@@ -1,0 +1,22 @@
+% Experiments
+\section{Experiments}
+\label{sec:experiments}
+
+Our experimental evaluation focuses on characterizing the performance of \texttt{gce\_tangent} against \texttt{gce\_ambient} across three distinct concept domains. We prioritize nonlinear concepts where manifold geometry is expected to play a critical role, while maintaining a diagnostic baseline for linear comparison.
+
+\subsection{Experimental Domains and Ordering}
+We evaluate our methods across three primary blocks, ordered by their relevance to nonlinear manifold erasure:
+\begin{enumerate}
+    \item \textbf{Sycophancy (Primary Nonlinear Case):} Our central focus is on removing agreement bias in model responses. This represents a critical challenge for model alignment where concept encoding is expected to be locally curved.
+    \item \textbf{Safety (Secondary Case Study):} We evaluate the surgicality of erasure on content safety using the PKU-SafeRLHF dataset, testing the preservation of helpfulness alongside safety leakage.
+    \item \textbf{Bias in Bios (Diagnostic Baseline):} We use gender and profession classification as a replication anchor. This setting provides a linear comparison point to contrast against the nonlinear gains of tangent-constrained erasure.
+\end{enumerate}
+
+\subsection{Model and Implementation}
+All experiments are conducted on Qwen2.5-0.5B (24 decoder layers, hidden dimension 896). We implement and replicate four primary erasure methods: linear projection, INLP, \texttt{gce\_ambient}, and \texttt{gce\_tangent}. For \texttt{gce\_tangent}, we estimate the local tangent space using PCA on a reference corpus (e.g., Wikipedia) to ensure the erasure direction remains on the representation manifold.
+
+\subsection{Evaluation Protocol}
+Following the evaluation contract in our research brief, all probes are trained from scratch on erased representations to ensure no leakage from the erasure scorers themselves. We report both linear and nonlinear leakage, downstream utility preservation (e.g., MMLU accuracy, profession classification), and manifold-fidelity metrics including k-NN ratio and PCA reconstruction error.
+
+\subsection{Geometric Foundation (Appendix Support)}
+While the main text focuses on the performance of \texttt{gce\_tangent}, we provide extensive geometric diagnostics to ground our findings. These include broad geometry sweeps across multiple datasets and layers, subspace projection sensitivity (Q1), manifold-versus-subspace curvature tests (Q2), and representation connectivity analyses (Q3). These geometry-heavy materials are detailed in the Appendix to support the core narrative of off-manifold displacement as the primary driver of utility degradation.

@@ -1,0 +1,8 @@
+% Method
+\section{Method}
+
+We implement Gradient-based Concept Erasure (GCE) using an iterative protocol with probe recycling. Each round of erasure begins by computing per-sample gradients from a current multi-layer perceptron (MLP) scorer. These gradients are normalized to unit directions. In the tangent variant, the algorithm projects these directions onto the local tangent space of the representation manifold. The erasure step modifies the hidden state by subtracting the projection of the state onto the erasure direction, scaled by a step size parameter.
+
+To estimate the local tangent space for each representation, we find its k-nearest neighbors in the current data. Secant vectors are computed between the target point and its neighbors. Running principal component analysis (PCA) on these secant vectors allows us to extract the top principal components, which form the tangent basis. The tangent estimator is refit in every round to track the evolving manifold geometry as representations shift.
+
+Two diagnostics help evaluate tangent quality. Tangent Gradient Capture (TGC) measures the fraction of the leakage gradient that lies within the estimated tangent space. Tangent Neighbor Residual (TNR) measures the fraction of local secant vectors not explained by the tangent basis. These metrics verify that the tangent estimation remains geometrically sound throughout the iterative process.

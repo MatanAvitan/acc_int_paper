@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{This table summarizes the minimum geometry experiments included in the main text. These tests establish the empirical foundation for manifold-aware erasure. We move broad sweeps and secondary diagnostics to the appendix to maintain focus on the primary narrative.}
+\label{tab:geometry_schedule}
+\small
+\begin{tabular}{lll}
+\toprule
+Experiment Block & Research Question & Primary Evidence \\
+\midrule
+Q1: Rank-retention & Subspace concentration & Top-1 agreement under intrinsic projection \\
+Q2: Tangent comparison & Manifold vs. flat subspace & KL divergence of local vs. global edits \\
+Q3: Domain connectivity & Shared vs. domain manifolds & Cross-domain interpolation smoothness \\
+Matched-leakage bridge & Off-manifold degradation & \texttt{gce\_ambient} vs. \texttt{gce\_tangent} utility \\
+\bottomrule
+\end{tabular}
+\end{table}

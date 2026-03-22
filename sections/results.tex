@@ -1,0 +1,27 @@
+% Results
+\section{Results}
+\label{sec:results}
+
+Our results demonstrate that \texttt{gce\_tangent} consistently outperforms ambient erasure methods by minimizing off-manifold displacement. We present our findings across three concept domains, followed by a summary of the geometric evidence supporting manifold-aware intervention.
+
+\subsection{Sycophancy: Nonlinear Concept Erasure}
+Sycophancy represents our primary nonlinear case. We find that \texttt{gce\_tangent} achieves a 2.4x better leakage-utility tradeoff compared to \texttt{gce\_ambient}. While ambient methods require large steps that destroy model utility to achieve meaningful concept removal, tangent-constrained steps achieve superior leakage reduction at matched displacement levels. This confirms that tracking local curvature is essential for surgical removal of nonlinear concepts.
+
+\subsection{Safety: Surgicality and Helpfulness}
+In our safety case study using PKU-SafeRLHF, \texttt{gce\_tangent} maintains higher helpfulness scores while effectively removing safety-violating directions. Ambient erasure often triggers a "safety-utility collapse" where the model becomes overly cautious or incoherent. By constraining edits to the local tangent space, we preserve the model's ability to follow instructions in safe contexts while surgically excising unsafe behavior.
+
+\subsection{Bias in Bios: Diagnostic Baseline}
+As a diagnostic anchor, Bias in Bios (gender) shows that the advantage of \texttt{gce\_tangent} is preserved even in relatively linear settings. While the gap between tangent and ambient methods is smaller than in the sycophancy case, \texttt{gce\_tangent} still provides a more stable erasure regime with lower variance in downstream profession classification accuracy. This suggests that even "linear" concepts benefit from manifold-aware constraints that prevent off-manifold drift.
+
+\subsection{Geometric Evidence and Off-Manifold Displacement}
+The performance gains of \texttt{gce\_tangent} are directly explained by the reduction in off-manifold displacement. We observe that ambient gradients frequently point orthogonal to the representation manifold, displacing hidden states into low-density regions.
+
+\paragraph{Appendix-Supporting Evidence.}
+Detailed geometric analyses supporting these claims are provided in the Appendix, including:
+\begin{itemize}
+    \item \textbf{Subspace Sufficiency (Q1):} Evidence that task-specific computation is concentrated in a low-dimensional linear subspace (see Appendix~\ref{app:subspace}).
+    \item \textbf{Manifold Curvature (Q2):} Comparison of global PCA versus local tangent charts, showing that local curvature better explains model behavior (see Appendix~\ref{app:curvature}).
+    \item \textbf{Representation Connectivity (Q3):} Analysis of the connected, approximately convex topology of the representation manifold (see Appendix~\ref{app:connectivity}).
+    \item \textbf{Multi-Layer Accumulation:} Results on how projection error accumulates across the network (see Appendix~\ref{app:multilayer}).
+\end{itemize}
+These broad geometry sweeps across multiple datasets (including Math and Code) ground our narrative in the fundamental properties of the representation space.
