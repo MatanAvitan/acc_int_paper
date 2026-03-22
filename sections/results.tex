@@ -2,26 +2,34 @@
 \section{Results}
 \label{sec:results}
 
-Our results demonstrate that \texttt{gce\_tangent} consistently outperforms ambient erasure methods by minimizing off-manifold displacement. We present our findings across three concept domains, followed by a summary of the geometric evidence supporting manifold-aware intervention.
+This draft reports only the paper runs that have finished at the time of writing: the sycophancy tangent-vs-ambient sweep at layers 4 and 8, the Bias in Bios tangent-vs-ambient sweep at layers 4 and 8, the layer-8 iterative safety sweep, and the completed geometry summaries for gender and sycophancy. The iterative layer-16/23 sycophancy and safety sweeps are still running and are excluded from the quantitative claims below.
 
 \subsection{Sycophancy: Nonlinear Concept Erasure}
-Sycophancy represents our primary nonlinear case. We find that \texttt{gce\_tangent} achieves a 2.4x better leakage-utility tradeoff compared to \texttt{gce\_ambient}. While ambient methods require large steps that destroy model utility to achieve meaningful concept removal, tangent-constrained steps achieve superior leakage reduction at matched displacement levels. This confirms that tracking local curvature is essential for surgical removal of nonlinear concepts.
+Across all completed layer/lambda pairs, \texttt{gce\_tangent} yields lower sycophancy leakage than \texttt{gce\_ambient}. At layer 8, leakage falls from 0.202 to 0.142 at $\lambda=0.25$ and from 0.231 to 0.105 at $\lambda=1.0$. The same qualitative pattern holds at layer 4, where the best completed tangent point reaches 0.127 leakage versus 0.168 for the best ambient point.
+
+The completed sweep does not yet support the stronger claim that tangent erasure wins by moving less or by preserving more utility. In the finished layer-8 run at $\lambda=1.0$, tangent also produces a larger mean displacement (0.728 vs. 0.048) and a larger answer-matching drop (-20.4 vs. -17.0 points). The current sycophancy evidence therefore supports better concept removal, but not yet a better leakage-utility-displacement frontier.
 
 \subsection{Safety: Surgicality and Helpfulness}
-In our safety case study using PKU-SafeRLHF, \texttt{gce\_tangent} maintains higher helpfulness scores while effectively removing safety-violating directions. Ambient erasure often triggers a "safety-utility collapse" where the model becomes overly cautious or incoherent. By constraining edits to the local tangent space, we preserve the model's ability to follow instructions in safe contexts while surgically excising unsafe behavior.
+The completed iterative safety sweep currently covers layer 8. Within that finished block, iterative tangent erasure reduces safety leakage much more aggressively than iterative ambient erasure: at $\lambda=0.5$, leakage is 0.113 for tangent versus 0.272 for ambient, and at $\lambda=1.0$, leakage is 0.068 versus 0.252.
+
+This stronger removal again comes with a cost. At $\lambda=1.0$, tangent yields a helpfulness delta of -0.060 compared with -0.021 for ambient, while its mean displacement is 2.68 versus 0.20. The completed safety evidence is therefore promising on leakage, but still mixed on surgicality. The layer-16 and layer-23 safety sweeps are still in flight and are needed before we make a stronger claim.
 
 \subsection{Bias in Bios: Diagnostic Baseline}
-As a diagnostic anchor, Bias in Bios (gender) shows that the advantage of \texttt{gce\_tangent} is preserved even in relatively linear settings. While the gap between tangent and ambient methods is smaller than in the sycophancy case, \texttt{gce\_tangent} still provides a more stable erasure regime with lower variance in downstream profession classification accuracy. This suggests that even "linear" concepts benefit from manifold-aware constraints that prevent off-manifold drift.
+Bias in Bios does not reverse the pattern. Tangent again reaches substantially lower gender leakage in the completed runs: at layer 8 and $\lambda=1.0$, leakage is 0.062 for tangent versus 0.221 for ambient; at layer 4, the best completed tangent point reaches 0.084 versus 0.213 for the best ambient point.
+
+However, the lower-leakage tangent points also reduce the downstream control-task accuracy more and require larger displacement. At layer 8 and $\lambda=1.0$, the downstream control-task accuracy is 0.513 for tangent and 0.536 for ambient, with displacement 0.847 versus 0.156. The completed linear anchor therefore supports stronger removal, not yet a cleaner utility-preserving regime.
 
 \subsection{Geometric Evidence and Off-Manifold Displacement}
-The performance gains of \texttt{gce\_tangent} are directly explained by the reduction in off-manifold displacement. We observe that ambient gradients frequently point orthogonal to the representation manifold, displacing hidden states into low-density regions.
+The completed geometry summaries preserve one strong part of the original paper story. Sycophancy is much more nonlinear than gender in the finished diagnostic runs: its local intrinsic dimension is only 34--53 across layers 4, 8, and 12, compared with 365--461 for gender, but its mean local-vs-global angle is 76.9--82.6$^\circ$ rather than 51.8--55.8$^\circ$. Pairwise scorer agreement remains high for both concepts (0.818--0.882), which suggests that the local direction field is coherent even when the global direction is a poor summary.
+
+This geometry contrast keeps sycophancy as the right primary nonlinear case for the paper. What it does not yet prove, on the basis of the completed paper runs alone, is that tangent erasure already converts that geometric advantage into lower-displacement or higher-utility operating points.
 
 \paragraph{Appendix-Supporting Evidence.}
 Detailed geometric analyses supporting these claims are provided in the Appendix, including:
 \begin{itemize}
-    \item \textbf{Subspace Sufficiency (Q1):} Evidence that task-specific computation is concentrated in a low-dimensional linear subspace (see Appendix~\ref{app:subspace}).
-    \item \textbf{Manifold Curvature (Q2):} Comparison of global PCA versus local tangent charts, showing that local curvature better explains model behavior (see Appendix~\ref{app:curvature}).
-    \item \textbf{Representation Connectivity (Q3):} Analysis of the connected, approximately convex topology of the representation manifold (see Appendix~\ref{app:connectivity}).
-    \item \textbf{Multi-Layer Accumulation:} Results on how projection error accumulates across the network (see Appendix~\ref{app:multilayer}).
+    \item \textbf{Subspace Sufficiency (Q1):} Evidence that task-specific computation is concentrated in a low-dimensional linear subspace.
+    \item \textbf{Manifold Curvature (Q2):} Comparison of global PCA versus local tangent charts, showing that local curvature better explains model behavior.
+    \item \textbf{Representation Connectivity (Q3):} Analysis of the connected, approximately convex topology of the representation manifold.
+    \item \textbf{Multi-Layer Accumulation:} Results on how projection error accumulates across the network.
 \end{itemize}
-These broad geometry sweeps across multiple datasets (including Math and Code) ground our narrative in the fundamental properties of the representation space.
+These appendix-scale geometry analyses remain important support for the mechanism story, but the main-text quantitative claims should currently be limited to the completed paper runs summarized above.
