@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering
+\caption{Representative completed paper-run comparisons. Utility is task-specific: answer-matching delta for sycophancy, helpfulness delta for safety, and profession control accuracy for Bias in Bios. Lower leakage and displacement are better; higher control-task accuracy is better.}
+\label{tab:completed_results_summary}
+\small
+\begin{tabular}{llcccccc}
+\toprule
+Domain / Setting & Utility & T leak & A leak & T util & A util & T disp & A disp \\
+\midrule
+Sycophancy L8, $\lambda=1.0$ & Ans. match $\Delta$ & 0.105 & 0.231 & -20.4pp & -17.0pp & 0.728 & 0.048 \\
+Safety L8, $\lambda=1.0$ & Helpful. $\Delta$ & 0.068 & 0.252 & -0.060 & -0.021 & 2.68 & 0.20 \\
+Bias in Bios L8, $\lambda=1.0$ & Profession acc. & 0.062 & 0.221 & 0.513 & 0.536 & 0.847 & 0.156 \\
+\bottomrule
+\end{tabular}
+\end{table}
