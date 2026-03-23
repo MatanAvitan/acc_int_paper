@@ -1,16 +1,16 @@
 \begin{table}[t]
 \centering
-\caption{This table summarizes the minimum geometry experiments included in the main text. These tests establish the empirical foundation for manifold-aware erasure. We move broad sweeps and secondary diagnostics to the appendix to maintain focus on the primary narrative.}
+\caption{Geometry evidence map for the appendix diagnostics. These analyses support the manuscript's mechanism discussion by separating low-dimensional subspace evidence, perturbation sensitivity, connectedness, and multi-layer accumulation.}
 \label{tab:geometry_schedule}
-\small
-\begin{tabular}{lll}
+\scriptsize
+\begin{tabular}{p{0.22\linewidth}p{0.22\linewidth}p{0.40\linewidth}}
 \toprule
 Experiment Block & Research Question & Primary Evidence \\
 \midrule
 Q1: Rank-retention & Subspace concentration & Top-1 agreement under intrinsic projection \\
-Q2: Tangent comparison & Manifold vs. flat subspace & KL divergence of local vs. global edits \\
+Q2: Perturbation sensitivity & High-variance vs. orthogonal directions & KL and top-1 under on/off-subspace noise \\
 Q3: Domain connectivity & Shared vs. domain manifolds & Cross-domain interpolation smoothness \\
-Matched-leakage bridge & Off-manifold degradation & \texttt{gce\_ambient} vs. \texttt{gce\_tangent} utility \\
+Multi-layer accumulation & Error compounding across the network & Simultaneous intrinsic projection across layers \\
 \bottomrule
 \end{tabular}
 \end{table}
