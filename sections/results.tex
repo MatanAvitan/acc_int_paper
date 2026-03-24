@@ -7,26 +7,28 @@ This draft separates two evidence tiers. Main-text quantitative claims use only 
 \input{tables/completed_results_summary}
 
 \subsection{Sycophancy: Nonlinear Concept Erasure}
-Across all completed layer/lambda pairs, \texttt{gce\_tangent} yields lower sycophancy leakage than \texttt{gce\_ambient}; Table~\ref{tab:completed_results_summary} shows the representative layer-8 comparison used in the main text. At layer 8, leakage falls from 0.202 to 0.142 at $\lambda=0.25$ and from 0.231 to 0.105 at $\lambda=1.0$. The same qualitative pattern holds at layer 4, where the best completed tangent point reaches 0.127 leakage versus 0.168 for the best ambient point.
+Table~\ref{tab:completed_results_summary} shows the layer-8 comparison at $\lambda=1.0$. Tangent erasure yields substantially lower leakage (0.105 vs. 0.231), consistent with results across all completed layer/lambda pairs: at layer 4, the best tangent point reaches 0.127 leakage versus 0.168 for ambient.
 
-The completed sweep does not yet support the stronger claim that tangent erasure wins by moving less or by preserving more utility. In the finished layer-8 run at $\lambda=1.0$, tangent also produces a larger mean displacement (0.728 vs. 0.048) and a larger answer-matching drop (-20.4 vs. -17.0 points). The current sycophancy evidence therefore supports better concept removal, but not yet a better leakage-utility-displacement frontier.
+The lower leakage comes at a cost. Tangent produces larger displacement (0.728 vs. 0.048) and sharper utility loss (-20.4 vs. -17.0 percentage points), patterns that hold across the completed sweep. The evidence therefore supports better concept removal but does not yet establish a frontier advantage in leakage-utility-displacement tradeoffs.
 
 \subsection{Safety: Surgicality and Helpfulness}
-The completed iterative safety sweep currently covers layer 8. Within that finished block, iterative tangent erasure reduces safety leakage much more aggressively than iterative ambient erasure: at $\lambda=0.5$, leakage is 0.113 for tangent versus 0.272 for ambient, and at $\lambda=1.0$, leakage is 0.068 versus 0.252.
+The completed iterative safety sweep at layer 8 shows tangent erasure reducing leakage far more aggressively than ambient (Table~\ref{tab:completed_results_summary}). At $\lambda=1.0$, leakage is 0.068 for tangent versus 0.252 for ambient.
 
-This stronger removal again comes with a cost. At $\lambda=1.0$, tangent yields a helpfulness delta of -0.060 compared with -0.021 for ambient, while its mean displacement is 2.68 versus 0.20. The completed safety evidence is therefore promising on leakage, but still mixed on surgicality.
+Again, lower leakage requires higher cost. Tangent produces larger displacement (2.68 vs. 0.20) and a steeper helpfulness penalty (-0.060 vs. -0.021), indicating a utility-surgicality tradeoff rather than unambiguous improvement.
 
 \subsection{Bias in Bios: Diagnostic Baseline}
-Bias in Bios does not reverse the pattern. Tangent again reaches substantially lower gender leakage in the completed runs: at layer 8 and $\lambda=1.0$, leakage is 0.062 for tangent versus 0.221 for ambient; at layer 4, the best completed tangent point reaches 0.084 versus 0.213 for the best ambient point.
+Table~\ref{tab:completed_results_summary} shows that tangent reaches substantially lower gender leakage than ambient at layer 8, $\lambda=1.0$ (0.062 vs. 0.221), mirroring layer-4 results (0.084 vs. 0.213 at best points).
 
-However, the lower-leakage tangent points also reduce the downstream control-task accuracy more and require larger displacement. At layer 8 and $\lambda=1.0$, the downstream control-task accuracy is 0.513 for tangent and 0.536 for ambient, with displacement 0.847 versus 0.156. The completed linear anchor therefore supports stronger removal, not yet a cleaner utility-preserving regime.
+This stronger removal comes with utility and displacement costs. At layer 8, tangent reduces control-task accuracy (0.513 vs. 0.536) and requires larger displacement (0.847 vs. 0.156). The linear anchor therefore supports stronger removal, not yet a cleaner utility-preserving regime.
+
+The same layer-8 Qwen snapshot also provides a descriptive comparison against the implemented linear baselines. On Bias in Bios, both linear projection and INLP remain near 0.198 leakage with profession accuracy around 0.539, whereas tangent reaches 0.062 leakage with profession accuracy 0.513. On sycophancy, linear projection and INLP both land at 0.163 leakage with answer-matching deltas around -16.6 percentage points, whereas tangent reaches 0.071 leakage with a -18.0 point answer-matching delta. We treat these cross-family numbers as descriptive rather than as matched-frontier claims, because the evaluation protocol intentionally uses nonlinear probes for nonlinear erasers and linear probes for linear erasers.
 
 \subsection{Geometric Evidence and Off-Manifold Displacement}
 \input{tables/geometry_contrast_summary}
 
-The completed geometry summaries preserve one strong part of the original paper story. Table~\ref{tab:geometry_contrast_summary} shows that sycophancy is much more nonlinear than gender in the finished diagnostic runs: its local intrinsic dimension is only 34--53 across layers 4, 8, and 12, compared with 365--461 for gender, while its mean local-vs-global angle is 76.9--82.6$^\circ$ rather than 51.8--55.8$^\circ$. Pairwise scorer agreement also remains high in the completed summaries, which suggests that the local direction field is coherent even when the global direction is a poor summary.
+Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs. 51.8--55.8$^\circ$). Pairwise scorer agreement remains high in the completed runs, suggesting coherence in the local direction field despite weak global summary.
 
-This geometry contrast keeps sycophancy as the right primary nonlinear case for the paper. What it does not yet prove, on the basis of the completed paper runs alone, is that tangent erasure already converts that geometric advantage into lower-displacement or higher-utility operating points.
+This geometry contrast validates sycophancy as the primary case for manifold-aware erasure methods. However, the completed paper runs do not yet prove that this geometric advantage translates into lower-displacement or higher-utility erasure points on any frontier.
 
 \paragraph{Appendix-Supporting Evidence.}
 Detailed geometric analyses supporting these claims are provided in the Appendix, including:
