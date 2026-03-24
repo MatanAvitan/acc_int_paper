@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\caption{Current matched layer-8 Qwen leakage inventory across the implemented method set. Each entry uses the best \texttt{retraction=none} point within the common layer-8 sweep for that method. Following the evaluation contract, nonlinear methods are measured with a fresh nonlinear probe and linear methods with a fresh linear probe. Lower is better. LEACE remains pending at this manuscript snapshot.}
+\label{tab:matched_inventory_leakage}
+\small
+\begin{tabular}{lcc}
+\toprule
+Method & Gender leakage & Sycophancy leakage \\
+\midrule
+\texttt{gce\_tangent} & 0.0621 & 0.0713 \\
+\texttt{gce\_ambient} & 0.2096 & 0.1033 \\
+INLP & 0.1979 & 0.1633 \\
+LEACE & --- & --- \\
+Linear projection & 0.1975 & 0.1633 \\
+\bottomrule
+\end{tabular}
+\end{table}

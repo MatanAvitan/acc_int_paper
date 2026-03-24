@@ -5,6 +5,10 @@
 This draft separates two evidence tiers. Main-text quantitative claims use only the paper runs that were complete when the manuscript snapshot was assembled: the sycophancy tangent-vs-ambient sweep at layers 4 and 8, the Bias in Bios tangent-vs-ambient sweep at layers 4 and 8, the layer-8 iterative safety sweep, and the completed geometry summaries for gender and sycophancy. Broader repository snapshot tables from completed reports are included in Appendix~\ref{sec:appendix_snapshots} for status tracking, but they are not promoted to the main claim set below.
 
 \input{tables/completed_results_summary}
+\input{tables/matched_inventory_leakage}
+\input{tables/matched_inventory_surgicality}
+
+Tables~\ref{tab:matched_inventory_leakage} and \ref{tab:matched_inventory_surgicality} provide the current matched layer-8 Qwen inventory across the implemented method set. They are intended as a descriptive cross-family comparison: nonlinear erasers are scored with fresh nonlinear probes, linear erasers with fresh linear probes, and LEACE remains pending until the replication run is complete.
 
 \subsection{Sycophancy: Nonlinear Concept Erasure}
 Table~\ref{tab:completed_results_summary} shows the layer-8 comparison at $\lambda=1.0$. Tangent erasure yields substantially lower leakage (0.105 vs. 0.231), consistent with results across all completed layer/lambda pairs: at layer 4, the best tangent point reaches 0.127 leakage versus 0.168 for ambient.
@@ -21,7 +25,7 @@ Table~\ref{tab:completed_results_summary} shows that tangent reaches substantial
 
 This stronger removal comes with utility and displacement costs. At layer 8, tangent reduces control-task accuracy (0.513 vs. 0.536) and requires larger displacement (0.847 vs. 0.156). The linear anchor therefore supports stronger removal, not yet a cleaner utility-preserving regime.
 
-The same layer-8 Qwen snapshot also provides a descriptive comparison against the implemented linear baselines. On Bias in Bios, both linear projection and INLP remain near 0.198 leakage with profession accuracy around 0.539, whereas tangent reaches 0.062 leakage with profession accuracy 0.513. On sycophancy, linear projection and INLP both land at 0.163 leakage with answer-matching deltas around -16.6 percentage points, whereas tangent reaches 0.071 leakage with a -18.0 point answer-matching delta. We treat these cross-family numbers as descriptive rather than as matched-frontier claims, because the evaluation protocol intentionally uses nonlinear probes for nonlinear erasers and linear probes for linear erasers.
+The same layer-8 Qwen snapshot also provides a descriptive comparison against the implemented linear baselines (Tables~\ref{tab:matched_inventory_leakage} and \ref{tab:matched_inventory_surgicality}). On Bias in Bios, both linear projection and INLP remain near 0.198 leakage with profession accuracy around 0.539, whereas tangent reaches 0.062 leakage with profession accuracy 0.513. On sycophancy, linear projection and INLP both land at 0.163 leakage with answer-matching deltas around -16.6 percentage points, whereas tangent reaches 0.071 leakage with a -18.0 point answer-matching delta. We treat these cross-family numbers as descriptive rather than as matched-frontier claims, because the evaluation protocol intentionally uses nonlinear probes for nonlinear erasers and linear probes for linear erasers.
 
 \subsection{Geometric Evidence and Off-Manifold Displacement}
 \input{tables/geometry_contrast_summary}
