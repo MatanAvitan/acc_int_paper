@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1774366932.13634 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1774366933.532 0
+["pdflatex"] 1774367669.03095 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1774367669.98803 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -108,14 +108,14 @@
   "/home/nlp/matan_avitan/.TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt" 1771861273 2285651 5ad8a4952eee17c7c4e5eb2ce9480a40 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf.cnf" 1768362267 637 edd806fb06a89761a6034e1968af9017 ""
   "checklist.tex" 1773773760 26167 b3450429513a86f46735450d0288b722 ""
-  "neurips_2026.aux" 1774366933.41715 13141 65b4aca3af5d02c141efc0ab8a7caf47 "pdflatex"
-  "neurips_2026.out" 1774366933.42015 3094 36218447b7726b3fcb5acf9f318ffba1 "pdflatex"
+  "neurips_2026.aux" 1774367669.88504 13141 9ccbf64c11442d278a6c74e4b39be5ec "pdflatex"
+  "neurips_2026.out" 1774367669.88704 3094 36218447b7726b3fcb5acf9f318ffba1 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
   "neurips_2026.tex" 1774264309.31528 4881 146d1a00b17062700b848bb67a274088 ""
   "sections/abstract.tex" 1774264790.42073 1166 caccf0da6abef2d3ea0d41235b1a15bc ""
   "sections/appendix_results.tex" 1774264790.43373 1296 a6fe99acb037d18f4aaf44e343adcd83 ""
   "sections/conclusion.tex" 1774264428.8294 1194 b2528e76eea40e43a2ad69edf21b9f99 ""
-  "sections/discussion.tex" 1774264790.42573 2361 a813d312f4a1980491bdba0cb5e5280d ""
+  "sections/discussion.tex" 1774367661.48496 3155 5a94ed31a1af11074efe2a4e19fb8f62 ""
   "sections/experiments.tex" 1774366916.33799 3437 27761858182d3853366c4bf7c2a27f93 ""
   "sections/introduction.tex" 1774264790.42173 2189 a94fa9c1242898cc1b31ed28551b3f10 ""
   "sections/limitations.tex" 1774264428.8274 1325 6746b2d497b3ef5541c00f066334ad62 ""
