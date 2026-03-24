@@ -13,7 +13,7 @@ We evaluate our methods across three primary blocks, ordered by their relevance 
 \end{enumerate}
 
 \subsection{Model and Implementation}
-All experiments are conducted on Qwen2.5-0.5B (24 decoder layers, hidden dimension 896). The current paper-locked comparison set implements four primary erasure methods: linear projection, INLP, \texttt{gce\_ambient}, and \texttt{gce\_tangent}. LEACE is retained as a literature baseline in this manuscript but is not yet part of the completed paper-run suite at this snapshot. For \texttt{gce\_tangent}, we estimate local tangent spaces with PCA-based neighborhoods so that the erasure direction is constrained to a local on-manifold approximation rather than to the full ambient space.
+All experiments are conducted on Qwen2.5-0.5B (24 decoder layers, hidden dimension 896). The current paper-locked comparison set implements five primary erasure methods: linear projection, INLP, LEACE, \texttt{gce\_ambient}, and \texttt{gce\_tangent}. LEACE is included as a matched linear baseline in the layer-8 inventory reported below. For \texttt{gce\_tangent}, we estimate local tangent spaces with PCA-based neighborhoods so that the erasure direction is constrained to a local on-manifold approximation rather than to the full ambient space.
 
 \input{tables/method_comparison_scope}
 
