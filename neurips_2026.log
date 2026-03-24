@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  23 MAR 2026 13:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  24 MAR 2026 17:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -422,10 +422,13 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 
 {/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]) (./sections/experiments.tex (./tables/method_comparison_scope.tex) [2]) (./sections/results.tex (./tables/completed_results_summary.tex) [3] (./tables/geometry_contrast_summary.tex)
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 34.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 36.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)) (./sections/discussion.tex [4]) (./sections/limitations.tex) (./sections/conclusion.tex) [5] (./sections/appendix_results.tex (./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/main_text_geometry_schedule.tex)) [6] (./checklist.tex [7] [8] [9] [10] [11] [12]) [13] (./neurips_2026.aux)
+)
+Underfull \vbox (badness 1107) has occurred while \output is active []
+
+ [4]) (./sections/discussion.tex) (./sections/limitations.tex [5]) (./sections/conclusion.tex) (./sections/appendix_results.tex (./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/main_text_geometry_schedule.tex)) [6] (./checklist.tex [7] [8] [9] [10] [11] [12] [13]) [14] (./neurips_2026.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-29>
@@ -434,18 +437,18 @@ Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
 (rerunfilecheck)             Checksum: 36218447B7726B3FCB5ACF9F318FFBA1;3094.
  ) 
 Here is how much of TeX's memory you used:
- 12836 strings out of 469476
- 202952 string characters out of 5467624
- 656983 words of memory out of 5000000
+ 12837 strings out of 469476
+ 202959 string characters out of 5467624
+ 664895 words of memory out of 5000000
  40991 multiletter control sequences out of 15000+600000
  672749 words of font info for 225 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 72i,10n,79p,1206b,686s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (13 pages, 199355 bytes).
+ 72i,10n,79p,1206b,729s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on neurips_2026.pdf (14 pages, 203119 bytes).
 PDF statistics:
- 267 PDF objects out of 1000 (max. 8388607)
- 225 compressed objects within 3 object streams
- 66 named destinations out of 1000 (max. 500000)
+ 278 PDF objects out of 1000 (max. 8388607)
+ 233 compressed objects within 3 object streams
+ 67 named destinations out of 1000 (max. 500000)
  48785 words of extra memory for PDF output out of 51595 (max. 10000000)
 
