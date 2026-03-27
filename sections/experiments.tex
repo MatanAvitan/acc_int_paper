@@ -18,7 +18,36 @@ All experiments are conducted on Qwen2.5-0.5B (24 decoder layers, hidden dimensi
 \input{tables/method_comparison_scope}
 
 \subsection{Evaluation Protocol}
-Following the evaluation contract in our research brief, all probes are trained from scratch on erased representations to ensure no leakage from the erasure scorers themselves. We report both linear and nonlinear leakage, task-specific utility preservation (answer matching, helpfulness ranking, and profession classification), and manifold-fidelity metrics such as displacement, cosine similarity, and local-geometry diagnostics when available. For the cross-family inventory discussed in the Results section, we use the family-matched leakage evaluator: nonlinear erasers are scored with a fresh nonlinear MLP probe, while linear erasers are scored with a fresh linear probe. Main-text quantitative claims are restricted to the completed paper suite; broader repository snapshot tables are reported separately in Appendix~\ref{sec:appendix_snapshots}.
+All leakage probes are trained from scratch on erased representations to ensure no information leaks from the erasure scorers themselves. We employ three complementary evaluation axes:
+
+\paragraph{Probe-based leakage.} A retrained nonlinear MLP probe measures whether concept information remains accessible to a standard function class. We report both linear and nonlinear test accuracy; the gap between them indicates the degree to which concept encoding is nonlinear.
+
+\paragraph{Mutual information via $k$-NN estimation.}
+Probe accuracy measures whether a \emph{specific function class} can recover the concept; a nonlinear MLP probe might miss information that a more complex architecture could extract. Mutual information $I(\mathbf{X}; y)$ captures \emph{all} shared information between representations and labels, providing a probe-free, architecture-agnostic bound on recoverability.
+
+\emph{Mental model.} Mutual information decomposes as $I(\mathbf{X}; y) = H(y) - H(y \mid \mathbf{X})$: the entropy of the concept label minus the residual uncertainty after observing the representation. When erasure is effective, $H(y \mid \mathbf{X})$ rises toward $H(y)$ (the label becomes unpredictable from the representation), and MI drops toward zero. For continuous $\mathbf{X}$ and discrete $y$, we estimate MI using the Ross/Gao $k$-nearest-neighbor estimator:
+\begin{equation}
+\label{eq:knn_mi}
+I(\mathbf{X}; y) = \psi(k) - \bigl\langle \psi(m_i) \bigr\rangle + \psi(N) - \bigl\langle \psi(N_{c(i)}) \bigr\rangle,
+\end{equation}
+where $\psi$ is the digamma function and the procedure is:
+\begin{enumerate}
+    \item For each point $\mathbf{x}_i$, find its $k$-th nearest neighbor \emph{within its class} $c(i)$; call that distance $\varepsilon_i$.
+    \item Count $m_i$: the number of \emph{all} points (any class) within distance $\varepsilon_i$ of $\mathbf{x}_i$.
+    \item $N_{c(i)}$ is the total number of points sharing the same label as point $i$; $N$ is the total sample size.
+\end{enumerate}
+
+\emph{Intuition.} When concept information is encoded in $\mathbf{X}$, same-class points cluster together: $\varepsilon_i$ is small, $m_i \approx k$ (mostly same-class neighbors within that radius), and MI is high. After effective erasure, class labels become geometrically mixed: to reach $k$ same-class neighbors one must search a large $\varepsilon_i$, sweeping in many cross-class points so that $m_i \gg k$, and MI drops.
+
+\emph{Adaptive resolution and local geometry.} A key property of the $k$-NN estimator is that it sets its measurement scale \emph{adaptively}: for each point, the radius $\varepsilon_i$ is determined by the local data density, not by a global bandwidth or histogram bin width. In dense regions of the manifold, $\varepsilon_i$ is small; in sparse regions, it is large. The digamma terms $\psi(m_i)$ implicitly encode the local density ratio between the class-conditional and marginal distributions without ever estimating densities explicitly in $\mathbb{R}^d$---the estimator works entirely with neighbor counts, which are topological quantities that naturally handle varying density and curvature.
+
+This makes the estimator well-suited for data on a low-dimensional manifold embedded in $\mathbb{R}^d$. A parametric density estimator (e.g., Gaussian kernel) operating in the ambient space would be misled by the high-dimensional volume: two points close in $\mathbb{R}^d$ may be far apart along the manifold, and vice versa. The $k$-NN estimator sidesteps this because it only examines local neighborhoods---points that are actually nearby along the data distribution. While it still uses ambient Euclidean distance (not geodesic distance), the locality of $k$-NN queries means that for small $k$ relative to the dataset, the Euclidean and geodesic neighborhoods approximately coincide.
+
+\emph{Connection to TanGCE.} Both the MI estimator and TanGCE operate through local neighborhood structure rather than global ambient-space assumptions. TanGCE explicitly projects onto the tangent space estimated from $k$-nearest neighbors; the MI estimator implicitly adapts to the manifold by measuring information through local ball neighborhoods. Neither assumes the data fills $\mathbb{R}^d$ uniformly. This shared reliance on local structure creates a coherent geometric framework: the same manifold properties that make tangent-projected erasure more precise also make $k$-NN MI estimation more faithful than ambient-space alternatives.
+
+We compute MI for both concept labels (should decrease after erasure) and control labels (should remain unchanged), yielding a complete picture of erasure selectivity.
+
+\paragraph{Unsupervised SAE diagnostics.} We train TopK sparse autoencoders ($k{=}64$) on a general-purpose WikiText corpus---independent of any concept labels---then measure concept feature removal rate, collateral damage rate, and feature redistribution score (Section~\ref{sec:results}). These metrics require no control-task annotations and detect failure modes invisible to probe-based evaluation, such as concept information being redistributed across features rather than removed.
 
 \subsection{Geometric Foundation (Appendix Support)}
 While the main text focuses on the performance of \texttt{gce\_tangent}, we also provide geometric diagnostics to ground the mechanism story. These include broad geometry sweeps across multiple datasets and layers, subspace projection sensitivity (Q1), perturbation-based subspace sensitivity tests (Q2), and representation connectivity analyses (Q3). These appendix-scale materials support the low-dimensional and nonlinear-geometry motivation for tangent projection, but they should not be read as a standalone causal proof that off-manifold displacement fully explains the observed utility tradeoffs.

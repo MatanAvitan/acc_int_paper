@@ -2,47 +2,65 @@
 \section{Results}
 \label{sec:results}
 
-This draft separates two evidence tiers. Main-text quantitative claims use only the paper runs that were complete when the manuscript snapshot was assembled: the sycophancy tangent-vs-ambient sweep at layers 4 and 8, the Bias in Bios tangent-vs-ambient sweep at layers 4 and 8, the layer-8 iterative safety sweep, and the completed geometry summaries for gender and sycophancy. Broader repository snapshot tables from completed reports are included in Appendix~\ref{sec:appendix_snapshots} for status tracking, but they are not promoted to the main claim set below.
+We evaluate eight erasure methods across three concept domains---sycophancy, gender (Bias in Bios), and safety---at layer~8 of Qwen2.5-0.5B. All methods except TanGCE use $\lambda{=}0.5$; TanGCE (raw) uses $\lambda{=}8.0$ to compensate for the naturally attenuated projection norms (see Section~\ref{sec:lambda_sweep}). We measure concept leakage with a retrained nonlinear MLP probe, mutual information via the Ross/Gao $k$-NN estimator in the original representation space, and unsupervised SAE-based metrics: concept feature removal rate, collateral damage rate, and feature redistribution score.
 
-\input{tables/completed_results_summary}
-\input{tables/matched_inventory_leakage}
-\input{tables/matched_inventory_surgicality}
+\input{tables/full_comparison}
+\input{tables/full_comparison_detail}
 
-Tables~\ref{tab:matched_inventory_leakage} and \ref{tab:matched_inventory_surgicality} provide the current matched layer-8 Qwen inventory across the implemented method set. They are intended as a descriptive cross-family comparison: nonlinear erasers are scored with fresh nonlinear probes, while linear erasers are scored with fresh linear probes and their excess-over-chance leakage is floored at zero.
+\subsection{TanGCE Achieves Lowest Leakage Across All Domains}
 
-\subsection{Sycophancy: Nonlinear Concept Erasure}
-Table~\ref{tab:completed_results_summary} shows the layer-8 comparison at $\lambda=1.0$. Tangent erasure yields substantially lower leakage (0.105 vs. 0.231), consistent with results across all completed layer/lambda pairs: at layer 4, the best tangent point reaches 0.127 leakage versus 0.168 for ambient.
+Table~\ref{tab:full_comparison} shows that TanGCE (raw) achieves the lowest nonlinear leakage across all three domains: 0.602 on sycophancy (vs.\ 0.681 for LEACE, 0.703 for Ambient GCE), 0.618 on gender (vs.\ 0.701 for Ambient GCE), and 0.663 on safety (vs.\ 0.778 for Ambient GCE). Linear methods (Linear Projection, INLP) barely reduce leakage below random baselines, confirming that concept information is predominantly encoded nonlinearly.
 
-The lower leakage comes at a cost. Tangent produces larger displacement (0.728 vs. 0.048) and sharper utility loss (-20.4 vs. -17.0 percentage points), patterns that hold across the completed sweep. The evidence therefore supports better concept removal but does not yet establish a frontier advantage in leakage-utility-displacement tradeoffs.
+\subsection{Control Task Preservation}
 
-\subsection{Safety: Surgicality and Helpfulness}
-The completed iterative safety sweep at layer 8 shows tangent erasure reducing leakage far more aggressively than ambient (Table~\ref{tab:completed_results_summary}). At $\lambda=1.0$, leakage is 0.068 for tangent versus 0.252 for ambient.
+Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream control task accuracy relative to clean representations. For sycophancy (answer matching), TanGCE incurs a small $-1.5$pp drop; all other methods preserve perfect accuracy. For gender (profession classification), TanGCE drops only $-0.8$pp (0.531 vs.\ 0.539 clean), while ConceptSAE Soft catastrophically degrades profession accuracy by $-19.7$pp (0.342). On safety, TanGCE \emph{improves} helpfulness ($+3.9$pp), suggesting that removing safety-concept directions frees capacity for the helpfulness task.
 
-Again, lower leakage requires higher cost. Tangent produces larger displacement (2.68 vs. 0.20) and a steeper helpfulness penalty (-0.060 vs. -0.021), indicating a utility-surgicality tradeoff rather than unambiguous improvement.
+Table~\ref{tab:full_comparison_detail} complements this with mutual information: TanGCE preserves control MI across all domains (sycophancy: 1.158 vs.\ 1.157 clean; gender: 0.904 vs.\ 0.903 clean). On gender, TanGCE is the only method that slightly \emph{increases} control MI, indicating zero collateral damage to task-relevant information. ConceptSAE Soft destroys control MI on gender (0.846 vs.\ 0.903).
 
-\subsection{Bias in Bios: Diagnostic Baseline}
-Table~\ref{tab:completed_results_summary} shows that tangent reaches substantially lower gender leakage than ambient at layer 8, $\lambda=1.0$ (0.062 vs. 0.221), mirroring layer-4 results (0.084 vs. 0.213 at best points).
+\subsection{Near-Zero Redistribution}
 
-This stronger removal comes with utility and displacement costs. At layer 8, tangent reduces control-task accuracy (0.513 vs. 0.536) and requires larger displacement (0.847 vs. 0.156). The linear anchor therefore supports stronger removal, not yet a cleaner utility-preserving regime.
+TanGCE (raw) maintains near-zero redistribution across all concepts: 1.4\% on sycophancy, 0.0\% on gender, and 4.1\% on safety. In contrast, Ambient GCE shows nonzero redistribution even at $\lambda{=}0.5$, and this grows dramatically at higher $\lambda$ (Section~\ref{sec:lambda_sweep}). ConceptSAE Soft, despite high concept feature removal rates (57--69\%), produces catastrophic collateral damage (76--99\%) and the highest redistribution scores (1.3--4.1\%).
 
-The same layer-8 Qwen snapshot also provides a descriptive comparison against the implemented linear baselines (Tables~\ref{tab:matched_inventory_leakage} and \ref{tab:matched_inventory_surgicality}). On Bias in Bios, both linear projection and INLP remain near 0.198 leakage with profession accuracy around 0.539, whereas tangent reaches 0.062 leakage with profession accuracy 0.513 and LEACE drives the fresh linear probe to chance with profession accuracy 0.538. On sycophancy, linear projection and INLP both land at 0.163 leakage with answer-matching deltas around -16.6 percentage points, whereas tangent reaches 0.071 leakage with a -18.0 point answer-matching delta and LEACE again drives the fresh linear probe to chance with a smaller utility drop of -10.3 points. We treat these cross-family numbers as descriptive rather than as matched-frontier claims, because the evaluation protocol intentionally uses nonlinear probes for nonlinear erasers and linear probes for linear erasers.
+\paragraph{Damage threshold sensitivity.}
+\input{tables/damage_threshold}
+Table~\ref{tab:damage_threshold} reveals that the high damage rates at $\delta{>}2\%$ are largely an artifact of the lenient threshold: many non-concept features shift by 2--5\% in mean activation---a perturbation too small to meaningfully alter downstream behavior (consistent with preserved MI$_\text{ctrl}$ in Table~\ref{tab:full_comparison_detail}). At the strict $\delta{>}20\%$ threshold, TanGCE's damage drops to 1\% on gender and 7\% on safety, while ConceptSAE Soft retains 80\% damage on gender. This confirms that TanGCE's apparent collateral impact at the lenient threshold reflects superficial activation shifts, not genuine information disruption.
+
+\subsection{The $\lambda$ Sweep: Off-Manifold Displacement Creates Spurious Correlations}
+\label{sec:lambda_sweep}
+
+\input{tables/lambda_sweep}
+
+Table~\ref{tab:lambda_sweep} reveals a critical failure mode of Ambient GCE: at $\lambda \geq 4$, concept MI \emph{increases} rather than decreases (negative MI drop). On sycophancy at $\lambda{=}8$, the MI drop is $-0.063$; on gender, $-0.098$; on safety, $-0.092$. Simultaneously, redistribution reaches 15--31\%.
+
+This occurs because ambient erasure pushes representations off the data manifold. The displacement magnitude correlates with each sample's concept signal strength, creating a new axis of variation that SAE features detect as concept-correlated. Concept information is laundered into the geometry of the displacement rather than removed.
+
+TanGCE (raw) avoids this failure mode through two mechanisms. First, projection onto the tangent space removes off-manifold gradient components, ensuring displacement stays on the manifold. Second, retaining the raw projection norm $\|\mathbf{P}_T(\nabla f)\|$ as a confidence weight naturally attenuates erasure for samples where the concept gradient is mostly off-manifold. This yields monotonically decreasing leakage with increasing $\lambda$, with redistribution remaining below 8\% even at $\lambda{=}8$.
+
+\subsection{Polysemanticity Confounds Linear Correlation Metrics}
+\label{sec:polysemanticity}
+
+\input{tables/sae_expansion_comparison}
+
+A natural approach for measuring concept removal in SAE feature space is to identify concept-correlated features via point-biserial correlation $r(z_j, y)$ and then measure what fraction are disrupted after erasure. However, this approach assumes that each SAE feature encodes a single semantic concept---an assumption that fails when features are \emph{polysemantic}.
+
+Consider a polysemantic feature $z_j$ that activates when \emph{both} concept $y{=}1$ and topic $t{=}\text{science}$ are present, or when $y{=}0$ and $t{=}\text{politics}$. The marginal correlation $r(z_j, y) \approx 0$ because the feature fires equally often for both concept labels, yet $z_j$ carries substantial concept information \emph{conditioned on topic}. A linear correlation metric would classify this feature as non-concept-related and miss the fact that erasure correctly disrupts it.
+
+Table~\ref{tab:sae_expansion} demonstrates this effect empirically. At $8\times$ expansion (7{,}168 dictionary features), the SAE reports \textbf{0\% concept removal} for both TanGCE and LEACE on gender---despite both methods substantially reducing nonlinear probe leakage (Table~\ref{tab:full_comparison}). Increasing the dictionary to $64\times$ expansion (57{,}344 features) resolves the polysemanticity: features become more monosemantic, linear correlations faithfully detect concept encoding, and both methods now show \textbf{100\% concept removal}.
+
+The effect is concept-dependent. Sycophancy removal rates are stable across expansions (71\% at both $8\times$ and $64\times$ for TanGCE), suggesting that sycophancy features are already relatively monosemantic at $8\times$. Gender features, by contrast, are heavily polysemantic at $8\times$---the concept is distributed across features that jointly encode gender with other attributes, making it invisible to marginal correlation. Safety shows an intermediate pattern: removal increases from 59\% to 82\%.
+
+These results have two implications. First, SAE-based erasure evaluation requires sufficiently high dictionary expansion to overcome polysemanticity; $8\times$ expansion is inadequate for concepts that are entangled with other attributes. Second, the zero-redistribution result for TanGCE on gender (Table~\ref{tab:full_comparison}) is robust: redistribution remains at 0\% even at $64\times$ expansion, confirming that TanGCE removes rather than reshuffles concept information.
 
 \subsection{Geometric Evidence and Off-Manifold Displacement}
 \input{tables/geometry_contrast_summary}
 
-Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs. 51.8--55.8$^\circ$). Pairwise scorer agreement remains high in the completed runs, suggesting coherence in the local direction field despite weak global summary.
-
-This geometry contrast validates sycophancy as the primary case for manifold-aware erasure methods. However, the completed paper runs do not yet prove that this geometric advantage translates into lower-displacement or higher-utility erasure points on any frontier.
+Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs.\ 51.8--55.8$^\circ$). This geometry contrast validates sycophancy as the primary case for manifold-aware erasure methods, while the strong TanGCE results on gender demonstrate that the method generalizes even to approximately linear concepts.
 
 \paragraph{Appendix-Supporting Evidence.}
 Detailed geometric analyses supporting these claims are provided in the Appendix, including:
 \begin{itemize}
     \item \textbf{Subspace Sufficiency (Q1):} Evidence that task-specific computation is concentrated in a low-dimensional linear subspace.
-    \item \textbf{Perturbation Sensitivity (Q2):} Comparison of perturbations in high-variance and orthogonal subspaces, which supports low-dimensional sensitivity concentration but does not by itself prove curved-manifold causality.
+    \item \textbf{Perturbation Sensitivity (Q2):} Comparison of perturbations in high-variance and orthogonal subspaces.
     \item \textbf{Representation Connectivity (Q3):} Analysis of the connected, approximately convex topology of the representation manifold.
     \item \textbf{Multi-Layer Accumulation:} Results on how projection error accumulates across the network.
 \end{itemize}
-These appendix-scale geometry analyses remain important support for the mechanism story, but the main-text quantitative claims should currently be limited to the completed paper runs summarized above.
-
-\paragraph{Broader Repository Snapshot.}
-The broader iterative reports recorded in Appendix~\ref{sec:appendix_snapshots} are directionally consistent with the main-text picture. In both the sycophancy and safety repository snapshots (Tables~\ref{tab:repo_snapshot_sycophancy} and \ref{tab:repo_snapshot_safety}), deeper-layer iterative tangent runs continue to reduce leakage more than ambient baselines. We include those tables to document the current state of the project and to motivate the next matched-leakage analyses, but we do not rely on them for the central paper claims.

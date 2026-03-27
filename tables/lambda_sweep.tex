@@ -1,0 +1,30 @@
+\begin{table}[t]
+\centering
+\caption{$\lambda$ sweep comparing Ambient GCE, TanGCE (renorm), and TanGCE (raw) at layer 8. TanGCE (raw) retains the raw tangent projection norm as a confidence weight: if the gradient is mostly off-manifold, $\|\mathbf{P}_T(\nabla f)\| \ll 1$ and erasure is naturally attenuated. Ambient GCE at high $\lambda$ increases MI$_c$ (negative MI drop) and shows high redistribution---concept information is reshuffled into new SAE features rather than removed. TanGCE (raw) maintains near-zero redistribution across all $\lambda$ values.}
+\label{tab:lambda_sweep}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{ll|cccccc}
+\toprule
+Concept & Method & $\lambda$ & NL$\downarrow$ & MI drop$\uparrow$ & Remove\% & Dmg\%$\downarrow$ & Redist\%$\downarrow$ \\
+\midrule
+\multirow{6}{*}{Syco.}
+& Ambient     & 0.5 & .678 & +.007 &  0 &  1.4 & 1.4 \\
+& Ambient     & 8.0 & .734 & $-.063$ & 25 & 23.3 & \textbf{15.1} \\
+& TanGCE (raw) & 4.0 & .596 & +.006 & 50 & 27.4 & 5.5 \\
+& TanGCE (raw) & 8.0 & \textbf{.588} & +.014 & 50 & 49.3 & 4.1 \\
+\midrule
+\multirow{6}{*}{Gender}
+& Ambient     & 0.5 & .666 & $-.001$ & 21 & 23.4 & 0.0 \\
+& Ambient     & 8.0 & .702 & $-.098$ & 79 & 78.8 & \textbf{11.1} \\
+& TanGCE (raw) & 4.0 & .580 & $-.000$ & 26 & 41.5 & 0.0 \\
+& TanGCE (raw) & 8.0 & \textbf{.470} & $-.002$ & 37 & 57.6 & 0.2 \\
+\midrule
+\multirow{6}{*}{Safety}
+& Ambient     & 0.5 & .664 & +.008 &  0 &  1.9 & 0.0 \\
+& Ambient     & 8.0 & .770 & $-.092$ & 12 & 30.8 & \textbf{30.8} \\
+& TanGCE (raw) & 4.0 & .680 & +.015 & 44 & 46.2 & 5.8 \\
+& TanGCE (raw) & 8.0 & \textbf{.646} & +.011 & 68 & 67.3 & 7.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
