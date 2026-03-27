@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{Full erasure method comparison at layer 8 across three concept domains. All methods use $\lambda{=}0.5$ except TanGCE (raw) which uses $\lambda{=}8.0$ to compensate for attenuated projection norms (Section~\ref{sec:lambda_sweep}). NL Leak: retrained nonlinear MLP probe accuracy (lower = better concept removal). $\Delta$Ctrl: downstream control task accuracy change relative to clean representations (closer to zero = more surgical). Redist\%: fraction of non-concept SAE features that become concept-correlated post-erasure (lower = less information reshuffling). Model: Qwen2.5-0.5B. SAE: 8$\times$ TopK, $k{=}64$. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}
+\caption{Full erasure method comparison at layer 8 across three concept domains. All methods use $\lambda{=}0.5$ except TanGCE which uses $\lambda{=}8.0$ to compensate for attenuated projection norms (Section~\ref{sec:lambda_sweep}). NL Leak: retrained nonlinear MLP probe accuracy (lower = better concept removal). $\Delta$Ctrl: downstream control task accuracy change relative to clean representations (closer to zero = more surgical). Redist\%: fraction of non-concept SAE features that become concept-correlated post-erasure (lower = less information reshuffling). Model: Qwen2.5-0.5B. SAE: 8$\times$ TopK, $k{=}64$. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}
 \label{tab:full_comparison}
 \small
 \setlength{\tabcolsep}{3pt}
@@ -15,8 +15,7 @@ Linear Proj.        & .740 & .000 & 14.1 & 0.0  & .747 & +.001 & 23.4 & 0.0  & .
 INLP                & .734 & .000 & 14.1 & 0.0  & .737 & +.001 & 22.8 & 0.0  & .795 & $-.004$ & 0.0  & 0.0  \\
 LEACE               & .681 & .000 & 1.4  & 0.0  & .739 & $-.002$ & 29.2 & 0.0  & .785 & $-.015$ & 4.1  & 0.0  \\
 Ambient GCE         & .703 & .000 & 2.8  & 1.4  & .701 & .000  & 15.9 & 0.0  & .778 & $-.040$ & 0.0  & 2.0  \\
-\textbf{TanGCE (raw)} & \textbf{.602} & $-.015$ & 60.6 & \textbf{1.4} & \textbf{.618} & $-.008$ & 51.1 & \textbf{0.0} & \textbf{.663} & +.039 & 65.3 & 4.1 \\
-ConceptSAE Soft     & .703 & .000 & 76.1 & 2.8  & .736 & $\mathbf{-.197}$ & 98.7 & 1.3  & .783 & +.085 & 75.5 & 4.1  \\
+\textbf{TanGCE} & \textbf{.602} & $-.015$ & 60.6 & \textbf{1.4} & \textbf{.618} & $-.008$ & 51.1 & \textbf{0.0} & \textbf{.663} & +.039 & 65.3 & 4.1 \\
 \bottomrule
 \end{tabular}
 \end{table}
