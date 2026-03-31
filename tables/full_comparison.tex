@@ -1,21 +1,21 @@
 \begin{table}[t]
 \centering
-\caption{Full erasure method comparison at layer 8 across three concept domains. All methods use $\lambda{=}0.5$ except TanGCE which uses $\lambda{=}8.0$ to compensate for attenuated projection norms (Section~\ref{sec:lambda_sweep}). L/NL Leak: retrained linear logistic-regression / nonlinear MLP probe accuracy (lower = better concept removal). $\Delta$Ctrl: downstream control task accuracy change relative to clean representations (closer to zero = more surgical). Dmg\%: fraction of non-concept SAE features with $>{10}\%$ activation change (lower = less collateral damage). Rdst\%: fraction of non-concept SAE features that become concept-correlated post-erasure (lower = less information reshuffling). Model: Qwen2.5-0.5B. SAE: $64\times$ TopK, $k{=}64$, disruption threshold $\delta{>}10\%$. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}
+\caption{Full erasure method comparison at layer 8 across three concept domains. All methods use $\lambda{=}0.5$ except TanGCE which uses $\lambda{=}8.0$ to compensate for attenuated projection norms (Section~\ref{sec:lambda_sweep}). L/NL Leak: retrained linear logistic-regression / nonlinear MLP probe accuracy (lower = better concept removal). $\Delta$Ctrl: downstream control task accuracy change relative to clean representations (closer to zero = more surgical). Rem\%: fraction of concept-correlated SAE features disrupted ($\delta{>}2\%$; higher = better erasure). Dmg\%: fraction of non-concept SAE features with $>{10}\%$ activation change (lower = less collateral damage). Rdst\%: fraction of non-concept features that become concept-correlated post-erasure (lower = less reshuffling). Model: Qwen2.5-0.5B. SAE: $64\times$ TopK, $k{=}64$. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}
 \label{tab:full_comparison}
 \small
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l|ccccc|ccccc|ccccc}
+\begin{tabular}{l|cccccc|cccccc|cccccc}
 \toprule
- & \multicolumn{5}{c|}{Sycophancy} & \multicolumn{5}{c|}{Gender (Bias in Bios)} & \multicolumn{5}{c}{Safety} \\
-Method & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst \\
+ & \multicolumn{6}{c|}{Sycophancy} & \multicolumn{6}{c|}{Gender (Bias in Bios)} & \multicolumn{6}{c}{Safety} \\
+Method & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Rem$\uparrow$ & Dmg$\downarrow$ & Rdst$\downarrow$ & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Rem$\uparrow$ & Dmg$\downarrow$ & Rdst$\downarrow$ & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Rem$\uparrow$ & Dmg$\downarrow$ & Rdst$\downarrow$ \\
 \midrule
-Random Global       & .685 & .748 & .000 & 0.0  & 0.0  & .719 & .758 & .000  & 0.8  & 0.0  & .798 & .805 & +.003 & 0.0  & 0.0  \\
-Random Per-Samp.    & .621 & .745 & .000 & 0.0  & 0.0  & .723 & .743 & +.003 & 0.0  & 0.0  & .784 & .799 & $-.010$ & 0.0  & 0.0  \\
-Linear Proj.        & .683 & .740 & .000 & 5.3  & 0.0  & .722 & .747 & +.001 & 0.3  & 0.0  & .807 & .800 & $-.003$ & 0.0  & 0.0  \\
-INLP                & .683 & .734 & .000 & 5.3  & 0.0  & .722 & .737 & +.001 & 0.3  & 0.0  & .807 & .795 & $-.004$ & 0.0  & 0.0  \\
-LEACE               & .681 & .681 & .000 & 0.0  & 0.0  & .719 & .739 & $-.002$ & 0.8  & 0.0  & .801 & .785 & $-.015$ & 0.0  & 0.0  \\
-Ambient GCE         & .714 & .703 & .000 & 0.0  & 0.0  & .663 & .701 & .000  & 0.2  & 0.0  & .780 & .778 & $-.040$ & 0.0  & 3.3  \\
-\textbf{TanGCE} & \textbf{.628} & \textbf{.602} & $-.015$ & 18.4 & \textbf{0.0} & \textbf{.603} & \textbf{.618} & $-.008$ & 9.8 & \textbf{0.0} & \textbf{.654} & \textbf{.663} & +.039 & 21.3 & 1.6 \\
+Random Global       & .685 & .748 & .000 & 0  & 0.0  & 0.0  & .719 & .758 & .000  & 50 & 0.8  & 0.0  & .798 & .805 & +.003 & 13 & 0.0  & 0.0  \\
+Random Per-Samp.    & .621 & .745 & .000 & 0  & 0.0  & 0.0  & .723 & .743 & +.003 & 0  & 0.0  & 0.0  & .784 & .799 & $-.010$ & 0  & 0.0  & 0.0  \\
+Linear Proj.        & .683 & .740 & .000 & 0  & 5.3  & 0.0  & .722 & .747 & +.001 & 0  & 0.3  & 0.0  & .807 & .800 & $-.003$ & 0  & 0.0  & 0.0  \\
+INLP                & .683 & .734 & .000 & 0  & 5.3  & 0.0  & .722 & .737 & +.001 & 0  & 0.3  & 0.0  & .807 & .795 & $-.004$ & 0  & 0.0  & 0.0  \\
+LEACE               & .681 & .681 & .000 & 0  & 0.0  & 0.0  & .719 & .739 & $-.002$ & 100 & 0.8  & 0.0  & .801 & .785 & $-.015$ & 4  & 0.0  & 0.0  \\
+Ambient GCE         & .714 & .703 & .000 & 0  & 0.0  & 0.0  & .663 & .701 & .000  & 0  & 0.2  & 0.0  & .780 & .778 & $-.040$ & 4  & 0.0  & 3.3  \\
+\textbf{TanGCE} & \textbf{.628} & \textbf{.602} & $-.015$ & \textbf{33} & 18.4 & \textbf{0.0} & \textbf{.603} & \textbf{.618} & $-.008$ & \textbf{50} & 9.8 & \textbf{0.0} & \textbf{.654} & \textbf{.663} & +.039 & \textbf{83} & 21.3 & 1.6 \\
 \bottomrule
 \end{tabular}
 \end{table}
