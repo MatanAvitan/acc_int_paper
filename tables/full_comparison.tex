@@ -1,21 +1,21 @@
 \begin{table}[t]
 \centering
-\caption{Full erasure method comparison at layer 8 across three concept domains. All methods use $\lambda{=}0.5$ except TanGCE which uses $\lambda{=}8.0$ to compensate for attenuated projection norms (Section~\ref{sec:lambda_sweep}). NL Leak: retrained nonlinear MLP probe accuracy (lower = better concept removal). $\Delta$Ctrl: downstream control task accuracy change relative to clean representations (closer to zero = more surgical). Redist\%: fraction of non-concept SAE features that become concept-correlated post-erasure (lower = less information reshuffling). Model: Qwen2.5-0.5B. SAE: 8$\times$ TopK, $k{=}64$. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}
+\caption{Full erasure method comparison at layer 8 across three concept domains. All methods use $\lambda{=}0.5$ except TanGCE which uses $\lambda{=}8.0$ to compensate for attenuated projection norms (Section~\ref{sec:lambda_sweep}). L/NL Leak: retrained linear logistic-regression / nonlinear MLP probe accuracy (lower = better concept removal). $\Delta$Ctrl: downstream control task accuracy change relative to clean representations (closer to zero = more surgical). Dmg\%: fraction of non-concept SAE features with $>{10}\%$ activation change (lower = less collateral damage). Rdst\%: fraction of non-concept SAE features that become concept-correlated post-erasure (lower = less information reshuffling). Model: Qwen2.5-0.5B. SAE: $64\times$ TopK, $k{=}64$, disruption threshold $\delta{>}10\%$. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}
 \label{tab:full_comparison}
 \small
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l|cccc|cccc|cccc}
+\begin{tabular}{l|ccccc|ccccc|ccccc}
 \toprule
- & \multicolumn{4}{c|}{Sycophancy} & \multicolumn{4}{c|}{Gender (Bias in Bios)} & \multicolumn{4}{c}{Safety} \\
-Method & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst \\
+ & \multicolumn{5}{c|}{Sycophancy} & \multicolumn{5}{c|}{Gender (Bias in Bios)} & \multicolumn{5}{c}{Safety} \\
+Method & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & Dmg & Rdst \\
 \midrule
-Random Global       & .748 & .000 & 2.8  & 0.0  & .758 & .000  & 21.9 & 0.0  & .805 & +.003 & 8.2  & 0.0  \\
-Random Per-Samp.    & .745 & .000 & 1.4  & 0.0  & .743 & +.003 & 27.3 & 0.0  & .799 & $-.010$ & 0.0  & 0.0  \\
-Linear Proj.        & .740 & .000 & 14.1 & 0.0  & .747 & +.001 & 23.4 & 0.0  & .800 & $-.003$ & 0.0  & 0.0  \\
-INLP                & .734 & .000 & 14.1 & 0.0  & .737 & +.001 & 22.8 & 0.0  & .795 & $-.004$ & 0.0  & 0.0  \\
-LEACE               & .681 & .000 & 1.4  & 0.0  & .739 & $-.002$ & 29.2 & 0.0  & .785 & $-.015$ & 4.1  & 0.0  \\
-Ambient GCE         & .703 & .000 & 2.8  & 1.4  & .701 & .000  & 15.9 & 0.0  & .778 & $-.040$ & 0.0  & 2.0  \\
-\textbf{TanGCE} & \textbf{.602} & $-.015$ & 60.6 & \textbf{1.4} & \textbf{.618} & $-.008$ & 51.1 & \textbf{0.0} & \textbf{.663} & +.039 & 65.3 & 4.1 \\
+Random Global       & .685 & .748 & .000 & 0.0  & 0.0  & .719 & .758 & .000  & 0.8  & 0.0  & .798 & .805 & +.003 & 0.0  & 0.0  \\
+Random Per-Samp.    & .621 & .745 & .000 & 0.0  & 0.0  & .723 & .743 & +.003 & 0.0  & 0.0  & .784 & .799 & $-.010$ & 0.0  & 0.0  \\
+Linear Proj.        & .683 & .740 & .000 & 5.3  & 0.0  & .722 & .747 & +.001 & 0.3  & 0.0  & .807 & .800 & $-.003$ & 0.0  & 0.0  \\
+INLP                & .683 & .734 & .000 & 5.3  & 0.0  & .722 & .737 & +.001 & 0.3  & 0.0  & .807 & .795 & $-.004$ & 0.0  & 0.0  \\
+LEACE               & .681 & .681 & .000 & 0.0  & 0.0  & .719 & .739 & $-.002$ & 0.8  & 0.0  & .801 & .785 & $-.015$ & 0.0  & 0.0  \\
+Ambient GCE         & .714 & .703 & .000 & 0.0  & 0.0  & .663 & .701 & .000  & 0.2  & 0.0  & .780 & .778 & $-.040$ & 0.0  & 3.3  \\
+\textbf{TanGCE} & \textbf{.628} & \textbf{.602} & $-.015$ & 18.4 & \textbf{0.0} & \textbf{.603} & \textbf{.618} & $-.008$ & 9.8 & \textbf{0.0} & \textbf{.654} & \textbf{.663} & +.039 & 21.3 & 1.6 \\
 \bottomrule
 \end{tabular}
 \end{table}
