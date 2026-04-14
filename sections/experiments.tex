@@ -2,18 +2,26 @@
 \section{Experiments}
 \label{sec:experiments}
 
-Our experimental evaluation focuses on characterizing the performance of \texttt{gce\_tangent} against \texttt{gce\_ambient} across three distinct concept domains. We prioritize nonlinear concepts where manifold geometry is expected to play a critical role, while maintaining a diagnostic baseline for linear comparison.
+Our experimental evaluation focuses on characterizing the performance of \texttt{gce\_tangent} against \texttt{gce\_ambient} across two modalities---language model hidden states and vision encoder embeddings---spanning four concept domains. We prioritize nonlinear concepts where manifold geometry is expected to play a critical role, while maintaining diagnostic baselines for linear comparison.
 
-\subsection{Experimental Domains and Ordering}
-We evaluate our methods across three primary blocks, ordered by their relevance to nonlinear manifold erasure:
+\subsection{Experimental Domains}
+We evaluate our methods across four blocks:
 \begin{enumerate}
     \item \textbf{Sycophancy (Primary Nonlinear Case):} Our central focus is on removing agreement bias in model responses. This represents a critical challenge for model alignment where concept encoding is expected to be locally curved.
     \item \textbf{Safety (Secondary Case Study):} We evaluate the surgicality of erasure on content safety using the PKU-SafeRLHF dataset, testing the preservation of helpfulness alongside safety leakage.
     \item \textbf{Bias in Bios (Diagnostic Baseline):} We use gender and profession classification as a replication anchor. This setting provides a linear comparison point to contrast against the nonlinear gains of tangent-constrained erasure.
+    \item \textbf{CelebA Visual Attributes (Cross-Modal Generalization):} We apply the same erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) of CelebA face images. CelebA provides 40 binary facial attributes, enabling a rich surgicality analysis: when erasing one attribute (e.g., \emph{Male}), the remaining 39 serve as potential controls. We select the 5 least-correlated attributes as controls per concept to ensure that control accuracy changes reflect genuine collateral damage rather than attribute correlation. This domain demonstrates that TanGCE generalizes beyond language model representations to vision encoders.
 \end{enumerate}
 
-\subsection{Model and Implementation}
-All experiments are conducted on Qwen2.5-0.5B (24 decoder layers, hidden dimension 896). The current paper-locked comparison set implements five primary erasure methods: linear projection, INLP, LEACE, \texttt{gce\_ambient}, and \texttt{gce\_tangent}. LEACE is included as a matched linear baseline in the layer-8 inventory reported below. For \texttt{gce\_tangent}, we estimate local tangent spaces with PCA-based neighborhoods so that the erasure direction is constrained to a local on-manifold approximation rather than to the full ambient space.
+\subsection{Models and Implementation}
+\paragraph{Language model.} The sycophancy, safety, and gender experiments use Qwen2.5-0.5B (24 decoder layers, hidden dimension 896) at layer~8.
+
+\paragraph{Vision encoder.} The CelebA experiments use CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim), extracted once and cached.
+
+\paragraph{Methods.} The comparison set implements eight erasure methods: two random baselines (global and per-sample direction), linear projection, INLP, LEACE, IGBP (Iskander et al., 2023), Ambient GCE, and TanGCE. IGBP is the closest prior nonlinear method: it iteratively trains two-class MLP probes and retracts representations to the decision boundary via Newton steps (Eq.~\ref{eq:igbp}). Our implementation follows the official codebase faithfully, including the projection loss $L = \tfrac{1}{2}\operatorname{logit}(p)^2$ and the probe architecture (single hidden layer with $d_{\mathrm{hidden}} = d_{\mathrm{input}}$). For TanGCE, we estimate local tangent spaces with PCA-based neighborhoods so that the erasure direction is constrained to a local on-manifold approximation rather than the full ambient space.
+
+\paragraph{Fair $\lambda$ selection.}
+Most methods share a common erasure strength parameter $\lambda$ (Eq.~\ref{eq:ambient_erase}, \ref{eq:tangent_erase}). Because TanGCE's tangent projection attenuates the effective step size (by $\|\mathbf{u}_i^{\mathrm{tan}}\|^2 \leq 1$), a fixed $\lambda$ across methods would systematically under-erase for TanGCE. Rather than manually choosing different $\lambda$ values---which risks unfair comparison---we adopt validation-based hyperparameter selection: all $\lambda$-based methods search the same grid $\lambda \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ and select the $\lambda^*$ that minimizes validation nonlinear probe accuracy (i.e., maximizes erasure on held-out data). IGBP has no $\lambda$ parameter---its step size is determined by each sample's distance to the decision boundary (Eq.~\ref{eq:igbp})---so it runs its iterative procedure until convergence. This ensures each method gets its best shot at erasure under a common protocol.
 
 \input{tables/method_comparison_scope}
 

@@ -15,6 +15,11 @@ This appendix records broader repository snapshot tables that are directionally 
 
 To ensure a modality-matched benchmark, this appendix now reports a vision-only CelebA run (CLIP ViT-B/32 embeddings) with the Table~\ref{tab:full_comparison} method family and 3 least-correlated controls per target concept. Artifacts are stored under \texttt{outputs/local/celeba\_visual\_table2\_v1/} (including per-method sample folders with 2 saved images each). The consolidated W\&B results run is \texttt{g52h8kbr}.
 
+\subsection{CelebA Per-Concept Detail (All 40 Attributes)}
+\label{sec:appendix_celeba_per_concept}
+Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl} give the full per-concept breakdown behind the aggregate CelebA result in Table~\ref{tab:celeba_clip_all40}. The main-text Table~\ref{tab:celeba_clip_fair} reports three representative concepts (Male, Smiling, Blond\_Hair); the appendix tables cover all 40 binary CelebA attributes from the same \texttt{celeba\_clip\_all40\_fair\_v2} run under the shared validation-HPO protocol. TanGCE achieves the lowest nonlinear leakage on \textbf{36 of 40} concepts (LEACE wins on 3, IGBP on 1), with a mean margin of $0.116$ absolute NL accuracy over the best competing method per concept. Per-concept mean $\Delta$Ctrl remains within roughly a percentage point of zero, consistent with the aggregate mean NL of $0.707$ and mean $\Delta$Ctrl of $-0.7\%$ reported in the main text.
+\input{tables/celeba_clip_all40_per_concept}
+
 \input{tables/main_text_geometry_schedule}
 
 \paragraph{Geometry Note.}

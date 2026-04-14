@@ -55,7 +55,15 @@ LEACE guarantees $\mathbb{E}[\tilde{X}_c] = \mathbb{E}[X]$ and $\mathrm{Var}[\ti
 \subsection{Gradient-Based Concept Erasure}
 \label{subsec:gce}
 
-The linear baselines above remove linearly decodable concept information but leave nonlinear structure intact. GCE addresses this by computing per-sample erasure directions from the gradient of a nonlinear concept scorer.
+The linear baselines above remove linearly decodable concept information but leave nonlinear structure intact. Several methods address this by computing per-sample erasure directions from the gradient of a nonlinear concept scorer.
+
+\paragraph{IGBP (Iterative Gradient-Based Projection).}
+IGBP (Iskander et al., 2023) trains a two-class MLP probe $g_\phi : \mathbb{R}^d \to \mathbb{R}^2$ with softmax output, then retracts each representation to the decision boundary via a Newton step.  Let $p_i = \max_c \operatorname{softmax}(g_\phi(\mathbf{x}_i))_c$ be the maximum class probability. IGBP uses the \emph{projection loss} $L_i = \tfrac{1}{2}\operatorname{logit}(p_i)^2$ and computes:
+\begin{equation}
+\label{eq:igbp}
+\tilde{\mathbf{x}}_i = \mathbf{x}_i - \frac{\nabla_{\mathbf{x}} L_i}{\|\boldsymbol{\theta}_i\|^2}, \qquad \boldsymbol{\theta}_i = \frac{\nabla_{\mathbf{x}} L_i}{\operatorname{logit}(p_i)},
+\end{equation}
+where $\operatorname{logit}(p) = \log\frac{p}{1-p}$. This is a Newton step that projects $\mathbf{x}_i$ onto the level set $\operatorname{logit}(p_i) = 0$ (i.e., $p_i = 0.5$, the decision boundary). The procedure iterates: after projection, a fresh probe is trained on the projected representations and the process repeats until leakage falls to majority accuracy. Unlike Ambient GCE (below), IGBP has no explicit $\lambda$ parameter---the step size is determined by each sample's distance to the decision boundary.
 
 \paragraph{Ambient GCE.}
 Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:

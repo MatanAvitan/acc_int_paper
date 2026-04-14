@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\caption{CelebA all-40-attribute summary (CLIP ViT-B/32, validation HPO for $\lambda$). Each cell averages over all 40 binary CelebA attributes. $\lambda^*$ is selected per method per concept from the grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy. NL Leak: mean nonlinear test accuracy across 40 concepts (lower = better). Mean $\Delta$Ctrl: mean control accuracy change (5 low-correlation controls per concept, averaged over 40 concepts). Worst $\Delta$Ctrl: worst single control drop averaged over 40 concepts.}
+\label{tab:celeba_clip_all40}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l|cccc}
+\toprule
+Method & NL Leak$\downarrow$ & Mean $\Delta$Ctrl & Worst $\Delta$Ctrl & Med.\ $\lambda^*$ \\
+\midrule
+Random Global       & 0.883 & $-$0.4\% & $-$1.6\% & 2.0 \\
+Random Per-Samp.    & 0.882 & $-$0.3\% & $-$1.2\% & 0.5 \\
+Linear Proj.        & 0.869 & $-$0.8\% & $-$2.7\% & 4.0 \\
+INLP                & 0.859 & $-$3.5\% & $-$6.9\% & 1.0 \\
+LEACE               & 0.839 & $-$0.2\% & $-$1.2\% & 2.0 \\
+Ambient GCE         & 0.875 & $-$0.6\% & $-$2.8\% & 0.5 \\
+\textbf{TanGCE}     & \textbf{0.707} & $-$0.7\% & $-$2.1\% & \textbf{8.0} \\
+\bottomrule
+\end{tabular}
+\end{table}

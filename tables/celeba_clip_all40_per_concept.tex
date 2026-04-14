@@ -1,0 +1,111 @@
+\begin{table*}[p]
+\centering
+\caption{Per-concept nonlinear probe leakage on CelebA (CLIP ViT-B/32), all 40 binary attributes. Each cell is retrained nonlinear probe test accuracy after erasure (lower = stronger erasure). $\lambda^*$ is selected per method per concept from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. Bold marks the lowest leakage per row. Abbrev.: RandG = Random Global, RandS = Random Per-Sample, LinProj = Linear Projection, AmbGCE = Ambient GCE, TanGCE = Tangent GCE.}
+\label{tab:celeba_clip_all40_per_concept_leak}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{l|cccccccc}
+\toprule
+Concept & RandG & RandS & LinProj & INLP & LEACE & IGBP & AmbGCE & TanGCE \\
+\midrule
+5\_o\_Clock\_Shadow & .92 & .92 & .91 & .92 & .87 & .92 & .91 & \textbf{.77} \\
+Arched\_Eyebrows & .79 & .79 & .76 & .76 & .69 & .77 & .77 & \textbf{.59} \\
+Attractive & .73 & .74 & .69 & .73 & .63 & \textbf{.53} & .73 & .60 \\
+Bags\_Under\_Eyes & .76 & .75 & .74 & .75 & .70 & .77 & .75 & \textbf{.69} \\
+Bald & 1.00 & .99 & .99 & .99 & .98 & 1.00 & .99 & \textbf{.97} \\
+Bangs & .91 & .91 & .89 & .89 & .87 & .92 & .91 & \textbf{.68} \\
+Big\_Lips & .80 & .79 & .74 & .80 & \textbf{.68} & .82 & .81 & .73 \\
+Big\_Nose & .76 & .76 & .73 & .74 & .72 & .73 & .76 & \textbf{.61} \\
+Black\_Hair & .85 & .84 & .82 & .81 & .79 & .83 & .82 & \textbf{.46} \\
+Blond\_Hair & .92 & .92 & .94 & .92 & .92 & .92 & .92 & \textbf{.72} \\
+Blurry & .98 & .98 & .98 & .96 & .97 & .98 & .97 & \textbf{.88} \\
+Brown\_Hair & .80 & .80 & .76 & .75 & .75 & .80 & .80 & \textbf{.52} \\
+Bushy\_Eyebrows & .87 & .88 & .86 & .85 & .76 & .87 & .86 & \textbf{.66} \\
+Chubby & .94 & .94 & .95 & .95 & .92 & .95 & .94 & \textbf{.81} \\
+Double\_Chin & .94 & .94 & .94 & .93 & .92 & .94 & .95 & \textbf{.85} \\
+Eyeglasses & .99 & 1.00 & .96 & .93 & .96 & 1.00 & .96 & \textbf{.90} \\
+Goatee & .96 & .97 & .97 & .93 & .96 & .96 & .95 & \textbf{.85} \\
+Gray\_Hair & .97 & .97 & .97 & .97 & .97 & .97 & .98 & \textbf{.89} \\
+Heavy\_Makeup & .89 & .89 & .89 & .86 & .85 & .88 & .88 & \textbf{.70} \\
+High\_Cheekbones & .79 & .79 & .77 & .75 & .70 & .57 & .76 & \textbf{.50} \\
+Male & .99 & .99 & .99 & .99 & 1.00 & .98 & 1.00 & \textbf{.85} \\
+Mouth\_Slightly\_Open & .89 & .89 & .89 & .71 & .72 & .66 & .80 & \textbf{.43} \\
+Mustache & .94 & .95 & .95 & .94 & .92 & .95 & .93 & \textbf{.77} \\
+Narrow\_Eyes & .88 & .88 & .80 & .87 & .80 & .88 & .88 & \textbf{.78} \\
+No\_Beard & .94 & .95 & .94 & .93 & .92 & .94 & .95 & \textbf{.77} \\
+Oval\_Face & .70 & .71 & .69 & .68 & \textbf{.67} & .69 & .67 & .72 \\
+Pale\_Skin & .93 & .93 & .94 & .95 & .93 & .92 & .93 & \textbf{.83} \\
+Pointy\_Nose & .75 & .72 & .71 & .69 & \textbf{.63} & .72 & .75 & .64 \\
+Receding\_Hairline & .94 & .94 & .96 & .96 & .94 & .94 & .95 & \textbf{.69} \\
+Rosy\_Cheeks & .93 & .93 & .93 & .94 & .91 & .94 & .93 & \textbf{.79} \\
+Sideburns & .95 & .95 & .94 & .94 & .95 & .94 & .94 & \textbf{.82} \\
+Smiling & .90 & .89 & .91 & .74 & .82 & .59 & .88 & \textbf{.44} \\
+Straight\_Hair & .78 & .78 & .79 & .77 & .78 & .78 & .78 & \textbf{.49} \\
+Wavy\_Hair & .78 & .76 & .77 & .77 & .78 & .77 & .78 & \textbf{.52} \\
+Wearing\_Earrings & .90 & .89 & .86 & .88 & .85 & .89 & .88 & \textbf{.61} \\
+Wearing\_Hat & 1.00 & 1.00 & .97 & .97 & .97 & 1.00 & .97 & \textbf{.94} \\
+Wearing\_Lipstick & .90 & .90 & .90 & .89 & .85 & .88 & .92 & \textbf{.75} \\
+Wearing\_Necklace & .84 & .85 & .80 & .80 & .77 & .85 & .83 & \textbf{.68} \\
+Wearing\_Necktie & .93 & .93 & .92 & .92 & .91 & .92 & .93 & \textbf{.78} \\
+Young & .86 & .86 & .85 & .84 & .83 & .86 & .87 & \textbf{.60} \\
+\midrule
+\textbf{Mean} & .88 & .88 & .87 & .86 & .84 & .86 & .87 & \textbf{.71} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[p]
+\centering
+\caption{Per-concept mean control accuracy change $\Delta$Ctrl (\%) on CelebA, all 40 binary attributes. For each concept, $\Delta$Ctrl is averaged over the 5 least-correlated control attributes (closer to zero = more surgical). $\lambda^*$ selection matches Table~\ref{tab:celeba_clip_all40_per_concept_leak}.}
+\label{tab:celeba_clip_all40_per_concept_ctrl}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{l|cccccccc}
+\toprule
+Concept & RandG & RandS & LinProj & INLP & LEACE & IGBP & AmbGCE & TanGCE \\
+\midrule
+5\_o\_Clock\_Shadow & +0.0 & +0.1 & -0.7 & +0.1 & +0.0 & +0.1 & -2.3 & -0.2 \\
+Arched\_Eyebrows & -1.3 & -2.3 & -1.2 & -0.8 & -1.1 & -2.5 & +0.6 & -0.6 \\
+Attractive & -0.3 & -1.0 & -1.7 & -0.8 & -0.3 & -0.9 & +0.0 & -0.8 \\
+Bags\_Under\_Eyes & -3.7 & -1.7 & -0.3 & -7.7 & -0.3 & -0.3 & -0.3 & -0.1 \\
+Bald & +0.1 & +0.0 & -0.1 & +0.1 & -0.1 & +1.1 & +2.3 & +0.2 \\
+Bangs & -3.7 & -1.2 & -0.5 & -7.9 & -0.1 & -0.7 & -0.3 & -0.8 \\
+Big\_Lips & +0.1 & -0.0 & -0.3 & +0.0 & -0.1 & -0.5 & +0.1 & -0.1 \\
+Big\_Nose & -0.1 & +0.3 & -3.5 & -9.7 & +0.0 & -0.3 & -1.8 & +0.1 \\
+Black\_Hair & -0.1 & -0.0 & +0.1 & +0.2 & +0.3 & -0.3 & -0.3 & -0.7 \\
+Blond\_Hair & -0.3 & +0.1 & -1.4 & +0.7 & -0.1 & -0.4 & -1.1 & -1.6 \\
+Blurry & -1.3 & +0.0 & -0.1 & -5.5 & +0.1 & -0.7 & +0.7 & -0.1 \\
+Brown\_Hair & +0.1 & -0.9 & -0.3 & -6.0 & -0.7 & +0.4 & +0.1 & -0.2 \\
+Bushy\_Eyebrows & +0.0 & +0.1 & -0.1 & -1.5 & +0.2 & -0.9 & -0.3 & -0.5 \\
+Chubby & -0.1 & +0.3 & -0.2 & -1.4 & -0.2 & -0.2 & +0.4 & -2.0 \\
+Double\_Chin & +0.1 & +0.1 & -0.4 & -12.7 & +0.3 & +0.7 & -0.7 & -2.5 \\
+Eyeglasses & -0.1 & +0.1 & -0.0 & -0.1 & -0.2 & -0.4 & -0.2 & +0.2 \\
+Goatee & +0.1 & -0.1 & +0.0 & +0.2 & +0.1 & +0.5 & -0.3 & -0.4 \\
+Gray\_Hair & -0.2 & -0.3 & -2.1 & +0.4 & -0.1 & -1.1 & -1.5 & -1.5 \\
+Heavy\_Makeup & -0.3 & -0.1 & -1.1 & -1.7 & -1.3 & -1.3 & -1.1 & -0.9 \\
+High\_Cheekbones & +0.1 & +0.2 & +0.1 & -0.3 & -0.1 & -0.4 & -0.0 & -0.7 \\
+Male & -0.3 & -0.1 & -0.7 & -0.2 & -0.3 & -2.2 & -0.9 & -1.1 \\
+Mouth\_Slightly\_Open & -0.3 & -0.6 & +0.1 & +0.4 & +0.2 & +0.3 & +0.1 & -0.2 \\
+Mustache & +0.0 & -0.1 & +0.1 & -10.3 & -0.5 & +1.0 & +0.5 & -1.5 \\
+Narrow\_Eyes & -0.1 & -0.2 & -0.3 & +0.2 & -0.1 & +0.3 & +0.0 & +0.0 \\
+No\_Beard & -1.2 & -0.2 & -4.0 & -6.5 & -1.6 & -0.1 & -0.7 & -0.5 \\
+Oval\_Face & -2.0 & +0.1 & -0.1 & -14.4 & -0.6 & -0.3 & +0.2 & -0.3 \\
+Pale\_Skin & -1.2 & -0.1 & -0.1 & -6.8 & -0.9 & -0.1 & +0.7 & -1.0 \\
+Pointy\_Nose & -0.1 & -0.2 & +0.3 & -1.1 & +0.2 & -0.7 & -0.1 & -0.1 \\
+Receding\_Hairline & -0.1 & -0.1 & -0.1 & -5.9 & +0.0 & -0.3 & +0.1 & -1.1 \\
+Rosy\_Cheeks & -0.5 & +0.1 & -0.6 & -0.1 & -0.2 & -0.1 & -0.1 & -1.3 \\
+Sideburns & -0.4 & +0.0 & -0.1 & +0.1 & +0.1 & -0.6 & -2.5 & -0.1 \\
+Smiling & -0.3 & -1.3 & +0.1 & +0.6 & +0.4 & +0.1 & +0.1 & -0.1 \\
+Straight\_Hair & -0.1 & -0.2 & -0.1 & -0.9 & -0.1 & -0.8 & +0.5 & -0.7 \\
+Wavy\_Hair & +0.1 & -0.7 & -0.9 & +0.2 & +0.1 & -0.4 & -0.1 & -0.7 \\
+Wearing\_Earrings & +0.8 & -0.3 & -1.6 & -0.3 & -0.1 & -1.3 & -0.5 & -0.3 \\
+Wearing\_Hat & -0.1 & +0.0 & -0.1 & -0.6 & +0.0 & +1.0 & +0.1 & -0.2 \\
+Wearing\_Lipstick & +0.2 & -0.1 & -6.1 & -21.5 & -1.9 & -1.2 & -1.4 & -0.9 \\
+Wearing\_Necklace & +0.1 & -1.7 & -1.7 & -9.3 & +0.3 & -1.8 & +0.2 & -1.2 \\
+Wearing\_Necktie & +0.0 & +0.1 & +0.0 & +0.2 & -0.2 & -0.7 & -13.4 & -1.3 \\
+Young & -0.0 & -0.7 & -1.7 & -10.7 & +0.1 & -0.9 & -2.2 & -0.8 \\
+\midrule
+\textbf{Mean} & -0.4 & -0.3 & -0.8 & -3.5 & -0.2 & -0.4 & -0.6 & -0.7 \\
+\bottomrule
+\end{tabular}
+\end{table*}

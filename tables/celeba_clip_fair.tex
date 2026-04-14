@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\caption{CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda$). Each method's $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta$Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 \texttt{pooler\_output} (768-dim).}
+\label{tab:celeba_clip_fair}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{l c|ccc|ccc|ccc}
+\toprule
+ & & \multicolumn{3}{c|}{Male} & \multicolumn{3}{c|}{Smiling} & \multicolumn{3}{c}{Blond\_Hair} \\
+Method & $\lambda^*$ & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+Random Global & 0.5 & .997 & .990 & $-$0.3 & .903 & .903 & $-$0.3 & .937 & .923 & $-$0.3 \\
+Random Per-Samp. & 0.5 & .993 & .990 & $-$0.1 & .867 & .887 & $-$1.3 & .933 & .920 & $+$0.1 \\
+Linear Proj. & 1.0 & .987 & .987 & $-$0.7 & .903 & .913 & $+$0.1 & .923 & .940 & $-$1.4 \\
+INLP & 1.0 & .587 & .987 & $-$0.2 & .580 & .740 & $+$0.6 & .713 & .917 & $+$0.7 \\
+LEACE & 0.5 & .997 & .997 & $-$0.3 & .503 & .820 & $+$0.4 & .903 & .917 & $-$0.1 \\
+Ambient GCE & 0.5 & .997 & .997 & $-$0.9 & .787 & .877 & $+$0.1 & .910 & .923 & $-$1.1 \\
+\textbf{TanGCE} & \textbf{8.0} & \textbf{.800} & \textbf{.847} & $-$1.1 & \textbf{.487} & \textbf{.443} & $-$0.1 & \textbf{.693} & \textbf{.720} & $-$1.6 \\
+\bottomrule
+\end{tabular}
+\end{table*}
