@@ -3,7 +3,7 @@
 \caption{Full erasure method comparison at layer 8 across three concept domains. All methods use $\lambda{=}0.5$ except TanGCE which uses $\lambda{=}8.0$ to compensate for attenuated projection norms (Section~\ref{sec:lambda_sweep}). L/NL Leak: retrained linear logistic-regression / nonlinear MLP probe accuracy (lower = better concept removal). $\Delta$Ctrl: downstream control task accuracy change relative to clean representations (closer to zero = more surgical). Rem\%: fraction of concept-correlated SAE features disrupted ($\delta{>}2\%$; higher = better erasure). Dmg\%: fraction of non-concept SAE features with $>{10}\%$ activation change (lower = less collateral damage). Rdst\%: fraction of non-concept features that become concept-correlated post-erasure (lower = less reshuffling). Model: Qwen2.5-0.5B. SAE: $64\times$ TopK, $k{=}64$. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}
 \label{tab:full_comparison}
 \small
-\setlength{\tabcolsep}{3pt}
+\setlength{\tabcolsep}{1pt}
 \begin{tabular}{l|cccccc|cccccc|cccccc}
 \toprule
  & \multicolumn{6}{c|}{Sycophancy} & \multicolumn{6}{c|}{Gender (Bias in Bios)} & \multicolumn{6}{c}{Safety} \\
