@@ -2,7 +2,7 @@
 \section{Notation and Formal Framework}
 \label{sec:notation}
 
-We define the notation used throughout, then give the formal definitions of TanGCE, the $k$-NN MI estimator, and the SAE-based diagnostics.
+We define the notation used throughout, then give the formal definitions of the GCE family and the two supervised evaluation metrics used in the paper: erasure precision and surgicality on control concepts.
 
 \paragraph{Language model and encoder.}
 Let $\Sigma^*$ denote the set of all strings over a vocabulary $\Sigma$. A language model $p$ defines a distribution over $\Sigma^*$. We write $\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ for the hidden representation at layer $\ell$, where $d$ is the hidden dimension. For a fixed layer $\ell$ (omitted when clear from context), the representation of string $s$ is $\mathbf{x} = \mathrm{enc}_\ell(s) \in \mathbb{R}^d$.
@@ -36,7 +36,7 @@ Given a concept direction $\mathbf{w} \in \mathbb{R}^d$ (typically the differenc
 This removes a single linear direction but leaves all other concept-correlated structure intact.
 
 \paragraph{INLP (Iterative Nullspace Projection).}
-INLP (Ravfogel et al., 2020) iteratively trains linear classifiers $\mathbf{w}_1, \ldots, \mathbf{w}_T$ and projects onto the intersection of their nullspaces:
+INLP \citep{ravfogel-etal-2020-null} iteratively trains linear classifiers $\mathbf{w}_1, \ldots, \mathbf{w}_T$ and projects onto the intersection of their nullspaces:
 \begin{equation}
 \label{eq:inlp}
 \mathbf{P}_{\mathrm{INLP}} = \prod_{t=1}^{T} (\mathbf{I} - \hat{\mathbf{w}}_t \hat{\mathbf{w}}_t^\top), \qquad \tilde{\mathbf{x}}_i = \mathbf{P}_{\mathrm{INLP}} \, \mathbf{x}_i.
@@ -44,7 +44,7 @@ INLP (Ravfogel et al., 2020) iteratively trains linear classifiers $\mathbf{w}_1
 Each $\mathbf{w}_t$ is trained on the residual after projecting out $\mathbf{w}_1, \ldots, \mathbf{w}_{t-1}$. INLP extends linear projection to multiple directions but remains limited to linearly decodable concept information.
 
 \paragraph{LEACE (Least-squares Concept Erasure).}
-LEACE (Belrose et al., 2023) finds an oblique projection $\mathbf{P} \in \mathbb{R}^{d \times d}$ of rank $|\mathcal{C}|-1$ and a translation $\mathbf{b}$ that minimally modify representations while ensuring no log-linear classifier can recover the concept:
+LEACE \citep{belrose-etal-2023-leace} finds an oblique projection $\mathbf{P} \in \mathbb{R}^{d \times d}$ of rank $|\mathcal{C}|-1$ and a translation $\mathbf{b}$ that minimally modify representations while ensuring no log-linear classifier can recover the concept:
 \begin{equation}
 \label{eq:leace}
 \tilde{\mathbf{x}}_i = \mathbf{P}\mathbf{x}_i + \mathbf{b}.
@@ -58,15 +58,15 @@ LEACE guarantees $\mathbb{E}[\tilde{X}_c] = \mathbb{E}[X]$ and $\mathrm{Var}[\ti
 The linear baselines above remove linearly decodable concept information but leave nonlinear structure intact. Several methods address this by computing per-sample erasure directions from the gradient of a nonlinear concept scorer.
 
 \paragraph{IGBP (Iterative Gradient-Based Projection).}
-IGBP (Iskander et al., 2023) trains a two-class MLP probe $g_\phi : \mathbb{R}^d \to \mathbb{R}^2$ with softmax output, then retracts each representation to the decision boundary via a Newton step.  Let $p_i = \max_c \operatorname{softmax}(g_\phi(\mathbf{x}_i))_c$ be the maximum class probability. IGBP uses the \emph{projection loss} $L_i = \tfrac{1}{2}\operatorname{logit}(p_i)^2$ and computes:
+IGBP \citep{iskander-etal-2023-shielded} trains a two-class MLP probe $g_\phi : \mathbb{R}^d \to \mathbb{R}^2$ with softmax output, then retracts each representation to the decision boundary via a Newton step. Let $p_i = \max_c \operatorname{softmax}(g_\phi(\mathbf{x}_i))_c$ be the maximum class probability. IGBP uses the \emph{projection loss} $L_i = \tfrac{1}{2}\operatorname{logit}(p_i)^2$ and computes:
 \begin{equation}
 \label{eq:igbp}
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \frac{\nabla_{\mathbf{x}} L_i}{\|\boldsymbol{\theta}_i\|^2}, \qquad \boldsymbol{\theta}_i = \frac{\nabla_{\mathbf{x}} L_i}{\operatorname{logit}(p_i)},
 \end{equation}
-where $\operatorname{logit}(p) = \log\frac{p}{1-p}$. This is a Newton step that projects $\mathbf{x}_i$ onto the level set $\operatorname{logit}(p_i) = 0$ (i.e., $p_i = 0.5$, the decision boundary). The procedure iterates: after projection, a fresh probe is trained on the projected representations and the process repeats until leakage falls to majority accuracy. Unlike Ambient GCE (below), IGBP has no explicit $\lambda$ parameter---the step size is determined by each sample's distance to the decision boundary.
+where $\operatorname{logit}(p) = \log\frac{p}{1-p}$. This is a Newton step that projects $\mathbf{x}_i$ onto the level set $\operatorname{logit}(p_i) = 0$ (i.e., $p_i = 0.5$, the decision boundary). Within each round, IGBP is therefore a one-shot boundary correction for the current scorer. The procedure then iterates: after projection, a fresh probe is trained on the projected representations and the process repeats until leakage falls to majority accuracy. Unlike Ambient GCE (below), IGBP has no explicit $\lambda$ parameter---the step size is determined by each sample's distance to the decision boundary.
 
 \paragraph{Ambient GCE.}
-Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:
+Ambient GCE is the corresponding ablation of IGBP's nonlinear update: instead of moving directly to the current decision boundary, it takes a tunable $\lambda$-scaled step along the scorer gradient. Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:
 \begin{equation}
 \label{eq:ambient_direction}
 \mathbf{u}_i = \frac{\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)}{\|\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)\|}.
@@ -108,78 +108,31 @@ The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$, which is
 
 \paragraph{Why tangent projection helps.}
 Ambient GCE (Eq.~\ref{eq:ambient_erase}) displaces $\mathbf{x}_i$ along $\mathbf{u}_i$, which may point off the data manifold.
-At high $\lambda$, this pushes representations into low-density regions where the displacement magnitude itself correlates with concept signal strength, creating spurious concept information (Section~\ref{sec:lambda_sweep}).
-TanGCE constrains the displacement to the tangent space, ensuring that the modified representation stays on (or near) $\mathcal{M}$.
+At high $\lambda$, this pushes representations into low-density regions where the displacement magnitude itself correlates with concept signal strength and can distort unrelated structure or preserve recoverable signal (Section~\ref{sec:lambda_sweep}).
+TanGCE projects the update onto a local tangent approximation, reducing off-manifold displacement even when the ambient gradient contains large orthogonal components.
 
 % ============================================================
-\subsection{Mutual Information Evaluation}
-\label{subsec:mi_eval}
+\subsection{Supervised Evaluation Metrics}
+\label{subsec:supervised_eval}
 
-We estimate $I(\mathbf{X}; y)$ using the Ross/Gao $k$-nearest-neighbor estimator for mutual information between a continuous variable $\mathbf{X} \in \mathbb{R}^d$ and a discrete variable $y$.
+We evaluate every erasure method with supervised metrics trained from scratch on the erased representations.
 
-\paragraph{Procedure.}
-For each sample $i$:
-\begin{enumerate}
-    \item Find the $k$-th nearest neighbor of $\mathbf{x}_i$ \emph{within its class} $c(i) = y_i$. Let $\varepsilon_i$ be the Euclidean distance to this neighbor.
-    \item Count $m_i$: the number of points from \emph{all classes} within distance $\varepsilon_i$ of $\mathbf{x}_i$ (excluding $\mathbf{x}_i$ itself).
-\end{enumerate}
-The MI estimate is:
+\paragraph{Erasure precision.}
+Let $h^{\mathrm{NL}}$ be a nonlinear probe and $h^{\mathrm{L}}$ a linear probe trained on $\tilde{\mathbf{x}}_i$ to predict the target concept $y_i$. We report their test accuracies on the erased representations:
 \begin{equation}
-\label{eq:knn_mi_formal}
-\hat{I}(\mathbf{X}; y) = \psi(k) - \bigl\langle \psi(m_i) \bigr\rangle + \psi(N) - \bigl\langle \psi(N_{c(i)}) \bigr\rangle,
+\label{eq:precision_metric}
+\mathrm{Prec}_{\mathrm{erase}}^{\mathrm{NL}} = \mathrm{Acc}(h^{\mathrm{NL}}(\tilde{\mathbf{X}}), y),
+\qquad
+\mathrm{Prec}_{\mathrm{erase}}^{\mathrm{L}} = \mathrm{Acc}(h^{\mathrm{L}}(\tilde{\mathbf{X}}), y).
 \end{equation}
-where $\psi$ is the digamma function, $N_{c(i)}$ is the number of samples in the class of point $i$, and $\langle \cdot \rangle$ averages over all $N$ samples.
+Lower values indicate stronger erasure. Because our target concepts are often nonlinear, we treat the retrained nonlinear probe accuracy as the primary precision metric and report linear probe accuracy as a secondary diagnostic.
 
-\paragraph{Interpretation.}
-The estimator measures concept information through local neighborhood structure.
-The term $\psi(m_i) - \psi(k)$ captures the local class purity: when same-class points cluster ($m_i \approx k$, mostly same-class neighbors within $\varepsilon_i$), this term is small and MI is high.
-When classes are geometrically mixed ($m_i \gg k$, many cross-class neighbors within $\varepsilon_i$), this term is large and MI drops.
-The terms $\psi(N) - \psi(N_{c(i)})$ correct for class imbalance.
-
-\paragraph{Erasure evaluation.}
-We compute MI on both clean and erased representations:
-\begin{itemize}
-    \item $\hat{I}(\mathbf{X}; y) - \hat{I}(\tilde{\mathbf{X}}; y) > 0$: concept information was removed.
-    \item $\hat{I}(\mathbf{X}; c) \approx \hat{I}(\tilde{\mathbf{X}}; c)$: control-task information was preserved.
-\end{itemize}
-A method that reduces concept MI while preserving control MI achieves selective erasure.
-
-% ============================================================
-\subsection{Unsupervised SAE Diagnostics}
-\label{subsec:sae_diagnostics}
-
-We train a TopK sparse autoencoder (SAE) on a general-purpose corpus (WikiText), independent of any concept labels.
-The SAE maps representations to sparse feature activations: $\mathbf{z} = \mathrm{TopK}(\mathbf{W}_{\mathrm{enc}}(\mathbf{x} - \mathbf{b}_{\mathrm{dec}}) + \mathbf{b}_{\mathrm{enc}})$, where $\mathbf{z} \in \mathbb{R}^{D}$ with $D = \eta d$ ($\eta$ is the expansion factor) and at most $k$ entries are nonzero.
-
-\paragraph{Feature--concept correlation.}
-For each SAE feature $j \in \{1, \ldots, D\}$ active on the clean data ($\bar{z}_j > \tau_{\mathrm{act}}$), we compute the point-biserial correlation between its activations and the concept label:
+\paragraph{Surgicality on control concepts.}
+Let $q$ be a predictor for an annotated control label $c$ (e.g., profession for gender erasure, helpfulness for safety, or selected low-correlation attributes in CelebA). We report the change in control performance relative to the clean representations:
 \begin{equation}
-\label{eq:point_biserial}
-r_j = \frac{\bar{z}_j^{(1)} - \bar{z}_j^{(0)}}{\hat{\sigma}_{z_j}} \cdot \sqrt{\frac{N_0 N_1}{N^2}},
+\label{eq:surgicality_metric}
+\Delta_{\mathrm{ctrl}} = \mathrm{Acc}(q(\tilde{\mathbf{X}}), c) - \mathrm{Acc}(q(\mathbf{X}), c).
 \end{equation}
-where $\bar{z}_j^{(c)}$ is the mean activation of feature $j$ for class $c$ and $\hat{\sigma}_{z_j}$ is the pooled standard deviation.
-Features with $|r_j| > \tau_{\mathrm{corr}}$ are classified as \emph{concept features}; the remainder are \emph{non-concept features}.
+Smaller $|\Delta_{\mathrm{ctrl}}|$ means the erasure is more surgical. In CelebA, where each target attribute is paired with multiple controls, we report the mean $\Delta_{\mathrm{ctrl}}$ across the selected controls.
 
-\paragraph{Disruption.}
-A feature $j$ is \emph{disrupted} if its relative activation change exceeds a threshold:
-\begin{equation}
-\label{eq:disruption}
-\frac{|\bar{z}_j^{\mathrm{erased}} - \bar{z}_j^{\mathrm{clean}}|}{\bar{z}_j^{\mathrm{clean}}} > \delta,
-\end{equation}
-where $\bar{z}_j^{\mathrm{clean}}$ and $\bar{z}_j^{\mathrm{erased}}$ are mean activations on clean and erased data, and $\delta$ is the disruption threshold.
-
-\paragraph{Metrics.}
-Let $\mathcal{F}$ and $\mathcal{F}^c$ denote the concept and non-concept feature sets.
-\begin{align}
-\text{Concept removal rate} &= \frac{|\{j \in \mathcal{F} : j \text{ disrupted}\}|}{|\mathcal{F}|}, \label{eq:removal_rate} \\
-\text{Damage rate} &= \frac{|\{j \in \mathcal{F}^c : j \text{ disrupted}\}|}{|\mathcal{F}^c|}. \label{eq:damage_rate}
-\end{align}
-
-\paragraph{Feature redistribution.}
-We recompute point-biserial correlations on the \emph{erased} data.
-Features that were non-concept on clean data but become concept-correlated ($|r_j^{\mathrm{erased}}| > \tau_{\mathrm{corr}}$) on erased data indicate concept information \emph{redistribution} rather than removal:
-\begin{equation}
-\label{eq:redistribution}
-\text{Redistribution score} = \frac{|\{j \in \mathcal{F}^c : |r_j^{\mathrm{erased}}| > \tau_{\mathrm{corr}}\}|}{|\mathcal{F}^c|}.
-\end{equation}
-A method with high removal, low damage, and zero redistribution achieves surgical concept erasure.
+A successful concept erasure method therefore achieves low residual target-concept predictability together with near-zero change on control concepts.

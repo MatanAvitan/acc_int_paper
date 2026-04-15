@@ -1,0 +1,42 @@
+\begin{thebibliography}{5}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Belrose et~al.(2023)Belrose, Schneider-Joseph, Ravfogel, Cotterell, Raff, and Biderman]{belrose-etal-2023-leace}
+Nora Belrose, David Schneider-Joseph, Shauli Ravfogel, Ryan Cotterell, Edward Raff, and Stella Biderman.
+\newblock Leace: Perfect linear concept erasure in closed form.
+\newblock In \emph{Advances in Neural Information Processing Systems 36}, 2023.
+\newblock URL \url{https://papers.nips.cc/paper_files/paper/2023/hash/d066d21c619d0a78c5b557fa3291a8f4-Abstract-Conference.html}.
+
+\bibitem[Elazar and Goldberg(2018)]{elazar-goldberg-2018-adversarial}
+Yanai Elazar and Yoav Goldberg.
+\newblock Adversarial removal of demographic attributes from text data.
+\newblock In \emph{Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing}, pages 11--21, Brussels, Belgium, 2018. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/D18-1002}.
+\newblock URL \url{https://aclanthology.org/D18-1002/}.
+
+\bibitem[Elazar et~al.(2021)Elazar, Ravfogel, Jacovi, and Goldberg]{elazar-etal-2021-amnesic}
+Yanai Elazar, Shauli Ravfogel, Alon Jacovi, and Yoav Goldberg.
+\newblock Amnesic probing: Behavioral explanation with amnesic counterfactuals.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 9:\penalty0 160--175, 2021.
+\newblock \doi{10.1162/tacl_a_00359}.
+\newblock URL \url{https://aclanthology.org/2021.tacl-1.10/}.
+
+\bibitem[Iskander et~al.(2023)Iskander, Radinsky, and Belinkov]{iskander-etal-2023-shielded}
+Shadi Iskander, Kira Radinsky, and Yonatan Belinkov.
+\newblock Shielded representations: Protecting sensitive attributes through iterative gradient-based projection.
+\newblock In \emph{Findings of the Association for Computational Linguistics: ACL 2023}, pages 5961--5977, Toronto, Canada, 2023. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2023.findings-acl.369}.
+\newblock URL \url{https://aclanthology.org/2023.findings-acl.369/}.
+
+\bibitem[Ravfogel et~al.(2020)Ravfogel, Elazar, Gonen, Twiton, and Goldberg]{ravfogel-etal-2020-null}
+Shauli Ravfogel, Yanai Elazar, Hila Gonen, Michael Twiton, and Yoav Goldberg.
+\newblock Null it out: Guarding protected attributes by iterative nullspace projection.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}, pages 7237--7256, Online, 2020. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2020.acl-main.647}.
+\newblock URL \url{https://aclanthology.org/2020.acl-main.647/}.
+
+\end{thebibliography}

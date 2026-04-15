@@ -2,7 +2,7 @@
 \section{Experiments}
 \label{sec:experiments}
 
-Our experimental evaluation focuses on characterizing the performance of \texttt{gce\_tangent} against \texttt{gce\_ambient} across two modalities---language model hidden states and vision encoder embeddings---spanning four concept domains. We prioritize nonlinear concepts where manifold geometry is expected to play a critical role, while maintaining diagnostic baselines for linear comparison.
+Our experimental evaluation tests TanGCE across two modalities---language model hidden states and vision encoder embeddings---spanning four concept domains. The baselines are included to answer a focused question: does tangent-constrained nonlinear erasure improve precision and surgicality relative to ambient and prior alternatives?
 
 \subsection{Experimental Domains}
 We evaluate our methods across four blocks:
@@ -18,7 +18,7 @@ We evaluate our methods across four blocks:
 
 \paragraph{Vision encoder.} The CelebA experiments use CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim), extracted once and cached.
 
-\paragraph{Methods.} The comparison set implements eight erasure methods: two random baselines (global and per-sample direction), linear projection, INLP, LEACE, IGBP (Iskander et al., 2023), Ambient GCE, and TanGCE. IGBP is the closest prior nonlinear method: it iteratively trains two-class MLP probes and retracts representations to the decision boundary via Newton steps (Eq.~\ref{eq:igbp}). Our implementation follows the official codebase faithfully, including the projection loss $L = \tfrac{1}{2}\operatorname{logit}(p)^2$ and the probe architecture (single hidden layer with $d_{\mathrm{hidden}} = d_{\mathrm{input}}$). For TanGCE, we estimate local tangent spaces with PCA-based neighborhoods so that the erasure direction is constrained to a local on-manifold approximation rather than the full ambient space.
+\paragraph{Methods.} The main quantitative comparison evaluates TanGCE against seven baselines and ablations: two random baselines (global and per-sample direction), linear projection, INLP \citep{ravfogel-etal-2020-null}, LEACE \citep{belrose-etal-2023-leace}, IGBP \citep{iskander-etal-2023-shielded}, and Ambient GCE. IGBP iteratively trains two-class MLP probes and retracts representations to the decision boundary via Newton steps (Eq.~\ref{eq:igbp}), making it the closest prior nonlinear baseline. Ambient GCE is our direct ablation of TanGCE: it uses the same scorer-training loop but applies the update in the full ambient space. TanGCE adds the key ingredient of the paper by estimating local tangent spaces with PCA-based neighborhoods and restricting the erasure direction to a local on-manifold approximation rather than the full ambient space.
 
 \paragraph{Fair $\lambda$ selection.}
 Most methods share a common erasure strength parameter $\lambda$ (Eq.~\ref{eq:ambient_erase}, \ref{eq:tangent_erase}). Because TanGCE's tangent projection attenuates the effective step size (by $\|\mathbf{u}_i^{\mathrm{tan}}\|^2 \leq 1$), a fixed $\lambda$ across methods would systematically under-erase for TanGCE. Rather than manually choosing different $\lambda$ values---which risks unfair comparison---we adopt validation-based hyperparameter selection: all $\lambda$-based methods search the same grid $\lambda \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ and select the $\lambda^*$ that minimizes validation nonlinear probe accuracy (i.e., maximizes erasure on held-out data). IGBP has no $\lambda$ parameter---its step size is determined by each sample's distance to the decision boundary (Eq.~\ref{eq:igbp})---so it runs its iterative procedure until convergence. This ensures each method gets its best shot at erasure under a common protocol.
@@ -26,36 +26,13 @@ Most methods share a common erasure strength parameter $\lambda$ (Eq.~\ref{eq:am
 \input{tables/method_comparison_scope}
 
 \subsection{Evaluation Protocol}
-All leakage probes are trained from scratch on erased representations to ensure no information leaks from the erasure scorers themselves. We employ three complementary evaluation axes:
+All leakage probes are trained from scratch on erased representations to ensure no information leaks from the erasure scorers themselves. Our main evaluation is supervised and centered on two quantities: erasure precision on the target concept and surgicality on control concepts.
 
-\paragraph{Probe-based leakage.} A retrained nonlinear MLP probe measures whether concept information remains accessible to a standard function class. We report both linear and nonlinear test accuracy; the gap between them indicates the degree to which concept encoding is nonlinear.
+\paragraph{Erasure precision.} A retrained nonlinear MLP probe measures whether target-concept information remains accessible after erasure. This nonlinear probe is our primary metric because the target concepts in this paper are not assumed to be linearly encoded. We also report retrained linear probe accuracy as a secondary diagnostic to show how much of the residual leakage is linearly decodable.
 
-\paragraph{Mutual information via $k$-NN estimation.}
-Probe accuracy measures whether a \emph{specific function class} can recover the concept; a nonlinear MLP probe might miss information that a more complex architecture could extract. Mutual information $I(\mathbf{X}; y)$ captures \emph{all} shared information between representations and labels, providing a probe-free, architecture-agnostic bound on recoverability.
+\paragraph{Surgicality on control concepts.} For each domain we identify an annotated control concept that should be preserved under erasure: answer matching for sycophancy, profession for Bias in Bios, helpfulness for safety, and selected low-correlation facial attributes for CelebA. We report the change in control-task accuracy relative to clean representations ($\Delta$Ctrl). Values near zero indicate that the intervention removed the target concept without disrupting unrelated task-relevant structure.
 
-\emph{Mental model.} Mutual information decomposes as $I(\mathbf{X}; y) = H(y) - H(y \mid \mathbf{X})$: the entropy of the concept label minus the residual uncertainty after observing the representation. When erasure is effective, $H(y \mid \mathbf{X})$ rises toward $H(y)$ (the label becomes unpredictable from the representation), and MI drops toward zero. For continuous $\mathbf{X}$ and discrete $y$, we estimate MI using the Ross/Gao $k$-nearest-neighbor estimator:
-\begin{equation}
-\label{eq:knn_mi}
-I(\mathbf{X}; y) = \psi(k) - \bigl\langle \psi(m_i) \bigr\rangle + \psi(N) - \bigl\langle \psi(N_{c(i)}) \bigr\rangle,
-\end{equation}
-where $\psi$ is the digamma function and the procedure is:
-\begin{enumerate}
-    \item For each point $\mathbf{x}_i$, find its $k$-th nearest neighbor \emph{within its class} $c(i)$; call that distance $\varepsilon_i$.
-    \item Count $m_i$: the number of \emph{all} points (any class) within distance $\varepsilon_i$ of $\mathbf{x}_i$.
-    \item $N_{c(i)}$ is the total number of points sharing the same label as point $i$; $N$ is the total sample size.
-\end{enumerate}
-
-\emph{Intuition.} When concept information is encoded in $\mathbf{X}$, same-class points cluster together: $\varepsilon_i$ is small, $m_i \approx k$ (mostly same-class neighbors within that radius), and MI is high. After effective erasure, class labels become geometrically mixed: to reach $k$ same-class neighbors one must search a large $\varepsilon_i$, sweeping in many cross-class points so that $m_i \gg k$, and MI drops.
-
-\emph{Adaptive resolution and local geometry.} A key property of the $k$-NN estimator is that it sets its measurement scale \emph{adaptively}: for each point, the radius $\varepsilon_i$ is determined by the local data density, not by a global bandwidth or histogram bin width. In dense regions of the manifold, $\varepsilon_i$ is small; in sparse regions, it is large. The digamma terms $\psi(m_i)$ implicitly encode the local density ratio between the class-conditional and marginal distributions without ever estimating densities explicitly in $\mathbb{R}^d$---the estimator works entirely with neighbor counts, which are topological quantities that naturally handle varying density and curvature.
-
-This makes the estimator well-suited for data on a low-dimensional manifold embedded in $\mathbb{R}^d$. A parametric density estimator (e.g., Gaussian kernel) operating in the ambient space would be misled by the high-dimensional volume: two points close in $\mathbb{R}^d$ may be far apart along the manifold, and vice versa. The $k$-NN estimator sidesteps this because it only examines local neighborhoods---points that are actually nearby along the data distribution. While it still uses ambient Euclidean distance (not geodesic distance), the locality of $k$-NN queries means that for small $k$ relative to the dataset, the Euclidean and geodesic neighborhoods approximately coincide.
-
-\emph{Connection to TanGCE.} Both the MI estimator and TanGCE operate through local neighborhood structure rather than global ambient-space assumptions. TanGCE explicitly projects onto the tangent space estimated from $k$-nearest neighbors; the MI estimator implicitly adapts to the manifold by measuring information through local ball neighborhoods. Neither assumes the data fills $\mathbb{R}^d$ uniformly. This shared reliance on local structure creates a coherent geometric framework: the same manifold properties that make tangent-projected erasure more precise also make $k$-NN MI estimation more faithful than ambient-space alternatives.
-
-We compute MI for both concept labels (should decrease after erasure) and control labels (should remain unchanged), yielding a complete picture of erasure selectivity.
-
-\paragraph{Unsupervised SAE diagnostics.} We train TopK sparse autoencoders ($k{=}64$) on a general-purpose WikiText corpus---independent of any concept labels---then measure concept feature removal rate, collateral damage rate, and feature redistribution score (Section~\ref{sec:results}). These metrics require no control-task annotations and detect failure modes invisible to probe-based evaluation, such as concept information being redistributed across features rather than removed.
+\paragraph{Iterative evaluation.} The precision metric is intentionally strict: after every erasure method finishes, we train a \emph{new} probe on the erased representations. This follows the cautionary lesson of Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial}: if a fresh classifier can still recover the concept, then the concept was not actually removed in the sense relevant for downstream use.
 
 \subsection{Geometric Foundation (Appendix Support)}
 While the main text focuses on the performance of \texttt{gce\_tangent}, we also provide geometric diagnostics to ground the mechanism story. These include broad geometry sweeps across multiple datasets and layers, subspace projection sensitivity (Q1), perturbation-based subspace sensitivity tests (Q2), and representation connectivity analyses (Q3). These appendix-scale materials support the low-dimensional and nonlinear-geometry motivation for tangent projection, but they should not be read as a standalone causal proof that off-manifold displacement fully explains the observed utility tradeoffs.

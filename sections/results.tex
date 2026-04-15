@@ -2,54 +2,27 @@
 \section{Results}
 \label{sec:results}
 
-We evaluate seven erasure methods across three concept domains---sycophancy, gender (Bias in Bios), and safety---at layer~8 of Qwen2.5-0.5B. Each method's erasure strength $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison (Section~\ref{sec:experiments}). We measure concept leakage with a retrained nonlinear MLP probe, mutual information via the Ross/Gao $k$-NN estimator in the original representation space, and unsupervised SAE-based metrics: concept feature removal rate, collateral damage rate, and feature redistribution score.
+We evaluate seven erasure methods across three concept domains---sycophancy, gender (Bias in Bios), and safety---at layer~8 of Qwen2.5-0.5B. Each method's erasure strength $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison (Section~\ref{sec:experiments}). Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance.
 
 \input{tables/full_comparison}
-\input{tables/full_comparison_detail}
 
-\subsection{TanGCE Achieves Lowest Leakage Across All Domains}
+\subsection{TanGCE Achieves the Best Erasure Precision Across All Domains}
 
 Table~\ref{tab:full_comparison} shows that TanGCE achieves the lowest nonlinear leakage across all three domains: 0.602 on sycophancy (vs.\ 0.681 for LEACE, 0.703 for Ambient GCE), 0.618 on gender (vs.\ 0.701 for Ambient GCE), and 0.663 on safety (vs.\ 0.778 for Ambient GCE). Linear methods (Linear Projection, INLP) barely reduce leakage below random baselines, confirming that concept information is predominantly encoded nonlinearly.
 
-\subsection{Control Task Preservation}
+\subsection{TanGCE Remains Surgical on Control Concepts}
 
 Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream control task accuracy relative to clean representations. For sycophancy (answer matching), TanGCE incurs a small $-1.5$pp drop; all other methods preserve perfect accuracy. For gender (profession classification), TanGCE drops only $-0.8$pp (0.531 vs.\ 0.539 clean). On safety, TanGCE \emph{improves} helpfulness ($+3.9$pp), suggesting that removing safety-concept directions frees capacity for the helpfulness task.
 
-Table~\ref{tab:full_comparison_detail} complements this with mutual information: TanGCE preserves control MI across all domains (sycophancy: 1.158 vs.\ 1.157 clean; gender: 0.904 vs.\ 0.903 clean). On gender, TanGCE is the only method that slightly \emph{increases} control MI, indicating zero collateral damage to task-relevant information.
-
-\subsection{Near-Zero Redistribution}
-
-TanGCE maintains near-zero redistribution across all concepts: 1.4\% on sycophancy, 0.0\% on gender, and 4.1\% on safety. In contrast, Ambient GCE shows nonzero redistribution even at $\lambda{=}0.5$, and this grows dramatically at higher $\lambda$ (Section~\ref{sec:lambda_sweep}).
-
-\paragraph{Damage threshold sensitivity.}
-\input{tables/damage_threshold}
-Table~\ref{tab:damage_threshold} reveals that the high damage rates at $\delta{>}2\%$ are largely an artifact of the lenient threshold: many non-concept features shift by 2--5\% in mean activation---a perturbation too small to meaningfully alter downstream behavior (consistent with preserved MI$_\text{ctrl}$ in Table~\ref{tab:full_comparison_detail}). At the strict $\delta{>}20\%$ threshold, TanGCE's damage drops to 1\% on gender and 7\% on safety, confirming that TanGCE's apparent collateral impact at the lenient threshold reflects superficial activation shifts, not genuine information disruption.
-
-\subsection{The $\lambda$ Sweep: Off-Manifold Displacement Creates Spurious Correlations}
+\subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
 \label{sec:lambda_sweep}
 
 \input{tables/lambda_sweep}
 
-Table~\ref{tab:lambda_sweep} reveals a critical failure mode of Ambient GCE: at $\lambda \geq 4$, concept MI \emph{increases} rather than decreases (negative MI drop). On sycophancy at $\lambda{=}8$, the MI drop is $-0.063$; on gender, $-0.098$; on safety, $-0.092$. Simultaneously, redistribution reaches 15--31\%.
+Table~\ref{tab:lambda_sweep} shows the central operating-point difference between ambient and tangent erasure. As $\lambda$ increases, Ambient GCE becomes unstable: its nonlinear leakage worsens sharply at high step sizes, rising to 0.734 on sycophancy, 0.702 on gender, and 0.770 on safety at $\lambda{=}8$. TanGCE behaves in the opposite way, improving as $\lambda$ increases and reaching its best precision at the largest tested step size in all three domains.
 
-This occurs because ambient erasure pushes representations off the data manifold. The displacement magnitude correlates with each sample's concept signal strength, creating a new axis of variation that SAE features detect as concept-correlated. Concept information is laundered into the geometry of the displacement rather than removed.
+This pattern is consistent with the manifold hypothesis motivating the method. If the ambient gradient has a substantial off-manifold component, then increasing $\lambda$ does not simply erase more target information; it also pushes the representation into regions where unrelated structure is distorted. Projecting onto the local tangent approximation suppresses those off-manifold components, which is why TanGCE can safely use larger erasure strengths.
 
-TanGCE avoids this failure mode through two mechanisms. First, projection onto the tangent space removes off-manifold gradient components, ensuring displacement stays on the manifold. Second, retaining the raw projection norm $\|\mathbf{P}_T(\nabla f)\|$ as a confidence weight naturally attenuates erasure for samples where the concept gradient is mostly off-manifold. This yields monotonically decreasing leakage with increasing $\lambda$, with redistribution remaining below 8\% even at $\lambda{=}8$.
-
-\subsection{Polysemanticity Confounds Linear Correlation Metrics}
-\label{sec:polysemanticity}
-
-\input{tables/sae_expansion_comparison}
-
-A natural approach for measuring concept removal in SAE feature space is to identify concept-correlated features via point-biserial correlation $r(z_j, y)$ and then measure what fraction are disrupted after erasure. However, this approach assumes that each SAE feature encodes a single semantic concept---an assumption that fails when features are \emph{polysemantic}.
-
-Consider a polysemantic feature $z_j$ that activates when \emph{both} concept $y{=}1$ and topic $t{=}\text{science}$ are present, or when $y{=}0$ and $t{=}\text{politics}$. The marginal correlation $r(z_j, y) \approx 0$ because the feature fires equally often for both concept labels, yet $z_j$ carries substantial concept information \emph{conditioned on topic}. A linear correlation metric would classify this feature as non-concept-related and miss the fact that erasure correctly disrupts it.
-
-Table~\ref{tab:sae_expansion} demonstrates this effect empirically. At $8\times$ expansion (7{,}168 dictionary features), the SAE reports \textbf{0\% concept removal} for both TanGCE and LEACE on gender---despite both methods substantially reducing nonlinear probe leakage (Table~\ref{tab:full_comparison}). Increasing the dictionary to $64\times$ expansion (57{,}344 features) resolves the polysemanticity: features become more monosemantic, linear correlations faithfully detect concept encoding, and both methods now show \textbf{100\% concept removal}.
-
-The effect is concept-dependent. Sycophancy removal rates are stable across expansions (71\% at both $8\times$ and $64\times$ for TanGCE), suggesting that sycophancy features are already relatively monosemantic at $8\times$. Gender features, by contrast, are heavily polysemantic at $8\times$---the concept is distributed across features that jointly encode gender with other attributes, making it invisible to marginal correlation. Safety shows an intermediate pattern: removal increases from 59\% to 82\%.
-
-These results have two implications. First, SAE-based erasure evaluation requires sufficiently high dictionary expansion to overcome polysemanticity; $8\times$ expansion is inadequate for concepts that are entangled with other attributes. Second, the zero-redistribution result for TanGCE on gender (Table~\ref{tab:full_comparison}) is robust: redistribution remains at 0\% even at $64\times$ expansion, confirming that TanGCE removes rather than reshuffles concept information.
 
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
