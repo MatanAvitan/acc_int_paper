@@ -1,0 +1,9 @@
+% Related work
+\section{Related Work}
+\label{sec:related}
+
+Concept erasure methods differ mainly in the function class against which they erase and in the geometry they assume. Linear methods such as INLP \citep{ravfogel-etal-2020-null} and LEACE \citep{belrose-etal-2023-leace} target linearly decodable concept information. INLP removes successively exposed linear directions by iterative nullspace projection, while LEACE gives the strongest closed-form linear baseline in our comparisons. These methods are essential reference points, but they do not directly address the case where a fresh nonlinear probe can still recover the concept after linear erasure.
+
+That recoverability concern is central to our framing. Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial} showed that apparent success against one learned remover or classifier does not imply that the protected information is gone for a newly trained downstream model. Amnesic probing \citep{elazar-etal-2021-amnesic} and related intervention-based analyses adopt the same conservative lesson: the meaningful question is what remains recoverable after the intervention, not only what the original scorer no longer captures.
+
+Among nonlinear erasure methods, IGBP \citep{iskander-etal-2023-shielded} is the closest prior baseline because it iteratively trains a nonlinear probe and retracts representations toward the current decision boundary. Our paper differs in two ways. First, \AmbGCE{} is introduced only as the direct ambient-space ablation that keeps the iterative nonlinear scorer loop but removes the manifold constraint. Second, \TanGCE{} is the paper's main method: it projects the erasure update onto a locally estimated tangent space, making the geometric hypothesis itself the main point of comparison.
