@@ -5,124 +5,134 @@
 \citation{elazar-goldberg-2018-adversarial}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \citation{elazar-goldberg-2018-adversarial}
-\citation{tu-2011-manifolds}
-\citation{tu-2011-manifolds}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Problem Setup and Geometric Background}{2}{section.2}\protected@file@percent }
-\newlabel{sec:notation}{{2}{2}{Problem Setup and Geometric Background}{section.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Language model and encoder.}{2}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Concepts and data.}{2}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Concept scorer.}{2}{section*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Representation manifold.}{2}{section*.5}\protected@file@percent }
-\citation{elazar-goldberg-2018-adversarial}
 \citation{ravfogel-etal-2020-null}
 \citation{belrose-etal-2023-leace}
+\citation{elazar-goldberg-2018-adversarial}
+\citation{elazar-etal-2021-amnesic}
+\citation{iskander-etal-2023-shielded}
+\citation{tu-2011-manifolds}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup and Geometric Motivation}{2}{section.3}\protected@file@percent }
+\newlabel{sec:notation}{{3}{2}{Problem Setup and Geometric Motivation}{section.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Language model and encoder.}{2}{section*.2}\protected@file@percent }
+\citation{tu-2011-manifolds}
+\citation{elazar-goldberg-2018-adversarial}
+\@writefile{toc}{\contentsline {paragraph}{Concepts and data.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Concept scorer.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Representation manifold.}{3}{section*.5}\protected@file@percent }
 \newlabel{eq:tangent_space_chart}{{2}{3}{Representation manifold}{equation.2}{}}
 \@writefile{toc}{\contentsline {paragraph}{Ambient versus tangent directions.}{3}{section*.6}\protected@file@percent }
 \newlabel{eq:tangent_normal_decomp}{{3}{3}{Ambient versus tangent directions}{equation.3}{}}
 \@writefile{toc}{\contentsline {paragraph}{Recoverability after erasure.}{3}{section*.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Conventions.}{3}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Baselines and Ambient Gradient Editing}{3}{subsection.2.1}\protected@file@percent }
-\newlabel{subsec:baselines}{{2.1}{3}{Baselines and Ambient Gradient Editing}{subsection.2.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Linear projection.}{3}{section*.9}\protected@file@percent }
-\newlabel{eq:linear_proj}{{4}{3}{Linear projection}{equation.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{INLP (Iterative Nullspace Projection).}{3}{section*.10}\protected@file@percent }
-\newlabel{eq:inlp}{{5}{3}{INLP (Iterative Nullspace Projection)}{equation.5}{}}
-\citation{iskander-etal-2023-shielded}
-\@writefile{toc}{\contentsline {paragraph}{LEACE (Least-squares Concept Erasure).}{4}{section*.11}\protected@file@percent }
-\newlabel{eq:leace}{{6}{4}{LEACE (Least-squares Concept Erasure)}{equation.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Gradient-Based Concept Erasure}{4}{subsection.2.2}\protected@file@percent }
-\newlabel{subsec:gce}{{2.2}{4}{Gradient-Based Concept Erasure}{subsection.2.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{IGBP (Iterative Gradient-Based Projection).}{4}{section*.12}\protected@file@percent }
-\newlabel{eq:igbp}{{7}{4}{IGBP (Iterative Gradient-Based Projection)}{equation.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{AmbGCE{}.}{4}{section*.13}\protected@file@percent }
-\newlabel{eq:ambient_direction}{{8}{4}{\AmbGCE {}}{equation.8}{}}
-\newlabel{eq:ambient_erase}{{9}{4}{\AmbGCE {}}{equation.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Method: TanGCE{}}{4}{section.3}\protected@file@percent }
-\newlabel{sec:method}{{3}{4}{Method: \TanGCE {}}{section.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Local tangent estimation}{4}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Method: TanGCE{}}{4}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{4}{Method: \TanGCE {}}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Local tangent estimation}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:local_cov}{{4}{4}{Local tangent estimation}{equation.4}{}}
+\newlabel{eq:tangent_basis}{{5}{4}{Local tangent estimation}{equation.5}{}}
+\newlabel{eq:tangent_proj}{{6}{4}{Local tangent estimation}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Tangent-constrained update}{4}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:ambient_direction}{{7}{4}{Tangent-constrained update}{equation.7}{}}
+\newlabel{eq:tangent_direction}{{8}{4}{Tangent-constrained update}{equation.8}{}}
+\newlabel{eq:tangent_erase}{{9}{4}{Tangent-constrained update}{equation.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Why tangent projection permits larger $\lambda $}{4}{subsection.4.3}\protected@file@percent }
 \citation{elazar-goldberg-2018-adversarial}
 \citation{iskander-etal-2023-shielded}
-\newlabel{eq:local_cov}{{10}{5}{Local tangent estimation}{equation.10}{}}
-\newlabel{eq:tangent_basis}{{11}{5}{Local tangent estimation}{equation.11}{}}
-\newlabel{eq:tangent_proj}{{12}{5}{Local tangent estimation}{equation.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Tangent-constrained update}{5}{subsection.3.2}\protected@file@percent }
-\newlabel{eq:tangent_direction}{{13}{5}{Tangent-constrained update}{equation.13}{}}
-\newlabel{eq:tangent_erase}{{14}{5}{Tangent-constrained update}{equation.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Why tangent projection permits larger $\lambda $}{5}{subsection.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Iterative TanGCE{} and relation to baselines}{5}{subsection.3.4}\protected@file@percent }
 \citation{elazar-goldberg-2018-adversarial}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Evaluation}{6}{section.4}\protected@file@percent }
-\newlabel{sec:evaluation}{{4}{6}{Evaluation}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Metrics}{6}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Erasure precision.}{6}{section*.14}\protected@file@percent }
-\newlabel{eq:precision_metric}{{15}{6}{Erasure precision}{equation.15}{}}
-\@writefile{toc}{\contentsline {paragraph}{Surgicality on control concepts.}{6}{section*.15}\protected@file@percent }
-\newlabel{eq:surgicality_metric}{{16}{6}{Surgicality on control concepts}{equation.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Evaluation Protocol}{6}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Fresh-probe evaluation.}{6}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Shared validation protocol.}{6}{section*.17}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Domain-specific controls.}{6}{section*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{6}{section.5}\protected@file@percent }
-\newlabel{sec:experiments}{{5}{6}{Experiments}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Iterative TanGCE{} and relation to baselines}{5}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Setup}{5}{section.5}\protected@file@percent }
+\newlabel{sec:evaluation}{{5}{5}{Experimental Setup}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Metrics}{5}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Erasure precision.}{5}{section*.9}\protected@file@percent }
+\newlabel{eq:precision_metric}{{10}{5}{Erasure precision}{equation.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Surgicality on control concepts.}{5}{section*.10}\protected@file@percent }
+\newlabel{eq:surgicality_metric}{{11}{5}{Surgicality on control concepts}{equation.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Evaluation Protocol}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Fresh-probe evaluation.}{5}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Shared validation protocol.}{5}{section*.12}\protected@file@percent }
+\citation{perez-etal-2022-model-written}
+\citation{ji-etal-2024-pku-saferlhf}
+\citation{dearteaga-etal-2019-bias}
+\citation{radford-etal-2021-clip}
+\citation{liu-etal-2015-celeba}
+\citation{qwen-2024-qwen25}
 \citation{ravfogel-etal-2020-null}
 \citation{belrose-etal-2023-leace}
 \citation{iskander-etal-2023-shielded}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of concept erasure methods by implementation status and role in this work. We distinguish between methods implemented in this repository and those positioned as literature baselines.}}{7}{table.1}\protected@file@percent }
-\newlabel{tab:method_comparison_scope}{{1}{7}{Comparison of concept erasure methods by implementation status and role in this work. We distinguish between methods implemented in this repository and those positioned as literature baselines}{table.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Experimental Domains}{7}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Models and Implementation}{7}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Language model.}{7}{section*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Vision encoder.}{7}{section*.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Methods.}{7}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Geometric Foundation (Appendix Support)}{7}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Domain-specific controls.}{6}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Datasets, Models, and Compared Methods}{6}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}Experimental Domains}{6}{subsubsection.5.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.2}Models and Compared Methods}{6}{subsubsection.5.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Language model.}{6}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Vision encoder.}{6}{section*.15}\protected@file@percent }
+\citation{ravfogel-etal-2020-null}
+\citation{belrose-etal-2023-leace}
+\citation{iskander-etal-2023-shielded}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of concept erasure methods by family and role in this work.}}{7}{table.1}\protected@file@percent }
+\newlabel{tab:method_comparison_scope}{{1}{7}{Comparison of concept erasure methods by family and role in this work}{table.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Methods.}{7}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Comparison method definitions.}{7}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Linear projection.}{7}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{INLP (Iterative Nullspace Projection).}{7}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{LEACE (Least-squares Concept Erasure).}{7}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{IGBP (Iterative Gradient-Based Projection).}{7}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{AmbGCE{}.}{7}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{7}{section.6}\protected@file@percent }
+\newlabel{sec:results}{{6}{7}{Results}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}TanGCE{} Achieves the Best Erasure Precision Across All Domains}{7}{subsection.6.1}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Full erasure method comparison at layer 8 across three concept domains. Each $\lambda $-based method's $\lambda ^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison where every method gets its best shot at erasure; non-$\lambda $ baselines use their standard procedure. L/NL Leak: retrained linear logistic-regression / nonlinear MLP probe accuracy on the target concept (lower = stronger erasure precision). $\Delta $Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). Model: Qwen2.5-0.5B. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety).}}{8}{table.2}\protected@file@percent }
 \newlabel{tab:full_comparison}{{2}{8}{Full erasure method comparison at layer 8 across three concept domains. Each $\lambda $-based method's $\lambda ^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison where every method gets its best shot at erasure; non-$\lambda $ baselines use their standard procedure. L/NL Leak: retrained linear logistic-regression / nonlinear MLP probe accuracy on the target concept (lower = stronger erasure precision). $\Delta $Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). Model: Qwen2.5-0.5B. Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety)}{table.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{8}{section.6}\protected@file@percent }
-\newlabel{sec:results}{{6}{8}{Results}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}TanGCE{} Achieves the Best Erasure Precision Across All Domains}{8}{subsection.6.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces $\lambda $ sweep comparing AmbGCE{} and TanGCE{} at matched $\lambda $ values ($\lambda \in \{0.5, 4.0, 8.0\}$) at layer 8. NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure precision). AmbGCE{} deteriorates at high $\lambda $, while TanGCE{} continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths.}}{8}{table.3}\protected@file@percent }
+\newlabel{tab:lambda_sweep}{{3}{8}{$\lambda $ sweep comparing \AmbGCE {} and \TanGCE {} at matched $\lambda $ values ($\lambda \in \{0.5, 4.0, 8.0\}$) at layer 8. NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure precision). \AmbGCE {} deteriorates at high $\lambda $, while \TanGCE {} continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths}{table.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}TanGCE{} Remains Surgical on Control Concepts}{8}{subsection.6.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3}The Lambda Sweep: On-Manifold Updates Support Larger Interventions}{8}{subsection.6.3}\protected@file@percent }
 \newlabel{sec:lambda_sweep}{{6.3}{8}{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}{subsection.6.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces $\lambda $ sweep comparing AmbGCE{} and TanGCE{} at matched $\lambda $ values ($\lambda \in \{0.5, 4.0, 8.0\}$) at layer 8. NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure precision). AmbGCE{} deteriorates at high $\lambda $, while TanGCE{} continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths.}}{9}{table.3}\protected@file@percent }
-\newlabel{tab:lambda_sweep}{{3}{9}{$\lambda $ sweep comparing \AmbGCE {} and \TanGCE {} at matched $\lambda $ values ($\lambda \in \{0.5, 4.0, 8.0\}$) at layer 8. NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure precision). \AmbGCE {} deteriorates at high $\lambda $, while \TanGCE {} continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths}{table.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda $). Each method's $\lambda ^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta $Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 \texttt  {pooler\_output} (768-dim).}}{9}{table.4}\protected@file@percent }
-\newlabel{tab:celeba_clip_fair}{{4}{9}{CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda $). Each method's $\lambda ^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta $Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 \texttt {pooler\_output} (768-dim)}{table.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda $). Each method's $\lambda ^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta $Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 pooled embedding (768 dimensions).}}{9}{table.4}\protected@file@percent }
+\newlabel{tab:celeba_clip_fair}{{4}{9}{CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda $). Each method's $\lambda ^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta $Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 pooled embedding (768 dimensions)}{table.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces CelebA all-40-attribute summary (CLIP ViT-B/32, validation HPO for $\lambda $). Each cell averages over all 40 binary CelebA attributes. $\lambda ^*$ is selected per method per concept from the grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy. NL Leak: mean nonlinear test accuracy across 40 concepts (lower = better). Mean $\Delta $Ctrl: mean control accuracy change (5 low-correlation controls per concept, averaged over 40 concepts). Worst $\Delta $Ctrl: worst single control drop averaged over 40 concepts.}}{9}{table.5}\protected@file@percent }
+\newlabel{tab:celeba_clip_all40}{{5}{9}{CelebA all-40-attribute summary (CLIP ViT-B/32, validation HPO for $\lambda $). Each cell averages over all 40 binary CelebA attributes. $\lambda ^*$ is selected per method per concept from the grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy. NL Leak: mean nonlinear test accuracy across 40 concepts (lower = better). Mean $\Delta $Ctrl: mean control accuracy change (5 low-correlation controls per concept, averaged over 40 concepts). Worst $\Delta $Ctrl: worst single control drop averaged over 40 concepts}{table.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Cross-Modal Generalization: CelebA Visual Attributes}{9}{subsection.6.4}\protected@file@percent }
 \newlabel{sec:celeba}{{6.4}{9}{Cross-Modal Generalization: CelebA Visual Attributes}{subsection.6.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces CelebA all-40-attribute summary (CLIP ViT-B/32, validation HPO for $\lambda $). Each cell averages over all 40 binary CelebA attributes. $\lambda ^*$ is selected per method per concept from the grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy. NL Leak: mean nonlinear test accuracy across 40 concepts (lower = better). Mean $\Delta $Ctrl: mean control accuracy change (5 low-correlation controls per concept, averaged over 40 concepts). Worst $\Delta $Ctrl: worst single control drop averaged over 40 concepts.}}{10}{table.5}\protected@file@percent }
-\newlabel{tab:celeba_clip_all40}{{5}{10}{CelebA all-40-attribute summary (CLIP ViT-B/32, validation HPO for $\lambda $). Each cell averages over all 40 binary CelebA attributes. $\lambda ^*$ is selected per method per concept from the grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy. NL Leak: mean nonlinear test accuracy across 40 concepts (lower = better). Mean $\Delta $Ctrl: mean control accuracy change (5 low-correlation controls per concept, averaged over 40 concepts). Worst $\Delta $Ctrl: worst single control drop averaged over 40 concepts}{table.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Geometry contrast between sycophancy and gender across completed layers 4, 8, and 12. This is a focused contrast between the primary nonlinear case and the diagnostic baseline, not an all-dataset geometry census. Lower intrinsic dimension and larger local-vs-global angle indicate stronger nonlinearity: a concept whose erasure direction varies significantly across the input space, making a single fixed direction insufficient to capture the full concept. Sycophancy shows substantially higher nonlinearity (dim 34--53, angle 76.9--82.6$^\circ $) compared to gender (dim 365--461, angle 51.8--55.8$^\circ $), supporting sycophancy as the primary case for manifold-aware erasure methods. This table demonstrates the geometric contrast but does not establish causality: it does not prove that the observed nonlinearity will be converted into lower displacement or higher utility preservation by any particular erasure method.}}{10}{table.6}\protected@file@percent }
 \newlabel{tab:geometry_contrast_summary}{{6}{10}{Geometry contrast between sycophancy and gender across completed layers 4, 8, and 12. This is a focused contrast between the primary nonlinear case and the diagnostic baseline, not an all-dataset geometry census. Lower intrinsic dimension and larger local-vs-global angle indicate stronger nonlinearity: a concept whose erasure direction varies significantly across the input space, making a single fixed direction insufficient to capture the full concept. Sycophancy shows substantially higher nonlinearity (dim 34--53, angle 76.9--82.6$^\circ $) compared to gender (dim 365--461, angle 51.8--55.8$^\circ $), supporting sycophancy as the primary case for manifold-aware erasure methods. This table demonstrates the geometric contrast but does not establish causality: it does not prove that the observed nonlinearity will be converted into lower displacement or higher utility preservation by any particular erasure method}{table.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Geometric Evidence and Off-Manifold Displacement}{10}{subsection.6.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Appendix-Supporting Evidence.}{10}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{11}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Appendix-Supporting Evidence.}{10}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{10}{section.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{11}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{11}{section.9}\protected@file@percent }
 \bibstyle{plainnat}
 \bibdata{references}
 \bibcite{belrose-etal-2023-leace}{{1}{2023}{{Belrose et~al.}}{{Belrose, Schneider-Joseph, Ravfogel, Cotterell, Raff, and Biderman}}}
-\bibcite{elazar-goldberg-2018-adversarial}{{2}{2018}{{Elazar and Goldberg}}{{}}}
-\bibcite{iskander-etal-2023-shielded}{{3}{2023}{{Iskander et~al.}}{{Iskander, Radinsky, and Belinkov}}}
-\bibcite{ravfogel-etal-2020-null}{{4}{2020}{{Ravfogel et~al.}}{{Ravfogel, Elazar, Gonen, Twiton, and Goldberg}}}
-\bibcite{tu-2011-manifolds}{{5}{2011}{{Tu}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Repository snapshot from the iterative sycophancy report at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is answer-matching delta relative to clean representations. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This snapshot table is not a main-text claim anchor and should be read only as evidence of directional consistency with the layer-8 paper-locked row (Table~\ref {tab:full_comparison}). Deeper-layer iterative tangent runs continue to reduce leakage more than ambient baselines across this exploratory sweep.}}{13}{table.7}\protected@file@percent }
-\newlabel{tab:repo_snapshot_sycophancy}{{7}{13}{Repository snapshot from the iterative sycophancy report at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is answer-matching delta relative to clean representations. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This snapshot table is not a main-text claim anchor and should be read only as evidence of directional consistency with the layer-8 paper-locked row (Table~\ref {tab:full_comparison}). Deeper-layer iterative tangent runs continue to reduce leakage more than ambient baselines across this exploratory sweep}{table.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Repository snapshot from the iterative safety report at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is pairwise helpfulness delta. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This snapshot table is not a main-text claim anchor and should be read only as evidence of directional consistency with the layer-8 paper-locked row (Table~\ref {tab:full_comparison}). Deeper-layer iterative tangent runs continue to reduce leakage more than ambient baselines across this exploratory sweep.}}{13}{table.8}\protected@file@percent }
-\newlabel{tab:repo_snapshot_safety}{{8}{13}{Repository snapshot from the iterative safety report at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is pairwise helpfulness delta. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This snapshot table is not a main-text claim anchor and should be read only as evidence of directional consistency with the layer-8 paper-locked row (Table~\ref {tab:full_comparison}). Deeper-layer iterative tangent runs continue to reduce leakage more than ambient baselines across this exploratory sweep}{table.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Repository Snapshot Tables}{13}{appendix.A}\protected@file@percent }
-\newlabel{sec:appendix_snapshots}{{A}{13}{Repository Snapshot Tables}{appendix.A}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Iterative Sycophancy Snapshot}{13}{subsection.A.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Iterative Safety Snapshot}{13}{subsection.A.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Local CelebA Visual Table-2-Style Comparison}{13}{subsection.A.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}CelebA Per-Concept Detail (All 40 Attributes)}{13}{subsection.A.4}\protected@file@percent }
-\newlabel{sec:appendix_celeba_per_concept}{{A.4}{13}{CelebA Per-Concept Detail (All 40 Attributes)}{subsection.A.4}{}}
+\bibcite{dearteaga-etal-2019-bias}{{2}{2019}{{De-Arteaga et~al.}}{{De-Arteaga, Romanov, Wallach, Chayes, Borgs, Chouldechova, Geyik, Kenthapadi, and Kalai}}}
+\bibcite{elazar-goldberg-2018-adversarial}{{3}{2018}{{Elazar and Goldberg}}{{}}}
+\bibcite{elazar-etal-2021-amnesic}{{4}{2021}{{Elazar et~al.}}{{Elazar, Ravfogel, Jacovi, and Goldberg}}}
+\bibcite{iskander-etal-2023-shielded}{{5}{2023}{{Iskander et~al.}}{{Iskander, Radinsky, and Belinkov}}}
+\bibcite{ji-etal-2024-pku-saferlhf}{{6}{2024}{{Ji et~al.}}{{Ji, Hong, Zhang, Chen, Dai, Zheng, Qiu, Li, and Yang}}}
+\bibcite{liu-etal-2015-celeba}{{7}{2015}{{Liu et~al.}}{{Liu, Luo, Wang, and Tang}}}
+\bibcite{perez-etal-2022-model-written}{{8}{2023}{{Perez et~al.}}{{Perez, Ringer, Luko\v {s}i\={u}t\={e}, Nguyen, Chen, Heiner, Pettit, Olsson, Kundu, Kadavath, Jones, Chen, Mann, Israel, Seethor, McKinnon, Jones, Yan, Kaplan, Shenk, Phang, Landis, Clark, Kravec, Tamkin, Joseph, Bowman, and Li}}}
+\bibcite{qwen-2024-qwen25}{{9}{2024}{{Qwen Team}}{{}}}
+\bibcite{radford-etal-2021-clip}{{10}{2021}{{Radford et~al.}}{{Radford, Kim, Hallacy, Ramesh, Goh, Agarwal, Sastry, Askell, Mishkin, Clark, Krueger, and Sutskever}}}
+\bibcite{ravfogel-etal-2020-null}{{11}{2020}{{Ravfogel et~al.}}{{Ravfogel, Elazar, Gonen, Twiton, and Goldberg}}}
+\bibcite{tu-2011-manifolds}{{12}{2011}{{Tu}}{{}}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Supplementary deeper-layer sycophancy comparison at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is answer-matching change relative to clean representations. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This table is included as supplementary evidence of directional consistency with the layer-8 main-text comparison in Table~\ref {tab:full_comparison}. Deeper-layer tangent runs continue to reduce leakage more than ambient baselines across this sweep.}}{13}{table.7}\protected@file@percent }
+\newlabel{tab:repo_snapshot_sycophancy}{{7}{13}{Supplementary deeper-layer sycophancy comparison at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is answer-matching change relative to clean representations. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This table is included as supplementary evidence of directional consistency with the layer-8 main-text comparison in Table~\ref {tab:full_comparison}. Deeper-layer tangent runs continue to reduce leakage more than ambient baselines across this sweep}{table.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Supplementary deeper-layer safety comparison at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is pairwise helpfulness change. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This table is included as supplementary evidence of directional consistency with the layer-8 main-text comparison in Table~\ref {tab:full_comparison}. Deeper-layer tangent runs continue to reduce leakage more than ambient baselines across this sweep.}}{13}{table.8}\protected@file@percent }
+\newlabel{tab:repo_snapshot_safety}{{8}{13}{Supplementary deeper-layer safety comparison at $\lambda =1.0$ after 7 rounds, across layers 8, 16, and 23. Columns T (tangent-constrained) and A (ambient baseline) compare erasure methods. Utility is pairwise helpfulness change. Leakage and displacement decrease from left to right (lower is better); utility increases from left to right (higher is better). This table is included as supplementary evidence of directional consistency with the layer-8 main-text comparison in Table~\ref {tab:full_comparison}. Deeper-layer tangent runs continue to reduce leakage more than ambient baselines across this sweep}{table.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Supplementary Deeper-Layer Comparisons}{13}{appendix.A}\protected@file@percent }
+\newlabel{sec:appendix_snapshots}{{A}{13}{Supplementary Deeper-Layer Comparisons}{appendix.A}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Local Table-2-style CelebA visual comparison using CLIP ViT-B/32 embeddings. For each target concept we intervene once per method and evaluate (i) concept leakage via retrained linear/nonlinear probes (lower is better) and (ii) mean control-task accuracy change across 3 least-correlated control attributes (closer to zero is better). Targets and controls: Male $\rightarrow $ Blurry,Narrow\_Eyes,Straight\_Hair; Smiling $\rightarrow $ Straight\_Hair,Bushy\_Eyebrows,Gray\_Hair; Blond\_Hair $\rightarrow $ Straight\_Hair,Narrow\_Eyes,Blurry. Lambdas follow Table~\ref {tab:full_comparison}: all methods $\lambda {=}0.5$ except TanGCE{} $\lambda {=}8.0$.}}{14}{table.9}\protected@file@percent }
 \newlabel{tab:local_celeba_visual_table2}{{9}{14}{Local Table-2-style CelebA visual comparison using CLIP ViT-B/32 embeddings. For each target concept we intervene once per method and evaluate (i) concept leakage via retrained linear/nonlinear probes (lower is better) and (ii) mean control-task accuracy change across 3 least-correlated control attributes (closer to zero is better). Targets and controls: Male $\rightarrow $ Blurry,Narrow\_Eyes,Straight\_Hair; Smiling $\rightarrow $ Straight\_Hair,Bushy\_Eyebrows,Gray\_Hair; Blond\_Hair $\rightarrow $ Straight\_Hair,Narrow\_Eyes,Blurry. Lambdas follow Table~\ref {tab:full_comparison}: all methods $\lambda {=}0.5$ except \TanGCE {} $\lambda {=}8.0$}{table.9}{}}
-\@writefile{toc}{\contentsline {paragraph}{Geometry Note.}{14}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Iterative Sycophancy (Supplementary Comparison)}{14}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Iterative Safety (Supplementary Comparison)}{14}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Local CelebA Visual Table-2-Style Comparison}{14}{subsection.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}CelebA Per-Concept Detail (All 40 Attributes)}{14}{subsection.A.4}\protected@file@percent }
+\newlabel{sec:appendix_celeba_per_concept}{{A.4}{14}{CelebA Per-Concept Detail (All 40 Attributes)}{subsection.A.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Geometry Note.}{14}{section*.25}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Per-concept nonlinear probe leakage on CelebA (CLIP ViT-B/32), all 40 binary attributes. Each cell is retrained nonlinear probe test accuracy after erasure (lower = stronger erasure). $\lambda ^*$ is selected per method per concept from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. Bold marks the lowest leakage per row. Abbrev.: RandG = Random Global, RandS = Random Per-Sample, LinProj = Linear Projection, AmbGCE{} = ambient gradient-based concept erasure, TanGCE{} = tangent gradient-based concept erasure.}}{15}{table.10}\protected@file@percent }
 \newlabel{tab:celeba_clip_all40_per_concept_leak}{{10}{15}{Per-concept nonlinear probe leakage on CelebA (CLIP ViT-B/32), all 40 binary attributes. Each cell is retrained nonlinear probe test accuracy after erasure (lower = stronger erasure). $\lambda ^*$ is selected per method per concept from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. Bold marks the lowest leakage per row. Abbrev.: RandG = Random Global, RandS = Random Per-Sample, LinProj = Linear Projection, \AmbGCE {} = ambient gradient-based concept erasure, \TanGCE {} = tangent gradient-based concept erasure}{table.10}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Per-concept mean control accuracy change $\Delta $Ctrl (\%) on CelebA, all 40 binary attributes. For each concept, $\Delta $Ctrl is averaged over the 5 least-correlated control attributes (closer to zero = more surgical). $\lambda ^*$ selection matches Table~\ref {tab:celeba_clip_all40_per_concept_leak}.}}{23}{table.11}\protected@file@percent }
 \newlabel{tab:celeba_clip_all40_per_concept_ctrl}{{11}{23}{Per-concept mean control accuracy change $\Delta $Ctrl (\%) on CelebA, all 40 binary attributes. For each concept, $\Delta $Ctrl is averaged over the 5 least-correlated control attributes (closer to zero = more surgical). $\lambda ^*$ selection matches Table~\ref {tab:celeba_clip_all40_per_concept_leak}}{table.11}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Geometry evidence map organizing the appendix diagnostics into four research blocks. Each block addresses a distinct aspect of manifold structure: Q1 examines whether task-relevant computation concentrates in a low-dimensional linear subspace, Q2 tests whether perturbations on the manifold are more consequential than off-manifold perturbations, Q3 validates whether the manifold is connected across domains, and multi-layer accumulation tracks error compounding through the network. These diagnostics support the mechanism discussion and motivate the need for manifold-aware erasure methods but do not by themselves establish causality.}}{23}{table.12}\protected@file@percent }
-\newlabel{tab:geometry_schedule}{{12}{23}{Geometry evidence map organizing the appendix diagnostics into four research blocks. Each block addresses a distinct aspect of manifold structure: Q1 examines whether task-relevant computation concentrates in a low-dimensional linear subspace, Q2 tests whether perturbations on the manifold are more consequential than off-manifold perturbations, Q3 validates whether the manifold is connected across domains, and multi-layer accumulation tracks error compounding through the network. These diagnostics support the mechanism discussion and motivate the need for manifold-aware erasure methods but do not by themselves establish causality}{table.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Geometry evidence map organizing the appendix diagnostics into four research blocks. Each block addresses a distinct aspect of manifold structure: subspace sufficiency examines whether task-relevant computation concentrates in a low-dimensional linear subspace, perturbation sensitivity tests whether on-manifold directions matter more than orthogonal directions, representation connectivity evaluates whether the manifold remains connected across domains, and multi-layer accumulation tracks error compounding through the network. These diagnostics support the mechanism discussion and motivate the need for manifold-aware erasure methods but do not by themselves establish causality.}}{23}{table.12}\protected@file@percent }
+\newlabel{tab:geometry_schedule}{{12}{23}{Geometry evidence map organizing the appendix diagnostics into four research blocks. Each block addresses a distinct aspect of manifold structure: subspace sufficiency examines whether task-relevant computation concentrates in a low-dimensional linear subspace, perturbation sensitivity tests whether on-manifold directions matter more than orthogonal directions, representation connectivity evaluates whether the manifold remains connected across domains, and multi-layer accumulation tracks error compounding through the network. These diagnostics support the mechanism discussion and motivate the need for manifold-aware erasure methods but do not by themselves establish causality}{table.12}{}}
 \gdef \@abspage@last{23}
