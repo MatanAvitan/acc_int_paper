@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{$\lambda$ sweep comparing Ambient GCE and TanGCE at matched $\lambda$ values ($\lambda \in \{0.5, 4.0, 8.0\}$) at layer 8. NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure precision). Ambient GCE deteriorates at high $\lambda$, while TanGCE continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths.}
+\caption{$\lambda$ sweep comparing \AmbGCE{} and \TanGCE{} at matched $\lambda$ values ($\lambda \in \{0.5, 4.0, 8.0\}$) at layer 8. NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure precision). \AmbGCE{} deteriorates at high $\lambda$, while \TanGCE{} continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths.}
 \label{tab:lambda_sweep}
 \small
 \setlength{\tabcolsep}{6pt}
@@ -9,28 +9,28 @@
 Concept & Method & $\lambda$ & NL$\downarrow$ \\
 \midrule
 \multirow{6}{*}{Syco.}
-& Ambient & 0.5 & .678 \\
-& TanGCE  & 0.5 & .662 \\
-& Ambient & 4.0 & .694 \\
-& TanGCE  & 4.0 & .596 \\
-& Ambient & 8.0 & .734 \\
-& TanGCE  & 8.0 & \textbf{.588} \\
+& \AmbGCE{} & 0.5 & .678 \\
+& \TanGCE{}  & 0.5 & .662 \\
+& \AmbGCE{} & 4.0 & .694 \\
+& \TanGCE{}  & 4.0 & .596 \\
+& \AmbGCE{} & 8.0 & .734 \\
+& \TanGCE{}  & 8.0 & \textbf{.588} \\
 \midrule
 \multirow{6}{*}{Gender}
-& Ambient & 0.5 & .666 \\
-& TanGCE  & 0.5 & .704 \\
-& Ambient & 4.0 & .700 \\
-& TanGCE  & 4.0 & .580 \\
-& Ambient & 8.0 & .702 \\
-& TanGCE  & 8.0 & \textbf{.470} \\
+& \AmbGCE{} & 0.5 & .666 \\
+& \TanGCE{}  & 0.5 & .704 \\
+& \AmbGCE{} & 4.0 & .700 \\
+& \TanGCE{}  & 4.0 & .580 \\
+& \AmbGCE{} & 8.0 & .702 \\
+& \TanGCE{}  & 8.0 & \textbf{.470} \\
 \midrule
 \multirow{6}{*}{Safety}
-& Ambient & 0.5 & .664 \\
-& TanGCE  & 0.5 & .748 \\
-& Ambient & 4.0 & .776 \\
-& TanGCE  & 4.0 & .680 \\
-& Ambient & 8.0 & .770 \\
-& TanGCE  & 8.0 & \textbf{.646} \\
+& \AmbGCE{} & 0.5 & .664 \\
+& \TanGCE{}  & 0.5 & .748 \\
+& \AmbGCE{} & 4.0 & .776 \\
+& \TanGCE{}  & 4.0 & .680 \\
+& \AmbGCE{} & 8.0 & .770 \\
+& \TanGCE{}  & 8.0 & \textbf{.646} \\
 \bottomrule
 \end{tabular}
 \end{table}
