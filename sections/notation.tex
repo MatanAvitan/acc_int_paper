@@ -1,5 +1,5 @@
-% Problem setup and geometric background
-\section{Problem Setup and Geometric Background}
+% Problem setup and geometric motivation
+\section{Problem Setup and Geometric Motivation}
 \label{sec:notation}
 
 We first define the representation-editing problem, then introduce the geometric language used throughout the paper. Our notation follows the manifold viewpoint in Tu's introduction to smooth manifolds \citep{tu-2011-manifolds}: we use local coordinate maps, tangent spaces, and differentials only as local approximations, not as theorem-level guarantees about neural representations.
@@ -49,62 +49,3 @@ Throughout the paper, concept removal is judged only after training a \emph{fres
 \paragraph{Conventions.}
 Index $i$ ranges over samples.
 $\|\cdot\|$ denotes the Euclidean norm unless stated otherwise.
-
-% ============================================================
-\subsection{Baselines and Ambient Gradient Editing}
-\label{subsec:baselines}
-
-All erasure methods share a common goal: given representations $\mathbf{x}_i$ that encode concept $\phi$, produce modified representations $\tilde{\mathbf{x}}_i$ from which $\phi$ cannot be recovered, while preserving information unrelated to $\phi$. We review the linear baselines and the ambient nonlinear baselines before introducing the tangent-constrained method in Section~\ref{sec:method}.
-
-\paragraph{Linear projection.}
-Given a concept direction $\mathbf{w} \in \mathbb{R}^d$ (typically the difference of class-conditional means, $\mathbf{w} = \mathbb{E}[X_1] - \mathbb{E}[X_0]$), linear projection removes the component along $\mathbf{w}$:
-\begin{equation}
-\label{eq:linear_proj}
-\tilde{\mathbf{x}}_i = (\mathbf{I} - \hat{\mathbf{w}}\hat{\mathbf{w}}^\top)\mathbf{x}_i, \qquad \hat{\mathbf{w}} = \mathbf{w} / \|\mathbf{w}\|.
-\end{equation}
-This removes a single linear direction but leaves all other concept-correlated structure intact.
-
-\paragraph{INLP (Iterative Nullspace Projection).}
-INLP \citep{ravfogel-etal-2020-null} iteratively trains linear classifiers $\mathbf{w}_1, \ldots, \mathbf{w}_T$ and projects onto the intersection of their nullspaces:
-\begin{equation}
-\label{eq:inlp}
-\mathbf{P}_{\mathrm{INLP}} = \prod_{t=1}^{T} (\mathbf{I} - \hat{\mathbf{w}}_t \hat{\mathbf{w}}_t^\top), \qquad \tilde{\mathbf{x}}_i = \mathbf{P}_{\mathrm{INLP}} \, \mathbf{x}_i.
-\end{equation}
-Each $\mathbf{w}_t$ is trained on the residual after projecting out $\mathbf{w}_1, \ldots, \mathbf{w}_{t-1}$. INLP extends linear projection to multiple directions but remains limited to linearly decodable concept information.
-
-\paragraph{LEACE (Least-squares Concept Erasure).}
-LEACE \citep{belrose-etal-2023-leace} finds an oblique projection $\mathbf{P} \in \mathbb{R}^{d \times d}$ of rank $|\mathcal{C}|-1$ and a translation $\mathbf{b}$ that minimally modify representations while ensuring no log-linear classifier can recover the concept:
-\begin{equation}
-\label{eq:leace}
-\tilde{\mathbf{x}}_i = \mathbf{P}\mathbf{x}_i + \mathbf{b}.
-\end{equation}
-LEACE guarantees $\mathbb{E}[\tilde{X}_c] = \mathbb{E}[X]$ and $\mathrm{Var}[\tilde{X}_c] = \mathrm{Var}[\tilde{X}_{c'}]$ for all $c, c' \in \mathcal{C}$, erasing both mean and covariance differences between class-conditional distributions. This provides the strongest linear erasure guarantee among the baselines.
-
-% ============================================================
-\subsection{Gradient-Based Concept Erasure}
-\label{subsec:gce}
-
-The linear baselines above remove linearly decodable concept information but leave nonlinear structure intact. Several methods address this by computing per-sample erasure directions from the gradient of a nonlinear concept scorer.
-
-\paragraph{IGBP (Iterative Gradient-Based Projection).}
-IGBP \citep{iskander-etal-2023-shielded} trains a two-class MLP probe $g_\phi : \mathbb{R}^d \to \mathbb{R}^2$ with softmax output, then retracts each representation to the decision boundary via a Newton step. Let $p_i = \max_c \operatorname{softmax}(g_\phi(\mathbf{x}_i))_c$ be the maximum class probability. IGBP uses the \emph{projection loss} $L_i = \tfrac{1}{2}\operatorname{logit}(p_i)^2$ and computes:
-\begin{equation}
-\label{eq:igbp}
-\tilde{\mathbf{x}}_i = \mathbf{x}_i - \frac{\nabla_{\mathbf{x}} L_i}{\|\boldsymbol{\theta}_i\|^2}, \qquad \boldsymbol{\theta}_i = \frac{\nabla_{\mathbf{x}} L_i}{\operatorname{logit}(p_i)},
-\end{equation}
-where $\operatorname{logit}(p) = \log\frac{p}{1-p}$. This is a Newton step that projects $\mathbf{x}_i$ onto the level set $\operatorname{logit}(p_i) = 0$ (i.e., $p_i = 0.5$, the decision boundary). Within each round, IGBP is therefore a one-shot boundary correction for the current scorer. The procedure then iterates: after projection, a fresh probe is trained on the projected representations and the process repeats until leakage falls to majority accuracy. Unlike \AmbGCE{} (below), IGBP has no explicit $\lambda$ parameter---the step size is determined by each sample's distance to the decision boundary.
-
-\paragraph{\AmbGCE{}.}
-\AmbGCE{} is the tangent-free ablation used later to isolate the manifold constraint: instead of moving directly to the current decision boundary, it takes a tunable $\lambda$-scaled step along the scorer gradient. Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:
-\begin{equation}
-\label{eq:ambient_direction}
-\mathbf{u}_i = \frac{\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)}{\|\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)\|}.
-\end{equation}
-The erased representation is obtained by projecting out the concept component:
-\begin{equation}
-\label{eq:ambient_erase}
-\tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i) \, \mathbf{u}_i,
-\end{equation}
-where $\lambda > 0$ controls the erasure strength. At $\lambda = 1$, this removes the full projection onto $\mathbf{u}_i$; at $\lambda < 1$, it partially attenuates.
-
-\AmbGCE{} edits in the full ambient space and therefore does not distinguish tangent from normal directions. Section~\ref{sec:method} introduces the tangent-constrained version of this update.

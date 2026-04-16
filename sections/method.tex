@@ -27,7 +27,12 @@ This is the empirical analogue of the differential-geometric tangent space from 
 
 \subsection{Tangent-constrained update}
 
-Given the ambient erasure direction $\mathbf{u}_i$ from Eq.~\ref{eq:ambient_direction}, \TanGCE{} defines the tangent-constrained direction by projecting onto the local tangent space:
+To define the tangent-constrained update, we start from the ambient unit gradient direction
+\begin{equation}
+\label{eq:ambient_direction}
+\mathbf{u}_i = \frac{\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)}{\|\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)\|}.
+\end{equation}
+\TanGCE{} then defines the tangent-constrained direction by projecting onto the local tangent space:
 \begin{equation}
 \label{eq:tangent_direction}
 \mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \, \mathbf{u}_i = \mathbf{B}_i (\mathbf{B}_i^\top \mathbf{u}_i).

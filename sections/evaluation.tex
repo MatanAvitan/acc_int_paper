@@ -1,5 +1,5 @@
-% Evaluation
-\section{Evaluation}
+% Experimental setup
+\section{Experimental Setup}
 \label{sec:evaluation}
 
 We evaluate each erasure method by training all probes from scratch on the erased representations, so that success cannot be attributed to leakage from the erasure scorer itself.
@@ -32,7 +32,7 @@ Together, these metrics ask whether an erasure method removes the target concept
 The precision metric is intentionally strict: after every erasure method finishes, we train a \emph{new} probe on the erased representations. This follows the cautionary lesson of Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial}: if a freshly trained probe can still recover the concept, then the concept was not actually removed in the sense relevant for downstream use.
 
 \paragraph{Shared validation protocol.}
-Most methods share a common erasure strength parameter $\lambda$ (Eqs.~\ref{eq:ambient_erase} and~\ref{eq:tangent_erase}). Because \TanGCE{}'s tangent projection attenuates the effective step size by $\|\mathbf{u}_i^{\mathrm{tan}}\|^2 \leq 1$, a fixed $\lambda$ across methods would systematically under-erase for the tangent-constrained update. Rather than manually choosing different values, we adopt validation-based hyperparameter selection: all $\lambda$-based methods search the same grid $\lambda \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ and select the $\lambda^*$ that minimizes validation nonlinear probe accuracy. IGBP has no explicit $\lambda$ parameter---its step size is determined by each sample's distance to the decision boundary---so it runs until convergence.
+Most gradient-based methods share a common erasure strength parameter $\lambda$. For \AmbGCE{} and \TanGCE{}, $\lambda$ scales the ambient or tangent-projected update. Because \TanGCE{}'s tangent projection attenuates the effective step size by $\|\mathbf{u}_i^{\mathrm{tan}}\|^2 \leq 1$, a fixed $\lambda$ across methods would systematically under-erase for the tangent-constrained update. Rather than manually choosing different values, we adopt validation-based hyperparameter selection: all $\lambda$-based methods search the same grid $\lambda \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ and select the $\lambda^*$ that minimizes validation nonlinear probe accuracy. IGBP has no explicit $\lambda$ parameter---its step size is determined by each sample's distance to the decision boundary---so it runs until convergence.
 
 \paragraph{Domain-specific controls.}
 For sycophancy we use answer matching as the control concept; for Bias in Bios we use profession; for safety we use helpfulness; and for CelebA we use selected low-correlation facial attributes. This lets the evaluation distinguish targeted concept removal from broad representational damage.
