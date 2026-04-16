@@ -1,6 +1,6 @@
 \begin{table*}[t]
 \centering
-\caption{Local Table-2-style CelebA visual comparison using CLIP ViT-B/32 embeddings. For each target concept we intervene once per method and evaluate (i) concept leakage via retrained linear/nonlinear probes (lower is better) and (ii) mean control-task accuracy change across 3 least-correlated control attributes (closer to zero is better). Targets and controls: Male $\rightarrow$ Blurry,Narrow\_Eyes,Straight\_Hair; Smiling $\rightarrow$ Straight\_Hair,Bushy\_Eyebrows,Gray\_Hair; Blond\_Hair $\rightarrow$ Straight\_Hair,Narrow\_Eyes,Blurry. Lambdas follow Table~\ref{tab:full_comparison}: all methods $\lambda{=}0.5$ except TanGCE $\lambda{=}8.0$.}
+\caption{Local Table-2-style CelebA visual comparison using CLIP ViT-B/32 embeddings. For each target concept we intervene once per method and evaluate (i) concept leakage via retrained linear/nonlinear probes (lower is better) and (ii) mean control-task accuracy change across 3 least-correlated control attributes (closer to zero is better). Targets and controls: Male $\rightarrow$ Blurry,Narrow\_Eyes,Straight\_Hair; Smiling $\rightarrow$ Straight\_Hair,Bushy\_Eyebrows,Gray\_Hair; Blond\_Hair $\rightarrow$ Straight\_Hair,Narrow\_Eyes,Blurry. Lambdas follow Table~\ref{tab:full_comparison}: all methods $\lambda{=}0.5$ except \TanGCE{} $\lambda{=}8.0$.}
 \label{tab:local_celeba_visual_table2}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -14,8 +14,8 @@ Random Per-Samp. & .993 & .994 & +0.0pp & .891 & .907 & +0.2pp & .907 & .932 & -
 Linear Proj. & .993 & .992 & +0.0pp & .900 & .906 & -0.3pp & .919 & .931 & -0.2pp \\
 INLP & .994 & .993 & -0.0pp & .900 & .903 & +0.3pp & .918 & .932 & -0.0pp \\
 LEACE & .994 & .991 & -0.0pp & .894 & .894 & +0.2pp & .909 & .925 & -0.1pp \\
-Ambient GCE & .990 & .995 & -0.2pp & .858 & .884 & -0.4pp & .893 & .920 & +0.2pp \\
-TanGCE & .887 & .953 & -0.8pp & .649 & .649 & -0.6pp & .699 & .747 & -2.1pp \\
+\AmbGCE{} & .990 & .995 & -0.2pp & .858 & .884 & -0.4pp & .893 & .920 & +0.2pp \\
+\TanGCE{} & .887 & .953 & -0.8pp & .649 & .649 & -0.6pp & .699 & .747 & -2.1pp \\
 \bottomrule
 \end{tabular}
 \end{table*}

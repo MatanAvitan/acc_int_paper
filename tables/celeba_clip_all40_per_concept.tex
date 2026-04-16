@@ -1,12 +1,12 @@
 \begin{table*}[p]
 \centering
-\caption{Per-concept nonlinear probe leakage on CelebA (CLIP ViT-B/32), all 40 binary attributes. Each cell is retrained nonlinear probe test accuracy after erasure (lower = stronger erasure). $\lambda^*$ is selected per method per concept from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. Bold marks the lowest leakage per row. Abbrev.: RandG = Random Global, RandS = Random Per-Sample, LinProj = Linear Projection, AmbGCE = Ambient GCE, TanGCE = Tangent GCE.}
+\caption{Per-concept nonlinear probe leakage on CelebA (CLIP ViT-B/32), all 40 binary attributes. Each cell is retrained nonlinear probe test accuracy after erasure (lower = stronger erasure). $\lambda^*$ is selected per method per concept from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. Bold marks the lowest leakage per row. Abbrev.: RandG = Random Global, RandS = Random Per-Sample, LinProj = Linear Projection, \AmbGCE{} = ambient gradient-based concept erasure, \TanGCE{} = tangent gradient-based concept erasure.}
 \label{tab:celeba_clip_all40_per_concept_leak}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{l|cccccccc}
 \toprule
-Concept & RandG & RandS & LinProj & INLP & LEACE & IGBP & AmbGCE & TanGCE \\
+Concept & RandG & RandS & LinProj & INLP & LEACE & IGBP & \AmbGCE{} & \TanGCE{} \\
 \midrule
 5\_o\_Clock\_Shadow & .92 & .92 & .91 & .92 & .87 & .92 & .91 & \textbf{.77} \\
 Arched\_Eyebrows & .79 & .79 & .76 & .76 & .69 & .77 & .77 & \textbf{.59} \\
@@ -62,7 +62,7 @@ Young & .86 & .86 & .85 & .84 & .83 & .86 & .87 & \textbf{.60} \\
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{l|cccccccc}
 \toprule
-Concept & RandG & RandS & LinProj & INLP & LEACE & IGBP & AmbGCE & TanGCE \\
+Concept & RandG & RandS & LinProj & INLP & LEACE & IGBP & \AmbGCE{} & \TanGCE{} \\
 \midrule
 5\_o\_Clock\_Shadow & +0.0 & +0.1 & -0.7 & +0.1 & +0.0 & +0.1 & -2.3 & -0.2 \\
 Arched\_Eyebrows & -1.3 & -2.3 & -1.2 & -0.8 & -1.1 & -2.5 & +0.6 & -0.6 \\
