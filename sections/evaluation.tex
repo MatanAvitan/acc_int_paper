@@ -1,0 +1,38 @@
+% Evaluation
+\section{Evaluation}
+\label{sec:evaluation}
+
+We evaluate each erasure method by training all probes from scratch on the erased representations, so that success cannot be attributed to leakage from the erasure scorer itself.
+
+\subsection{Metrics}
+
+\paragraph{Erasure precision.}
+Let $h^{\mathrm{NL}}$ be a nonlinear probe and $h^{\mathrm{L}}$ a linear probe trained on $\tilde{\mathbf{x}}_i$ to predict the target concept $y_i$. We report their test accuracies on the erased representations:
+\begin{equation}
+\label{eq:precision_metric}
+\mathrm{Prec}_{\mathrm{erase}}^{\mathrm{NL}} = \mathrm{Acc}(h^{\mathrm{NL}}(\tilde{\mathbf{X}}), y),
+\qquad
+\mathrm{Prec}_{\mathrm{erase}}^{\mathrm{L}} = \mathrm{Acc}(h^{\mathrm{L}}(\tilde{\mathbf{X}}), y).
+\end{equation}
+Lower values indicate stronger erasure. Because the target concepts in this paper are not assumed to be linearly encoded, the retrained nonlinear probe is the primary precision metric and the linear probe is a secondary diagnostic.
+
+\paragraph{Surgicality on control concepts.}
+Let $q$ be a predictor for an annotated control label $c$ (e.g., profession for gender erasure, helpfulness for safety, or selected low-correlation attributes in CelebA). We report the change in control performance relative to the clean representations:
+\begin{equation}
+\label{eq:surgicality_metric}
+\Delta_{\mathrm{ctrl}} = \mathrm{Acc}(q(\tilde{\mathbf{X}}), c) - \mathrm{Acc}(q(\mathbf{X}), c).
+\end{equation}
+Smaller $|\Delta_{\mathrm{ctrl}}|$ means the erasure is more surgical. In CelebA, where each target attribute is paired with multiple controls, we report the mean $\Delta_{\mathrm{ctrl}}$ across the selected controls.
+
+Together, these metrics ask whether an erasure method removes the target concept while preserving unrelated control concepts.
+
+\subsection{Evaluation Protocol}
+
+\paragraph{Fresh-probe evaluation.}
+The precision metric is intentionally strict: after every erasure method finishes, we train a \emph{new} probe on the erased representations. This follows the cautionary lesson of Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial}: if a freshly trained probe can still recover the concept, then the concept was not actually removed in the sense relevant for downstream use.
+
+\paragraph{Shared validation protocol.}
+Most methods share a common erasure strength parameter $\lambda$ (Eqs.~\ref{eq:ambient_erase} and~\ref{eq:tangent_erase}). Because TanGCE's tangent projection attenuates the effective step size by $\|\mathbf{u}_i^{\mathrm{tan}}\|^2 \leq 1$, a fixed $\lambda$ across methods would systematically under-erase for the tangent-constrained update. Rather than manually choosing different values, we adopt validation-based hyperparameter selection: all $\lambda$-based methods search the same grid $\lambda \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ and select the $\lambda^*$ that minimizes validation nonlinear probe accuracy. IGBP has no explicit $\lambda$ parameter---its step size is determined by each sample's distance to the decision boundary---so it runs until convergence.
+
+\paragraph{Domain-specific controls.}
+For sycophancy we use answer matching as the control concept; for Bias in Bios we use profession; for safety we use helpfulness; and for CelebA we use selected low-correlation facial attributes. This lets the evaluation distinguish targeted concept removal from broad representational damage.
