@@ -6,28 +6,28 @@ We evaluate seven erasure methods across three concept domains---sycophancy, gen
 
 \input{tables/full_comparison}
 
-\subsection{TanGCE Achieves the Best Erasure Precision Across All Domains}
+\subsection{\TanGCE{} Achieves the Best Erasure Precision Across All Domains}
 
-Table~\ref{tab:full_comparison} shows that TanGCE achieves the lowest nonlinear leakage across all three domains: 0.602 on sycophancy (vs.\ 0.681 for LEACE, 0.703 for Ambient GCE), 0.618 on gender (vs.\ 0.701 for Ambient GCE), and 0.663 on safety (vs.\ 0.778 for Ambient GCE). Linear methods (Linear Projection, INLP) barely reduce leakage below random baselines, confirming that concept information is predominantly encoded nonlinearly.
+Table~\ref{tab:full_comparison} shows that \TanGCE{} achieves the lowest nonlinear leakage across all three domains: 0.602 on sycophancy (vs.\ 0.681 for LEACE, 0.703 for \AmbGCE{}), 0.618 on gender (vs.\ 0.701 for \AmbGCE{}), and 0.663 on safety (vs.\ 0.778 for \AmbGCE{}). Linear methods (Linear Projection, INLP) barely reduce leakage below random baselines, confirming that concept information is predominantly encoded nonlinearly.
 
-\subsection{TanGCE Remains Surgical on Control Concepts}
+\subsection{\TanGCE{} Remains Surgical on Control Concepts}
 
-Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream control task accuracy relative to clean representations. For sycophancy (answer matching), TanGCE incurs a small $-1.5$pp drop; all other methods preserve perfect accuracy. For gender (profession classification), TanGCE drops only $-0.8$pp (0.531 vs.\ 0.539 clean). On safety, TanGCE \emph{improves} helpfulness ($+3.9$pp), suggesting that removing safety-concept directions frees capacity for the helpfulness task.
+Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream control task accuracy relative to clean representations. For sycophancy (answer matching), \TanGCE{} incurs a small $-1.5$pp drop; all other methods preserve perfect accuracy. For gender (profession classification), \TanGCE{} drops only $-0.8$pp (0.531 vs.\ 0.539 clean). On safety, \TanGCE{} \emph{improves} helpfulness ($+3.9$pp), suggesting that removing safety-concept directions frees capacity for the helpfulness task.
 
 \subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
 \label{sec:lambda_sweep}
 
 \input{tables/lambda_sweep}
 
-Table~\ref{tab:lambda_sweep} shows the central operating-point difference between ambient and tangent erasure. As $\lambda$ increases, Ambient GCE becomes unstable: its nonlinear leakage worsens sharply at high step sizes, rising to 0.734 on sycophancy, 0.702 on gender, and 0.770 on safety at $\lambda{=}8$. TanGCE behaves in the opposite way, improving as $\lambda$ increases and reaching its best precision at the largest tested step size in all three domains.
+Table~\ref{tab:lambda_sweep} shows the central operating-point difference between ambient and tangent erasure. As $\lambda$ increases, \AmbGCE{} becomes unstable: its nonlinear leakage worsens sharply at high step sizes, rising to 0.734 on sycophancy, 0.702 on gender, and 0.770 on safety at $\lambda{=}8$. \TanGCE{} behaves in the opposite way, improving as $\lambda$ increases and reaching its best precision at the largest tested step size in all three domains.
 
-This pattern is consistent with the manifold hypothesis motivating the method. If the ambient gradient has a substantial off-manifold component, then increasing $\lambda$ does not simply erase more target information; it also pushes the representation into regions where unrelated structure is distorted. Projecting onto the local tangent approximation suppresses those off-manifold components, which is why TanGCE can safely use larger erasure strengths.
+This pattern is consistent with the manifold hypothesis motivating the method. If the ambient gradient has a substantial off-manifold component, then increasing $\lambda$ does not simply erase more target information; it also pushes the representation into regions where unrelated structure is distorted. Projecting onto the local tangent approximation suppresses those off-manifold components, which is why \TanGCE{} can safely use larger erasure strengths.
 
 
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
 
-To test whether TanGCE generalizes beyond language model representations, we apply all erasure methods to CLIP ViT-B/32 embeddings of CelebA face images. CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls.
+To test whether \TanGCE{} generalizes beyond language model representations, we apply all erasure methods to CLIP ViT-B/32 embeddings of CelebA face images. CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls.
 
 \input{tables/celeba_clip_fair}
 
@@ -35,12 +35,12 @@ Table~\ref{tab:celeba_clip_fair} shows results on three representative concepts 
 
 \input{tables/celeba_clip_all40_summary}
 
-Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA attributes. The median selected $\lambda^*$ column confirms that TanGCE consistently selects higher $\lambda$ values than other methods---enabled by the tangent projection's attenuation of off-manifold displacement---while maintaining competitive control accuracy. Per-concept breakdowns for all 40 attributes (nonlinear leakage and mean $\Delta$Ctrl per method) are reported in Appendix~\ref{sec:appendix_celeba_per_concept}, Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl}.
+Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA attributes. The median selected $\lambda^*$ column confirms that \TanGCE{} consistently selects higher $\lambda$ values than other methods---enabled by the tangent projection's attenuation of off-manifold displacement---while maintaining competitive control accuracy. Per-concept breakdowns for all 40 attributes (nonlinear leakage and mean $\Delta$Ctrl per method) are reported in Appendix~\ref{sec:appendix_celeba_per_concept}, Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl}.
 
 \subsection{Geometric Evidence and Off-Manifold Displacement}
 \input{tables/geometry_contrast_summary}
 
-Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs.\ 51.8--55.8$^\circ$). This geometry contrast is consistent with sycophancy being the primary case for manifold-aware erasure methods, while the strong TanGCE results on gender demonstrate that the method generalizes even to approximately linear concepts.
+Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs.\ 51.8--55.8$^\circ$). This table intentionally focuses on the primary nonlinear case (sycophancy) and the diagnostic baseline (gender), rather than all datasets. The geometry contrast is consistent with sycophancy being the primary case for manifold-aware erasure methods, while the strong \TanGCE{} results on gender demonstrate that the method generalizes even to approximately linear concepts. Broader task coverage is reported in Table~\ref{tab:full_comparison} for the three text domains and in the all-40 CelebA appendix tables for the visual domain.
 
 \paragraph{Appendix-Supporting Evidence.}
 Detailed geometric analyses supporting these claims are provided in the Appendix, including:
