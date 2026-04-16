@@ -2,7 +2,7 @@
 \section{Results}
 \label{sec:results}
 
-We evaluate seven erasure methods across three concept domains---sycophancy, gender (Bias in Bios), and safety---at layer~8 of Qwen2.5-0.5B. Each method's erasure strength $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison (Section~\ref{sec:experiments}). Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance.
+We evaluate seven erasure methods across three concept domains---sycophancy, gender (Bias in Bios), and safety---at layer~8 of Qwen2.5-0.5B. Each method's erasure strength $\lambda^*$ is selected from the same shared validation protocol described in Section~\ref{sec:evaluation}. Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance.
 
 \input{tables/full_comparison}
 
@@ -40,7 +40,7 @@ Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA
 \subsection{Geometric Evidence and Off-Manifold Displacement}
 \input{tables/geometry_contrast_summary}
 
-Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs.\ 51.8--55.8$^\circ$). This geometry contrast validates sycophancy as the primary case for manifold-aware erasure methods, while the strong TanGCE results on gender demonstrate that the method generalizes even to approximately linear concepts.
+Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs.\ 51.8--55.8$^\circ$). This geometry contrast is consistent with sycophancy being the primary case for manifold-aware erasure methods, while the strong TanGCE results on gender demonstrate that the method generalizes even to approximately linear concepts.
 
 \paragraph{Appendix-Supporting Evidence.}
 Detailed geometric analyses supporting these claims are provided in the Appendix, including:
