@@ -18,13 +18,6 @@ Yanai Elazar and Yoav Goldberg.
 \newblock \doi{10.18653/v1/D18-1002}.
 \newblock URL \url{https://aclanthology.org/D18-1002/}.
 
-\bibitem[Elazar et~al.(2021)Elazar, Ravfogel, Jacovi, and Goldberg]{elazar-etal-2021-amnesic}
-Yanai Elazar, Shauli Ravfogel, Alon Jacovi, and Yoav Goldberg.
-\newblock Amnesic probing: Behavioral explanation with amnesic counterfactuals.
-\newblock \emph{Transactions of the Association for Computational Linguistics}, 9:\penalty0 160--175, 2021.
-\newblock \doi{10.1162/tacl_a_00359}.
-\newblock URL \url{https://aclanthology.org/2021.tacl-1.10/}.
-
 \bibitem[Iskander et~al.(2023)Iskander, Radinsky, and Belinkov]{iskander-etal-2023-shielded}
 Shadi Iskander, Kira Radinsky, and Yonatan Belinkov.
 \newblock Shielded representations: Protecting sensitive attributes through iterative gradient-based projection.
@@ -38,5 +31,12 @@ Shauli Ravfogel, Yanai Elazar, Hila Gonen, Michael Twiton, and Yoav Goldberg.
 \newblock In \emph{Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}, pages 7237--7256, Online, 2020. Association for Computational Linguistics.
 \newblock \doi{10.18653/v1/2020.acl-main.647}.
 \newblock URL \url{https://aclanthology.org/2020.acl-main.647/}.
+
+\bibitem[Tu(2011)]{tu-2011-manifolds}
+Loring~W. Tu.
+\newblock \emph{An Introduction to Manifolds}.
+\newblock Universitext. Springer, 2 edition, 2011.
+\newblock \doi{10.1007/978-1-4419-7400-6}.
+\newblock URL \url{https://luis.impa.br/aulas/anvar/Tu_AnIntroductionToManifolds.pdf}.
 
 \end{thebibliography}
