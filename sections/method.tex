@@ -1,15 +1,58 @@
-% Method — Implementation Details
-% (Formal definitions are in Section~\ref{sec:notation}; this section describes the iterative protocol.)
+% Method — first full presentation of TanGCE
 
 \section{Method: TanGCE}
 \label{sec:method}
 
-TanGCE is motivated by a mismatch between ambient dimension and effective representation dimension. The hidden space of the model may be large, but the representations of actual sentences need not explore all of it; they can concentrate near a much lower-dimensional natural manifold. In that regime, an unrestricted gradient step is likely to contain a substantial off-manifold component. TanGCE addresses exactly this failure mode by restricting the erasure update to a local tangent approximation of the manifold.
+We now introduce \emph{Tangent Gradient-based Concept Erasure} (TanGCE), the method presented in this paper. The method is built from the geometric background above: if the representation support is locally approximated by an embedded manifold $\mathcal{M} \subset \mathbb{R}^d$, then the ambient erasure gradient should be edited so that the update moves along the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than along directions normal to the manifold.
 
-We implement TanGCE using an iterative protocol with probe recycling. The rationale is simple: success against a single trained classifier is not evidence that the concept has been exhausted. Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial} showed that even when an adversarial removal objective appears successful, a new post-hoc classifier can still recover the protected attribute. Iterative linear methods such as INLP \citep{ravfogel-etal-2020-null} and intervention-based analyses such as amnesic probing \citep{elazar-etal-2021-amnesic} build on the same insight. We adopt that logic directly in the nonlinear setting.
+\subsection{Local tangent estimation}
 
-Each round of TanGCE begins by training a fresh concept scorer on the current (possibly already partially erased) representations, computing per-sample gradients, and applying the tangent-constrained erasure step (Eq.~\ref{eq:tangent_erase}). This turns the method into an iterative nonlinear eraser: every new scorer is trained specifically to recover whatever target information survived the previous round. The tangent estimator is refit in every round to track the evolving local geometry as the representations shift.
+For each query point $\mathbf{x}_i$, we estimate the tangent space $T_{\mathbf{x}_i}\mathcal{M}$ via local PCA on its $k$-nearest neighbors. Let $\mathcal{N}_k(\mathbf{x}_i) = \{\mathbf{x}_{j_1}, \ldots, \mathbf{x}_{j_k}\}$ denote the $k$ nearest neighbors of $\mathbf{x}_i$ in the training set. We form secant vectors $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ and compute the local covariance:
+\begin{equation}
+\label{eq:local_cov}
+\mathbf{C}_i = \frac{1}{k} \sum_{m=1}^{k} \mathbf{s}_{j_m} \mathbf{s}_{j_m}^\top \in \mathbb{R}^{d \times d}.
+\end{equation}
+The top $r$ eigenvectors of $\mathbf{C}_i$ form the tangent basis
+\begin{equation}
+\label{eq:tangent_basis}
+\mathbf{B}_i = [\mathbf{b}_i^{(1)}, \ldots, \mathbf{b}_i^{(r)}] \in \mathbb{R}^{d \times r},
+\end{equation}
+where the intrinsic dimension $r$ is selected automatically by a retained-variance rule. The resulting orthogonal projector onto the estimated tangent space is
+\begin{equation}
+\label{eq:tangent_proj}
+\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top.
+\end{equation}
 
-This setup also clarifies the relationship between TanGCE, Ambient GCE, and IGBP. IGBP \citep{iskander-etal-2023-shielded} performs a one-shot correction to the current decision boundary in each round and serves as the closest prior nonlinear baseline. Ambient GCE is our ablation: it keeps the same fresh-scorer loop but replaces the exact boundary projection with a controllable $\lambda$-scaled gradient update in the ambient space. TanGCE is the full method, adding the manifold constraint by projecting that ambient update onto the local tangent space.
+This is the empirical analogue of the differential-geometric tangent space from Section~\ref{sec:notation}: the neighborhood PCA basis provides a local linear model of the chart image around $\mathbf{x}_i$.
 
-Two diagnostics verify tangent quality throughout the iterative process. \emph{Tangent Gradient Capture} (TGC) measures the fraction of the leakage gradient that lies within the estimated tangent space. \emph{Tangent Neighbor Residual} (TNR) measures the fraction of local secant vectors not explained by the tangent basis. High TGC and low TNR confirm that the tangent estimation remains geometrically sound.
+\subsection{Tangent-constrained update}
+
+Given the ambient erasure direction $\mathbf{u}_i$ from Eq.~\ref{eq:ambient_direction}, TanGCE defines the tangent-constrained direction by projecting onto the local tangent space:
+\begin{equation}
+\label{eq:tangent_direction}
+\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \, \mathbf{u}_i = \mathbf{B}_i (\mathbf{B}_i^\top \mathbf{u}_i).
+\end{equation}
+The projected direction is \emph{not} re-normalized to unit length. Its norm $\|\mathbf{u}_i^{\mathrm{tan}}\| \leq 1$ acts as a confidence weight: when the ambient concept gradient is mostly normal to the manifold, $\|\mathbf{u}_i^{\mathrm{tan}}\| \ll 1$, and the edit is naturally attenuated.
+
+TanGCE then applies the update
+\begin{equation}
+\label{eq:tangent_erase}
+\tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}.
+\end{equation}
+The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$, which is maximized when the gradient lies entirely in the tangent space and vanishes when it is entirely off-manifold.
+
+This construction is the core difference between TanGCE and its ambient counterpart. Ambient GCE applies the update in the full hidden space, whereas TanGCE restricts the update to tangent directions supported by the local geometry of the representations.
+
+\subsection{Why tangent projection permits larger $\lambda$}
+
+Ambient GCE edits $\mathbf{x}_i$ along $\mathbf{u}_i \in \mathbb{R}^d$, which can contain a large normal component relative to $T_{\mathbf{x}_i}\mathcal{M}$. If $\mathbf{u}_i^{\perp}$ is large, increasing $\lambda$ pushes the representation away from the local manifold approximation and can distort unrelated structure or preserve recoverable signal. TanGCE removes this normal component at first order by replacing $\mathbf{u}_i$ with $\mathbf{u}_i^{\mathrm{tan}}$. This is the geometric reason the method can operate at larger erasure strengths than ambient updates.
+
+\subsection{Iterative TanGCE and relation to baselines}
+
+We implement TanGCE using an iterative protocol with probe recycling. Each round begins by training a fresh concept scorer on the current representations, computing per-sample gradients, and applying the tangent-constrained update in Eq.~\ref{eq:tangent_erase}. This turns the method into an iterative nonlinear eraser: every new scorer is trained specifically to recover whatever target information survived the previous round. The tangent estimator is also refit in every round to track the evolving local geometry.
+
+The rationale follows Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial}: success against a single trained classifier is not evidence that the concept has been exhausted. We therefore evaluate every erasure method against a retrained probe after each full erasure procedure, and the erasure itself iterates to remove residual recoverable signal.
+
+This setup also clarifies the relation between TanGCE and the baselines. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline, performing a one-shot correction to the current decision boundary in each round. Ambient GCE is the direct ablation of TanGCE: it keeps the same fresh-scorer loop but applies the update in the full ambient space. TanGCE is the full method, adding the tangent-space restriction.
+
+Two diagnostics verify tangent quality throughout the iterative process. \emph{Tangent Gradient Capture} (TGC) measures the fraction of the leakage gradient lying within the estimated tangent space. \emph{Tangent Neighbor Residual} (TNR) measures the fraction of local secant variation not explained by the tangent basis. High TGC and low TNR indicate that the local linear approximation is sufficiently faithful for the tangent-constrained update to be meaningful.

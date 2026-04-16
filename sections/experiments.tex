@@ -2,7 +2,7 @@
 \section{Experiments}
 \label{sec:experiments}
 
-Our experimental evaluation tests TanGCE across two modalities---language model hidden states and vision encoder embeddings---spanning four concept domains. The baselines are included to answer a focused question: does tangent-constrained nonlinear erasure improve precision and surgicality relative to ambient and prior alternatives?
+This section describes the empirical setup used to compare TanGCE to linear, ambient, and prior nonlinear baselines. The evaluation metrics and the shared validation protocol are defined separately in Section~\ref{sec:evaluation}.
 
 \subsection{Experimental Domains}
 We evaluate our methods across four blocks:
@@ -18,21 +18,9 @@ We evaluate our methods across four blocks:
 
 \paragraph{Vision encoder.} The CelebA experiments use CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim), extracted once and cached.
 
-\paragraph{Methods.} The main quantitative comparison evaluates TanGCE against seven baselines and ablations: two random baselines (global and per-sample direction), linear projection, INLP \citep{ravfogel-etal-2020-null}, LEACE \citep{belrose-etal-2023-leace}, IGBP \citep{iskander-etal-2023-shielded}, and Ambient GCE. IGBP iteratively trains two-class MLP probes and retracts representations to the decision boundary via Newton steps (Eq.~\ref{eq:igbp}), making it the closest prior nonlinear baseline. Ambient GCE is our direct ablation of TanGCE: it uses the same scorer-training loop but applies the update in the full ambient space. TanGCE adds the key ingredient of the paper by estimating local tangent spaces with PCA-based neighborhoods and restricting the erasure direction to a local on-manifold approximation rather than the full ambient space.
-
-\paragraph{Fair $\lambda$ selection.}
-Most methods share a common erasure strength parameter $\lambda$ (Eq.~\ref{eq:ambient_erase}, \ref{eq:tangent_erase}). Because TanGCE's tangent projection attenuates the effective step size (by $\|\mathbf{u}_i^{\mathrm{tan}}\|^2 \leq 1$), a fixed $\lambda$ across methods would systematically under-erase for TanGCE. Rather than manually choosing different $\lambda$ values---which risks unfair comparison---we adopt validation-based hyperparameter selection: all $\lambda$-based methods search the same grid $\lambda \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ and select the $\lambda^*$ that minimizes validation nonlinear probe accuracy (i.e., maximizes erasure on held-out data). IGBP has no $\lambda$ parameter---its step size is determined by each sample's distance to the decision boundary (Eq.~\ref{eq:igbp})---so it runs its iterative procedure until convergence. This ensures each method gets its best shot at erasure under a common protocol.
+\paragraph{Methods.} The core quantitative comparison evaluates TanGCE against six baselines and ablations: two random baselines (global and per-sample direction), linear projection, INLP \citep{ravfogel-etal-2020-null}, LEACE \citep{belrose-etal-2023-leace}, and Ambient GCE. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline and serves as the main methodological reference point for the GCE family: it iteratively trains two-class MLP probes and retracts representations to the decision boundary via Newton steps (Eq.~\ref{eq:igbp}). Ambient GCE is our direct ablation of TanGCE: it uses the same scorer-training loop but applies the update in the full ambient space. TanGCE adds the key ingredient of the paper by estimating local tangent spaces with PCA-based neighborhoods and restricting the erasure direction to a local on-manifold approximation rather than the full ambient space.
 
 \input{tables/method_comparison_scope}
-
-\subsection{Evaluation Protocol}
-All leakage probes are trained from scratch on erased representations to ensure no information leaks from the erasure scorers themselves. Our main evaluation is supervised and centered on two quantities: erasure precision on the target concept and surgicality on control concepts.
-
-\paragraph{Erasure precision.} A retrained nonlinear MLP probe measures whether target-concept information remains accessible after erasure. This nonlinear probe is our primary metric because the target concepts in this paper are not assumed to be linearly encoded. We also report retrained linear probe accuracy as a secondary diagnostic to show how much of the residual leakage is linearly decodable.
-
-\paragraph{Surgicality on control concepts.} For each domain we identify an annotated control concept that should be preserved under erasure: answer matching for sycophancy, profession for Bias in Bios, helpfulness for safety, and selected low-correlation facial attributes for CelebA. We report the change in control-task accuracy relative to clean representations ($\Delta$Ctrl). Values near zero indicate that the intervention removed the target concept without disrupting unrelated task-relevant structure.
-
-\paragraph{Iterative evaluation.} The precision metric is intentionally strict: after every erasure method finishes, we train a \emph{new} probe on the erased representations. This follows the cautionary lesson of Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial}: if a fresh classifier can still recover the concept, then the concept was not actually removed in the sense relevant for downstream use.
 
 \subsection{Geometric Foundation (Appendix Support)}
 While the main text focuses on the performance of \texttt{gce\_tangent}, we also provide geometric diagnostics to ground the mechanism story. These include broad geometry sweeps across multiple datasets and layers, subspace projection sensitivity (Q1), perturbation-based subspace sensitivity tests (Q2), and representation connectivity analyses (Q3). These appendix-scale materials support the low-dimensional and nonlinear-geometry motivation for tangent projection, but they should not be read as a standalone causal proof that off-manifold displacement fully explains the observed utility tradeoffs.
