@@ -1,6 +1,6 @@
 \begin{table*}[t]
 \centering
-\caption{CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda$). Each method's $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta$Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 \texttt{pooler\_output} (768-dim).}
+\caption{CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda$). Each method's $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy, ensuring a fair comparison. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta$Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 pooled embedding (768 dimensions).}
 \label{tab:celeba_clip_fair}
 \small
 \setlength{\tabcolsep}{3.5pt}
