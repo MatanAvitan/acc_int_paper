@@ -247,6 +247,8 @@ INPUT ./sections/results.tex
 INPUT ./sections/results.tex
 INPUT ./sections/results.tex
 INPUT sections/results.tex
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT ./tables/full_comparison.tex
 INPUT ./tables/full_comparison.tex
 INPUT ./tables/full_comparison.tex
@@ -268,8 +270,6 @@ INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/symbo
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT ./tables/lambda_sweep.tex
 INPUT ./tables/lambda_sweep.tex
 INPUT ./tables/lambda_sweep.tex
@@ -298,12 +298,12 @@ INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8c.tfm
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmr8c.vf
 INPUT ./sections/discussion.tex
 INPUT ./sections/discussion.tex
 INPUT ./sections/discussion.tex
 INPUT ./sections/discussion.tex
 INPUT sections/discussion.tex
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmr8c.vf
 INPUT ./sections/limitations.tex
 INPUT ./sections/limitations.tex
 INPUT ./sections/limitations.tex
