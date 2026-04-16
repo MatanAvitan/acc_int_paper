@@ -19,7 +19,7 @@ Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream c
 
 \input{tables/lambda_sweep}
 
-Table~\ref{tab:lambda_sweep} shows the central operating-point difference between ambient and tangent erasure. As $\lambda$ increases, \AmbGCE{} becomes unstable: its nonlinear leakage worsens sharply at high step sizes, rising to 0.734 on sycophancy, 0.702 on gender, and 0.770 on safety at $\lambda{=}8$. \TanGCE{} behaves in the opposite way, improving as $\lambda$ increases and reaching its best precision at the largest tested step size in all three domains.
+Table~\ref{tab:lambda_sweep} isolates the effect of step size by running only \AmbGCE{} and \TanGCE{} at three fixed $\lambda$ values ($0.5, 4.0, 8.0$) on the same three domains as above (Qwen2.5-0.5B, layer~8, same train/val/test splits and fresh-probe evaluation protocol as in Section~\ref{sec:evaluation}). As $\lambda$ increases, \AmbGCE{} becomes unstable: its nonlinear leakage worsens sharply at high step sizes, rising to 0.734 on sycophancy, 0.702 on gender, and 0.770 on safety at $\lambda{=}8$. \TanGCE{} behaves in the opposite way, improving as $\lambda$ increases and reaching its best precision at the largest tested step size in all three domains.
 
 This pattern is consistent with the manifold hypothesis motivating the method. If the ambient gradient has a substantial off-manifold component, then increasing $\lambda$ does not simply erase more target information; it also pushes the representation into regions where unrelated structure is distorted. Projecting onto the local tangent approximation suppresses those off-manifold components, which is why \TanGCE{} can safely use larger erasure strengths.
 
@@ -27,7 +27,7 @@ This pattern is consistent with the manifold hypothesis motivating the method. I
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
 
-To test whether \TanGCE{} generalizes beyond language model representations, we apply all erasure methods to CLIP ViT-B/32 embeddings of CelebA face images. CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls.
+To test whether \TanGCE{} generalizes beyond language model representations, we apply all seven erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) of CelebA face images (see Section~\ref{sec:experiments} for preprocessing and split details). CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls. The same validation-HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy) is applied uniformly across all methods.
 
 We treat this cross-modal block as a generality check rather than the primary evidence block for the paper's central claim.
 

@@ -1,36 +1,25 @@
 \begin{table}[t]
 \centering
-\caption{$\lambda$ sweep comparing \AmbGCE{} and \TanGCE{} at matched $\lambda$ values ($\lambda \in \{0.5, 4.0, 8.0\}$) at layer 8. NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure precision). \AmbGCE{} deteriorates at high $\lambda$, while \TanGCE{} continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths.}
+\caption{$\lambda$ sweep comparing \AmbGCE{} and \TanGCE{} at matched step sizes across three concept domains (Qwen2.5-0.5B, layer~8). NL: retrained nonlinear probe accuracy on the target concept (lower = stronger erasure). \AmbGCE{} deteriorates at high $\lambda$ (rising leakage), while \TanGCE{} continues improving, supporting the claim that on-manifold updates can safely employ larger erasure strengths. Bold: best NL per domain.}
 \label{tab:lambda_sweep}
 \small
-\setlength{\tabcolsep}{6pt}
-\begin{tabular}{ll|cc}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{ll|ccc}
 \toprule
-Concept & Method & $\lambda$ & NL$\downarrow$ \\
+ & & \multicolumn{3}{c}{NL$\downarrow$ at $\lambda=$} \\
+Concept & Method & $0.5$ & $4.0$ & $8.0$ \\
 \midrule
-\multirow{6}{*}{Syco.}
-& \AmbGCE{} & 0.5 & .678 \\
-& \TanGCE{}  & 0.5 & .662 \\
-& \AmbGCE{} & 4.0 & .694 \\
-& \TanGCE{}  & 4.0 & .596 \\
-& \AmbGCE{} & 8.0 & .734 \\
-& \TanGCE{}  & 8.0 & \textbf{.588} \\
+\multirow{2}{*}{Sycophancy}
+ & \AmbGCE{} & .678 & .694 & .734 \\
+ & \TanGCE{}  & .662 & .596 & \textbf{.588} \\
 \midrule
-\multirow{6}{*}{Gender}
-& \AmbGCE{} & 0.5 & .666 \\
-& \TanGCE{}  & 0.5 & .704 \\
-& \AmbGCE{} & 4.0 & .700 \\
-& \TanGCE{}  & 4.0 & .580 \\
-& \AmbGCE{} & 8.0 & .702 \\
-& \TanGCE{}  & 8.0 & \textbf{.470} \\
+\multirow{2}{*}{Gender}
+ & \AmbGCE{} & .666 & .700 & .702 \\
+ & \TanGCE{}  & .704 & .580 & \textbf{.470} \\
 \midrule
-\multirow{6}{*}{Safety}
-& \AmbGCE{} & 0.5 & .664 \\
-& \TanGCE{}  & 0.5 & .748 \\
-& \AmbGCE{} & 4.0 & .776 \\
-& \TanGCE{}  & 4.0 & .680 \\
-& \AmbGCE{} & 8.0 & .770 \\
-& \TanGCE{}  & 8.0 & \textbf{.646} \\
+\multirow{2}{*}{Safety}
+ & \AmbGCE{} & .664 & .776 & .770 \\
+ & \TanGCE{}  & .748 & .680 & \textbf{.646} \\
 \bottomrule
 \end{tabular}
 \end{table}
