@@ -39,18 +39,50 @@ Table~\ref{tab:celeba_clip_fair} shows results on three representative concepts 
 
 Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA attributes. The median selected $\lambda^*$ column confirms that \TanGCE{} consistently selects higher $\lambda$ values than other methods---enabled by the tangent projection's attenuation of off-manifold displacement---while maintaining competitive control accuracy. Per-concept breakdowns for all 40 attributes (nonlinear leakage and mean $\Delta$Ctrl per method) are reported in Appendix~\ref{sec:appendix_celeba_per_concept}, Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl}.
 
-\subsection{Geometric Evidence and Off-Manifold Displacement}
-Beyond the main erasure comparisons, we also report geometric diagnostics to ground the mechanism story. These include subspace-sufficiency analyses, perturbation-sensitivity tests, and representation-connectivity analyses. These appendix-scale materials support the low-dimensional and nonlinear-geometry motivation for tangent projection, but they should not be read as a standalone causal proof that off-manifold displacement fully explains the observed utility tradeoffs.
+\subsection{Geometric Characterization: Subspace Isolation and Sensitivity Concentration}
+\label{sec:geometry}
+
+The preceding results establish that \TanGCE{} achieves stronger nonlinear erasure than \AmbGCE{}. This subsection provides two empirical measurements that explain \emph{why} tangent projection is particularly effective for sycophancy: the concept's intrinsic subspace is geometrically isolated from other task subspaces, and that isolated subspace is the primary carrier of task-relevant computation.
+
+\paragraph{Experimental setup.}
+We run two diagnostic experiments on layer~8 representations of Qwen2.5-0.5B across five domains: Bias in Bios (gender), code generation, mathematical reasoning, content safety, and sycophancy. For each domain we collect 500 labeled representations and estimate the intrinsic dimension $m$ via a retained-variance rule applied to a held-out reference set of 2{,}000 samples (not used in erasure training). All geometry experiments use the same evaluation split as the main comparison.
+
+\paragraph{Q1: Cross-domain subspace transfer.}
+For each ordered pair of domains $(\mathrm{src}, \mathrm{tgt})$, we fit PCA on \emph{target}-domain representations to dimension $k \approx m_{\mathrm{tgt}}$, project \emph{source}-domain representations onto the resulting subspace, and measure top-1 next-token agreement and KL divergence relative to the unmodified source representations. High top-1 agreement indicates that the source domain's representations lie within the target's intrinsic subspace; agreement collapse indicates geometric orthogonality between the two concept subspaces.
+
+Figure~\ref{fig:geom_combined} (left) shows the resulting $5 \times 5$ transfer matrix. The diagonal is uniformly high (top-1 $\geq 0.88$), confirming that each domain's intrinsic subspace captures the directions that matter for its own predictions. Off the diagonal, sycophancy is the structural outlier: projecting sycophancy representations onto the biasbios subspace yields top-1 agreement of $0.002$ ($\mathrm{KL} = 7.4$), and onto the code subspace gives $0.13$ ($\mathrm{KL} = 6.6$). No other pair in the matrix approaches this degree of isolation. Conversely, math and safety share substantial subspace overlap (mutual top-1 $\approx 0.88$--$0.92$), consistent with those tasks drawing on similar general-language structure. The pattern is stable across layers~4, 8, and 16 (Appendix~\ref{sec:appendix_snapshots}).
+
+This isolation has a direct implication for ambient-space erasure. When the sycophancy concept gradient is applied in the full hidden space, it necessarily has components that project onto the biasbios and code subspaces---directions whose off-diagonal transfer is near zero and that therefore carry no sycophancy signal whatsoever. \TanGCE{} attenuates those components by restricting the update to the local tangent space, which approximates the directions actually used by the representations. \AmbGCE{} applies the full ambient gradient, including its projections onto these geometrically irrelevant directions.
+
+\paragraph{Q2: Perturbation sensitivity.}
+To verify that the identified subspaces are causally load-bearing and not merely high-variance summaries, we perturb each sample by $\epsilon \|\mathbf{x}\|$ in three directions: a random direction drawn uniformly within the intrinsic subspace (on-manifold), a random direction orthogonal to it (off-manifold), and a random ambient direction. We then compare top-1 next-token agreement under the three perturbation types. A ratio $\mathrm{off\text{-}top1} / \mathrm{on\text{-}top1} > 1$ indicates that on-subspace perturbations are more disruptive than equal-magnitude off-subspace perturbations---that is, the subspace carries task-relevant computation, not merely low-dimensional structure.
+
+Figure~\ref{fig:geom_combined} (right) shows the off/on top-1 ratio at $\epsilon = 0.5$ for all 25 domain pairs. Along the diagonal---where the source representations and the subspace belong to the same domain---all five ratios exceed~1, confirming that intrinsic subspaces concentrate task-relevant computation. The effect is sharpest for sycophancy (ratio $= 1.16$): an on-manifold perturbation of unit norm is $16\%$ more destructive than an equal off-manifold perturbation, the largest sensitivity asymmetry among the five domains. The effect is consistent at $\epsilon = 1.0$ and $\epsilon = 2.0$ (Appendix~\ref{sec:appendix_snapshots}).
+
+The off-diagonal cells reinforce the isolation result from Q1. For biasbios and code representations perturbed within the \emph{sycophancy} subspace (column~5, rows~1--2), the off/on ratio falls to $0.79$ and $0.72$: perturbations within the sycophancy subspace are actually \emph{less} disruptive to biasbios and code predictions than perturbations orthogonal to it. The sycophancy subspace is a null direction for those tasks. This means that ambient erasure updates, which have nonzero projections onto the sycophancy subspace, will inadvertently interfere with the orthogonal structure that biasbios and code actually use.
+
+\paragraph{Geometric summary.}
+Taken together, Q1 and Q2 establish three properties of the sycophancy concept at layer~8: its intrinsic subspace is geometrically isolated from other task subspaces (Q1 off-diagonal), it is self-sufficient for sycophancy computation (Q1 diagonal and Q2 diagonal), and it is a null direction for unrelated tasks (Q2 off-diagonal). These are the empirical preconditions for the tangent-constraint design: \TanGCE{} restricts updates to the directions where sycophancy computation lives, while attenuating the ambient components that land in geometrically irrelevant---or actively null---regions of the hidden space.
 
 \input{tables/geometry_contrast_summary}
 
-Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs.\ 51.8--55.8$^\circ$). This table intentionally focuses on the primary nonlinear case (sycophancy) and the diagnostic baseline (gender), rather than all datasets. The geometry contrast is consistent with sycophancy being the primary case for manifold-aware erasure methods, while the strong \TanGCE{} results on gender demonstrate that the method generalizes even to approximately linear concepts. Broader task coverage is reported in Table~\ref{tab:full_comparison} for the three text domains and in the all-40 CelebA appendix tables for the visual domain.
+Table~\ref{tab:geometry_contrast_summary} places these measurements in the context of nonlinearity: sycophancy's intrinsic dimension (34--53 across layers 4, 8, 12) is more than an order of magnitude smaller than gender's (365--461), and its local-vs-global angle (76.9--82.6$^\circ$) indicates that the local tangent direction rotates substantially across the input space---a hallmark of curved concept geometry. The geometry contrast is consistent with sycophancy being the primary case for manifold-aware erasure, while \TanGCE{}'s strong results on gender show that the method generalizes to more linear concepts as well.
 
-\paragraph{Appendix-Supporting Evidence.}
-Detailed geometric analyses supporting these claims are provided in the Appendix, including:
-\begin{itemize}
-    \item \textbf{Subspace Sufficiency:} Evidence that task-specific computation is concentrated in a low-dimensional linear subspace.
-    \item \textbf{Perturbation Sensitivity:} Comparison of perturbations in high-variance and orthogonal subspaces.
-    \item \textbf{Representation Connectivity:} Analysis of the connected, approximately convex topology of the representation manifold.
-    \item \textbf{Multi-Layer Accumulation:} Results on how projection error accumulates across the network.
-\end{itemize}
+\begin{figure}[t]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Q1_L8_top1.png}
+    \caption{Q1: cross-domain subspace transfer (top-1 next-token agreement, $k \approx m_{\mathrm{tgt}}$). Each cell measures how well source-domain representations are preserved when projected onto the intrinsic subspace of the target domain. High diagonal values confirm subspace self-sufficiency. Sycophancy is the structural outlier: its row has near-zero off-diagonal transfer to biasbios (0.002) and code (0.13), indicating that sycophancy representations occupy a geometrically isolated region of the hidden space.}
+    \label{fig:q1_transfer}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Q2_L8_top1_agreement_ratio.png}
+    \caption{Q2: perturbation sensitivity (off/on top-1 agreement ratio, $\epsilon = 0.5$). Values above~1 (red) indicate that on-subspace perturbations are more disruptive than equally sized off-subspace perturbations, confirming that the subspace is the primary carrier of task-relevant computation. The sycophancy diagonal entry ($1.16$, darkest red) shows the strongest concentration among the five domains. Blue off-diagonal entries in the sycophancy column ($0.79$, $0.72$) indicate that the sycophancy subspace is a null direction for biasbios and code predictions.}
+    \label{fig:q2_sensitivity}
+\end{subfigure}
+\caption{Geometric diagnostics at layer~8 of Qwen2.5-0.5B across five domains (biasbios, code, math, safety, sycophancy). Rows index the source domain whose representations are used; columns index the domain whose intrinsic subspace is applied. \textbf{Left (Q1):} subspace transfer matrix. \textbf{Right (Q2):} perturbation sensitivity ratio. Both experiments use 500 evaluation samples per domain; the Q1 intrinsic-dimension estimates use an additional 2{,}000 held-out reference samples not used in erasure training.}
+\label{fig:geom_combined}
+\end{figure}
