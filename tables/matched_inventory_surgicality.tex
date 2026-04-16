@@ -1,14 +1,14 @@
 \begin{table}[t]
 \centering
-\caption{Current matched layer-8 Qwen surgicality inventory across the implemented method set. Entries report \texttt{downstream\_accuracy\_delta}: profession preservation for Bias in Bios and answer-matching delta for sycophancy. Values closer to zero are better.}
+\caption{Matched layer-8 Qwen surgicality summary across the compared method set. Entries report downstream accuracy change: profession preservation for Bias in Bios and answer-matching change for sycophancy. Values closer to zero are better.}
 \label{tab:matched_inventory_surgicality}
 \small
 \begin{tabular}{lcc}
 \toprule
 Method & Gender delta & Sycophancy delta \\
 \midrule
-\texttt{gce\_tangent} & -0.0250 & -0.1800 \\
-\texttt{gce\_ambient} & 0.0000 & -0.1408 \\
+\TanGCE{} & -0.0250 & -0.1800 \\
+\AmbGCE{} & 0.0000 & -0.1408 \\
 INLP & 0.0004 & -0.1663 \\
 LEACE & -0.0063 & -0.1033 \\
 Linear projection & 0.0004 & -0.1663 \\
