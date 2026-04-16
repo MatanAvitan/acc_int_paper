@@ -41,7 +41,7 @@ For any ambient vector $\mathbf{g} \in \mathbb{R}^d$ attached to the point $\mat
 \quad
 \mathbf{g}^{\perp} \perp T_{\mathbf{x}}\mathcal{M}.
 \end{equation}
-Here $\mathbf{g}^{\top}$ is the tangent component, namely the part of $\mathbf{g}$ that moves along the manifold, and $\mathbf{g}^{\perp}$ is the normal component, namely the part that points away from the manifold. In this local approximation, the tangent component changes the representation along directions already available in natural data, while the normal component is the first-order source of off-manifold displacement. This is the geometric distinction used later by TanGCE: ambient gradient updates may contain both parts, but tangent-projected updates keep only the component that remains aligned with the local geometry of plausible representations.
+Here $\mathbf{g}^{\top}$ is the tangent component, namely the part of $\mathbf{g}$ that moves along the manifold, and $\mathbf{g}^{\perp}$ is the normal component, namely the part that points away from the manifold. In this local approximation, the tangent component changes the representation along directions already available in natural data, while the normal component is the first-order source of off-manifold displacement. This is the geometric distinction used later by \TanGCE{}: ambient gradient updates may contain both parts, but tangent-projected updates keep only the component that remains aligned with the local geometry of plausible representations.
 
 \paragraph{Recoverability after erasure.}
 Throughout the paper, concept removal is judged only after training a \emph{fresh} probe on the edited representations. This follows the lesson of \citet{elazar-goldberg-2018-adversarial}: erasure succeeds only if a newly trained classifier still fails to recover the concept from $\tilde{\mathbf{x}}$.
@@ -92,10 +92,10 @@ IGBP \citep{iskander-etal-2023-shielded} trains a two-class MLP probe $g_\phi : 
 \label{eq:igbp}
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \frac{\nabla_{\mathbf{x}} L_i}{\|\boldsymbol{\theta}_i\|^2}, \qquad \boldsymbol{\theta}_i = \frac{\nabla_{\mathbf{x}} L_i}{\operatorname{logit}(p_i)},
 \end{equation}
-where $\operatorname{logit}(p) = \log\frac{p}{1-p}$. This is a Newton step that projects $\mathbf{x}_i$ onto the level set $\operatorname{logit}(p_i) = 0$ (i.e., $p_i = 0.5$, the decision boundary). Within each round, IGBP is therefore a one-shot boundary correction for the current scorer. The procedure then iterates: after projection, a fresh probe is trained on the projected representations and the process repeats until leakage falls to majority accuracy. Unlike Ambient GCE (below), IGBP has no explicit $\lambda$ parameter---the step size is determined by each sample's distance to the decision boundary.
+where $\operatorname{logit}(p) = \log\frac{p}{1-p}$. This is a Newton step that projects $\mathbf{x}_i$ onto the level set $\operatorname{logit}(p_i) = 0$ (i.e., $p_i = 0.5$, the decision boundary). Within each round, IGBP is therefore a one-shot boundary correction for the current scorer. The procedure then iterates: after projection, a fresh probe is trained on the projected representations and the process repeats until leakage falls to majority accuracy. Unlike \AmbGCE{} (below), IGBP has no explicit $\lambda$ parameter---the step size is determined by each sample's distance to the decision boundary.
 
-\paragraph{Ambient GCE.}
-Ambient GCE is the tangent-free ablation used later to isolate the manifold constraint: instead of moving directly to the current decision boundary, it takes a tunable $\lambda$-scaled step along the scorer gradient. Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:
+\paragraph{\AmbGCE{}.}
+\AmbGCE{} is the tangent-free ablation used later to isolate the manifold constraint: instead of moving directly to the current decision boundary, it takes a tunable $\lambda$-scaled step along the scorer gradient. Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:
 \begin{equation}
 \label{eq:ambient_direction}
 \mathbf{u}_i = \frac{\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)}{\|\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)\|}.
@@ -107,4 +107,4 @@ The erased representation is obtained by projecting out the concept component:
 \end{equation}
 where $\lambda > 0$ controls the erasure strength. At $\lambda = 1$, this removes the full projection onto $\mathbf{u}_i$; at $\lambda < 1$, it partially attenuates.
 
-Ambient GCE edits in the full ambient space and therefore does not distinguish tangent from normal directions. Section~\ref{sec:method} introduces the tangent-constrained version of this update.
+\AmbGCE{} edits in the full ambient space and therefore does not distinguish tangent from normal directions. Section~\ref{sec:method} introduces the tangent-constrained version of this update.
