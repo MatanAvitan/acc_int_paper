@@ -29,6 +29,8 @@ This pattern is consistent with the manifold hypothesis motivating the method. I
 
 To test whether \TanGCE{} generalizes beyond language model representations, we apply all erasure methods to CLIP ViT-B/32 embeddings of CelebA face images. CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls.
 
+We treat this cross-modal block as a generality check rather than the primary evidence block for the paper's central claim.
+
 \input{tables/celeba_clip_fair}
 
 Table~\ref{tab:celeba_clip_fair} shows results on three representative concepts (Male, Smiling, Blond\_Hair), each with 5 low-correlation control attributes. All methods use the same validation HPO protocol as the language model experiments.
@@ -38,6 +40,8 @@ Table~\ref{tab:celeba_clip_fair} shows results on three representative concepts 
 Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA attributes. The median selected $\lambda^*$ column confirms that \TanGCE{} consistently selects higher $\lambda$ values than other methods---enabled by the tangent projection's attenuation of off-manifold displacement---while maintaining competitive control accuracy. Per-concept breakdowns for all 40 attributes (nonlinear leakage and mean $\Delta$Ctrl per method) are reported in Appendix~\ref{sec:appendix_celeba_per_concept}, Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl}.
 
 \subsection{Geometric Evidence and Off-Manifold Displacement}
+Beyond the main erasure comparisons, we also report geometric diagnostics to ground the mechanism story. These include subspace-sufficiency analyses, perturbation-sensitivity tests, and representation-connectivity analyses. These appendix-scale materials support the low-dimensional and nonlinear-geometry motivation for tangent projection, but they should not be read as a standalone causal proof that off-manifold displacement fully explains the observed utility tradeoffs.
+
 \input{tables/geometry_contrast_summary}
 
 Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much more nonlinear than gender: its intrinsic dimension (34--53 across layers 4, 8, 12) is far lower than gender's (365--461), and its local-vs-global angle is much larger (76.9--82.6$^\circ$ vs.\ 51.8--55.8$^\circ$). This table intentionally focuses on the primary nonlinear case (sycophancy) and the diagnostic baseline (gender), rather than all datasets. The geometry contrast is consistent with sycophancy being the primary case for manifold-aware erasure methods, while the strong \TanGCE{} results on gender demonstrate that the method generalizes even to approximately linear concepts. Broader task coverage is reported in Table~\ref{tab:full_comparison} for the three text domains and in the all-40 CelebA appendix tables for the visual domain.
@@ -45,8 +49,8 @@ Table~\ref{tab:geometry_contrast_summary} demonstrates that sycophancy is much m
 \paragraph{Appendix-Supporting Evidence.}
 Detailed geometric analyses supporting these claims are provided in the Appendix, including:
 \begin{itemize}
-    \item \textbf{Subspace Sufficiency (Q1):} Evidence that task-specific computation is concentrated in a low-dimensional linear subspace.
-    \item \textbf{Perturbation Sensitivity (Q2):} Comparison of perturbations in high-variance and orthogonal subspaces.
-    \item \textbf{Representation Connectivity (Q3):} Analysis of the connected, approximately convex topology of the representation manifold.
+    \item \textbf{Subspace Sufficiency:} Evidence that task-specific computation is concentrated in a low-dimensional linear subspace.
+    \item \textbf{Perturbation Sensitivity:} Comparison of perturbations in high-variance and orthogonal subspaces.
+    \item \textbf{Representation Connectivity:} Analysis of the connected, approximately convex topology of the representation manifold.
     \item \textbf{Multi-Layer Accumulation:} Results on how projection error accumulates across the network.
 \end{itemize}
