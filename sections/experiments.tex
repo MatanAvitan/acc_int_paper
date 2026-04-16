@@ -1,26 +1,41 @@
-% Experiments
-\section{Experiments}
-\label{sec:experiments}
+% Experimental setup details
+\subsection{Datasets, Models, and Compared Methods}
 
-This section describes the empirical setup used to compare \TanGCE{} to linear, ambient, and prior nonlinear baselines. The evaluation metrics and the shared validation protocol are defined separately in Section~\ref{sec:evaluation}.
+This subsection completes the experimental setup by describing the datasets, models, and comparison methods used to evaluate \TanGCE{}.
 
-\subsection{Experimental Domains}
+\subsubsection{Experimental Domains}
 We evaluate our methods across four blocks:
 \begin{enumerate}
-    \item \textbf{Sycophancy (Primary Nonlinear Case):} Our central focus is on removing agreement bias in model responses. This represents a critical challenge for model alignment where concept encoding is expected to be locally curved.
-    \item \textbf{Safety (Secondary Case Study):} We evaluate the surgicality of erasure on content safety using the PKU-SafeRLHF dataset, testing the preservation of helpfulness alongside safety leakage.
-    \item \textbf{Bias in Bios (Diagnostic Baseline):} We use gender and profession classification as a replication anchor. This setting provides a linear comparison point to contrast against the nonlinear gains of tangent-constrained erasure.
-    \item \textbf{CelebA Visual Attributes (Cross-Modal Generalization):} We apply the same erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) of CelebA face images. CelebA provides 40 binary facial attributes, enabling a rich surgicality analysis: when erasing one attribute (e.g., \emph{Male}), the remaining 39 serve as potential controls. We select the 5 least-correlated attributes as controls per concept to ensure that control accuracy changes reflect genuine collateral damage rather than attribute correlation. This domain demonstrates that \TanGCE{} generalizes beyond language model representations to vision encoders.
+    \item \textbf{Sycophancy (Primary Nonlinear Case):} Our central focus is on removing agreement bias in model responses. We use the Anthropic model-written-evals sycophancy suite \citep{perez-etal-2022-model-written}, which comprises three subsets: NLP survey, PhilPapers 2020, and political typology quiz. Each example is a multiple-choice question prefaced by a persona bio that asserts a position, with a designated \emph{sycophantic} answer (the one matching the persona's assertion) and one or more \emph{non-sycophantic} alternatives. Because the dataset does not provide pre-assigned per-example concept labels, we assign them by running the model itself: concept~$=1$ if the model's argmax prediction matches the sycophantic answer, concept~$=0$ otherwise. This labelling strategy identifies exactly which examples activate the sycophancy direction in the model being studied, rather than relying on a fixed human annotation. For the surgicality control we use \emph{answer matching}: whether the model selects the non-sycophantic (factually correct) answer. This adapts the standard helpfulness control from safety datasets to the sycophancy setting, where ``helpful'' behaviour is operationalized as resisting social pressure and answering correctly.
+
+    \item \textbf{Safety (Secondary Case Study):} We evaluate the surgicality of erasure on content safety using the PKU-SafeRLHF dataset \citep{ji-etal-2024-pku-saferlhf}, testing the preservation of helpfulness alongside safety leakage.
+    \item \textbf{Bias in Bios (Diagnostic Baseline):} We use the Bias in Bios dataset \citep{dearteaga-etal-2019-bias} for gender and profession classification as a replication anchor. This setting provides a linear comparison point to contrast against the nonlinear gains of tangent-constrained erasure.
+    \item \textbf{CelebA Visual Attributes (Cross-Modal Generalization):} We apply the same erasure methods to CLIP ViT-B/32 \citep{radford-etal-2021-clip} \texttt{pooler\_output} embeddings (768-dim) of CelebA \citep{liu-etal-2015-celeba} face images. CelebA provides 40 binary facial attributes, enabling a rich surgicality analysis: when erasing one attribute (e.g., \emph{Male}), the remaining 39 serve as potential controls. We select the 5 least-correlated attributes as controls per concept to ensure that control accuracy changes reflect genuine collateral damage rather than attribute correlation. This domain demonstrates that \TanGCE{} generalizes beyond language model representations to vision encoders.
 \end{enumerate}
 
-\subsection{Models and Implementation}
-\paragraph{Language model.} The sycophancy, safety, and gender experiments use Qwen2.5-0.5B (24 decoder layers, hidden dimension 896) at layer~8.
+\subsubsection{Models and Compared Methods}
+\paragraph{Language model.} The sycophancy, safety, and gender experiments use Qwen2.5-0.5B \citep{qwen-2024-qwen25} (24 decoder layers, hidden dimension 896) at layer~8.
 
 \paragraph{Vision encoder.} The CelebA experiments use CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim), extracted once and cached.
 
-\paragraph{Methods.} The core quantitative comparison evaluates \TanGCE{} against six baselines and ablations: two random baselines (global and per-sample direction), linear projection, INLP \citep{ravfogel-etal-2020-null}, LEACE \citep{belrose-etal-2023-leace}, and \AmbGCE{}. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline and serves as the main methodological reference point for the GCE family: it iteratively trains two-class MLP probes and retracts representations to the decision boundary via Newton steps (Eq.~\ref{eq:igbp}). \AmbGCE{} is our direct ablation of \TanGCE{}: it uses the same scorer-training loop but applies the update in the full ambient space. \TanGCE{} adds the key ingredient of the paper by estimating local tangent spaces with PCA-based neighborhoods and restricting the erasure direction to a local on-manifold approximation rather than the full ambient space.
+\paragraph{Methods.} The core quantitative comparison evaluates \TanGCE{} against six baselines and ablations: two random baselines (global and per-sample direction), linear projection, INLP \citep{ravfogel-etal-2020-null}, LEACE \citep{belrose-etal-2023-leace}, and \AmbGCE{}. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline and serves as the main methodological reference point for the GCE family: it iteratively trains two-class MLP probes and applies Newton-step boundary corrections. \AmbGCE{} is our direct ablation of \TanGCE{}: it uses the same scorer-training loop but applies the update in the full ambient space. \TanGCE{} adds the key ingredient of the paper by estimating local tangent spaces with PCA-based neighborhoods and restricting the erasure direction to a local on-manifold approximation rather than the full ambient space.
+
+\paragraph{Comparison method definitions.}
+All erasure methods share a common goal: given representations $\mathbf{x}_i$ that encode concept $\phi$, produce modified representations $\tilde{\mathbf{x}}_i$ from which $\phi$ cannot be recovered, while preserving information unrelated to $\phi$.
+
+\paragraph{Linear projection.}
+Linear projection removes a single concept direction, typically estimated from the class-conditional means. It is the simplest global linear baseline and cannot remove nonlinear residual structure.
+
+\paragraph{INLP (Iterative Nullspace Projection).}
+INLP \citep{ravfogel-etal-2020-null} extends linear projection by repeatedly training linear classifiers on the residual and removing newly exposed linear directions. It is the canonical iterative linear baseline.
+
+\paragraph{LEACE (Least-squares Concept Erasure).}
+LEACE \citep{belrose-etal-2023-leace} is the strongest closed-form linear baseline in our comparisons. It performs a minimal linear intervention while eliminating linearly decodable concept information.
+
+\paragraph{IGBP (Iterative Gradient-Based Projection).}
+IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline. It iteratively trains a nonlinear probe and moves each representation toward the current decision boundary by a Newton-style correction.
+
+\paragraph{\AmbGCE{}.}
+\AmbGCE{} is the direct ambient-space ablation of \TanGCE{}. It keeps the same nonlinear scorer loop but applies the update in the full hidden space rather than projecting it onto a local tangent approximation.
 
 \input{tables/method_comparison_scope}
-
-\subsection{Geometric Foundation (Appendix Support)}
-While the main text focuses on the performance of \TanGCE{}, we also provide geometric diagnostics to ground the mechanism story. These include broad geometry sweeps across multiple datasets and layers, subspace projection sensitivity (Q1), perturbation-based subspace sensitivity tests (Q2), and representation connectivity analyses (Q3). These appendix-scale materials support the low-dimensional and nonlinear-geometry motivation for tangent projection, but they should not be read as a standalone causal proof that off-manifold displacement fully explains the observed utility tradeoffs.

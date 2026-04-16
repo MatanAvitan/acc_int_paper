@@ -1,18 +1,18 @@
 \begin{table}[t]
 \centering
-\caption{Comparison of concept erasure methods by implementation status and role in this work. We distinguish between methods implemented in this repository and those positioned as literature baselines.}
+\caption{Comparison of concept erasure methods by family and role in this work.}
 \label{tab:method_comparison_scope}
 \scriptsize
-\begin{tabular}{lllllp{0.24\linewidth}}
+\begin{tabular}{llp{0.48\linewidth}}
 \toprule
-Method & Family & Implemented & Replication & Canonical Dataset & Role in Paper \\
+Method & Family & Role in Paper \\
 \midrule
-Linear Projection & Linear & Yes & Yes & Bias in Bios & Global baseline \\
-INLP & Linear & Yes & Yes & Bias in Bios & Linear baseline \\
-LEACE & Linear & Yes & Yes & Bias in Bios / Syc. & Matched linear baseline \\
-IGBP & Nonlinear & Yes & Yes & Bias in Bios & Prior nonlinear baseline \\
-\AmbGCE{} & Nonlinear & Yes & Yes & Sycophancy & Nonlinear baseline \\
-\TanGCE{} & Nonlinear & Yes & Yes & Sycophancy & Main contribution \\
+Linear Projection & Linear & Global baseline \\
+INLP & Linear & Iterative linear baseline \\
+LEACE & Linear & Strong matched linear baseline \\
+IGBP & Nonlinear & Closest prior nonlinear baseline \\
+\AmbGCE{} & Nonlinear & Ambient ablation of \TanGCE{} \\
+\TanGCE{} & Nonlinear & Main contribution \\
 \bottomrule
 \end{tabular}
 \end{table}
