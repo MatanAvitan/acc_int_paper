@@ -1,26 +1,26 @@
 % Appendix snapshot tables
-\section{Repository Snapshot Tables}
+\section{Supplementary Deeper-Layer Comparisons}
 \label{sec:appendix_snapshots}
 
-This appendix records broader repository snapshot tables that are directionally consistent with the main text but were not part of the locked paper-evidence set when the quantitative claims in Section~\ref{sec:results} were written. We include them to document the current state of the project and to guide the next round of matched-leakage and deeper-layer analyses. The central paper claims continue to rely only on the completed paper suite summarized in the main text.
+This appendix records broader deeper-layer comparisons that are directionally consistent with the main text but are not part of the core quantitative evidence used for the paper's principal claims. We include them to show how the same comparison pattern extends beyond the main layer-8 evaluation and to motivate future matched-leakage analyses.
 
-\subsection{Iterative Sycophancy Snapshot}
+\subsection{Iterative Sycophancy (Supplementary Comparison)}
 \input{tables/repo_snapshot_sycophancy}
 
-\subsection{Iterative Safety Snapshot}
+\subsection{Iterative Safety (Supplementary Comparison)}
 \input{tables/repo_snapshot_safety}
 
 \subsection{Local CelebA Visual Table-2-Style Comparison}
 \input{tables/local_celeba_visual_table2}
 
-To ensure a modality-matched benchmark, this appendix now reports a vision-only CelebA run (CLIP ViT-B/32 embeddings) with the Table~\ref{tab:full_comparison} method family and 3 least-correlated controls per target concept. Artifacts are stored under \texttt{outputs/local/celeba\_visual\_table2\_v1/} (including per-method sample folders with 2 saved images each). The consolidated W\&B results run is \texttt{g52h8kbr}.
+To ensure a modality-matched benchmark, this appendix reports a vision-only CelebA run (CLIP ViT-B/32 embeddings) with the Table~\ref{tab:full_comparison} method family and three least-correlated controls per target concept.
 
 \subsection{CelebA Per-Concept Detail (All 40 Attributes)}
 \label{sec:appendix_celeba_per_concept}
-Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl} give the full per-concept breakdown behind the aggregate CelebA result in Table~\ref{tab:celeba_clip_all40}. The main-text Table~\ref{tab:celeba_clip_fair} reports three representative concepts (Male, Smiling, Blond\_Hair); the appendix tables cover all 40 binary CelebA attributes from the same \texttt{celeba\_clip\_all40\_fair\_v2} run under the shared validation-HPO protocol. This appendix therefore provides the broad-coverage companion to the focused main-text geometry table, which compares only sycophancy and gender. \TanGCE{} achieves the lowest nonlinear leakage on \textbf{36 of 40} concepts (LEACE wins on 3, IGBP on 1), with a mean margin of $0.116$ absolute NL accuracy over the best competing method per concept. Per-concept mean $\Delta$Ctrl remains within roughly a percentage point of zero, consistent with the aggregate mean NL of $0.707$ and mean $\Delta$Ctrl of $-0.7\%$ reported in the main text.
+Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl} give the full per-concept breakdown behind the aggregate CelebA result in Table~\ref{tab:celeba_clip_all40}. The main-text Table~\ref{tab:celeba_clip_fair} reports three representative concepts (Male, Smiling, Blond\_Hair); the appendix tables cover all 40 binary CelebA attributes from the same CelebA all-40 evaluation setting under the shared validation-HPO protocol. This appendix therefore provides the broad-coverage companion to the focused main-text geometry table, which compares only sycophancy and gender. \TanGCE{} achieves the lowest nonlinear leakage on \textbf{36 of 40} concepts (LEACE wins on 3, IGBP on 1), with a mean margin of $0.116$ absolute NL accuracy over the best competing method per concept. Per-concept mean $\Delta$Ctrl remains within roughly a percentage point of zero, consistent with the aggregate mean NL of $0.707$ and mean $\Delta$Ctrl of $-0.7\%$ reported in the main text.
 \input{tables/celeba_clip_all40_per_concept}
 
 \input{tables/main_text_geometry_schedule}
 
 \paragraph{Geometry Note.}
-The broader geometry report continues to support three useful points: early and mid-layer representations are effectively low-dimensional, on-manifold directions carry much of the model's sensitivity in these perturbation tests, and interpolation remains consistent with a connected representation space. At the same time, the Q2 perturbation study is best read as evidence of sensitivity concentration in a high-variance subspace rather than as a standalone proof of curved-manifold causality.
+The broader geometry report continues to support three useful points: early and mid-layer representations are effectively low-dimensional, on-manifold directions carry much of the model's sensitivity in these perturbation tests, and interpolation remains consistent with a connected representation space. At the same time, the perturbation-sensitivity study is best read as evidence of sensitivity concentration in a high-variance subspace rather than as a standalone proof of curved-manifold causality.

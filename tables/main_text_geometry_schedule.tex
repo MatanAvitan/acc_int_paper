@@ -1,15 +1,15 @@
 \begin{table}[t]
 \centering
-\caption{Geometry evidence map organizing the appendix diagnostics into four research blocks. Each block addresses a distinct aspect of manifold structure: Q1 examines whether task-relevant computation concentrates in a low-dimensional linear subspace, Q2 tests whether perturbations on the manifold are more consequential than off-manifold perturbations, Q3 validates whether the manifold is connected across domains, and multi-layer accumulation tracks error compounding through the network. These diagnostics support the mechanism discussion and motivate the need for manifold-aware erasure methods but do not by themselves establish causality.}
+\caption{Geometry evidence map organizing the appendix diagnostics into four research blocks. Each block addresses a distinct aspect of manifold structure: subspace sufficiency examines whether task-relevant computation concentrates in a low-dimensional linear subspace, perturbation sensitivity tests whether on-manifold directions matter more than orthogonal directions, representation connectivity evaluates whether the manifold remains connected across domains, and multi-layer accumulation tracks error compounding through the network. These diagnostics support the mechanism discussion and motivate the need for manifold-aware erasure methods but do not by themselves establish causality.}
 \label{tab:geometry_schedule}
 \scriptsize
 \begin{tabular}{p{0.22\linewidth}p{0.22\linewidth}p{0.40\linewidth}}
 \toprule
 Experiment Block & Research Question & Primary Evidence \\
 \midrule
-Q1: Rank-retention & Subspace concentration & Top-1 agreement under intrinsic projection \\
-Q2: Perturbation sensitivity & High-variance vs. orthogonal directions & KL and top-1 under on/off-subspace noise \\
-Q3: Domain connectivity & Shared vs. domain manifolds & Cross-domain interpolation smoothness \\
+Subspace sufficiency & Subspace concentration & Top-1 agreement under intrinsic projection \\
+Perturbation sensitivity & High-variance vs. orthogonal directions & KL and top-1 under on/off-subspace noise \\
+Representation connectivity & Shared vs. domain manifolds & Cross-domain interpolation smoothness \\
 Multi-layer accumulation & Error compounding across the network & Simultaneous intrinsic projection across layers \\
 \bottomrule
 \end{tabular}
