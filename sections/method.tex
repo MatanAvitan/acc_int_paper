@@ -23,7 +23,7 @@ where the intrinsic dimension $r$ is selected automatically by a retained-varian
 \mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top.
 \end{equation}
 
-This is the empirical analogue of the differential-geometric tangent space from Section~\ref{sec:notation}: the neighborhood PCA basis provides a local linear model of the chart image around $\mathbf{x}_i$.
+This is the empirical analogue of the differential-geometric tangent space from Section~\ref{sec:notation}: the neighborhood PCA basis provides a local linear model of the representation manifold around $\mathbf{x}_i$.
 
 \subsection{Tangent-constrained update}
 
@@ -45,7 +45,7 @@ This construction is the core difference between TanGCE and its ambient counterp
 
 \subsection{Why tangent projection permits larger $\lambda$}
 
-Ambient GCE edits $\mathbf{x}_i$ along $\mathbf{u}_i \in \mathbb{R}^d$, which can contain a large normal component relative to $T_{\mathbf{x}_i}\mathcal{M}$. If $\mathbf{u}_i^{\perp}$ is large, increasing $\lambda$ pushes the representation away from the local manifold approximation and can distort unrelated structure or preserve recoverable signal. TanGCE removes this normal component at first order by replacing $\mathbf{u}_i$ with $\mathbf{u}_i^{\mathrm{tan}}$. This is the geometric reason the method can operate at larger erasure strengths than ambient updates.
+Ambient GCE edits $\mathbf{x}_i$ along $\mathbf{u}_i \in \mathbb{R}^d$, which can contain a large normal component relative to $T_{\mathbf{x}_i}\mathcal{M}$. If $\mathbf{u}_i^{\perp}$ is large, increasing $\lambda$ pushes the representation away from the local manifold approximation and can distort unrelated structure or preserve recoverable signal. TanGCE removes this normal component at first order by replacing $\mathbf{u}_i$ with $\mathbf{u}_i^{\mathrm{tan}}$. This geometric mechanism can permit operation at larger erasure strengths than ambient updates.
 
 \subsection{Iterative TanGCE and relation to baselines}
 

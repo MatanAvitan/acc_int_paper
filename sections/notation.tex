@@ -2,13 +2,13 @@
 \section{Problem Setup and Geometric Background}
 \label{sec:notation}
 
-We first define the representation-editing problem, then introduce the geometric language used throughout the paper. Our notation follows the manifold viewpoint in Tu's introduction to smooth manifolds \citep{tu-2011-manifolds}: we use local charts, tangent spaces, and differentials only as local approximations, not as theorem-level guarantees about neural representations.
+We first define the representation-editing problem, then introduce the geometric language used throughout the paper. Our notation follows the manifold viewpoint in Tu's introduction to smooth manifolds \citep{tu-2011-manifolds}: we use local coordinate maps, tangent spaces, and differentials only as local approximations, not as theorem-level guarantees about neural representations.
 
 \paragraph{Language model and encoder.}
 Let $\Sigma^*$ denote the set of all strings over a vocabulary $\Sigma$. A language model $p$ defines a distribution over $\Sigma^*$. We write $\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ for the hidden representation at layer $\ell$, where $d$ is the hidden dimension. For a fixed layer $\ell$ (omitted when clear from context), the representation of string $s$ is $\mathbf{x} = \mathrm{enc}_\ell(s) \in \mathbb{R}^d$.
 
 \paragraph{Concepts and data.}
-A binary concept is defined by a labeling function $\phi : \Sigma^* \to \mathcal{C}$, where $\mathcal{C} = \{0,1\}$. Each sample $i$ has representation $\mathbf{x}_i \in \mathbb{R}^d$ and concept label $y_i = \phi(s_i) \in \mathcal{C}$, with an optional control label $c_i$ (e.g., profession for gender erasure). We write $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ for the dataset and $\mathcal{D}_c = \{i : y_i = c\}$ for the class-$c$ subset, with $N_c = |\mathcal{D}_c|$.
+A binary concept is defined by a labeling function $\phi : \Sigma^* \to \mathcal{C}$, where $\mathcal{C} = \{0,1\}$. Each sample $i$ has representation $\mathbf{x}_i \in \mathbb{R}^d$ and concept label $y_i = \phi(s_i) \in \mathcal{C}$, with an optional control label $z_i$ (e.g., profession for gender erasure). We write $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ for the dataset and $\mathcal{D}_c = \{i : y_i = c\}$ for the class-$c$ subset, with $N_c = |\mathcal{D}_c|$.
 
 The class-conditional representation is the random variable $X_c \sim \mathrm{enc}_\ell(s) \mid \phi(s) = c$, i.e., the distribution of hidden states for strings labeled $c$.
 
@@ -16,15 +16,23 @@ The class-conditional representation is the random variable $X_c \sim \mathrm{en
 A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a two-layer MLP trained with binary cross-entropy on $\mathcal{D}$ to predict $y$ from $\mathbf{x}$. Its per-sample gradient with respect to the input is $\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i) \in \mathbb{R}^d$, which points in the direction of steepest increase in concept probability at $\mathbf{x}_i$.
 
 \paragraph{Representation manifold.}
-Following Tu \citep{tu-2011-manifolds}, we model the support of layer-$\ell$ representations as lying near a smooth embedded submanifold $\mathcal{M} \subset \mathbb{R}^d$ of intrinsic dimension $m \ll d$. For a point $\mathbf{x} \in \mathcal{M}$, let $(U, \varphi)$ be a chart centered at $\mathbf{x}$, so that $\varphi : U \to \Omega \subset \mathbb{R}^m$ is a homeomorphism onto an open set and $\varphi(\mathbf{x}) = 0$. The tangent space at $\mathbf{x}$ is the $m$-dimensional linear space
+Each layer representation $\mathbf{x} = \mathrm{enc}_\ell(s)$ is formally a point in the ambient hidden space $\mathbb{R}^d$, where $d$ is the full hidden-state dimension. Following Tu \citep{tu-2011-manifolds}, we model the representations that actually occur for real inputs as lying near a smooth embedded submanifold $\mathcal{M} \subset \mathbb{R}^d$. The manifold $\mathcal{M}$ is our mathematical model of the representation manifold. Its intrinsic dimension is denoted by $m$, with $m < d$ and typically much smaller than $d$ in our settings, meaning that the local degrees of freedom used by the data are far fewer than the directions available in the ambient hidden space.
+
+Now fix a point $\mathbf{x} \in \mathcal{M}$. Let $U \subset \mathcal{M}$ be a small local neighborhood around $\mathbf{x}$, and let
+\begin{equation}
+\varphi : U \to \Omega \subset \mathbb{R}^m
+\end{equation}
+be a local coordinate map. Here $\Omega$ is an open set in the coordinate space $\mathbb{R}^m$. Intuitively, $\varphi$ assigns $m$ local coordinates to nearby points on the manifold. We choose the coordinates so that $\varphi(\mathbf{x}) = 0$, meaning that the point $\mathbf{x}$ is represented by the origin in local coordinates. The inverse map $\varphi^{-1} : \Omega \to U \subset \mathcal{M} \subset \mathbb{R}^d$ is the corresponding local parametrization back into the ambient hidden space.
+
+The tangent space at $\mathbf{x}$ is the best local linear approximation to the manifold near $\mathbf{x}$. Formally, it is the $m$-dimensional linear space
 \begin{equation}
 \label{eq:tangent_space_chart}
 T_{\mathbf{x}}\mathcal{M} = d(\varphi^{-1})_{0}(\mathbb{R}^m) \subset \mathbb{R}^d,
 \end{equation}
-where $d(\varphi^{-1})_0$ is the differential of the inverse chart at the origin. Because $\mathcal{M}$ is viewed as embedded in $\mathbb{R}^d$, we treat $T_{\mathbf{x}}\mathcal{M}$ as a linear subspace of the ambient hidden space.
+where $d(\varphi^{-1})_0$ is the differential of the local parametrization $\varphi^{-1}$ at the origin. In ordinary ML language, this differential can be read as the Jacobian or best local linear approximation of $\varphi^{-1}$ at $0$. It maps an infinitesimal coordinate displacement in $\mathbb{R}^m$ to the corresponding first-order displacement in the ambient space $\mathbb{R}^d$. Because $\mathcal{M}$ is embedded in $\mathbb{R}^d$, we can treat $T_{\mathbf{x}}\mathcal{M}$ as an $m$-dimensional linear subspace of the ambient hidden space.
 
 \paragraph{Ambient versus tangent directions.}
-For any ambient vector $\mathbf{g} \in \mathbb{R}^d$ at $\mathbf{x}$, the local geometric picture suggests a decomposition
+For any ambient vector $\mathbf{g} \in \mathbb{R}^d$ attached to the point $\mathbf{x}$, the local geometric picture suggests a decomposition
 \begin{equation}
 \label{eq:tangent_normal_decomp}
 \mathbf{g} = \mathbf{g}^{\top} + \mathbf{g}^{\perp},
@@ -33,7 +41,7 @@ For any ambient vector $\mathbf{g} \in \mathbb{R}^d$ at $\mathbf{x}$, the local 
 \quad
 \mathbf{g}^{\perp} \perp T_{\mathbf{x}}\mathcal{M}.
 \end{equation}
-The tangent component changes the representation along directions already available locally on the manifold, while the normal component is the first-order source of off-manifold displacement.
+Here $\mathbf{g}^{\top}$ is the tangent component, namely the part of $\mathbf{g}$ that moves along the manifold, and $\mathbf{g}^{\perp}$ is the normal component, namely the part that points away from the manifold. In this local approximation, the tangent component changes the representation along directions already available in natural data, while the normal component is the first-order source of off-manifold displacement. This is the geometric distinction used later by TanGCE: ambient gradient updates may contain both parts, but tangent-projected updates keep only the component that remains aligned with the local geometry of plausible representations.
 
 \paragraph{Recoverability after erasure.}
 Throughout the paper, concept removal is judged only after training a \emph{fresh} probe on the edited representations. This follows the lesson of \citet{elazar-goldberg-2018-adversarial}: erasure succeeds only if a newly trained classifier still fails to recover the concept from $\tilde{\mathbf{x}}$.
