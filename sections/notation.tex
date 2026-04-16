@@ -1,8 +1,8 @@
-% Notation and Formal Framework
-\section{Notation and Formal Framework}
+% Problem setup and geometric background
+\section{Problem Setup and Geometric Background}
 \label{sec:notation}
 
-We define the notation used throughout, then give the formal definitions of the GCE family and the two supervised evaluation metrics used in the paper: erasure precision and surgicality on control concepts.
+We first define the representation-editing problem, then introduce the geometric language used throughout the paper. Our notation follows the manifold viewpoint in Tu's introduction to smooth manifolds \citep{tu-2011-manifolds}: we use local charts, tangent spaces, and differentials only as local approximations, not as theorem-level guarantees about neural representations.
 
 \paragraph{Language model and encoder.}
 Let $\Sigma^*$ denote the set of all strings over a vocabulary $\Sigma$. A language model $p$ defines a distribution over $\Sigma^*$. We write $\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ for the hidden representation at layer $\ell$, where $d$ is the hidden dimension. For a fixed layer $\ell$ (omitted when clear from context), the representation of string $s$ is $\mathbf{x} = \mathrm{enc}_\ell(s) \in \mathbb{R}^d$.
@@ -15,6 +15,29 @@ The class-conditional representation is the random variable $X_c \sim \mathrm{en
 \paragraph{Concept scorer.}
 A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a two-layer MLP trained with binary cross-entropy on $\mathcal{D}$ to predict $y$ from $\mathbf{x}$. Its per-sample gradient with respect to the input is $\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i) \in \mathbb{R}^d$, which points in the direction of steepest increase in concept probability at $\mathbf{x}_i$.
 
+\paragraph{Representation manifold.}
+Following Tu \citep{tu-2011-manifolds}, we model the support of layer-$\ell$ representations as lying near a smooth embedded submanifold $\mathcal{M} \subset \mathbb{R}^d$ of intrinsic dimension $m \ll d$. For a point $\mathbf{x} \in \mathcal{M}$, let $(U, \varphi)$ be a chart centered at $\mathbf{x}$, so that $\varphi : U \to \Omega \subset \mathbb{R}^m$ is a homeomorphism onto an open set and $\varphi(\mathbf{x}) = 0$. The tangent space at $\mathbf{x}$ is the $m$-dimensional linear space
+\begin{equation}
+\label{eq:tangent_space_chart}
+T_{\mathbf{x}}\mathcal{M} = d(\varphi^{-1})_{0}(\mathbb{R}^m) \subset \mathbb{R}^d,
+\end{equation}
+where $d(\varphi^{-1})_0$ is the differential of the inverse chart at the origin. Because $\mathcal{M}$ is viewed as embedded in $\mathbb{R}^d$, we treat $T_{\mathbf{x}}\mathcal{M}$ as a linear subspace of the ambient hidden space.
+
+\paragraph{Ambient versus tangent directions.}
+For any ambient vector $\mathbf{g} \in \mathbb{R}^d$ at $\mathbf{x}$, the local geometric picture suggests a decomposition
+\begin{equation}
+\label{eq:tangent_normal_decomp}
+\mathbf{g} = \mathbf{g}^{\top} + \mathbf{g}^{\perp},
+\qquad
+\mathbf{g}^{\top} \in T_{\mathbf{x}}\mathcal{M},
+\quad
+\mathbf{g}^{\perp} \perp T_{\mathbf{x}}\mathcal{M}.
+\end{equation}
+The tangent component changes the representation along directions already available locally on the manifold, while the normal component is the first-order source of off-manifold displacement.
+
+\paragraph{Recoverability after erasure.}
+Throughout the paper, concept removal is judged only after training a \emph{fresh} probe on the edited representations. This follows the lesson of \citet{elazar-goldberg-2018-adversarial}: erasure succeeds only if a newly trained classifier still fails to recover the concept from $\tilde{\mathbf{x}}$.
+
 \paragraph{Conventions.}
 Index $i$ ranges over samples.
 $\|\cdot\|$ denotes the Euclidean norm unless stated otherwise.
@@ -22,10 +45,10 @@ $\psi$ denotes the digamma function $\psi(x) = \frac{d}{dx}\ln\Gamma(x)$.
 $\langle \cdot \rangle$ denotes the sample average over all $N$ points.
 
 % ============================================================
-\subsection{Representation Surgery Baselines}
+\subsection{Baselines and Ambient Gradient Editing}
 \label{subsec:baselines}
 
-All erasure methods share a common goal: given representations $\mathbf{x}_i$ that encode concept $\phi$, produce modified representations $\tilde{\mathbf{x}}_i$ from which $\phi$ cannot be recovered, while preserving information unrelated to $\phi$. We review the three linear baselines before introducing the nonlinear GCE family.
+All erasure methods share a common goal: given representations $\mathbf{x}_i$ that encode concept $\phi$, produce modified representations $\tilde{\mathbf{x}}_i$ from which $\phi$ cannot be recovered, while preserving information unrelated to $\phi$. We review the linear baselines and the ambient nonlinear baselines before introducing the tangent-constrained method in Section~\ref{sec:method}.
 
 \paragraph{Linear projection.}
 Given a concept direction $\mathbf{w} \in \mathbb{R}^d$ (typically the difference of class-conditional means, $\mathbf{w} = \mathbb{E}[X_1] - \mathbb{E}[X_0]$), linear projection removes the component along $\mathbf{w}$:
@@ -66,7 +89,7 @@ IGBP \citep{iskander-etal-2023-shielded} trains a two-class MLP probe $g_\phi : 
 where $\operatorname{logit}(p) = \log\frac{p}{1-p}$. This is a Newton step that projects $\mathbf{x}_i$ onto the level set $\operatorname{logit}(p_i) = 0$ (i.e., $p_i = 0.5$, the decision boundary). Within each round, IGBP is therefore a one-shot boundary correction for the current scorer. The procedure then iterates: after projection, a fresh probe is trained on the projected representations and the process repeats until leakage falls to majority accuracy. Unlike Ambient GCE (below), IGBP has no explicit $\lambda$ parameter---the step size is determined by each sample's distance to the decision boundary.
 
 \paragraph{Ambient GCE.}
-Ambient GCE is the corresponding ablation of IGBP's nonlinear update: instead of moving directly to the current decision boundary, it takes a tunable $\lambda$-scaled step along the scorer gradient. Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:
+Ambient GCE is the tangent-free ablation used later to isolate the manifold constraint: instead of moving directly to the current decision boundary, it takes a tunable $\lambda$-scaled step along the scorer gradient. Given a trained scorer $f_\theta$, the ambient erasure direction at sample $i$ is the unit gradient:
 \begin{equation}
 \label{eq:ambient_direction}
 \mathbf{u}_i = \frac{\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)}{\|\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)\|}.
@@ -78,61 +101,4 @@ The erased representation is obtained by projecting out the concept component:
 \end{equation}
 where $\lambda > 0$ controls the erasure strength. At $\lambda = 1$, this removes the full projection onto $\mathbf{u}_i$; at $\lambda < 1$, it partially attenuates.
 
-\paragraph{Local tangent space estimation.}
-For each query point $\mathbf{x}_i$, we estimate the tangent space $T_{\mathbf{x}_i}\mathcal{M}$ of the data manifold $\mathcal{M}$ via local PCA on its $k$-nearest neighbors.
-Let $\mathcal{N}_k(\mathbf{x}_i) = \{\mathbf{x}_{j_1}, \ldots, \mathbf{x}_{j_k}\}$ denote the $k$ nearest neighbors of $\mathbf{x}_i$ in the training set.
-We form secant vectors $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ and compute the local covariance:
-\begin{equation}
-\label{eq:local_cov}
-\mathbf{C}_i = \frac{1}{k} \sum_{m=1}^{k} \mathbf{s}_{j_m} \mathbf{s}_{j_m}^\top \in \mathbb{R}^{d \times d}.
-\end{equation}
-The top $r$ eigenvectors of $\mathbf{C}_i$ form the tangent basis $\mathbf{B}_i = [\mathbf{b}_i^{(1)}, \ldots, \mathbf{b}_i^{(r)}] \in \mathbb{R}^{d \times r}$, where the intrinsic dimension $r$ is determined automatically by retaining eigenvectors that explain a cumulative fraction of the variance.
-The orthogonal projection onto $T_{\mathbf{x}_i}\mathcal{M}$ is:
-\begin{equation}
-\label{eq:tangent_proj}
-\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top.
-\end{equation}
-
-\paragraph{TanGCE.}
-TanGCE projects the ambient erasure direction onto the local tangent space:
-\begin{equation}
-\label{eq:tangent_direction}
-\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \, \mathbf{u}_i = \mathbf{B}_i (\mathbf{B}_i^\top \mathbf{u}_i).
-\end{equation}
-The projected direction $\mathbf{u}_i^{\mathrm{tan}}$ is \emph{not} re-normalized to unit length. Its norm $\|\mathbf{u}_i^{\mathrm{tan}}\| \leq 1$ acts as a per-sample confidence weight: when the concept gradient is mostly off-manifold, $\|\mathbf{u}_i^{\mathrm{tan}}\| \ll 1$, and the effective erasure step is attenuated. The erased representation is:
-\begin{equation}
-\label{eq:tangent_erase}
-\tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}.
-\end{equation}
-The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$, which is maximized when the gradient lies entirely in the tangent space and vanishes when it is entirely off-manifold.
-
-\paragraph{Why tangent projection helps.}
-Ambient GCE (Eq.~\ref{eq:ambient_erase}) displaces $\mathbf{x}_i$ along $\mathbf{u}_i$, which may point off the data manifold.
-At high $\lambda$, this pushes representations into low-density regions where the displacement magnitude itself correlates with concept signal strength and can distort unrelated structure or preserve recoverable signal (Section~\ref{sec:lambda_sweep}).
-TanGCE projects the update onto a local tangent approximation, reducing off-manifold displacement even when the ambient gradient contains large orthogonal components.
-
-% ============================================================
-\subsection{Supervised Evaluation Metrics}
-\label{subsec:supervised_eval}
-
-We evaluate every erasure method with supervised metrics trained from scratch on the erased representations.
-
-\paragraph{Erasure precision.}
-Let $h^{\mathrm{NL}}$ be a nonlinear probe and $h^{\mathrm{L}}$ a linear probe trained on $\tilde{\mathbf{x}}_i$ to predict the target concept $y_i$. We report their test accuracies on the erased representations:
-\begin{equation}
-\label{eq:precision_metric}
-\mathrm{Prec}_{\mathrm{erase}}^{\mathrm{NL}} = \mathrm{Acc}(h^{\mathrm{NL}}(\tilde{\mathbf{X}}), y),
-\qquad
-\mathrm{Prec}_{\mathrm{erase}}^{\mathrm{L}} = \mathrm{Acc}(h^{\mathrm{L}}(\tilde{\mathbf{X}}), y).
-\end{equation}
-Lower values indicate stronger erasure. Because our target concepts are often nonlinear, we treat the retrained nonlinear probe accuracy as the primary precision metric and report linear probe accuracy as a secondary diagnostic.
-
-\paragraph{Surgicality on control concepts.}
-Let $q$ be a predictor for an annotated control label $c$ (e.g., profession for gender erasure, helpfulness for safety, or selected low-correlation attributes in CelebA). We report the change in control performance relative to the clean representations:
-\begin{equation}
-\label{eq:surgicality_metric}
-\Delta_{\mathrm{ctrl}} = \mathrm{Acc}(q(\tilde{\mathbf{X}}), c) - \mathrm{Acc}(q(\mathbf{X}), c).
-\end{equation}
-Smaller $|\Delta_{\mathrm{ctrl}}|$ means the erasure is more surgical. In CelebA, where each target attribute is paired with multiple controls, we report the mean $\Delta_{\mathrm{ctrl}}$ across the selected controls.
-
-A successful concept erasure method therefore achieves low residual target-concept predictability together with near-zero change on control concepts.
+Ambient GCE edits in the full ambient space and therefore does not distinguish tangent from normal directions. Section~\ref{sec:method} introduces the tangent-constrained version of this update.
