@@ -4,7 +4,39 @@
 \label{sec:method}
 
 We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. The key geometric premise is simple: if the representation support is locally approximated by an embedded manifold $\mathcal{M} \subset \mathbb{R}^d$, then the ambient erasure gradient should be edited so that the update moves along the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than along directions normal to the manifold. Each iteration therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
-\ye{present the method in an algorithm figure?}
+
+\begin{figure}[t]
+\centering
+\fbox{%
+\begin{minipage}{0.95\linewidth}
+\small
+\textbf{Algorithm 1: \TanGCE{} (Tangent Gradient-based Concept Erasure)}
+
+\textbf{Input:} representations $\mathbf{X} = \{\mathbf{x}_i\}_{i=1}^N$, concept labels $\mathbf{y}$, erasure strength $\lambda$, neighborhood size $k$, retained-variance rule for tangent rank, number of rounds $T$.
+
+\textbf{for} $t = 1, \ldots, T$ \textbf{do}
+\begin{enumerate}
+    \item Train a fresh nonlinear concept scorer $f_t$ on the current representations.
+    \item For each sample $\mathbf{x}_i$:
+    \begin{enumerate}
+        \item Retrieve the $k$ nearest neighbors of $\mathbf{x}_i$ and form local secant vectors.
+        \item Run local PCA on those secants to obtain a tangent basis $\mathbf{B}_i$ and projector $\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top$.
+        \item Compute the ambient unit gradient direction $\mathbf{u}_i = \nabla_{\mathbf{x}} f_t(\mathbf{x}_i) / \|\nabla_{\mathbf{x}} f_t(\mathbf{x}_i)\|$.
+        \item Project it onto the tangent space: $\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \mathbf{u}_i$.
+        \item Apply the tangent-constrained update:
+        \[
+        \tilde{\mathbf{x}}_i \leftarrow \mathbf{x}_i - \lambda (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \mathbf{u}_i^{\mathrm{tan}}.
+        \]
+    \end{enumerate}
+    \item Replace $\mathbf{X}$ by the updated representations $\tilde{\mathbf{X}}$ and continue to the next round.
+\end{enumerate}
+
+\textbf{Output:} intervened representations after $T$ fresh-scorer rounds.
+\end{minipage}%
+}
+\caption{Pseudocode overview of \TanGCE{}. Each round trains a fresh scorer, estimates sample-wise tangent spaces by local PCA, projects the leakage gradient into the tangent space, and applies the resulting constrained erasure update.}
+\label{fig:tangce_algorithm}
+\end{figure}
 
 \subsection{Local tangent estimation}
 
