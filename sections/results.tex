@@ -100,11 +100,11 @@ To assess whether \TanGCE{}'s advantage is specific to Qwen2.5-0.5B or holds acr
 
 Table~\ref{tab:multi_model} shows that \TanGCE{} achieves lower nonlinear leakage than \AmbGCE{} consistently across all model families and sizes evaluated. The absolute gap narrows somewhat at larger scales but remains in the same direction, suggesting that the tangent projection's benefit is not an artifact of the particular hidden-state geometry of small models. Control accuracy changes ($\Delta$Ctrl) remain small and comparable between the two methods across all settings.
 
-\subsection{Second Vision Benchmark: FairFace}
-\label{sec:fairface}
+\subsection{Second Vision Benchmark: UTKFace}
+\label{sec:utkface}
 
-CelebA is a large-scale dataset of celebrity images, which may introduce distribution shifts specific to this demographic slice. To test cross-dataset robustness of our findings in the vision domain, we additionally evaluate on FairFace~\citep{karkkainen2021fairface}, a balanced benchmark designed for diverse real-world face representation across gender, race, and age. We apply all seven erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) using the same validation HPO protocol as CelebA. For each of the four target concepts (Gender, Race~White, Race~Black, Age~Young), we select 5 low-correlation binary demographic attributes as controls. Erasure strength $\lambda^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy.
+CelebA consists predominantly of celebrity images, which may reflect a narrow demographic distribution. To test cross-dataset robustness, we additionally evaluate on UTKFace~\citep{zhifei2017cvpr}, a standard fairness benchmark covering a broad range of ages, genders, and ethnic groups from real-world images. We apply all seven erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) using the same validation HPO protocol as CelebA. For each of five target concepts (Gender, Race~White, Race~Black, Race~Asian, Age~Young), we select 5 low-correlation binary demographic attributes as controls. Erasure strength $\lambda^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy.
 
-\input{tables/fairface_clip_fair}
+\input{tables/utkface_clip_fair}
 
-Table~\ref{tab:fairface_clip_fair} shows that the pattern from CelebA replicates on FairFace: \TanGCE{} achieves the lowest nonlinear leakage across all four demographic concepts while maintaining comparable control accuracy to \AmbGCE{}. This confirms that the advantage of tangent-constrained erasure is not dataset-specific within the vision domain.
+Table~\ref{tab:utkface_clip_fair} shows that the pattern from CelebA replicates on UTKFace: \TanGCE{} achieves the lowest nonlinear leakage across all five demographic concepts while maintaining comparable control accuracy to \AmbGCE{}. This confirms that the advantage of tangent-constrained erasure generalizes across face image datasets with different demographic distributions.

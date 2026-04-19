@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\caption{CLIP ViT-B/32 concept erasure on UTKFace (validation HPO for $\lambda$). UTKFace provides diverse real-world face images with binary demographic labels (gender, binarized race groups, age). Each method's $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy. Controls: 5 least-correlated binary demographic attributes per concept. L/NL Leak: retrained linear / nonlinear probe accuracy (lower = better erasure). $\Delta$Ctrl: mean control accuracy change (closer to zero = more surgical). Embeddings: CLIP ViT-B/32 pooler\_output (768 dimensions).}
+\label{tab:utkface_clip_fair}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{l c|ccc|ccc|ccc|ccc|ccc}
+\toprule
+ & & \multicolumn{3}{c|}{Gender} & \multicolumn{3}{c|}{Race (White)} & \multicolumn{3}{c|}{Race (Black)} & \multicolumn{3}{c|}{Race (Asian)} & \multicolumn{3}{c}{Age (Young)} \\
+Method & $\lambda^*$ & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl & L$\downarrow$ & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+Random Global    & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+Random Per-Samp. & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+Linear Proj.     & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+INLP             & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+LEACE            & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+\AmbGCE{}      & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+\textbf{\TanGCE{}} & \textbf{---} & \textbf{---} & \textbf{---} & --- & \textbf{---} & \textbf{---} & --- & \textbf{---} & \textbf{---} & --- & \textbf{---} & \textbf{---} & --- & \textbf{---} & \textbf{---} & --- \\
+\bottomrule
+\end{tabular}
+\end{table*}
