@@ -16,7 +16,6 @@ Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream c
 
 \subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
 \label{sec:lambda_sweep}
-
 \ye{this sounds like an analysis (the part about lambda)}
 
 \input{tables/lambda_sweep}
@@ -91,3 +90,21 @@ The two observations connect to different aspects of the \TanGCE{} design. Subsp
 \caption{Geometric diagnostics at layer~8 of Qwen2.5-0.5B across five domains (biasbios, code, math, safety, sycophancy). Rows index the source domain whose representations are used; columns index the domain whose global PCA subspace is applied. \textbf{Left (Q1):} linear subspace transfer matrix. \textbf{Right (Q2):} subspace sensitivity ratio. Both experiments use 500 evaluation samples per domain with 2{,}000 additional held-out samples for intrinsic-dimension estimation.}
 \label{fig:geom_combined}
 \end{figure}
+
+\subsection{Multi-Model Generalization}
+\label{sec:multi_model}
+
+To assess whether \TanGCE{}'s advantage is specific to Qwen2.5-0.5B or holds across model families and scales, we repeat the evaluation at layer~8 across five models spanning three families and parameter counts from 0.5B to 7B: Qwen2.5 (0.5B, 1.5B, 3B), Gemma-2-2B, and Mistral-7B-v0.1. We compare only \TanGCE{} and \AmbGCE{}, the two methods that differ solely in their gradient constraint, isolating the effect of tangent-space projection. The same validation HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$, selected by lowest validation nonlinear probe accuracy) is applied uniformly.
+
+\input{tables/multi_model_comparison}
+
+Table~\ref{tab:multi_model} shows that \TanGCE{} achieves lower nonlinear leakage than \AmbGCE{} consistently across all model families and sizes evaluated. The absolute gap narrows somewhat at larger scales but remains in the same direction, suggesting that the tangent projection's benefit is not an artifact of the particular hidden-state geometry of small models. Control accuracy changes ($\Delta$Ctrl) remain small and comparable between the two methods across all settings.
+
+\subsection{Second Vision Benchmark: FairFace}
+\label{sec:fairface}
+
+CelebA is a large-scale dataset of celebrity images, which may introduce distribution shifts specific to this demographic slice. To test cross-dataset robustness of our findings in the vision domain, we additionally evaluate on FairFace~\citep{karkkainen2021fairface}, a balanced benchmark designed for diverse real-world face representation across gender, race, and age. We apply all seven erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) using the same validation HPO protocol as CelebA. For each of the four target concepts (Gender, Race~White, Race~Black, Age~Young), we select 5 low-correlation binary demographic attributes as controls. Erasure strength $\lambda^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy.
+
+\input{tables/fairface_clip_fair}
+
+Table~\ref{tab:fairface_clip_fair} shows that the pattern from CelebA replicates on FairFace: \TanGCE{} achieves the lowest nonlinear leakage across all four demographic concepts while maintaining comparable control accuracy to \AmbGCE{}. This confirms that the advantage of tangent-constrained erasure is not dataset-specific within the vision domain.
