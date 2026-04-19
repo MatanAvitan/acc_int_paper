@@ -13,10 +13,13 @@ We evaluate our methods across four blocks:
     \item \textbf{CelebA Visual Attributes (Cross-Modal Generalization):} We apply the same erasure methods to CLIP ViT-B/32 \citep{radford-etal-2021-clip} pooled embeddings (768 dimensions) of CelebA \citep{liu-etal-2015-celeba} face images. CelebA provides 40 binary facial attributes, enabling a rich surgicality analysis: when erasing one attribute (e.g., \emph{Male}), the remaining 39 serve as potential controls. We select the 5 least-correlated attributes as controls per concept to ensure that control accuracy changes reflect genuine collateral damage rather than attribute correlation. This domain demonstrates that \TanGCE{} generalizes beyond language model representations to vision encoders.
 \end{enumerate}
 
-\subsubsection{Models and Compared Methods}
-\paragraph{Language model.} The sycophancy, safety, and gender experiments use Qwen2.5-0.5B \citep{qwen-2024-qwen25} (24 decoder layers, hidden dimension 896) at layer~8.
+\ye{we should consider at least one more vision dataset imo}
 
-\paragraph{Vision encoder.} The CelebA experiments use CLIP ViT-B/32 pooled embeddings (768 dimensions), extracted once and cached.
+\subsubsection{Models and Compared Methods}
+\ye{split models and baselines into 2 subsections/parargraphs}
+\paragraph{Language model.} The sycophancy, safety, and gender experiments use Qwen2.5-0.5B \citep{qwen-2024-qwen25} (24 decoder layers, hidden dimension 896) at layer~8. \ye{we should have additional models, 1 is not enough. e.g., more sizes of qwen, olmo3, llama3, gemma4, etc.}
+
+\paragraph{Vision encoder.} The CelebA experiments use CLIP ViT-B/32 pooled embeddings (768 dimensions), extracted once and cached. \ye{same here: more models}
 
 \paragraph{Methods.} The core quantitative comparison evaluates \TanGCE{} against six baselines and ablations: two random baselines (global and per-sample direction), linear projection, INLP \citep{ravfogel-etal-2020-null}, LEACE \citep{belrose-etal-2023-leace}, and \AmbGCE{}. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline and serves as the main methodological reference point for the GCE family: it iteratively trains two-class MLP probes and applies Newton-step boundary corrections. \AmbGCE{} is our direct ablation of \TanGCE{}: it uses the same scorer-training loop but applies the update in the full ambient space. \TanGCE{} adds the key ingredient of the paper by estimating local tangent spaces with PCA-based neighborhoods and restricting the erasure direction to a local on-manifold approximation rather than the full ambient space.
 
@@ -37,5 +40,7 @@ IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline
 
 \paragraph{\AmbGCE{}.}
 \AmbGCE{} is the direct ambient-space ablation of \TanGCE{}. It keeps the same nonlinear scorer loop but applies the update in the full hidden space rather than projecting it onto a local tangent approximation.
+
+\ye{add the baselines we discussed on slack}
 
 \input{tables/method_comparison_scope}

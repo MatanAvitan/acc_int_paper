@@ -3,7 +3,9 @@
 \section{Method: \TanGCE{}}
 \label{sec:method}
 
-We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. The method is built from the geometric background above: if the representation support is locally approximated by an embedded manifold $\mathcal{M} \subset \mathbb{R}^d$, then the ambient erasure gradient should be edited so that the update moves along the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than along directions normal to the manifold.
+We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. The method is built from the geometric background above \ye{i think the specific background for the method should be moved here}: if the representation support is locally approximated by an embedded manifold $\mathcal{M} \subset \mathbb{R}^d$, then the ambient erasure gradient should be edited so that the update moves along the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than along directions normal to the manifold.
+
+\ye{present the method in an algorithm figure?}
 
 \subsection{Local tangent estimation}
 
@@ -57,6 +59,7 @@ This construction is the core difference between \TanGCE{} and its ambient count
 We implement \TanGCE{} using an iterative protocol with probe recycling. Each round begins by training a fresh concept scorer on the current representations, computing per-sample gradients, and applying the tangent-constrained update in Eq.~\ref{eq:tangent_erase}. This turns the method into an iterative nonlinear eraser: every new scorer is trained specifically to recover whatever target information survived the previous round. The tangent estimator is also refit in every round to track the evolving local geometry.
 
 The rationale follows Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial}: success against a single trained classifier is not evidence that the concept has been exhausted. We therefore evaluate every erasure method against a retrained probe after each full erasure procedure, and the erasure itself iterates to remove residual recoverable signal.
+\ye{and inlp? i think shauli had other papers following similar ideas as well}
 
 This setup also clarifies the relation between \TanGCE{} and the baselines. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline, performing a one-shot correction to the current decision boundary in each round. \AmbGCE{} is the direct ablation of \TanGCE{}: it keeps the same fresh-scorer loop but applies the update in the full ambient space. \TanGCE{} is the full method, adding the tangent-space restriction.
 

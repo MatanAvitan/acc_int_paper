@@ -17,6 +17,8 @@ Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream c
 \subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
 \label{sec:lambda_sweep}
 
+\ye{this sounds like an analysis (the part about lambda)}
+
 \input{tables/lambda_sweep}
 
 Table~\ref{tab:lambda_sweep} isolates the effect of step size by running only \AmbGCE{} and \TanGCE{} at three fixed $\lambda$ values ($0.5, 4.0, 8.0$) on the same three domains as above (Qwen2.5-0.5B, layer~8, same train/val/test splits and fresh-probe evaluation protocol as in Section~\ref{sec:evaluation}). As $\lambda$ increases, \AmbGCE{} becomes unstable: its nonlinear leakage worsens sharply at high step sizes, rising to 0.734 on sycophancy, 0.702 on gender, and 0.770 on safety at $\lambda{=}8$. \TanGCE{} behaves in the opposite way, improving as $\lambda$ increases and reaching its best precision at the largest tested step size in all three domains.
