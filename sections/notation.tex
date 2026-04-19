@@ -13,11 +13,12 @@ A binary concept is defined by a labeling function $\phi : \Sigma^* \to \mathcal
 The class-conditional representation is the random variable $X_c \sim \mathrm{enc}_\ell(s) \mid \phi(s) = c$, i.e., the distribution of hidden states for strings labeled $c$.
 
 \paragraph{Concept scorer.}
-A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a two-layer MLP \ye{don't define the exact architecture here. it's enough to say it's a non linear model. the actual scorer can be whatever model you choose (and perhaps it's worth having it as hyperparameter that you vary)} trained with binary cross-entropy \ye{same goes for the loss} on $\mathcal{D}$ to predict $y$ from $\mathbf{x}$. Its per-sample gradient with respect to the input is $\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i) \in \mathbb{R}^d$, which points in the direction of steepest increase in concept probability at $\mathbf{x}_i$.
+A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a differentiable nonlinear function trained to predict $y$ from $\mathbf{x}$. In the experiments we instantiate it as a two-layer MLP trained with binary cross-entropy, but the geometric construction below depends only on the scorer being differentiable. Its per-sample gradient with respect to the input is $\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i) \in \mathbb{R}^d$, which points in the direction of steepest increase in concept probability at $\mathbf{x}_i$.
 
 \paragraph{Representation manifold.}
 \ye{this seems to be the most important part of this section, but it's somewhat lost in the middle of the section}
-Each layer representation $\mathbf{x} = \mathrm{enc}_\ell(s)$ is formally a point in the ambient hidden space $\mathbb{R}^d$, where $d$ is the full hidden-state dimension. Following Tu \citep{tu-2011-manifolds}, we model the representations that actually occur for real inputs as lying near a smooth embedded submanifold $\mathcal{M} \subset \mathbb{R}^d$ \ye{why do you discuss modeling here? the section is supposed to describe the setup. this should be separated}. The manifold $\mathcal{M}$ is our mathematical model of the representation manifold. Its intrinsic dimension is denoted by $m$, with $m < d$ and typically much smaller than $d$ in our settings, meaning that the local degrees of freedom used by the data are far fewer than the directions available in the ambient hidden space.
+Each layer representation $\mathbf{x} = \mathrm{enc}_\ell(s)$ is formally a point in the ambient hidden space $\mathbb{R}^d$, where $d$ is the full hidden-state dimension. We model the representations that actually occur for real inputs as lying near a smooth embedded submanifold $\mathcal{M} \subset \mathbb{R}^d$, following the local manifold viewpoint of Tu \citep{tu-2011-manifolds}. Its intrinsic dimension is denoted by $m$, with $m < d$ and typically much smaller than $d$ in our settings, meaning that the local degrees of freedom used by the data are far fewer than the directions available in the ambient hidden space.
+\ye{why do you discuss modeling here? the section is supposed to describe the setup. this should be separated}
 
 Now fix a point $\mathbf{x} \in \mathcal{M}$. Let $U \subset \mathcal{M}$ be a small local neighborhood around $\mathbf{x}$, and let
 \begin{equation}
@@ -33,7 +34,7 @@ T_{\mathbf{x}}\mathcal{M} = d(\varphi^{-1})_{0}(\mathbb{R}^m) \subset \mathbb{R}
 where $d(\varphi^{-1})_0$ is the differential of the local parametrization $\varphi^{-1}$ at the origin. In ordinary ML language, this differential can be read as the Jacobian or best local linear approximation of $\varphi^{-1}$ at $0$. It maps an infinitesimal coordinate displacement in $\mathbb{R}^m$ to the corresponding first-order displacement in the ambient space $\mathbb{R}^d$. Because $\mathcal{M}$ is embedded in $\mathbb{R}^d$, we can treat $T_{\mathbf{x}}\mathcal{M}$ as an $m$-dimensional linear subspace of the ambient hidden space.
 
 \paragraph{Ambient versus tangent directions.}
-For any ambient \ye{you keep using all these terms you don't define. every time you introduce a new term (and think whether we actually need them), define it! use italics the first time, to help the read understand it's something you introduce.} vector $\mathbf{g} \in \mathbb{R}^d$ attached to the point $\mathbf{x}$, the local geometric picture suggests a decomposition
+For any \emph{ambient vector} $\mathbf{g} \in \mathbb{R}^d$ attached to the point $\mathbf{x}$, the local geometric picture suggests a decomposition
 \begin{equation}
 \label{eq:tangent_normal_decomp}
 \mathbf{g} = \mathbf{g}^{\top} + \mathbf{g}^{\perp},
