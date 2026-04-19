@@ -7,15 +7,13 @@ We argue that a central reason for the utility collapse of ambient-space erasure
 
 This observation suggests a different design principle for nonlinear erasure: the edit should follow the local geometry of the representation manifold rather than the full ambient space. Intuitively, if the relevant representation support is modeled locally by a tangent space, then only the tangent component of an erasure update preserves the first-order geometry actually used by the model. Constraining edits to that tangent geometry should make erasure more surgical and, crucially, should allow larger erasure strengths $\lambda$ before control concepts collapse.
 
-Our contributions are fourfold:
+Our contributions are twofold:
 \begin{enumerate}
     \item \textbf{A geometric formulation of nonlinear concept erasure.} We formalize the mismatch between the full hidden-state dimension and the much smaller effective representation dimension, and argue that off-manifold edits are a key failure mode of ambient gradient-based erasure.
 
     \item \textbf{A tangent-constrained nonlinear erasure method.} In Section~\ref{sec:method}, we introduce a method that projects ambient erasure updates onto locally estimated tangent spaces so that interventions stay aligned with the representation geometry used by the model.
-
-    \item \textbf{An iterative erasure view motivated by recoverability.} Following Elazar and Goldberg's recoverability insight \citep{elazar-goldberg-2018-adversarial} and the iterative linear perspective of INLP \citep{ravfogel-etal-2020-null}, we do not treat success against a single scorer as evidence of complete erasure. Instead, the method is evaluated against freshly retrained nonlinear probes, and the erasure itself is iterated to remove residual recoverable signal.
-
-    \item \textbf{A supervised evaluation centered on precision and surgicality.} We evaluate on three text datasets and two vision benchmarks using retrained concept probes to measure erasure precision and annotated control labels to measure surgicality.
 \end{enumerate}
+
+To evaluate the method conservatively, we adopt a recoverability-oriented protocol following Elazar and Goldberg's cautionary analysis \citep{elazar-goldberg-2018-adversarial} and the iterative perspective behind INLP \citep{ravfogel-etal-2020-null}: we do not treat success against a single scorer as evidence of complete erasure, we evaluate with freshly retrained nonlinear probes, and we iterate the erasure procedure to remove residual recoverable signal. We test this protocol on three text datasets and two vision benchmarks, measuring both erasure precision and surgicality through annotated control labels.
 
 Empirically, the resulting tangent-constrained method achieves the strongest nonlinear erasure across sycophancy, gender, safety, CelebA visual attributes, and FairFace demographic attributes while maintaining competitive control-concept preservation. Its advantage over the ambient ablation also persists across Qwen2.5-0.5B/1.5B/3B, Gemma-2-2B, and Mistral-7B, indicating that the benefit is not specific to a single small backbone. Section~\ref{sec:related} positions the method against prior erasure work, Section~\ref{sec:method} gives the method and mechanism hypothesis, Section~\ref{sec:evaluation} gives the experimental setup, and Section~\ref{sec:results} tests erasure precision and surgicality.
