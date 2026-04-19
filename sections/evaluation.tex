@@ -16,7 +16,7 @@ Most gradient-based methods share a common erasure strength parameter $\lambda$.
 For sycophancy we use answer matching as the control concept; for Bias in Bios we use profession; for safety we use helpfulness; and for CelebA and UTKFace we use selected low-correlation facial attributes (5 per concept). This lets the evaluation distinguish targeted concept removal from broad representational damage.
 
 \paragraph{Vision benchmarks.}
-For cross-modal evaluation we use two face-image datasets. \textbf{CelebA}~\citep{liu-etal-2015-celeba} provides 202{,}599 celebrity images with 40 binary facial attributes; we use the official train/val/test split. \textbf{UTKFace}~\citep{zhifei2017cvpr} provides 8{,}469 diverse real-world face images annotated with gender (binary), race (5 groups: White, Black, Asian, Indian, Others, each evaluated one-vs-rest), and continuous age (binarized as Young: $<$30). We use the official train/valid split. For both datasets we extract CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) and apply all erasure methods to the resulting representation matrix.
+For cross-modal evaluation we use two face-image datasets. \textbf{CelebA}~\citep{liu-etal-2015-celeba} provides 202{,}599 celebrity images with 40 binary facial attributes; we use the official train/val/test split. \textbf{UTKFace}~\citep{zhifei2017cvpr} provides 8{,}469 diverse real-world face images annotated with gender (binary), race (5 groups: White, Black, Asian, Indian, Others, each evaluated one-vs-rest), and continuous age (binarized as Young: $<$30). We use the official train/valid split. For both datasets we extract pooled CLIP ViT-B/32 image embeddings (768-dim) and apply all erasure methods to the resulting representation matrix.
 
 \subsection{Metrics}
 

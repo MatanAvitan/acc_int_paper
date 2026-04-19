@@ -28,7 +28,7 @@ This pattern is consistent with the manifold hypothesis motivating the method. I
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
 
-To test whether \TanGCE{} generalizes beyond language model representations, we apply all seven erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) of CelebA face images (see Section~\ref{sec:evaluation} for preprocessing and split details). CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls. The same validation-HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy) is applied uniformly across all methods.
+To test whether \TanGCE{} generalizes beyond language model representations, we apply all seven erasure methods to pooled CLIP ViT-B/32 image embeddings (768-dim) of CelebA face images (see Section~\ref{sec:evaluation} for preprocessing and split details). CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls. The same validation-HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy) is applied uniformly across all methods.
 
 We treat this cross-modal block as a generality check rather than the primary evidence block for the paper's central claim.
 
@@ -103,7 +103,7 @@ Table~\ref{tab:multi_model} shows that \TanGCE{} achieves lower nonlinear leakag
 \subsection{Second Vision Benchmark: UTKFace}
 \label{sec:utkface}
 
-CelebA consists predominantly of celebrity images, which may reflect a narrow demographic distribution. To test cross-dataset robustness, we additionally evaluate on UTKFace~\citep{zhifei2017cvpr}, a standard fairness benchmark covering a broad range of ages, genders, and ethnic groups from real-world images. We apply all seven erasure methods to CLIP ViT-B/32 \texttt{pooler\_output} embeddings (768-dim) using the same validation HPO protocol as CelebA. For each of five target concepts (Gender, Race~White, Race~Black, Race~Asian, Age~Young), we select 5 low-correlation binary demographic attributes as controls. Erasure strength $\lambda^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy.
+CelebA consists predominantly of celebrity images, which may reflect a narrow demographic distribution. To test cross-dataset robustness, we additionally evaluate on UTKFace~\citep{zhifei2017cvpr}, a standard fairness benchmark covering a broad range of ages, genders, and ethnic groups from real-world images. We apply all seven erasure methods to pooled CLIP ViT-B/32 image embeddings (768-dim) using the same validation HPO protocol as CelebA. For each of five target concepts (Gender, Race~White, Race~Black, Race~Asian, Age~Young), we select 5 low-correlation binary demographic attributes as controls. Erasure strength $\lambda^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy.
 
 \input{tables/utkface_clip_fair}
 
