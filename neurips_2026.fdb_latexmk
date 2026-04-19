@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex neurips_2026"] 1776631858.64027 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1776631861.26277 0
+["bibtex neurips_2026"] 1776633068.39744 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1776633070.91021 0
   "./references.bib" 1776612261.8073 7476 7938880b4d194e1385906e03cb73eae6 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "neurips_2026.aux" 1776631860.92446 34016 4727397befc16cf6b3d6bfd7d8bacb79 "pdflatex"
+  "neurips_2026.aux" 1776633070.55981 34016 359c366cdf45abc192ed696107a51e15 "pdflatex"
   (generated)
   "neurips_2026.bbl"
   "neurips_2026.blg"
   (rewritten before read)
-["pdflatex"] 1776631858.71033 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1776631861.26311 0
+["pdflatex"] 1776633068.48082 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1776633070.91079 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -150,9 +150,9 @@
   "checklist.tex" 1776369877.11282 24742 91487eae9b795e4618b3b92d8340a56b ""
   "figures/Q1_L8_top1.png" 1776369893.974 40297 7756966f3e4eb959e25bc22c35fe1eaa ""
   "figures/Q2_L8_top1_agreement_ratio.png" 1776369893.998 49615 7c1aa9fc937229bf3cb3280df1c74dd5 ""
-  "neurips_2026.aux" 1776631860.92446 34016 4727397befc16cf6b3d6bfd7d8bacb79 "pdflatex"
-  "neurips_2026.bbl" 1776631858.69844 8009 17ad5073abf38eb82512534eb0df8ebd "bibtex neurips_2026"
-  "neurips_2026.out" 1776631860.92846 6659 81b9c7ffddbdca899c62f1a269bcd478 "pdflatex"
+  "neurips_2026.aux" 1776633070.55981 34016 359c366cdf45abc192ed696107a51e15 "pdflatex"
+  "neurips_2026.bbl" 1776633068.46479 8009 17ad5073abf38eb82512534eb0df8ebd "bibtex neurips_2026"
+  "neurips_2026.out" 1776633070.58081 6659 81b9c7ffddbdca899c62f1a269bcd478 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
   "neurips_2026.tex" 1776631825.2781 5328 a6d5754c2b3bede79ebac10318de016e ""
   "sections/abstract.tex" 1776611740.14191 1385 c88c1159a56bf98b4373f5f21f48eaca ""
@@ -161,7 +161,7 @@
   "sections/discussion.tex" 1776371701.05611 4857 ebfbea937b3d961fbedafff09bf8836a ""
   "sections/evaluation.tex" 1776631825.3001 4168 1475e66361ca9bac0c1fa68f67f9fa90 ""
   "sections/experiments.tex" 1776631825.3181 6400 446f1031ff097b4846907d6572eb59e1 ""
-  "sections/introduction.tex" 1776611740.15891 4204 b62293185efc4e96569133723574214c ""
+  "sections/introduction.tex" 1776633053.22063 4082 432e7d54fb35477f938fc688a268d9c8 ""
   "sections/limitations.tex" 1776611740.21691 1418 b37b13ccebcce45c99fd4c0376f7266c ""
   "sections/method.tex" 1776631825.3051 6331 2ced6970d58a83c943753913f3084459 ""
   "sections/notation.tex" 1776631825.3031 6219 e8587091511409e48bed24ff4d309ec3 ""
