@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -56,6 +56,13 @@ Jiaming Ji, Donghai Hong, Borong Zhang, Boyuan Chen, Josef Dai, Boren Zheng, Tia
 \newblock {PKU-SafeRLHF}: A multi-level safety alignment dataset for large language models.
 \newblock \emph{arXiv preprint arXiv:2406.15513}, 2024.
 \newblock URL \url{https://arxiv.org/abs/2406.15513}.
+
+\bibitem[K{\"a}rkk{\"a}inen and Joo(2021)]{karkkainen2021fairface}
+Kimmo K{\"a}rkk{\"a}inen and Jungseock Joo.
+\newblock {FairFace}: Face attribute dataset for balanced race, gender, and age for bias measurement and mitigation.
+\newblock In \emph{Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}, pages 1548--1558, 2021.
+\newblock \doi{10.1109/WACV48630.2021.00159}.
+\newblock URL \url{https://openaccess.thecvf.com/content/WACV2021/html/Karkkainen_FairFace_Face_Attribute_Dataset_for_Balanced_Race_Gender_and_Age_WACV_2021_paper.html}.
 
 \bibitem[Liu et~al.(2015)Liu, Luo, Wang, and Tang]{liu-etal-2015-celeba}
 Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
