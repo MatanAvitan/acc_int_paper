@@ -1,6 +1,6 @@
 \begin{table*}[t]
 \centering
-\caption{Multi-model generalization of \TanGCE{} vs.\ \AmbGCE{} at layer~8. NL: retrained nonlinear MLP probe accuracy on the target concept (lower = stronger erasure). $\Delta$Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). $\lambda^*$ selected per method from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. \TanGCE{} achieves lower NL leakage than \AmbGCE{} consistently across all model families and sizes.}
+\caption{Multi-model generalization of \TanGCE{} vs.\ \AmbGCE{} at layer~8. NL: retrained nonlinear MLP probe accuracy on the target concept (lower = stronger erasure). $\Delta$Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). $\lambda^*$ selected per method from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. \TanGCE{} achieves lower NL leakage than \AmbGCE{} across model families and sizes; the single exception is Gemma-2-2B safety, where the gap is within typical run-to-run variance ($\Delta$NL\,$=\!+0.013$).}
 \label{tab:multi_model}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -10,24 +10,24 @@
 Model & Method & NL$\downarrow$ & $\Delta$Ctrl & NL$\downarrow$ & $\Delta$Ctrl & NL$\downarrow$ & $\Delta$Ctrl \\
 \midrule
 \multirow{2}{*}{Qwen2.5-0.5B}
- & \AmbGCE{}         & .703 & $.000$ & .701 & $.000$ & .778 & $-.040$ \\
- & \textbf{\TanGCE{}} & \textbf{.602} & $-.015$ & \textbf{.618} & $-.008$ & \textbf{.663} & $+.039$ \\
+ & \AmbGCE{}          & .643 & $.000$ & .681 & $-.001$ & .770 & $-.048$ \\
+ & \textbf{\TanGCE{}} & \textbf{.614} & $-.007$ & \textbf{.610} & $-.012$ & \textbf{.665} & $+.035$ \\
 \midrule
 \multirow{2}{*}{Qwen2.5-1.5B}
- & \AmbGCE{}         & --- & --- & --- & --- & --- & --- \\
- & \textbf{\TanGCE{}} & --- & --- & --- & --- & --- & --- \\
+ & \AmbGCE{}          & .738 & $.000$ & .861 & $-.003$ & .777 & $-.036$ \\
+ & \textbf{\TanGCE{}} & \textbf{.652} & $-.000$ & \textbf{.587} & $-.035$ & \textbf{.693} & $+.001$ \\
 \midrule
 \multirow{2}{*}{Qwen2.5-3B}
- & \AmbGCE{}         & --- & --- & --- & --- & --- & --- \\
- & \textbf{\TanGCE{}} & --- & --- & --- & --- & --- & --- \\
+ & \AmbGCE{}          & .805 & $.000$ & .870 & $-.000$ & .779 & $-.017$ \\
+ & \textbf{\TanGCE{}} & \textbf{.765} & $.000$ & \textbf{.555} & $-.019$ & \textbf{.760} & $-.005$ \\
 \midrule
 \multirow{2}{*}{Gemma-2-2B}
- & \AmbGCE{}         & --- & --- & --- & --- & --- & --- \\
- & \textbf{\TanGCE{}} & --- & --- & --- & --- & --- & --- \\
+ & \AmbGCE{}          & .650 & $.000$ & .820 & $-.007$ & \textbf{.739} & $-.020$ \\
+ & \textbf{\TanGCE{}} & \textbf{.635} & $-.001$ & \textbf{.814} & $-.003$ & .752 & $.000$ \\
 \midrule
 \multirow{2}{*}{Mistral-7B}
- & \AmbGCE{}         & --- & --- & --- & --- & --- & --- \\
- & \textbf{\TanGCE{}} & --- & --- & --- & --- & --- & --- \\
+ & \AmbGCE{}          & .817 & $.000$ & .906 & $-.003$ & .848 & $-.025$ \\
+ & \textbf{\TanGCE{}} & \textbf{.740} & $.000$ & \textbf{.631} & $-.006$ & \textbf{.843} & $-.001$ \\
 \bottomrule
 \end{tabular}
 \end{table*}

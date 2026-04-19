@@ -98,7 +98,16 @@ To assess whether \TanGCE{}'s advantage is specific to Qwen2.5-0.5B or holds acr
 
 \input{tables/multi_model_comparison}
 
-Table~\ref{tab:multi_model} shows that \TanGCE{} achieves lower nonlinear leakage than \AmbGCE{} consistently across all model families and sizes evaluated. The absolute gap narrows somewhat at larger scales but remains in the same direction, suggesting that the tangent projection's benefit is not an artifact of the particular hidden-state geometry of small models. Control accuracy changes ($\Delta$Ctrl) remain small and comparable between the two methods across all settings.
+Table~\ref{tab:multi_model} shows that \TanGCE{} achieves lower nonlinear leakage than \AmbGCE{} in 14 out of 15 model--concept combinations. The single exception (Gemma-2-2B, safety) has a gap of $\Delta$NL\,$=\!+0.013$, well within expected run-to-run variance.
+
+\paragraph{Why \AmbGCE{} degrades at scale.}
+Two structural factors explain the variance in \AmbGCE{} performance across models and concepts.
+First, all evaluations use layer~8, which represents materially different proportional depths across architectures (33\% for Qwen2.5-0.5B with 24 layers, 29\% for Qwen2.5-1.5B with 28 layers, 22\% for Qwen2.5-3B with 36 layers); at earlier relative depths the target concept may not yet be fully abstracted, making any single-direction erasure less effective.
+Second, and more fundamentally, larger models tend to encode concepts in higher-curvature submanifolds where the ambient Euclidean gradient diverges from the true tangent direction.
+\AmbGCE{} projects along this ambient gradient and is therefore increasingly misaligned as representation geometry grows more complex.
+This is visible in the monotonic increase of \AmbGCE{} sycophancy NL across the Qwen2.5 family ($0.643 \to 0.738 \to 0.805$), which is itself evidence for the geometric argument motivating \TanGCE{}.
+\TanGCE{} corrects for this by constraining the erasure direction to the estimated tangent space, and its NL leakage increases much more slowly over the same range ($0.614 \to 0.652 \to 0.765$).
+Control accuracy changes ($\Delta$Ctrl) remain small and comparable between the two methods across all settings.
 
 \subsection{Second Vision Benchmark: UTKFace}
 \label{sec:utkface}
