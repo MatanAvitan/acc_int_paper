@@ -356,6 +356,11 @@ INPUT ./sections/appendix_results.tex
 INPUT ./sections/appendix_results.tex
 INPUT ./sections/appendix_results.tex
 INPUT sections/appendix_results.tex
+INPUT ./tables/multi_model_per_layer.tex
+INPUT ./tables/multi_model_per_layer.tex
+INPUT ./tables/multi_model_per_layer.tex
+INPUT ./tables/multi_model_per_layer.tex
+INPUT tables/multi_model_per_layer.tex
 INPUT ./tables/repo_snapshot_sycophancy.tex
 INPUT ./tables/repo_snapshot_sycophancy.tex
 INPUT ./tables/repo_snapshot_sycophancy.tex
