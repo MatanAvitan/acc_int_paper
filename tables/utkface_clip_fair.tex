@@ -1,6 +1,6 @@
 \begin{table*}[t]
 \centering
-\caption{CLIP ViT-B/32 concept erasure on UTKFace (validation HPO for $\lambda$). UTKFace provides diverse real-world face images with binary demographic labels (gender, binarized race groups, age). Each method's $\lambda^*$ is selected from the same grid $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy. Controls: 5 least-correlated binary demographic attributes per concept. L/NL Leak: retrained linear / nonlinear probe accuracy (lower = better erasure). $\Delta$Ctrl: mean control accuracy change (closer to zero = more surgical). Embeddings: pooled CLIP ViT-B/32 image representations (768 dimensions).}
+\caption{CLIP ViT-B/32 concept erasure on UTKFace (validation HPO for $\lambda$). UTKFace provides diverse real-world face images with binary demographic labels (gender, binarized race groups, age). Each method's $\lambda^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy; the same probe (MLP hidden 256, 1500 steps, AdamW lr=$10^{-3}$) is used for both HPO and evaluation. Controls: 5 least-correlated binary demographic attributes per concept. L/NL Leak: retrained linear / nonlinear probe accuracy (lower = better erasure). $\Delta$Ctrl: mean control accuracy change (closer to zero = more surgical). Embeddings: pooled CLIP ViT-B/32 image representations (768 dimensions).}
 \label{tab:utkface_clip_fair}
 \small
 \setlength{\tabcolsep}{3.5pt}
