@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  20 APR 2026 17:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  20 APR 2026 17:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -539,12 +539,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 Underfull \vbox (badness 3189) has occurred while \output is active []
 
 [10] (./tables/geometry_contrast_summary.tex)
-<figures/Q1_L8_top1.png, id=357, 433.62pt x 361.35pt>
+<figures/Q1_L8_top1.png, id=353, 433.62pt x 361.35pt>
 File: figures/Q1_L8_top1.png Graphic file (type png)
 <use figures/Q1_L8_top1.png>
 Package pdftex.def Info: figures/Q1_L8_top1.png  used on input line 73.
 (pdftex.def)             Requested size: 190.79109pt x 158.99449pt.
-<figures/Q2_L8_top1_agreement_ratio.png, id=359, 433.62pt x 361.35pt>
+<figures/Q2_L8_top1_agreement_ratio.png, id=355, 433.62pt x 361.35pt>
 File: figures/Q2_L8_top1_agreement_ratio.png Graphic file (type png)
 <use figures/Q2_L8_top1_agreement_ratio.png>
 Package pdftex.def Info: figures/Q2_L8_top1_agreement_ratio.png  used on input line 80.
@@ -554,15 +554,10 @@ Overfull \hbox (90.88585pt too wide) in paragraph at lines 7--50
  [][] 
  []
 
-) [12 <./figures/Q1_L8_top1.png> <./figures/Q2_L8_top1_agreement_ratio.png>] (./tables/utkface_clip_fair.tex
-Overfull \hbox (43.85007pt too wide) in paragraph at lines 7--21
- [][] 
- []
+) [12 <./figures/Q1_L8_top1.png> <./figures/Q2_L8_top1_agreement_ratio.png>]) (./sections/discussion.tex
+Underfull \vbox (badness 1168) has occurred while \output is active []
 
-)) (./sections/discussion.tex [13]
-Underfull \vbox (badness 2547) has occurred while \output is active []
-
-[14]) (./sections/limitations.tex) (./sections/conclusion.tex) (./neurips_2026.bbl [15]
+[13]) (./sections/limitations.tex) (./sections/conclusion.tex [14]) (./neurips_2026.bbl [15]
 Underfull \hbox (badness 4913) in paragraph at lines 61--66
 []\T1/ptm/m/n/10 (+20) Kimmo Kärkkäi-nen and Jungseock Joo.  Fair-Face: Face at-tribute dataset for bal-
  []
@@ -587,7 +582,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--66
 \T1/cmtt/m/n/10 / / openaccess . thecvf . com / content / WACV2021 / html / Karkkainen _ FairFace _ Face _
  []
 
-[16]
+
 Underfull \hbox (badness 1205) in paragraph at lines 100--105
 []\T1/ptm/m/n/10 (+20) Loring W. Tu.  \T1/ptm/m/it/10 (+20) An In-tro-duc-tion to Man-i-folds\T1/ptm/m/n/10 (+20) .  Uni-ver-si-text. Springer, 2 edi-tion, 2011.
  []
@@ -601,31 +596,31 @@ Underfull \hbox (badness 4531) in paragraph at lines 100--105
 
 LaTeX Warning: Float too large for page by 13.71944pt on input line 85.
 
-) (./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/local_celeba_visual_table2.tex) (./tables/celeba_clip_all40_per_concept.tex) (./tables/main_text_geometry_schedule.tex)) [17] [18] (./checklist.tex
+) [16] (./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/local_celeba_visual_table2.tex) (./tables/celeba_clip_all40_per_concept.tex) (./tables/main_text_geometry_schedule.tex)) [17] (./checklist.tex
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 11.
 (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [19] [20] [21] [22] [23] [24]) [25] [26] [27] [28] [29] (./neurips_2026.aux)
+) [18] [19] [20] [21] [22] [23]) [24] [25] [26] [27] [28] (./neurips_2026.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-29>
  ***********
 Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
-(rerunfilecheck)             Checksum: 8609A86ACF5CEDF67A37DB3D8551C3A2;6939.
+(rerunfilecheck)             Checksum: 68DF16CFA4E7CD35CD8E6376A9E9743B;6712.
  ) 
 Here is how much of TeX's memory you used:
- 15897 strings out of 469476
- 257094 string characters out of 5467624
- 818307 words of memory out of 5000000
- 43726 multiletter control sequences out of 15000+600000
+ 15883 strings out of 469476
+ 256748 string characters out of 5467624
+ 814775 words of memory out of 5000000
+ 43718 multiletter control sequences out of 15000+600000
  689358 words of font info for 319 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 72i,11n,79p,1729b,779s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,79p,1729b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (29 pages, 490006 bytes).
+Output written on neurips_2026.pdf (28 pages, 486093 bytes).
 PDF statistics:
- 699 PDF objects out of 1000 (max. 8388607)
- 603 compressed objects within 7 object streams
- 176 named destinations out of 1000 (max. 500000)
- 62219 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 685 PDF objects out of 1000 (max. 8388607)
+ 591 compressed objects within 6 object streams
+ 173 named destinations out of 1000 (max. 500000)
+ 62211 words of extra memory for PDF output out of 74296 (max. 10000000)
 

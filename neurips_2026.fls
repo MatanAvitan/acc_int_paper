@@ -328,11 +328,6 @@ INPUT ./tables/multi_model_comparison.tex
 INPUT ./tables/multi_model_comparison.tex
 INPUT ./tables/multi_model_comparison.tex
 INPUT tables/multi_model_comparison.tex
-INPUT ./tables/utkface_clip_fair.tex
-INPUT ./tables/utkface_clip_fair.tex
-INPUT ./tables/utkface_clip_fair.tex
-INPUT ./tables/utkface_clip_fair.tex
-INPUT tables/utkface_clip_fair.tex
 INPUT ./sections/discussion.tex
 INPUT ./sections/discussion.tex
 INPUT ./sections/discussion.tex
