@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  20 APR 2026 17:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  20 APR 2026 17:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -539,12 +539,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 Underfull \vbox (badness 3189) has occurred while \output is active []
 
 [10] (./tables/geometry_contrast_summary.tex)
-<figures/Q1_L8_top1.png, id=353, 433.62pt x 361.35pt>
+<figures/Q1_L8_top1.png, id=348, 433.62pt x 361.35pt>
 File: figures/Q1_L8_top1.png Graphic file (type png)
 <use figures/Q1_L8_top1.png>
 Package pdftex.def Info: figures/Q1_L8_top1.png  used on input line 73.
 (pdftex.def)             Requested size: 190.79109pt x 158.99449pt.
-<figures/Q2_L8_top1_agreement_ratio.png, id=355, 433.62pt x 361.35pt>
+<figures/Q2_L8_top1_agreement_ratio.png, id=350, 433.62pt x 361.35pt>
 File: figures/Q2_L8_top1_agreement_ratio.png Graphic file (type png)
 <use figures/Q2_L8_top1_agreement_ratio.png>
 Package pdftex.def Info: figures/Q2_L8_top1_agreement_ratio.png  used on input line 80.
@@ -609,18 +609,18 @@ Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
 (rerunfilecheck)             Checksum: 68DF16CFA4E7CD35CD8E6376A9E9743B;6712.
  ) 
 Here is how much of TeX's memory you used:
- 15883 strings out of 469476
- 256748 string characters out of 5467624
- 814775 words of memory out of 5000000
- 43718 multiletter control sequences out of 15000+600000
- 689358 words of font info for 319 fonts, out of 8000000 for 9000
+ 15882 strings out of 469476
+ 256690 string characters out of 5467624
+ 813871 words of memory out of 5000000
+ 43715 multiletter control sequences out of 15000+600000
+ 689485 words of font info for 321 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  72i,11n,79p,1729b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (28 pages, 486093 bytes).
+Output written on neurips_2026.pdf (28 pages, 484865 bytes).
 PDF statistics:
- 685 PDF objects out of 1000 (max. 8388607)
- 591 compressed objects within 6 object streams
- 173 named destinations out of 1000 (max. 500000)
+ 679 PDF objects out of 1000 (max. 8388607)
+ 585 compressed objects within 6 object streams
+ 172 named destinations out of 1000 (max. 500000)
  62211 words of extra memory for PDF output out of 74296 (max. 10000000)
 
