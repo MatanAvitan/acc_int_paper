@@ -3,7 +3,7 @@
 \section{Method: \TanGCE{}}
 \label{sec:method}
 
-We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. The key geometric premise is simple: if the representation support is locally approximated by an embedded manifold $\mathcal{M} \subset \mathbb{R}^d$, then the ambient erasure gradient should be edited so that the update moves along the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than along directions normal to the manifold. Each iteration therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
+We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. Our starting point is a local manifold approximation of representation space. If the neighborhood of a representation $\mathbf{x}$ is well approximated by a low-dimensional manifold $\mathcal{M}$, then the relevant first-order directions are those in the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than arbitrary ambient directions in $\mathbb{R}^d$. We do not observe this tangent space directly. Instead, we approximate it with local PCA/SVD on neighborhood secants and use that first-order estimate to constrain the erasure update. Each iteration therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
 
 \begin{figure}[t]
 \centering
@@ -56,7 +56,7 @@ where the intrinsic dimension $r$ is selected automatically by a retained-varian
 \mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top.
 \end{equation}
 
-This is the empirical analogue of the differential-geometric tangent space from Section~\ref{sec:notation}: the neighborhood PCA basis provides a local linear model of the representation manifold around $\mathbf{x}_i$.
+This is the first-order approximation used throughout the paper: the neighborhood PCA basis serves as an empirical tangent estimator for the local representation manifold around $\mathbf{x}_i$.
 
 \subsection{Tangent-constrained update}
 
@@ -70,7 +70,7 @@ To define the tangent-constrained update, we start from the ambient unit gradien
 \label{eq:tangent_direction}
 \mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \, \mathbf{u}_i = \mathbf{B}_i (\mathbf{B}_i^\top \mathbf{u}_i).
 \end{equation}
-The projected direction is \emph{not} re-normalized to unit length. Its norm $\|\mathbf{u}_i^{\mathrm{tan}}\| \leq 1$ acts as a confidence weight: when the ambient concept gradient is mostly normal to the manifold, $\|\mathbf{u}_i^{\mathrm{tan}}\| \ll 1$, and the edit is naturally attenuated.
+The projected direction is \emph{not} re-normalized to unit length. Its norm $\|\mathbf{u}_i^{\mathrm{tan}}\| \leq 1$ acts as an overlap weight: when the ambient concept gradient has little support in the estimated tangent space, the update is naturally attenuated.
 
 \TanGCE{} then applies the update
 \begin{equation}
@@ -81,9 +81,9 @@ The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$, which is
 
 This construction is the core difference between \TanGCE{} and its ambient counterpart. \AmbGCE{} applies the update in the full hidden space, whereas \TanGCE{} restricts the update to tangent directions supported by the local geometry of the representations.
 
-\subsection{Why tangent projection permits larger $\lambda$}
+\subsection{Why tangent projection can help at larger \texorpdfstring{$\lambda$}{lambda}}
 
-\AmbGCE{} edits $\mathbf{x}_i$ along $\mathbf{u}_i \in \mathbb{R}^d$, which can contain a large normal component relative to $T_{\mathbf{x}_i}\mathcal{M}$. If $\mathbf{u}_i^{\perp}$ is large, increasing $\lambda$ pushes the representation away from the local manifold approximation and can distort unrelated structure or preserve recoverable signal. \TanGCE{} removes this normal component at first order by replacing $\mathbf{u}_i$ with $\mathbf{u}_i^{\mathrm{tan}}$. This geometric mechanism can permit operation at larger erasure strengths than ambient updates.
+\AmbGCE{} edits $\mathbf{x}_i$ in the full ambient space, where the gradient may contain components that are poorly aligned with the local representation support. Under the local manifold view, those components are the ones most likely to move the representation away from the neighborhood geometry captured by natural data. \TanGCE{} removes them at first order by replacing $\mathbf{u}_i$ with its projection $\mathbf{u}_i^{\mathrm{tan}}$ into the estimated tangent space. This motivates the hypothesis that tangent-constrained updates can remain effective at larger step sizes. We treat that statement as empirical rather than guaranteed, and evaluate it directly in the results section.
 
 \subsection{Iterative \TanGCE{} and relation to baselines}
 
@@ -93,4 +93,4 @@ The rationale follows Elazar and Goldberg \citep{elazar-goldberg-2018-adversaria
 
 This setup also clarifies the relation between \TanGCE{} and the baselines. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline, performing a one-shot correction to the current decision boundary in each round. \AmbGCE{} is the direct ablation of \TanGCE{}: it keeps the same fresh-scorer loop but applies the update in the full ambient space. \TanGCE{} is the full method, adding the tangent-space restriction.
 
-Two diagnostics verify tangent quality throughout the iterative process. \emph{Tangent Gradient Capture} (TGC) measures the fraction of the leakage gradient lying within the estimated tangent space. \emph{Tangent Neighbor Residual} (TNR) measures the fraction of local secant variation not explained by the tangent basis. High TGC and low TNR indicate that the local linear approximation is sufficiently faithful for the tangent-constrained update to be meaningful.
+Two diagnostics monitor tangent quality throughout the iterative process. \emph{Tangent Gradient Capture} (TGC) measures the fraction of the leakage gradient lying within the estimated tangent space. \emph{Tangent Neighbor Residual} (TNR) measures the fraction of local secant variation not explained by the tangent basis. High TGC and low TNR indicate that the local linear approximation is informative enough for the tangent-constrained update to be meaningful.
