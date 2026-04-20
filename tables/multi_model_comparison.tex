@@ -1,6 +1,6 @@
 \begin{table*}[t]
 \centering
-\caption{Multi-model generalization of \TanGCE{} vs.\ \AmbGCE{} at layer~8. NL: retrained nonlinear MLP probe accuracy on the target concept (lower = stronger erasure). $\Delta$Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). $\lambda^*$ selected per method from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL accuracy. \TanGCE{} achieves lower NL leakage than \AmbGCE{} across model families and sizes; the single exception is Gemma-2-2B safety, where the gap is within typical run-to-run variance ($\Delta$NL\,$=\!+0.013$).}
+\caption{Multi-family comparison of \TanGCE{} vs.\ \AmbGCE{}. Each model is evaluated at the layers corresponding to 25\%, 50\%, and 75\% of its depth; values shown are mean\,$\pm$\,std across those three layers. NL: retrained nonlinear MLP probe accuracy on the target concept (lower = stronger erasure). $\Delta$Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). $\lambda^*$ selected from $\{0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0\}$ by lowest validation NL accuracy. Dashes (---) indicate runs still in progress.}
 \label{tab:multi_model}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -8,26 +8,27 @@
 \toprule
  & & \multicolumn{2}{c|}{Sycophancy} & \multicolumn{2}{c|}{Gender (Bias in Bios)} & \multicolumn{2}{c}{Safety} \\
 Model & Method & NL$\downarrow$ & $\Delta$Ctrl & NL$\downarrow$ & $\Delta$Ctrl & NL$\downarrow$ & $\Delta$Ctrl \\
+ & & \multicolumn{6}{c}{\small mean\,$\pm$\,std over 25\%/50\%/75\% depth layers} \\
 \midrule
 \multirow{2}{*}{Qwen2.5-0.5B}
- & \AmbGCE{}          & .643 & $.000$ & .681 & $-.001$ & .770 & $-.048$ \\
- & \textbf{\TanGCE{}} & \textbf{.614} & $-.007$ & \textbf{.610} & $-.012$ & \textbf{.665} & $+.035$ \\
+ & \AmbGCE{}          & $0.806{\pm}0.095$ & $+0.000{\pm}0.000$ & $0.770{\pm}0.071$ & $-0.003{\pm}0.004$ & $0.806{\pm}0.033$ & $-0.041{\pm}0.003$ \\
+ & \textbf{\TanGCE{}} & $\mathbf{0.718{\pm}0.101}$ & $-0.000{\pm}0.000$ & $\mathbf{0.579{\pm}0.040}$ & $-0.038{\pm}0.017$ & $\mathbf{0.712{\pm}0.034}$ & $+0.007{\pm}0.010$ \\
 \midrule
 \multirow{2}{*}{Qwen2.5-1.5B}
- & \AmbGCE{}          & .738 & $.000$ & .861 & $-.003$ & .777 & $-.036$ \\
- & \textbf{\TanGCE{}} & \textbf{.652} & $-.000$ & \textbf{.587} & $-.035$ & \textbf{.693} & $+.001$ \\
+ & \AmbGCE{}          & $0.812{\pm}0.072$ & $+0.000{\pm}0.000$ & $0.842{\pm}0.083$ & $-0.002{\pm}0.000$ & $0.824{\pm}0.034$ & $-0.023{\pm}0.017$ \\
+ & \textbf{\TanGCE{}} & $\mathbf{0.704{\pm}0.043}$ & $-0.003{\pm}0.003$ & $\mathbf{0.598{\pm}0.043}$ & $-0.043{\pm}0.027$ & $\mathbf{0.717{\pm}0.037}$ & $-0.043{\pm}0.045$ \\
 \midrule
 \multirow{2}{*}{Qwen2.5-3B}
- & \AmbGCE{}          & .805 & $.000$ & .870 & $-.000$ & .779 & $-.017$ \\
- & \textbf{\TanGCE{}} & \textbf{.765} & $.000$ & \textbf{.555} & $-.019$ & \textbf{.760} & $-.005$ \\
+ & \AmbGCE{}          & $0.861{\pm}0.065$ & $+0.000{\pm}0.000$ & $0.885{\pm}0.032$ & $-0.002{\pm}0.004$ & $0.835{\pm}0.045$ & $-0.007{\pm}0.007$ \\
+ & \textbf{\TanGCE{}} & $\mathbf{0.807{\pm}0.071}$ & $-0.004{\pm}0.005$ & $\mathbf{0.590{\pm}0.034}$ & $-0.025{\pm}0.010$ & $\mathbf{0.737{\pm}0.073}$ & $-0.058{\pm}0.029$ \\
 \midrule
 \multirow{2}{*}{Gemma-2-2B}
- & \AmbGCE{}          & .650 & $.000$ & .820 & $-.007$ & \textbf{.739} & $-.020$ \\
- & \textbf{\TanGCE{}} & \textbf{.635} & $-.001$ & \textbf{.814} & $-.003$ & .752 & $.000$ \\
+ & \AmbGCE{}          & $0.656{\pm}0.020$ & $+0.000{\pm}0.000$ & --- & --- & --- & --- \\
+ & \textbf{\TanGCE{}} & $\mathbf{0.625{\pm}0.017}$ & $+0.000{\pm}0.000$ & --- & --- & --- & --- \\
 \midrule
 \multirow{2}{*}{Mistral-7B}
- & \AmbGCE{}          & .817 & $.000$ & .906 & $-.003$ & .848 & $-.025$ \\
- & \textbf{\TanGCE{}} & \textbf{.740} & $.000$ & \textbf{.631} & $-.006$ & \textbf{.843} & $-.001$ \\
+ & \AmbGCE{}          & $0.897{\pm}0.055$ & $+0.000{\pm}0.000$ & --- & --- & --- & --- \\
+ & \textbf{\TanGCE{}} & $\mathbf{0.725{\pm}0.003}$ & $-0.000{\pm}0.000$ & --- & --- & --- & --- \\
 \bottomrule
 \end{tabular}
 \end{table*}
