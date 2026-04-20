@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex neurips_2026"] 1776691433.55384 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1776691435.3058 0
+["bibtex neurips_2026"] 1776695135.4607 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1776695136.92129 0
   "./references.bib" 1776633279.57996 7841 a504abac549e114e6a039d3628c6bd8b ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "neurips_2026.aux" 1776691435.11128 37164 c76f615858a0d8ab942b89ef14ae3e37 "pdflatex"
+  "neurips_2026.aux" 1776695136.7622 37072 5ded1fefd53dc96539954e9be0f0c8a7 "pdflatex"
   (generated)
   "neurips_2026.bbl"
   "neurips_2026.blg"
   (rewritten before read)
-["pdflatex"] 1776691433.58664 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1776691435.30625 0
+["pdflatex"] 1776695135.49409 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1776695136.92165 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -153,9 +153,9 @@
   "checklist.tex" 1776369877.11282 24742 91487eae9b795e4618b3b92d8340a56b ""
   "figures/Q1_L8_top1.png" 1776369893.974 40297 7756966f3e4eb959e25bc22c35fe1eaa ""
   "figures/Q2_L8_top1_agreement_ratio.png" 1776369893.998 49615 7c1aa9fc937229bf3cb3280df1c74dd5 ""
-  "neurips_2026.aux" 1776691435.11128 37164 c76f615858a0d8ab942b89ef14ae3e37 "pdflatex"
-  "neurips_2026.bbl" 1776691433.57826 8377 982b7f1453e2f1c5812220f211b949e1 "bibtex neurips_2026"
-  "neurips_2026.out" 1776691435.11628 6939 8609a86acf5cedf67a37db3d8551c3a2 "pdflatex"
+  "neurips_2026.aux" 1776695136.7622 37072 5ded1fefd53dc96539954e9be0f0c8a7 "pdflatex"
+  "neurips_2026.bbl" 1776695135.48318 8377 982b7f1453e2f1c5812220f211b949e1 "bibtex neurips_2026"
+  "neurips_2026.out" 1776695136.7642 6939 8609a86acf5cedf67a37db3d8551c3a2 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
   "neurips_2026.tex" 1776631825.2781 5328 a6d5754c2b3bede79ebac10318de016e ""
   "sections/abstract.tex" 1776680472.62749 1199 f582798e34a6d2863aab9ef5b6fc6a40 ""
@@ -169,7 +169,7 @@
   "sections/method.tex" 1776680515.75091 8433 ebdf73e81bb2ea0e1ed3919a04b9039c ""
   "sections/notation.tex" 1776680472.63749 6134 89948db7d1e4880c270ab46b6814c8d9 ""
   "sections/related_work.tex" 1776362547.54363 1792 f3f55dba8f0831c31e78aa25cebfcdf6 ""
-  "sections/results.tex" 1776691399.84292 14736 ba888e70a8c8e69785718a8a51e3a526 ""
+  "sections/results.tex" 1776695123.40506 15002 c05d4d37977009e7026f8f2d28eb8f88 ""
   "tables/celeba_clip_all40_per_concept.tex" 1776360814.84213 7358 3b3e92e4d07d7edf7765b818956a27c2 ""
   "tables/celeba_clip_all40_summary.tex" 1776360814.80613 1240 6a2f99b6737e2878d5c83850a32a0559 ""
   "tables/celeba_clip_fair.tex" 1776674835.50247 1713 dcbeb304f52f949d66cfb1652635a02f ""
@@ -179,8 +179,8 @@
   "tables/local_celeba_visual_table2.tex" 1776360814.83913 1680 b51857bba4192305239a83cf8b73240b ""
   "tables/main_text_geometry_schedule.tex" 1776369166.46362 1375 3bc56b2d9aee8877139806e4387feb20 ""
   "tables/method_comparison_scope.tex" 1776361801.54043 586 3d0fed5ea4ded7b2f56d4be95ef81f96 ""
-  "tables/multi_model_comparison.tex" 1776691380.87572 2597 11953aa4024b0c1cf791e0b0faa4b06e ""
-  "tables/multi_model_per_layer.tex" 1776672769.5986 3573 ad3a89a8314546ef1e85e8e91fd40d2b ""
+  "tables/multi_model_comparison.tex" 1776695012.95395 4264 c265d3b4d601a31b82624bd8fd879f05 ""
+  "tables/multi_model_per_layer.tex" 1776695096.9468 6552 3fb5c6785b4572f475b170a3d348d1f8 ""
   "tables/repo_snapshot_safety.tex" 1776369166.51462 998 5b630795fa0d8f78eacb6bd71f966812 ""
   "tables/repo_snapshot_sycophancy.tex" 1776369166.47862 1030 7da5cb5d02906847495aa4aa1be06cad ""
   "tables/utkface_clip_fair.tex" 1776674839.87952 2271 5e4047400163c87d7cad55b2012dd653 ""

@@ -394,8 +394,6 @@ INPUT ./tables/main_text_geometry_schedule.tex
 INPUT ./tables/main_text_geometry_schedule.tex
 INPUT ./tables/main_text_geometry_schedule.tex
 INPUT tables/main_text_geometry_schedule.tex
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT ./checklist.tex
 INPUT ./checklist.tex
 INPUT checklist.tex
@@ -404,6 +402,8 @@ INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8c.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmr8c.vf
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT neurips_2026.aux
 INPUT ./neurips_2026.out
 INPUT ./neurips_2026.out
