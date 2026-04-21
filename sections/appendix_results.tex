@@ -1,4 +1,11 @@
 % Appendix snapshot tables
+\section{All Methods, All Models, All Datasets}
+\label{sec:appendix_all_methods}
+
+Tables~\ref{tab:appendix_all_methods_sycophancy}, \ref{tab:appendix_all_methods_gender}, and~\ref{tab:appendix_all_methods_safety} report nonlinear leakage (NL) and control-task change ($\Delta$Ctrl) for all eight erasure methods across all nine model families and all three concept domains. Values are mean\,$\pm$\,std over the 25\%, 50\%, and 75\% depth layers. \TanGCE{} achieves the lowest NL in \textbf{bold} per model; Gemma-3 results will appear once those runs complete.
+
+\input{tables/appendix_all_methods}
+
 \section{Per-Layer Multi-Model Breakdown}
 \label{sec:appendix_per_layer}
 
@@ -20,11 +27,11 @@ This appendix records broader deeper-layer comparisons that are directionally co
 \subsection{Local CelebA Visual Table-2-Style Comparison}
 \input{tables/local_celeba_visual_table2}
 
-To ensure a modality-matched benchmark, this appendix reports a vision-only CelebA run (CLIP ViT-B/32 embeddings) with the Table~\ref{tab:full_comparison} method family and three least-correlated controls per target concept.
+To provide a modality-matched supplementary slice, this appendix reports a local vision-only CelebA run (CLIP ViT-B/32 embeddings) over the same method family, with three least-correlated controls per target concept. This local check is separate from the paper-locked main-text protocol and is included only as supplementary context.
 
 \subsection{CelebA Per-Concept Detail (All 40 Attributes)}
 \label{sec:appendix_celeba_per_concept}
-Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl} give the full per-concept breakdown behind the aggregate CelebA result in Table~\ref{tab:celeba_clip_all40}. The main-text Table~\ref{tab:celeba_clip_fair} reports three representative concepts (Male, Smiling, Blond\_Hair); the appendix tables cover all 40 binary CelebA attributes from the same CelebA all-40 evaluation setting under the shared validation-HPO protocol. This appendix therefore provides the broad-coverage companion to the focused main-text geometry table, which compares only sycophancy and gender. \TanGCE{} achieves the lowest nonlinear leakage on \textbf{36 of 40} concepts (LEACE wins on 3, IGBP on 1), with a mean margin of $0.116$ absolute NL accuracy over the best competing method per concept. Per-concept mean $\Delta$Ctrl remains within roughly a percentage point of zero, consistent with the aggregate mean NL of $0.707$ and mean $\Delta$Ctrl of $-0.7\%$ reported in the main text.
+Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl} give the full per-concept breakdown behind the aggregate CelebA result in Table~\ref{tab:celeba_clip_all40}. The main-text Table~\ref{tab:celeba_clip_fair} reports three representative concepts (Male, Smiling, Blond\_Hair); the appendix tables cover all 40 binary CelebA attributes from the same CelebA all-40 evaluation setting under the shared validation-HPO protocol. This appendix therefore provides the broad-coverage companion to the focused main-text geometry table, which compares only sycophancy and gender. \TanGCE{} achieves the lowest nonlinear leakage on \textbf{36 of 40} concepts (LEACE wins on 3, IGBP on 1), with a mean margin of $0.126$ absolute NL accuracy over the best competing method per concept. Per-concept mean $\Delta$Ctrl remains within roughly a percentage point of zero, consistent with the aggregate mean NL of $0.695$ and mean $\Delta$Ctrl of $-0.6\%$ reported in the main text.
 \input{tables/celeba_clip_all40_per_concept}
 
 \input{tables/main_text_geometry_schedule}

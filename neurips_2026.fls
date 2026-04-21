@@ -88,6 +88,8 @@ INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
@@ -138,6 +140,8 @@ INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/caption/caption.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/caption/caption.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT ./neurips_2026.aux
@@ -351,6 +355,11 @@ INPUT ./sections/appendix_results.tex
 INPUT ./sections/appendix_results.tex
 INPUT ./sections/appendix_results.tex
 INPUT sections/appendix_results.tex
+INPUT ./tables/appendix_all_methods.tex
+INPUT ./tables/appendix_all_methods.tex
+INPUT ./tables/appendix_all_methods.tex
+INPUT ./tables/appendix_all_methods.tex
+INPUT tables/appendix_all_methods.tex
 INPUT ./tables/multi_model_per_layer.tex
 INPUT ./tables/multi_model_per_layer.tex
 INPUT ./tables/multi_model_per_layer.tex

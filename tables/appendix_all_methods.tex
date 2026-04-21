@@ -1,0 +1,309 @@
+\begin{longtable}{ll rr}
+\caption{All erasure methods on all models --- \textbf{Sycophancy} concept.
+  NL: retrained nonlinear MLP probe accuracy (lower = stronger erasure).
+  $\Delta$Ctrl: downstream control-task accuracy change (closer to zero = more surgical).
+  Values are mean\,$\pm$\,std across 25\%/50\%/75\% depth layers.
+  \textbf{Bold} marks the lowest NL per model.}
+\label{tab:appendix_all_methods_sycophancy} \\
+\toprule
+Model & Method & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable{} -- \textit{continued}} \\
+\toprule
+Model & Method & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+\endhead
+\midrule \multicolumn{4}{r}{\textit{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+  \multirow{8}{*}{Qwen2.5-0.5B} & Random Global & $0.848{\pm}0.098$ & $-0.096{\pm}0.136$ \\
+   & Random Per-Samp. & \textbf{$0.570{\pm}0.038$} & $-0.101{\pm}0.026$ \\
+   & Linear Proj. & $0.815{\pm}0.071$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.815{\pm}0.069$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.805{\pm}0.078$ & $-0.200{\pm}0.282$ \\
+   & IGBP & $0.843{\pm}0.077$ & $-0.005{\pm}0.007$ \\
+   & \AmbGCE{} & $0.806{\pm}0.095$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.718{\pm}0.101$ & $-0.000{\pm}0.000$ \\
+  \midrule
+  \multirow{8}{*}{Qwen2.5-1.5B} & Random Global & $0.690{\pm}0.120$ & $-0.249{\pm}0.106$ \\
+   & Random Per-Samp. & \textbf{$0.563{\pm}0.032$} & $-0.075{\pm}0.019$ \\
+   & Linear Proj. & $0.822{\pm}0.076$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.837{\pm}0.061$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.834{\pm}0.065$ & $-0.000{\pm}0.000$ \\
+   & IGBP & $0.838{\pm}0.078$ & $+0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.812{\pm}0.072$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.704{\pm}0.043$ & $-0.003{\pm}0.003$ \\
+  \midrule
+  \multirow{8}{*}{Qwen2.5-3B} & Random Global & $0.838{\pm}0.081$ & $+0.000{\pm}0.000$ \\
+   & Random Per-Samp. & \textbf{$0.674{\pm}0.071$} & $-0.013{\pm}0.008$ \\
+   & Linear Proj. & $0.836{\pm}0.053$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.835{\pm}0.054$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.842{\pm}0.054$ & $-0.243{\pm}0.209$ \\
+   & IGBP & $0.871{\pm}0.059$ & $+0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.861{\pm}0.065$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.807{\pm}0.071$ & $-0.004{\pm}0.005$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-2B} & Random Global & $0.655{\pm}0.042$ & $-0.000{\pm}0.000$ \\
+   & Random Per-Samp. & \textbf{$0.572{\pm}0.017$} & $-0.016{\pm}0.020$ \\
+   & Linear Proj. & $0.642{\pm}0.012$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.645{\pm}0.016$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.641{\pm}0.006$ & $-0.341{\pm}0.243$ \\
+   & IGBP & $0.645{\pm}0.064$ & $+0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.667{\pm}0.027$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.628{\pm}0.019$ & $-0.000{\pm}0.000$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-9B} & Random Global & $0.796{\pm}0.007$ & $+0.000{\pm}0.000$ \\
+   & Random Per-Samp. & \textbf{$0.611{\pm}0.039$} & $-0.003{\pm}0.002$ \\
+   & Linear Proj. & $0.762{\pm}0.028$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.749{\pm}0.011$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.760{\pm}0.011$ & $-0.009{\pm}0.007$ \\
+   & IGBP & $0.783{\pm}0.016$ & $+0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.746{\pm}0.042$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.684{\pm}0.010$ & $-0.000{\pm}0.000$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-27B} & Random Global & $0.756{\pm}0.044$ & $-0.008{\pm}0.011$ \\
+   & Random Per-Samp. & \textbf{$0.585{\pm}0.041$} & $-0.041{\pm}0.017$ \\
+   & Linear Proj. & $0.709{\pm}0.028$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.704{\pm}0.030$ & $-0.000{\pm}0.000$ \\
+   & LEACE & $0.692{\pm}0.046$ & $-0.047{\pm}0.019$ \\
+   & IGBP & $0.766{\pm}0.027$ & $+0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.759{\pm}0.045$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.672{\pm}0.006$ & $-0.000{\pm}0.000$ \\
+  \midrule
+  \multirow{8}{*}{Llama-3.2-1B} & Random Global & $0.847{\pm}0.020$ & $+0.000{\pm}0.000$ \\
+   & Random Per-Samp. & \textbf{$0.623{\pm}0.019$} & $-0.006{\pm}0.001$ \\
+   & Linear Proj. & $0.860{\pm}0.038$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.858{\pm}0.036$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.868{\pm}0.038$ & $+0.000{\pm}0.000$ \\
+   & IGBP & $0.850{\pm}0.030$ & $+0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.831{\pm}0.041$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.710{\pm}0.018$ & $+0.000{\pm}0.000$ \\
+  \midrule
+  \multirow{8}{*}{Llama-3.2-3B} & Random Global & $0.904{\pm}0.033$ & $+0.000{\pm}0.000$ \\
+   & Random Per-Samp. & \textbf{$0.686{\pm}0.070$} & $-0.001{\pm}0.001$ \\
+   & Linear Proj. & $0.905{\pm}0.042$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.911{\pm}0.039$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.921{\pm}0.034$ & $-0.000{\pm}0.000$ \\
+   & IGBP & $0.910{\pm}0.026$ & $-0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.882{\pm}0.049$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.748{\pm}0.016$ & $-0.000{\pm}0.000$ \\
+  \midrule
+  \multirow{8}{*}{Mistral-7B} & Random Global & $0.925{\pm}0.042$ & $+0.000{\pm}0.000$ \\
+   & Random Per-Samp. & \textbf{$0.724{\pm}0.042$} & $-0.000{\pm}0.000$ \\
+   & Linear Proj. & $0.920{\pm}0.049$ & $+0.000{\pm}0.000$ \\
+   & INLP & $0.911{\pm}0.048$ & $+0.000{\pm}0.000$ \\
+   & LEACE & $0.941{\pm}0.031$ & $-0.040{\pm}0.038$ \\
+   & IGBP & $0.925{\pm}0.030$ & $+0.000{\pm}0.000$ \\
+   & \AmbGCE{} & $0.897{\pm}0.055$ & $+0.000{\pm}0.000$ \\
+   & \TanGCE{} & $0.725{\pm}0.003$ & $-0.000{\pm}0.000$ \\
+\end{longtable}
+
+% ---
+
+\begin{longtable}{ll rr}
+\caption{All erasure methods on all models --- \textbf{Gender (BiasBios)} concept.
+  NL: retrained nonlinear MLP probe accuracy (lower = stronger erasure).
+  $\Delta$Ctrl: downstream control-task accuracy change (closer to zero = more surgical).
+  Values are mean\,$\pm$\,std across 25\%/50\%/75\% depth layers.
+  \textbf{Bold} marks the lowest NL per model.}
+\label{tab:appendix_all_methods_gender} \\
+\toprule
+Model & Method & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable{} -- \textit{continued}} \\
+\toprule
+Model & Method & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+\endhead
+\midrule \multicolumn{4}{r}{\textit{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+  \multirow{8}{*}{Qwen2.5-0.5B} & Random Global & $0.802{\pm}0.064$ & $-0.072{\pm}0.093$ \\
+   & Random Per-Samp. & $0.665{\pm}0.066$ & $-0.327{\pm}0.013$ \\
+   & Linear Proj. & $0.798{\pm}0.059$ & $-0.118{\pm}0.165$ \\
+   & INLP & $0.806{\pm}0.054$ & $-0.107{\pm}0.025$ \\
+   & LEACE & $0.784{\pm}0.049$ & $-0.001{\pm}0.005$ \\
+   & IGBP & $0.700{\pm}0.033$ & $-0.036{\pm}0.010$ \\
+   & \AmbGCE{} & $0.770{\pm}0.071$ & $-0.003{\pm}0.004$ \\
+   & \TanGCE{} & \textbf{$0.579{\pm}0.040$} & $-0.038{\pm}0.017$ \\
+  \midrule
+  \multirow{8}{*}{Qwen2.5-1.5B} & Random Global & $0.872{\pm}0.058$ & $-0.147{\pm}0.076$ \\
+   & Random Per-Samp. & $0.764{\pm}0.096$ & $-0.256{\pm}0.013$ \\
+   & Linear Proj. & $0.848{\pm}0.064$ & $-0.201{\pm}0.173$ \\
+   & INLP & $0.842{\pm}0.068$ & $-0.277{\pm}0.114$ \\
+   & LEACE & $0.845{\pm}0.039$ & $-0.005{\pm}0.002$ \\
+   & IGBP & $0.735{\pm}0.045$ & $-0.017{\pm}0.008$ \\
+   & \AmbGCE{} & $0.842{\pm}0.083$ & $-0.002{\pm}0.000$ \\
+   & \TanGCE{} & \textbf{$0.598{\pm}0.043$} & $-0.043{\pm}0.027$ \\
+  \midrule
+  \multirow{8}{*}{Qwen2.5-3B} & Random Global & $0.904{\pm}0.029$ & $-0.192{\pm}0.120$ \\
+   & Random Per-Samp. & $0.826{\pm}0.045$ & $-0.203{\pm}0.019$ \\
+   & Linear Proj. & $0.901{\pm}0.023$ & $-0.000{\pm}0.001$ \\
+   & INLP & $0.902{\pm}0.025$ & $-0.000{\pm}0.001$ \\
+   & LEACE & $0.874{\pm}0.017$ & $-0.015{\pm}0.009$ \\
+   & IGBP & $0.727{\pm}0.035$ & $-0.032{\pm}0.006$ \\
+   & \AmbGCE{} & $0.885{\pm}0.032$ & $-0.002{\pm}0.004$ \\
+   & \TanGCE{} & \textbf{$0.590{\pm}0.034$} & $-0.025{\pm}0.010$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-2B} & Random Global & $0.856{\pm}0.046$ & $-0.075{\pm}0.069$ \\
+   & Random Per-Samp. & $0.766{\pm}0.070$ & $-0.142{\pm}0.020$ \\
+   & Linear Proj. & $0.838{\pm}0.045$ & $-0.055{\pm}0.083$ \\
+   & INLP & $0.839{\pm}0.046$ & $-0.006{\pm}0.014$ \\
+   & LEACE & $0.774{\pm}0.018$ & $-0.003{\pm}0.004$ \\
+   & IGBP & $0.697{\pm}0.024$ & $-0.006{\pm}0.005$ \\
+   & \AmbGCE{} & $0.810{\pm}0.056$ & $+0.002{\pm}0.001$ \\
+   & \TanGCE{} & \textbf{$0.573{\pm}0.049$} & $-0.012{\pm}0.010$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-9B} & Random Global & $0.869{\pm}0.049$ & $-0.060{\pm}0.052$ \\
+   & Random Per-Samp. & $0.780{\pm}0.086$ & $-0.121{\pm}0.013$ \\
+   & Linear Proj. & $0.847{\pm}0.051$ & $-0.038{\pm}0.051$ \\
+   & INLP & $0.857{\pm}0.050$ & $-0.039{\pm}0.052$ \\
+   & LEACE & $0.803{\pm}0.046$ & $-0.006{\pm}0.005$ \\
+   & IGBP & $0.738{\pm}0.035$ & $-0.007{\pm}0.005$ \\
+   & \AmbGCE{} & $0.836{\pm}0.067$ & $-0.004{\pm}0.004$ \\
+   & \TanGCE{} & \textbf{$0.642{\pm}0.080$} & $-0.027{\pm}0.009$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-27B} & Random Global & $0.863{\pm}0.030$ & $-0.288{\pm}0.204$ \\
+   & Random Per-Samp. & $0.754{\pm}0.060$ & $-0.221{\pm}0.076$ \\
+   & Linear Proj. & $0.884{\pm}0.025$ & $-0.001{\pm}0.000$ \\
+   & INLP & $0.882{\pm}0.027$ & $-0.000{\pm}0.001$ \\
+   & LEACE & $0.772{\pm}0.052$ & $-0.009{\pm}0.002$ \\
+   & IGBP & $0.786{\pm}0.086$ & $-0.004{\pm}0.004$ \\
+   & \AmbGCE{} & $0.866{\pm}0.033$ & $-0.002{\pm}0.001$ \\
+   & \TanGCE{} & \textbf{$0.670{\pm}0.018$} & $-0.055{\pm}0.021$ \\
+  \midrule
+  \multirow{8}{*}{Llama-3.2-1B} & Random Global & $0.908{\pm}0.034$ & $-0.163{\pm}0.016$ \\
+   & Random Per-Samp. & $0.855{\pm}0.047$ & $-0.145{\pm}0.013$ \\
+   & Linear Proj. & $0.904{\pm}0.034$ & $-0.169{\pm}0.122$ \\
+   & INLP & $0.904{\pm}0.034$ & $-0.169{\pm}0.122$ \\
+   & LEACE & $0.877{\pm}0.029$ & $-0.005{\pm}0.010$ \\
+   & IGBP & $0.752{\pm}0.053$ & $-0.062{\pm}0.008$ \\
+   & \AmbGCE{} & $0.897{\pm}0.032$ & $+0.000{\pm}0.002$ \\
+   & \TanGCE{} & \textbf{$0.623{\pm}0.093$} & $-0.020{\pm}0.007$ \\
+  \midrule
+  \multirow{8}{*}{Llama-3.2-3B} & Random Global & $0.942{\pm}0.015$ & $-0.029{\pm}0.036$ \\
+   & Random Per-Samp. & $0.912{\pm}0.033$ & $-0.066{\pm}0.009$ \\
+   & Linear Proj. & $0.924{\pm}0.014$ & $-0.004{\pm}0.003$ \\
+   & INLP & $0.924{\pm}0.020$ & $-0.003{\pm}0.003$ \\
+   & LEACE & $0.869{\pm}0.007$ & $-0.037{\pm}0.003$ \\
+   & IGBP & $0.742{\pm}0.049$ & $-0.039{\pm}0.004$ \\
+   & \AmbGCE{} & $0.926{\pm}0.017$ & $-0.003{\pm}0.002$ \\
+   & \TanGCE{} & \textbf{$0.646{\pm}0.081$} & $-0.012{\pm}0.003$ \\
+  \midrule
+  \multirow{8}{*}{Mistral-7B} & Random Global & $0.931{\pm}0.007$ & $-0.009{\pm}0.013$ \\
+   & Random Per-Samp. & $0.917{\pm}0.011$ & $-0.015{\pm}0.011$ \\
+   & Linear Proj. & $0.915{\pm}0.012$ & $-0.004{\pm}0.002$ \\
+   & INLP & $0.915{\pm}0.014$ & $-0.004{\pm}0.002$ \\
+   & LEACE & $0.851{\pm}0.020$ & $-0.020{\pm}0.013$ \\
+   & IGBP & $0.713{\pm}0.026$ & $-0.039{\pm}0.005$ \\
+   & \AmbGCE{} & $0.912{\pm}0.013$ & $-0.003{\pm}0.001$ \\
+   & \TanGCE{} & \textbf{$0.634{\pm}0.052$} & $-0.016{\pm}0.008$ \\
+\end{longtable}
+
+% ---
+
+\begin{longtable}{ll rr}
+\caption{All erasure methods on all models --- \textbf{Safety} concept.
+  NL: retrained nonlinear MLP probe accuracy (lower = stronger erasure).
+  $\Delta$Ctrl: downstream control-task accuracy change (closer to zero = more surgical).
+  Values are mean\,$\pm$\,std across 25\%/50\%/75\% depth layers.
+  \textbf{Bold} marks the lowest NL per model.}
+\label{tab:appendix_all_methods_safety} \\
+\toprule
+Model & Method & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable{} -- \textit{continued}} \\
+\toprule
+Model & Method & NL$\downarrow$ & $\Delta$Ctrl \\
+\midrule
+\endhead
+\midrule \multicolumn{4}{r}{\textit{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+  \multirow{8}{*}{Qwen2.5-0.5B} & Random Global & $0.827{\pm}0.025$ & $+0.020{\pm}0.047$ \\
+   & Random Per-Samp. & \textbf{$0.649{\pm}0.046$} & $-0.059{\pm}0.005$ \\
+   & Linear Proj. & $0.821{\pm}0.023$ & $-0.086{\pm}0.126$ \\
+   & INLP & $0.818{\pm}0.026$ & $-0.091{\pm}0.119$ \\
+   & LEACE & $0.807{\pm}0.035$ & $-0.075{\pm}0.052$ \\
+   & IGBP & $0.758{\pm}0.013$ & $-0.151{\pm}0.082$ \\
+   & \AmbGCE{} & $0.806{\pm}0.033$ & $-0.041{\pm}0.003$ \\
+   & \TanGCE{} & $0.712{\pm}0.034$ & $+0.007{\pm}0.010$ \\
+  \midrule
+  \multirow{8}{*}{Qwen2.5-1.5B} & Random Global & $0.788{\pm}0.062$ & $-0.022{\pm}0.145$ \\
+   & Random Per-Samp. & \textbf{$0.678{\pm}0.038$} & $-0.068{\pm}0.009$ \\
+   & Linear Proj. & $0.837{\pm}0.039$ & $-0.090{\pm}0.133$ \\
+   & INLP & $0.840{\pm}0.032$ & $-0.127{\pm}0.152$ \\
+   & LEACE & $0.818{\pm}0.026$ & $-0.026{\pm}0.002$ \\
+   & IGBP & $0.796{\pm}0.039$ & $-0.062{\pm}0.106$ \\
+   & \AmbGCE{} & $0.824{\pm}0.034$ & $-0.023{\pm}0.017$ \\
+   & \TanGCE{} & $0.717{\pm}0.037$ & $-0.043{\pm}0.045$ \\
+  \midrule
+  \multirow{8}{*}{Qwen2.5-3B} & Random Global & $0.842{\pm}0.045$ & $+0.018{\pm}0.041$ \\
+   & Random Per-Samp. & \textbf{$0.727{\pm}0.060$} & $-0.045{\pm}0.023$ \\
+   & Linear Proj. & $0.838{\pm}0.035$ & $-0.094{\pm}0.153$ \\
+   & INLP & $0.835{\pm}0.040$ & $-0.099{\pm}0.157$ \\
+   & LEACE & $0.825{\pm}0.034$ & $-0.036{\pm}0.013$ \\
+   & IGBP & $0.817{\pm}0.038$ & $-0.087{\pm}0.067$ \\
+   & \AmbGCE{} & $0.835{\pm}0.045$ & $-0.007{\pm}0.007$ \\
+   & \TanGCE{} & $0.737{\pm}0.073$ & $-0.058{\pm}0.029$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-2B} & Random Global & $0.779{\pm}0.022$ & $+0.026{\pm}0.025$ \\
+   & Random Per-Samp. & $0.699{\pm}0.022$ & $-0.028{\pm}0.003$ \\
+   & Linear Proj. & $0.743{\pm}0.018$ & $-0.196{\pm}0.010$ \\
+   & INLP & $0.743{\pm}0.021$ & $-0.194{\pm}0.011$ \\
+   & LEACE & $0.729{\pm}0.003$ & $-0.025{\pm}0.011$ \\
+   & IGBP & $0.674{\pm}0.014$ & $-0.066{\pm}0.022$ \\
+   & \AmbGCE{} & $0.745{\pm}0.019$ & $-0.015{\pm}0.004$ \\
+   & \TanGCE{} & \textbf{$0.577{\pm}0.025$} & $-0.007{\pm}0.008$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-9B} & Random Global & $0.791{\pm}0.012$ & $-0.048{\pm}0.026$ \\
+   & Random Per-Samp. & $0.720{\pm}0.018$ & $-0.029{\pm}0.001$ \\
+   & Linear Proj. & $0.758{\pm}0.003$ & $-0.156{\pm}0.039$ \\
+   & INLP & $0.759{\pm}0.003$ & $-0.156{\pm}0.039$ \\
+   & LEACE & $0.710{\pm}0.016$ & $-0.016{\pm}0.003$ \\
+   & IGBP & $0.699{\pm}0.018$ & $-0.002{\pm}0.022$ \\
+   & \AmbGCE{} & $0.772{\pm}0.021$ & $-0.022{\pm}0.012$ \\
+   & \TanGCE{} & \textbf{$0.664{\pm}0.001$} & $+0.001{\pm}0.003$ \\
+  \midrule
+  \multirow{8}{*}{Gemma-2-27B} & Random Global & $0.819{\pm}0.008$ & $+0.089{\pm}0.013$ \\
+   & Random Per-Samp. & $0.734{\pm}0.018$ & $-0.044{\pm}0.002$ \\
+   & Linear Proj. & $0.820{\pm}0.004$ & $-0.146{\pm}0.052$ \\
+   & INLP & $0.818{\pm}0.003$ & $-0.139{\pm}0.046$ \\
+   & LEACE & $0.743{\pm}0.040$ & $-0.020{\pm}0.010$ \\
+   & IGBP & $0.789{\pm}0.019$ & $-0.013{\pm}0.013$ \\
+   & \AmbGCE{} & $0.816{\pm}0.005$ & $-0.039{\pm}0.042$ \\
+   & \TanGCE{} & \textbf{$0.709{\pm}0.017$} & $-0.006{\pm}0.004$ \\
+  \midrule
+  \multirow{8}{*}{Llama-3.2-1B} & Random Global & $0.845{\pm}0.017$ & $-0.163{\pm}0.069$ \\
+   & Random Per-Samp. & $0.778{\pm}0.015$ & $-0.039{\pm}0.003$ \\
+   & Linear Proj. & $0.799{\pm}0.019$ & $-0.203{\pm}0.014$ \\
+   & INLP & $0.798{\pm}0.017$ & $-0.197{\pm}0.021$ \\
+   & LEACE & $0.806{\pm}0.021$ & $-0.069{\pm}0.029$ \\
+   & IGBP & $0.752{\pm}0.030$ & $-0.002{\pm}0.049$ \\
+   & \AmbGCE{} & $0.827{\pm}0.027$ & $-0.032{\pm}0.005$ \\
+   & \TanGCE{} & \textbf{$0.662{\pm}0.042$} & $-0.012{\pm}0.015$ \\
+  \midrule
+  \multirow{8}{*}{Llama-3.2-3B} & Random Global & $0.856{\pm}0.027$ & $-0.061{\pm}0.037$ \\
+   & Random Per-Samp. & $0.826{\pm}0.025$ & $-0.044{\pm}0.006$ \\
+   & Linear Proj. & $0.837{\pm}0.029$ & $-0.141{\pm}0.055$ \\
+   & INLP & $0.836{\pm}0.031$ & $-0.140{\pm}0.056$ \\
+   & LEACE & $0.797{\pm}0.021$ & $-0.064{\pm}0.021$ \\
+   & IGBP & $0.770{\pm}0.033$ & $-0.045{\pm}0.027$ \\
+   & \AmbGCE{} & $0.851{\pm}0.022$ & $-0.030{\pm}0.013$ \\
+   & \TanGCE{} & \textbf{$0.709{\pm}0.043$} & $-0.020{\pm}0.010$ \\
+  \midrule
+  \multirow{8}{*}{Mistral-7B} & Random Global & $0.875{\pm}0.017$ & $-0.021{\pm}0.016$ \\
+   & Random Per-Samp. & $0.850{\pm}0.019$ & $-0.026{\pm}0.003$ \\
+   & Linear Proj. & $0.863{\pm}0.016$ & $-0.132{\pm}0.038$ \\
+   & INLP & $0.862{\pm}0.016$ & $-0.154{\pm}0.024$ \\
+   & LEACE & $0.785{\pm}0.024$ & $-0.035{\pm}0.008$ \\
+   & IGBP & $0.771{\pm}0.027$ & $-0.011{\pm}0.022$ \\
+   & \AmbGCE{} & $0.872{\pm}0.014$ & $-0.030{\pm}0.008$ \\
+   & \TanGCE{} & \textbf{$0.723{\pm}0.023$} & $-0.021{\pm}0.014$ \\
+\end{longtable}

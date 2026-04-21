@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -102,11 +102,5 @@ Loring~W. Tu.
 \newblock Universitext. Springer, 2 edition, 2011.
 \newblock \doi{10.1007/978-1-4419-7400-6}.
 \newblock URL \url{https://luis.impa.br/aulas/anvar/Tu_AnIntroductionToManifolds.pdf}.
-
-\bibitem[Zhang et~al.(2017)Zhang, Song, and Qi]{zhifei2017cvpr}
-Zhifei Zhang, Yang Song, and Hairong Qi.
-\newblock Age progression/regression by conditional adversarial autoencoder.
-\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 2017.
-\newblock UTKFace dataset: \url{https://susanqq.github.io/UTKFace/}.
 
 \end{thebibliography}
