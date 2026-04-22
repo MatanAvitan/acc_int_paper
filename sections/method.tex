@@ -56,7 +56,7 @@ where the intrinsic dimension $r$ is selected automatically by a retained-varian
 \mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top.
 \end{equation}
 
-This is the first-order approximation used throughout the paper: the neighborhood PCA basis serves as an empirical tangent estimator for the local representation manifold around $\mathbf{x}_i$.
+This is the operational approximation used in \TanGCE{}: the neighborhood PCA basis serves as an empirical local linear basis. We treat it as a practical first-order stand-in for a tangent space, not as a theorem-level guarantee that the representations form a smooth manifold.
 
 \subsection{Tangent-constrained update}
 
@@ -77,9 +77,11 @@ The projected direction is \emph{not} re-normalized to unit length. Its norm $\|
 \label{eq:tangent_erase}
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}.
 \end{equation}
-The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$, which is maximized when the gradient lies entirely in the tangent space and vanishes when it is entirely off-manifold.
+The update in Eq.~\ref{eq:tangent_erase} is a heuristic design choice, not the solution to an explicit optimization problem. It projects the representation onto the estimated tangent direction and subtracts a scaled multiple, analogous to a one-step descent along the constrained direction.
 
-This construction is the core difference between \TanGCE{} and its ambient counterpart. \AmbGCE{} applies the update in the full hidden space, whereas \TanGCE{} restricts the update to tangent directions supported by the local geometry of the representations.
+The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$. It is larger when the gradient has more support in the estimated tangent space and smaller when it has less, but this does not guarantee monotonic improvement in either leakage or utility.
+
+This construction is the core difference between \TanGCE{} and its ambient counterpart. \AmbGCE{} applies the update in the full hidden space, whereas \TanGCE{} restricts the update to directions supported by the local geometry estimated in the model's native coordinate system. We do not claim invariance under coordinate changes; the tangent basis is computed in the LayerNorm-induced geometry of the given representations.
 
 \subsection{Why tangent projection can help at larger \texorpdfstring{$\lambda$}{lambda}}
 

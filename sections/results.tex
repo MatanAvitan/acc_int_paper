@@ -38,53 +38,6 @@ Table~\ref{tab:celeba_clip_fair} shows results on three representative concepts 
 
 Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA attributes. The median selected $\lambda^*$ column confirms that \TanGCE{} consistently selects higher $\lambda$ values than other methods---enabled by the tangent projection's attenuation of off-manifold displacement---while maintaining competitive control accuracy. Per-concept breakdowns for all 40 attributes (nonlinear leakage and mean $\Delta$Ctrl per method) are reported in Appendix~\ref{sec:appendix_celeba_per_concept}, Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl}.
 
-\subsection{Geometric Characterization: Global Subspace Structure and Local Manifold Variation}
-\label{sec:geometry}
-
-The preceding results establish that \TanGCE{} achieves stronger nonlinear erasure than \AmbGCE{}. This subsection asks whether that advantage is consistent with the local manifold motivation of the method. We separate two questions. The first is a global structural question: do the representations admit useful low-rank task-specific subspaces at all? The second is a local manifold question: even if such a global approximation exists, is a single global direction sufficient, or does the relevant direction vary across neighborhoods on the manifold? The first question motivates subspace restriction. The second motivates local adaptation.
-
-\paragraph{Experimental setup.}
-We run two diagnostic experiments on layer~8 representations of Qwen2.5-0.5B across five domains: Bias in Bios (gender), code generation, mathematical reasoning, content safety, and sycophancy. For each domain we collect 500 labeled representations and estimate the global intrinsic dimension $m$ via a retained-variance rule applied to a held-out reference set of 2{,}000 samples. All geometry experiments use the same evaluation split as the main comparison.
-
-\paragraph{Q1: Cross-domain subspace transfer.}
-For each ordered pair of domains $(\mathrm{src}, \mathrm{tgt})$, we fit PCA on source-domain reference representations to dimension $k \approx m_{\mathrm{src}}$, project target-domain representations onto that source subspace, and measure top-1 next-token agreement and KL divergence relative to the unmodified target representations. High agreement indicates that the target representations are well captured by the source-domain global chart; low agreement indicates that the source chart transfers poorly.
-
-Figure~\ref{fig:geom_combined} (left) shows the $5 \times 5$ transfer matrix. The diagonal is uniformly high, confirming that each domain admits a useful low-rank global approximation for its own predictions. Off the diagonal, sycophancy is the structural outlier: transfer into sycophancy from other task charts is much weaker than the rest of the matrix. Under the manifold view, this means that a single global chart fitted on one task does not transfer well to the primary nonlinear case. This does not by itself prove task-specific manifolds, but it does show that global support is not shared uniformly across domains.
-
-\paragraph{Q2: Subspace sensitivity as an auxiliary check.}
-To complement Q1, we perturb each sample by $\epsilon \|\mathbf{x}\|$ in three directions: a random direction within the principal subspace (on-subspace), a random direction orthogonal to it (off-subspace), and a random ambient direction. A ratio $\mathrm{off\text{-}top1} / \mathrm{on\text{-}top1} > 1$ indicates that on-subspace perturbations are more disruptive than equal off-subspace perturbations, so the identified global subspace is behaviorally load-bearing.
-
-Figure~\ref{fig:geom_combined} (right) shows the off/on ratio at $\epsilon = 0.5$ for all 25 domain pairs. Along the diagonal, all five ratios exceed~1, confirming that the fitted subspaces are not merely high-variance summaries. We use this only as an auxiliary check on subspace relevance. We do not treat it as direct evidence for manifold structure by itself.
-
-\paragraph{Local manifold variation: why one global direction is insufficient.}
-Q1 establishes that the representations admit useful low-rank global structure. A natural next question is whether one global direction is also sufficient locally. To test this, we compare a global concept direction to local per-sample directions estimated from the nonlinear scorer. Large local-global angles indicate that the global direction is a poor local summary. They do not by themselves provide a direct estimate of curvature, but they do show that the concept varies across neighborhoods on the manifold in a way that a single global direction does not capture.
-
-\input{tables/geometry_contrast_summary}
-
-Table~\ref{tab:geometry_contrast_summary} shows that the primary nonlinear case exhibits substantially larger local-global directional misalignment than the diagnostic baseline across completed layers. Under the manifold framing, this is the quantity that matters operationally: if the relevant direction rotates across the manifold, a single global edit direction will be a poor first-order approximation. This is exactly the setting in which a local tangent estimate is useful.
-
-\paragraph{Summary.}
-The geometry results support the manifold motivation at two levels. First, the data admit useful low-rank structure, so the ambient space is a poor description of the directions actually used by the task. Second, the primary nonlinear concept shows substantial local variation relative to any single global direction. This is the setting that motivates \TanGCE{}: a method that uses a first-order local approximation of the manifold rather than a single global edit direction.
-
-\begin{figure}[t]
-\centering
-\begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/Q1_L8_top1.png}
-    \caption{Q1: cross-domain linear subspace transfer (top-1 next-token agreement, $k \approx m_{\mathrm{src}}$). Each cell measures how well target-domain representations are preserved when projected onto the global PCA subspace of the source domain. High diagonal values confirm per-domain subspace self-sufficiency. Sycophancy is the structural outlier: near-zero transfer into sycophancy from biasbios ($0.002$) and code ($0.13$) charts indicates that its global support is not well summarized by those other task charts.}
-    \label{fig:q1_transfer}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/Q2_L8_top1_agreement_ratio.png}
-    \caption{Q2: subspace sensitivity (off/on top-1 agreement ratio, $\epsilon = 0.5$). Values above~1 (red) indicate that on-subspace perturbations are more disruptive than equally sized off-subspace perturbations, confirming the subspace as the primary carrier of task-relevant computation. Sycophancy diagonal ($1.16$, darkest red) shows the strongest sensitivity asymmetry. Blue off-diagonal entries in the sycophancy column ($0.79$, $0.72$) confirm that the sycophancy subspace is a null direction for biasbios and code predictions.}
-    \label{fig:q2_sensitivity}
-\end{subfigure}
-\caption{Geometric diagnostics at layer~8 of Qwen2.5-0.5B across five domains (biasbios, code, math, safety, sycophancy). Rows index the target domain whose representations are evaluated; columns index the source domain whose global PCA subspace is applied. \textbf{Left (Q1):} linear subspace transfer matrix. \textbf{Right (Q2):} subspace sensitivity ratio. Both experiments use 500 evaluation samples per domain with 2{,}000 additional held-out samples for intrinsic-dimension estimation.}
-\label{fig:geom_combined}
-\end{figure}
-
 \subsection{Multi-Model Generalization}
 \label{sec:multi_model}
 
@@ -98,4 +51,3 @@ To assess whether the ambient-vs-tangent comparison is specific to one backbone,
 
 \paragraph{Interpretation.}
 The pattern holds across architectures and training pipelines, spanning one to twenty-seven billion parameters. Within the Qwen2.5 family, AmbGCE NL increases monotonically with scale ($0.806 \to 0.812 \to 0.861$ on sycophancy), while \TanGCE{} remains consistently lower. A similar trend holds within Gemma-2 ($0.656 \to 0.746 \to 0.759$) and Llama-3.2 ($0.831 \to 0.882$). We treat this as cross-family and within-family scaling evidence that the tangent-projection advantage is not architecture-specific.
-
