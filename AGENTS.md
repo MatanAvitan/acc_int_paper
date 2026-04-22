@@ -32,3 +32,5 @@ This tree is the manuscript source, not the build output.
   main section text explicitly needs them.
 - After each paper change, commit it promptly and push the branch to the current
   remote; keep paper changes separate from unrelated work.
+- **Specifically: after every edit to any `*.tex` file within `paper/`, run
+  `git push` immediately.** Do not batch paper edits with pushes.
