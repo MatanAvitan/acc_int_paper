@@ -11,7 +11,7 @@ We evaluate our methods across five blocks:
     \item \textbf{Safety (Secondary Case Study):} We evaluate the surgicality of erasure on content safety using the PKU-SafeRLHF dataset \citep{ji-etal-2024-pku-saferlhf}, testing the preservation of helpfulness alongside safety leakage.
     \item \textbf{Bias in Bios (Diagnostic Baseline):} We use the Bias in Bios dataset \citep{dearteaga-etal-2019-bias} for gender and profession classification as a replication anchor. This setting provides a linear comparison point to contrast against the nonlinear gains of tangent-constrained erasure.
     \item \textbf{CelebA Visual Attributes (Cross-Modal Generalization):} We apply the same erasure methods to CLIP ViT-B/32 \citep{radford-etal-2021-clip} pooled embeddings (768 dimensions) of CelebA \citep{liu-etal-2015-celeba} face images. CelebA provides 40 binary facial attributes, enabling a rich surgicality analysis: when erasing one attribute (e.g., \emph{Male}), the remaining 39 serve as potential controls. We select the 5 least-correlated attributes as controls per concept to ensure that control accuracy changes reflect genuine collateral damage rather than attribute correlation.
-    \item \textbf{FairFace Demographic Attributes (Cross-Dataset Vision Replication):} We additionally evaluate on FairFace \citep{karkkainen2021fairface}, using CLIP ViT-B/32 pooled embeddings for gender, race, and age concepts. This benchmark tests whether the vision-domain pattern observed on CelebA survives on a more demographically balanced dataset rather than a celebrity-image slice.
+
 \end{enumerate}
 
 \subsubsection{Models}
