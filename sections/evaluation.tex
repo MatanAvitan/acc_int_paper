@@ -31,7 +31,7 @@ Let $h^{\mathrm{NL}}$ be a nonlinear probe and $h^{\mathrm{L}}$ a linear probe t
 \qquad
 \mathrm{Prec}_{\mathrm{erase}}^{\mathrm{L}} = \mathrm{Acc}(h^{\mathrm{L}}(\tilde{\mathbf{X}}), y).
 \end{equation}
-Lower values indicate stronger erasure. Because the target concepts in this paper are not assumed to be linearly encoded, the retrained nonlinear probe is the primary precision metric and the linear probe is a secondary diagnostic.
+Lower values indicate stronger erasure. Because the target concepts in this paper are not assumed to be linearly encoded, the retrained nonlinear probe is the primary precision metric and the linear probe is a secondary diagnostic. For interpretation, the majority-class predictor provides a trivial lower-bound reference for what it means to erase by collapsing the target signal entirely rather than preserving useful structure.
 
 \paragraph{Surgicality on control concepts.}
 Let $q$ be a predictor for an annotated control label $c$ (e.g., profession for gender erasure, helpfulness for safety, or selected low-correlation attributes in CelebA). We report the change in control performance relative to the clean representations:
