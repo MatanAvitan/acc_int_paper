@@ -1,8 +1,8 @@
 \begin{longtable}{ll|rr|rr|rr}
+\caption{Multi-family comparison of core erasure methods across model families. Standard deviations in Appendix~Tables~\ref{tab:appendix_all_methods_sycophancy}--\ref{tab:appendix_all_methods_safety}.}
+\label{tab:multi_model} \\
 \footnotesize
 \setlength{\tabcolsep}{2.5pt}
-\caption{Multi-family comparison of the core erasure methods (two random baselines, IGBP, \AmbGCE{}, \TanGCE{}); the full method set (adds Linear Projection, INLP, LEACE) appears in Appendix Tables~\ref{tab:appendix_all_methods_sycophancy}--\ref{tab:appendix_all_methods_safety}. Each model is evaluated at the layers corresponding to 25\%, 50\%, and 75\% of its depth; values are means across those three layers (standard deviations in Appendix Tables~\ref{tab:appendix_all_methods_sycophancy}--\ref{tab:appendix_all_methods_safety}). NL: retrained nonlinear MLP probe accuracy on the target concept (lower = stronger erasure). $\Delta$Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). $\lambda^*$ for \AmbGCE{}/\TanGCE{} selected from $\{0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0\}$ by lowest validation NL accuracy. \textbf{Bold} marks the best cell per numeric column: lowest NL and $|\Delta$Ctrl$|$ closest to zero across every (model, method) row. Cells marked --- are (model, concept) pairs still running at submission.}
-\label{tab:multi_model} \\
 \toprule
  & & \multicolumn{2}{c|}{Sycophancy} & \multicolumn{2}{c|}{Gender} & \multicolumn{2}{c}{Safety} \\
 Model & Method & NL$\downarrow$ & $\Delta$Ctrl & NL$\downarrow$ & $\Delta$Ctrl & NL$\downarrow$ & $\Delta$Ctrl \\
