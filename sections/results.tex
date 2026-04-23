@@ -2,17 +2,17 @@
 \section{Results}
 \label{sec:results}
 
-We evaluate seven erasure methods across three concept domains---sycophancy, gender (Bias in Bios), and safety---at layer~8 of Qwen2.5-0.5B. Each method's erasure strength $\lambda^*$ is selected from the same shared validation protocol described in Section~\ref{sec:evaluation}. Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance. The main comparison is between ambient-space editing and tangent-constrained editing.
+We evaluate eight erasure methods plus a Majority Class reference baseline across three concept domains---sycophancy, gender (Bias in Bios), and safety---at layer~8 of Qwen2.5-0.5B. Each method's erasure strength $\lambda^*$ is selected from the same shared validation protocol described in Section~\ref{sec:evaluation}. Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance. The main comparison is between ambient-space editing and tangent-constrained editing.
 
 \input{tables/full_comparison}
 
 \subsection{\TanGCE{} Achieves the Best Erasure Precision Across All Domains}
 
-Table~\ref{tab:full_comparison} shows that \TanGCE{} achieves the lowest nonlinear leakage across all three domains: 0.602 on sycophancy (vs.\ 0.681 for LEACE, 0.703 for \AmbGCE{}), 0.618 on gender (vs.\ 0.701 for \AmbGCE{}), and 0.663 on safety (vs.\ 0.778 for \AmbGCE{}). Linear methods (Linear Projection, INLP) barely reduce leakage below random baselines, confirming that concept information is predominantly encoded nonlinearly and that ambient-space updates alone are not enough.
+Table~\ref{tab:full_comparison} shows that \TanGCE{} achieves the lowest nonlinear leakage across all three domains: 0.602 on sycophancy (vs.\ 0.681 for LEACE, 0.703 for \AmbGCE{}, 0.748 for IGBP), 0.618 on gender (vs.\ 0.675 for IGBP, 0.701 for \AmbGCE{}), and 0.663 on safety (vs.\ 0.759 for IGBP, 0.778 for \AmbGCE{}). The Majority Class row gives the trivial label-imbalance floor, showing what it would mean to erase by collapsing to the dominant class rather than preserving useful structure. Linear methods (Linear Projection, INLP) and the closest prior nonlinear baseline (IGBP) remain well above \TanGCE{}, confirming that concept information is predominantly encoded nonlinearly and that ambient-space updates alone are not enough.
 
 \subsection{\TanGCE{} Remains Surgical on Control Concepts}
 
-Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream control task accuracy relative to clean representations. For sycophancy (answer matching), \TanGCE{} incurs a small $-1.5$pp drop; all other methods preserve perfect accuracy. For gender (profession classification), \TanGCE{} drops only $-0.8$pp (0.531 vs.\ 0.539 clean). On safety, \TanGCE{} \emph{improves} helpfulness ($+3.9$pp), suggesting that removing safety-concept directions frees capacity for the helpfulness task.
+Table~\ref{tab:full_comparison} reports $\Delta$Ctrl, the change in downstream control task accuracy relative to clean representations. The key point is not just that some baselines can lower leakage, but how they do it. The random baselines and IGBP can reduce recoverability while still inducing substantially larger collateral damage than \TanGCE{} in the harder settings, indicating that they are more willing to distort the representation off its natural support. For gender (profession classification), \TanGCE{} drops only $-0.8$pp (0.531 vs.\ 0.539 clean), whereas IGBP drops $-1.5$pp and the random per-sample baseline is worse still. On safety, \TanGCE{} \emph{improves} helpfulness ($+3.9$pp), while IGBP also lowers leakage but with a larger representation shift and a different utility profile. The Majority Class row is a reference floor and therefore reports zero by construction on the control metric.
 
 \subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
 \label{sec:lambda_sweep}
