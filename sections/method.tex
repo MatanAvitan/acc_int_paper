@@ -40,7 +40,7 @@ We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the 
 
 \subsection{Local tangent estimation}
 
-For each query point $\mathbf{x}_i$, we estimate the tangent space $T_{\mathbf{x}_i}\mathcal{M}$ via local PCA on its $k$-nearest neighbors. Let $\mathcal{N}_k(\mathbf{x}_i) = \{\mathbf{x}_{j_1}, \ldots, \mathbf{x}_{j_k}\}$ denote the $k$ nearest neighbors of $\mathbf{x}_i$ in the training set. We form secant vectors $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ and compute the local covariance:
+For each query point $\mathbf{x}_i$, we estimate the tangent space $T_{\mathbf{x}_i}\mathcal{M}$ via local PCA \ye{so far you wrote PCA/SVD} on its $k$-nearest neighbors. Let $\mathcal{N}_k(\mathbf{x}_i) = \{\mathbf{x}_{j_1}, \ldots, \mathbf{x}_{j_k}\}$ denote the $k$ nearest neighbors of $\mathbf{x}_i$ in the training set \ye{including i?}. We form secant vectors $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ and compute the local covariance:
 \begin{equation}
 \label{eq:local_cov}
 \mathbf{C}_i = \frac{1}{k} \sum_{m=1}^{k} \mathbf{s}_{j_m} \mathbf{s}_{j_m}^\top \in \mathbb{R}^{d \times d}.
@@ -77,6 +77,7 @@ The projected direction is \emph{not} re-normalized to unit length. Its norm $\|
 \label{eq:tangent_erase}
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}.
 \end{equation}
+\ye{lambda wasn't defined yet afaik}
 The update in Eq.~\ref{eq:tangent_erase} is a heuristic design choice, not the solution to an explicit optimization problem. It projects the representation onto the estimated tangent direction and subtracts a scaled multiple, analogous to a one-step descent along the constrained direction.
 
 The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$. It is larger when the gradient has more support in the estimated tangent space and smaller when it has less, but this does not guarantee monotonic improvement in either leakage or utility.
