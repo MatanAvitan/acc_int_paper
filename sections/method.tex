@@ -6,7 +6,7 @@
 We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. Our starting point is a local manifold approximation of representation space. If the neighborhood of a representation $\mathbf{x}$ is well approximated by a low-dimensional manifold $\mathcal{M}$, then the relevant first-order directions are those in the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than arbitrary ambient directions in $\mathbb{R}^d$. We do not observe this tangent space directly. Instead, we approximate it with local PCA/SVD on neighborhood secants and use that first-order estimate to constrain the erasure update. Each iteration therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
 
 \begin{algorithm}[t]
-\caption{Pseudocode overview of \TanGCE{}. Each round trains a fresh scorer, estimates sample-wise tangent spaces by local PCA, projects the leakage gradient into the tangent space, and applies the resulting constrained erasure update.}
+\caption{Overview of \TanGCE{}. Each round trains a fresh scorer, estimates sample-wise tangent spaces by local PCA, projects the leakage gradient into the tangent space, and applies the resulting constrained erasure update.}
 \label{alg:tangce}
 \begin{algorithmic}[1]
 \REQUIRE Representations $\mathbf{X} = \{\mathbf{x}_i\}_{i=1}^N$, concept labels $\mathbf{y}$, erasure strength $\lambda$, neighborhood size $k$, retained-variance rule for tangent rank, number of rounds $T$.
