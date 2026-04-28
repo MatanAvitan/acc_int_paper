@@ -12,6 +12,13 @@ Armen Aghajanyan, Sonal Gupta, and Luke Zettlemoyer.
 \newblock \doi{10.18653/v1/2021.acl-long.568}.
 \newblock URL \url{https://aclanthology.org/2021.acl-long.568}.
 
+\bibitem[Avitan et~al.(2025)Avitan, Cotterell, Goldberg, and Ravfogel]{avitan-etal-2025-practical}
+Matan Avitan, Ryan Cotterell, Yoav Goldberg, and Shauli Ravfogel.
+\newblock A practical method for generating string counterfactuals.
+\newblock In \emph{Findings of the Association for Computational Linguistics: NAACL 2025}, pages 3267--3286. Association for Computational Linguistics, 2025.
+\newblock \doi{10.18653/v1/2025.findings-naacl.180}.
+\newblock URL \url{https://aclanthology.org/2025.findings-naacl.180/}.
+
 \bibitem[Belrose et~al.(2023)Belrose, Schneider-Joseph, Ravfogel, Cotterell, Raff, and Biderman]{belrose-etal-2023-leace}
 Nora Belrose, David Schneider-Joseph, Shauli Ravfogel, Ryan Cotterell, Edward Raff, and Stella Biderman.
 \newblock Leace: Perfect linear concept erasure in closed form.
@@ -57,13 +64,6 @@ Jiaming Ji, Donghai Hong, Borong Zhang, Boyuan Chen, Josef Dai, Boren Zheng, Tia
 \newblock \emph{arXiv preprint arXiv:2406.15513}, 2024.
 \newblock URL \url{https://arxiv.org/abs/2406.15513}.
 
-\bibitem[K{\"a}rkk{\"a}inen and Joo(2021)]{karkkainen2021fairface}
-Kimmo K{\"a}rkk{\"a}inen and Jungseock Joo.
-\newblock {FairFace}: Face attribute dataset for balanced race, gender, and age for bias measurement and mitigation.
-\newblock In \emph{Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}, pages 1548--1558, 2021.
-\newblock \doi{10.1109/WACV48630.2021.00159}.
-\newblock URL \url{https://openaccess.thecvf.com/content/WACV2021/html/Karkkainen_FairFace_Face_Attribute_Dataset_for_Balanced_Race_Gender_and_Age_WACV_2021_paper.html}.
-
 \bibitem[Liu et~al.(2015)Liu, Luo, Wang, and Tang]{liu-etal-2015-celeba}
 Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
 \newblock Deep learning face attributes in the wild.
@@ -96,17 +96,18 @@ Shauli Ravfogel, Yanai Elazar, Hila Gonen, Michael Twiton, and Yoav Goldberg.
 \newblock \doi{10.18653/v1/2020.acl-main.647}.
 \newblock URL \url{https://aclanthology.org/2020.acl-main.647/}.
 
+\bibitem[Ravfogel et~al.(2022)Ravfogel, Vargas, Goldberg, and Cotterell]{ravfogel-etal-2022-adversarial}
+Shauli Ravfogel, Francisco Vargas, Yoav Goldberg, and Ryan Cotterell.
+\newblock Adversarial concept erasure in kernel space.
+\newblock In \emph{Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing}, pages 6034--6055. Association for Computational Linguistics, 2022.
+\newblock \doi{10.18653/v1/2022.emnlp-main.405}.
+\newblock URL \url{https://aclanthology.org/2022.emnlp-main.405/}.
+
 \bibitem[Tu(2011)]{tu-2011-manifolds}
 Loring~W. Tu.
 \newblock \emph{An Introduction to Manifolds}.
 \newblock Universitext. Springer, 2 edition, 2011.
 \newblock \doi{10.1007/978-1-4419-7400-6}.
 \newblock URL \url{https://luis.impa.br/aulas/anvar/Tu_AnIntroductionToManifolds.pdf}.
-
-\bibitem[Zhang et~al.(2017)Zhang, Song, and Qi]{zhifei2017cvpr}
-Zhifei Zhang, Yang Song, and Hairong Qi.
-\newblock Age progression/regression by conditional adversarial autoencoder.
-\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 2017.
-\newblock UTKFace dataset: \url{https://susanqq.github.io/UTKFace/}.
 
 \end{thebibliography}

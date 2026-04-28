@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  22 APR 2026 23:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  28 APR 2026 12:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -391,30 +391,50 @@ Package caption Info: New subtype `subfigure' on input line 238.
 \c@subfigure=\count333
 Package caption Info: New subtype `subtable' on input line 238.
 \c@subtable=\count334
+) (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count335
+\float@exts=\toks31
+\float@box=\box62
+\@float@everytoks=\toks32
+\@floatcapt=\box63
+)
+\@float@every@algorithm=\toks33
+\c@algorithm=\count336
+) (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/algorithms/algorithmic.sty
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count337
+\c@ALC@line=\count338
+\c@ALC@rem=\count339
+\c@ALC@depth=\count340
+\ALC@tlm=\skip69
+\algorithmicindent=\skip70
 ) (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count335
+\l__color_backend_stack_int=\count341
 ) (./neurips_2026.aux)
 \openout1 = `neurips_2026.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -482,18 +502,18 @@ LaTeX Font Info:    ... okay on input line 115.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 115.
+Package hyperref Info: Link coloring OFF on input line 119.
 (./neurips_2026.out) (./neurips_2026.out)
 \@outlinefile=\write3
 \openout3 = `neurips_2026.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 115.
-Package microtype Info: Applying patch `item' on input line 115.
-Package microtype Info: Applying patch `toc' on input line 115.
-Package microtype Info: Applying patch `eqnum' on input line 115.
-Package microtype Info: Applying patch `footnote' on input line 115.
-Package microtype Info: Applying patch `verbatim' on input line 115.
-LaTeX Info: Redefining \microtypesetup on input line 115.
+LaTeX Info: Redefining \microtypecontext on input line 119.
+Package microtype Info: Applying patch `item' on input line 119.
+Package microtype Info: Applying patch `toc' on input line 119.
+Package microtype Info: Applying patch `eqnum' on input line 119.
+Package microtype Info: Applying patch `footnote' on input line 119.
+Package microtype Info: Applying patch `verbatim' on input line 119.
+LaTeX Info: Redefining \microtypesetup on input line 119.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -508,17 +528,17 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 ) (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count336
+\scratchcounter=\count342
 \scratchdimen=\dimen257
-\scratchbox=\box62
-\nofMPsegments=\count337
-\nofMParguments=\count338
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count339
+\scratchbox=\box64
+\nofMPsegments=\count343
+\nofMParguments=\count344
+\everyMPshowfont=\toks34
+\MPscratchCnt=\count345
 \MPscratchDim=\dimen258
-\MPnumerator=\count340
-\makeMPintoPDFobject=\count341
-\everyMPtoPDFconversion=\toks32
+\MPnumerator=\count346
+\makeMPintoPDFobject=\count347
+\everyMPtoPDFconversion=\toks35
 ) (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -526,17 +546,18 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 119.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 123.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 119.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 123.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
@@ -558,90 +579,29 @@ Package microtype Info: Loading generic protrusion settings for font family
 ) (./sections/introduction.tex [1
 
 
-{/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]) (./sections/related_work.tex) (./sections/notation.tex [2]) (./sections/method.tex [3] [4]) (./sections/evaluation.tex [5]) (./sections/experiments.tex [6] [7] (./tables/method_comparison_scope.tex)) (./sections/results.tex (./tables/full_comparison.tex) [8] (./tables/lambda_sweep.tex) [9] (./tables/celeba_clip_fair.tex) (./tables/celeba_clip_all40_summary.tex)
-Underfull \vbox (badness 3189) has occurred while \output is active []
+{/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]) (./sections/related_work.tex) (./sections/notation.tex [2] [3]) (./sections/method.tex
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 9.
+ [4] [5]) (./sections/evaluation.tex [6]
+Underfull \vbox (badness 1117) has occurred while \output is active []
 
- [10] (./tables/geometry_contrast_summary.tex)
-<figures/Q1_L8_top1.png, id=352, 433.62pt x 361.35pt>
-File: figures/Q1_L8_top1.png Graphic file (type png)
-<use figures/Q1_L8_top1.png>
-Package pdftex.def Info: figures/Q1_L8_top1.png  used on input line 73.
-(pdftex.def)             Requested size: 190.79109pt x 158.99449pt.
-<figures/Q2_L8_top1_agreement_ratio.png, id=354, 433.62pt x 361.35pt>
-File: figures/Q2_L8_top1_agreement_ratio.png Graphic file (type png)
-<use figures/Q2_L8_top1_agreement_ratio.png>
-Package pdftex.def Info: figures/Q2_L8_top1_agreement_ratio.png  used on input line 80.
-(pdftex.def)             Requested size: 190.79109pt x 158.99449pt.
- [11] (./tables/multi_model_comparison.tex
-! Misplaced \noalign.
-\caption ->\noalign 
-                    \bgroup \@ifnextchar [{\egroup \LT@c@ption \@firstofone ...
-l.4 \caption
-            {Multi-family comparison of the core erasure methods (two random...
-I expect to see \noalign only after the \cr of
-an alignment. Proceed, and I'll ignore this case.
+ [7]) (./sections/experiments.tex [8] [9] (./tables/method_comparison_scope.tex)) (./sections/results.tex (./tables/multi_model_comparison.tex
+ignored error: Infinite glue shrinkage found in box being split [10]
+ignored error: Infinite glue shrinkage found in box being split [11]) (./tables/celeba_clip_all40_summary.tex) [12] (./tables/celeba_clip_fair.tex) (./tables/lambda_sweep.tex)) (./sections/discussion.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-! Misplaced \noalign.
-\caption@LT@make #1->\noalign 
-                              {\caption@LT@config }\expandafter \LT@mcol \ex...
-l.4 ...oncept) pairs still running at submission.}
-                                                  
-I expect to see \noalign only after the \cr of
-an alignment. Proceed, and I'll ignore this case.
-
-! Misplaced \omit.
-\multispan ->\omit 
-                   \@multispan 
-l.4 ...oncept) pairs still running at submission.}
-                                                  
-I expect to see \omit only after tab marks or the \cr of
-an alignment. Proceed, and I'll ignore this case.
-
-[12 <./figures/Q1_L8_top1.png> <./figures/Q2_L8_top1_agreement_ratio.png>]
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 7 on input line 98.
-
-ignored error: Infinite glue shrinkage found in box being split [13])) (./sections/discussion.tex [14]) (./sections/limitations.tex
-Underfull \vbox (badness 2875) has occurred while \output is active []
-
- [15]) (./sections/conclusion.tex) (./neurips_2026.bbl [16]
-Underfull \hbox (badness 4913) in paragraph at lines 61--66
-[]\T1/ptm/m/n/10 (+20) Kimmo Kärkkäi-nen and Jungseock Joo.  Fair-Face: Face at-tribute dataset for bal-
- []
-
-
-Underfull \hbox (badness 2005) in paragraph at lines 61--66
-\T1/ptm/m/n/10 (+20) anced race, gen-der, and age for bias mea-sure-ment and mit-i-ga-tion.  In \T1/ptm/m/it/10 (+20) Pro-ceed-ings
- []
-
-
-Underfull \hbox (badness 4467) in paragraph at lines 61--66
-\T1/ptm/m/it/10 (+20) of the IEEE/CVF Win-ter Con-fer-ence on Ap-pli-ca-tions of Com-puter Vi-sion (WACV)\T1/ptm/m/n/10 (+20) ,
- []
-
-
-Underfull \hbox (badness 5217) in paragraph at lines 61--66
-\T1/ptm/m/n/10 (+20) pages 1548--1558, 2021.  doi: $10 . 1109 / WACV48630 . 2021 . 00159$.  URL []$\T1/cmtt/m/n/10 https :
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 61--66
-\T1/cmtt/m/n/10 / / openaccess . thecvf . com / content / WACV2021 / html / Karkkainen _ FairFace _ Face _
- []
-
-
-Underfull \hbox (badness 1205) in paragraph at lines 100--105
+ [13] [14]) (./sections/limitations.tex) (./sections/conclusion.tex) [15] (./neurips_2026.bbl [16]
+Underfull \hbox (badness 1205) in paragraph at lines 107--112
 []\T1/ptm/m/n/10 (+20) Loring W. Tu.  \T1/ptm/m/it/10 (+20) An In-tro-duc-tion to Man-i-folds\T1/ptm/m/n/10 (+20) .  Uni-ver-si-text. Springer, 2 edi-tion, 2011.
  []
 
 
-Underfull \hbox (badness 4531) in paragraph at lines 100--105
+Underfull \hbox (badness 4531) in paragraph at lines 107--112
 \T1/ptm/m/n/10 (+20) doi: $10 . 1007 / 978-[]1-[]4419-[]7400-[]6$.  URL []$\T1/cmtt/m/n/10 https : / / luis . impa . br / aulas / anvar / Tu _
  []
 
-) (./sections/appendix_results.tex [17] (./tables/appendix_all_methods.tex
-ignored error: Infinite glue shrinkage found in box being split [18] [19]
+) (./sections/appendix_results.tex (./tables/full_comparison.tex) [17] (./tables/appendix_all_methods.tex
+ignored error: Infinite glue shrinkage found in box being split [18]
+ignored error: Infinite glue shrinkage found in box being split [19]
 ignored error: Infinite glue shrinkage found in box being split [20]
 ignored error: Infinite glue shrinkage found in box being split [21]
 ignored error: Infinite glue shrinkage found in box being split [22]
@@ -649,35 +609,31 @@ ignored error: Infinite glue shrinkage found in box being split [23]) (./tables/
 
 LaTeX Warning: Float too large for page by 13.71944pt on input line 85.
 
-) (./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/local_celeba_visual_table2.tex) (./tables/celeba_clip_all40_per_concept.tex) (./tables/main_text_geometry_schedule.tex)) [24] (./checklist.tex
+) (./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/local_celeba_visual_table2.tex) (./tables/celeba_clip_all40_per_concept.tex [24]) (./tables/main_text_geometry_schedule.tex)) [25] (./checklist.tex
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 11.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [25] [26] [27] [28] [29] [30])
-
-Package longtable Warning: Table widths have changed. Rerun LaTeX.
-
-[31] [32] [33] [34] [35] (./neurips_2026.aux)
+) [26] [27] [28] [29] [30] [31]) [32] [33] [34] [35] [36] (./neurips_2026.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-29>
  ***********
 Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
-(rerunfilecheck)             Checksum: EF97C19F6A7393372369A3AEE1322F98;6957.
+(rerunfilecheck)             Checksum: C407BCF47FD8E05E9FA43A3EBF470599;6396.
  ) 
 Here is how much of TeX's memory you used:
- 16083 strings out of 469476
- 260130 string characters out of 5467624
- 821075 words of memory out of 5000000
- 43883 multiletter control sequences out of 15000+600000
- 689993 words of font info for 329 fonts, out of 8000000 for 9000
+ 16305 strings out of 469476
+ 263283 string characters out of 5467624
+ 819146 words of memory out of 5000000
+ 44123 multiletter control sequences out of 15000+600000
+ 688622 words of font info for 310 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 72i,10n,79p,1729b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (35 pages, 498439 bytes).
+ 72i,14n,79p,1760b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on neurips_2026.pdf (36 pages, 410775 bytes).
 PDF statistics:
- 733 PDF objects out of 1000 (max. 8388607)
- 627 compressed objects within 7 object streams
- 184 named destinations out of 1000 (max. 500000)
- 62219 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 728 PDF objects out of 1000 (max. 8388607)
+ 629 compressed objects within 7 object streams
+ 188 named destinations out of 1000 (max. 500000)
+ 60153 words of extra memory for PDF output out of 61914 (max. 10000000)
 

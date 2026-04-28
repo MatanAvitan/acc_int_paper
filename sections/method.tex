@@ -76,6 +76,36 @@ This construction is the core difference between \TanGCE{} and its ambient count
 
 \AmbGCE{} edits $\mathbf{x}_i$ in the full ambient space, where the gradient may contain components that are poorly aligned with the local representation support. Under the local manifold view, those components are the ones most likely to move the representation away from the neighborhood geometry captured by natural data. \TanGCE{} removes them at first order by replacing $\mathbf{u}_i$ with its projection $\mathbf{u}_i^{\mathrm{tan}}$ into the estimated tangent space. This motivates the hypothesis that tangent-constrained updates can remain effective at larger step sizes. We treat that statement as empirical rather than guaranteed, and evaluate it directly in the results section.
 
+\subsection{Adaptive per-sample step size: closed-form \texorpdfstring{$\lambda_i$}{lambda}}
+\label{sec:closed_form_lambda}
+
+A single global $\lambda$ over-edits some samples while under-editing others. Confident samples (large gradient norm and well-aligned tangent) move proportionally more for any fixed scalar; uncertain samples (small or off-manifold gradient) are dragged by the same scalar in noise-dominated directions. We address this with a per-sample step size $\lambda_i$ that respects the \emph{local trust region} of the manifold approximation.
+
+\paragraph{Trust region.} Recall that $\mathbf{B}_i$ is the local PCA basis at $\mathbf{x}_i$ and $r_i$ is the mean distance to its $k$ nearest neighbors. We use $r_i$ as a natural local-radius scale: it is the empirical scale on which the linear tangent approximation is reliable. We require that no sample moves further than a fraction $\varepsilon$ of its local neighborhood:
+\begin{equation}
+\label{eq:trust_region}
+\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \;\leq\; \varepsilon \cdot r_i.
+\end{equation}
+Here $\varepsilon \in (0, \infty)$ is a single global trust-region scale, dimensionless and shared across panels. Smaller $\varepsilon$ yields surgical edits inside each local manifold patch; larger $\varepsilon$ admits steps that may leave the patch.
+
+\paragraph{Closed-form solution.} Substituting Eq.~\ref{eq:tangent_erase} into Eq.~\ref{eq:trust_region}, the constraint becomes
+\begin{equation}
+\label{eq:lambda_constraint}
+\lambda_i \cdot |\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}| \cdot \|\mathbf{u}_i^{\mathrm{tan}}\| \;\leq\; \varepsilon \cdot r_i.
+\end{equation}
+Let $\mathbf{v}_i = (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}$ be the per-sample edit displacement at $\lambda{=}1$. The largest $\lambda_i$ satisfying Eq.~\ref{eq:lambda_constraint} is
+\begin{equation}
+\label{eq:lambda_closed_form}
+\boxed{ \;\;
+\lambda_i \;=\; \min\!\left( \lambda_{\max}, \; \frac{\varepsilon \cdot r_i}{\|\mathbf{v}_i\|} \right) \;\;
+}
+\end{equation}
+where $\lambda_{\max}$ is a safety cap that prevents runaway updates when $\|\mathbf{v}_i\| \to 0$ (gradient nearly orthogonal to the tangent space). In practice we set $\lambda_{\max}=64$, large enough that it binds only for samples whose gradient has near-zero tangent component.
+
+\paragraph{Why this matters.} Eq.~\ref{eq:lambda_closed_form} is a genuine \emph{trust region} per sample: confident samples move by exactly $\varepsilon \cdot r_i$ along their tangent; uncertain samples (small $\|\mathbf{v}_i\|$) get a larger nominal $\lambda_i$ but the actual movement $\lambda_i \cdot \|\mathbf{v}_i\|$ remains bounded by $\varepsilon \cdot r_i$ (or by the safety cap, in which case movement is small because $\|\mathbf{v}_i\|$ is small). This per-sample adaptation removes a hyperparameter (one global $\lambda$) and replaces it with a single dimensionless surgicality knob $\varepsilon$.
+
+The closed-form expression in Eq.~\ref{eq:lambda_closed_form} requires no bisection or auxiliary optimization: each iteration computes $\mathbf{v}_i$ once via a forward pass through the scorer, $r_i$ once via the cached $k$-NN distances, and $\lambda_i$ in $\mathcal{O}(1)$ per row. This makes the per-sample trust region essentially free relative to the cost of refitting the scorer and tangent.
+
 \subsection{Iterative \TanGCE{} and relation to baselines}
 
 We implement \TanGCE{} using an iterative protocol with probe recycling. Each round begins by training a fresh concept scorer on the current representations, computing per-sample gradients, and applying the tangent-constrained update in Eq.~\ref{eq:tangent_erase}. This turns the method into an iterative nonlinear eraser: every new scorer is trained specifically to recover whatever target information survived the previous round. The tangent estimator is also refit in every round to track the evolving local geometry.
