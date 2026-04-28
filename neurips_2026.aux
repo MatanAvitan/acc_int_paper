@@ -12,28 +12,28 @@
 \citation{elazar-goldberg-2018-adversarial}
 \citation{elazar-etal-2021-amnesic}
 \citation{iskander-etal-2023-shielded}
+\citation{tu-2011-manifolds}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
 \newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
-\citation{tu-2011-manifolds}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup and Geometric Motivation}{3}{section.3}\protected@file@percent }
-\newlabel{sec:notation}{{3}{3}{Problem Setup and Geometric Motivation}{section.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup and Geometric Motivation}{2}{section.3}\protected@file@percent }
+\newlabel{sec:notation}{{3}{2}{Problem Setup and Geometric Motivation}{section.3}{}}
 \@writefile{toc}{\contentsline {paragraph}{Language model and encoder.}{3}{section*.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Concepts and data.}{3}{section*.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Concept scorer.}{3}{section*.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Representation manifold.}{3}{section*.6}\protected@file@percent }
 \newlabel{eq:tangent_space_chart}{{2}{3}{Representation manifold}{equation.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Ambient versus tangent directions.}{3}{section*.7}\protected@file@percent }
+\newlabel{eq:tangent_normal_decomp}{{3}{3}{Ambient versus tangent directions}{equation.3}{}}
 \citation{elazar-goldberg-2018-adversarial}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Overview of TanGCE{}. Each round trains a fresh scorer, estimates sample-wise tangent spaces by local PCA, projects the leakage gradient into the tangent space, and applies the resulting constrained erasure update.}}{4}{algorithm.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{alg:tangce}{{1}{4}{Overview of \TanGCE {}. Each round trains a fresh scorer, estimates sample-wise tangent spaces by local PCA, projects the leakage gradient into the tangent space, and applies the resulting constrained erasure update}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Ambient versus tangent directions.}{4}{section*.7}\protected@file@percent }
-\newlabel{eq:tangent_normal_decomp}{{3}{4}{Ambient versus tangent directions}{equation.3}{}}
 \@writefile{toc}{\contentsline {paragraph}{Recoverability after erasure.}{4}{section*.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Conventions.}{4}{section*.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Method: TanGCE{}}{4}{section.4}\protected@file@percent }
 \newlabel{sec:method}{{4}{4}{Method: \TanGCE {}}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Local tangent estimation}{4}{subsection.4.1}\protected@file@percent }
-\newlabel{eq:local_cov}{{4}{5}{Local tangent estimation}{equation.4}{}}
+\newlabel{eq:local_cov}{{4}{4}{Local tangent estimation}{equation.4}{}}
 \newlabel{eq:tangent_basis}{{5}{5}{Local tangent estimation}{equation.5}{}}
 \newlabel{eq:tangent_proj}{{6}{5}{Local tangent estimation}{equation.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Tangent-constrained update}{5}{subsection.4.2}\protected@file@percent }
@@ -41,11 +41,11 @@
 \newlabel{eq:tangent_direction}{{8}{5}{Tangent-constrained update}{equation.8}{}}
 \newlabel{eq:tangent_erase}{{9}{5}{Tangent-constrained update}{equation.9}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Why tangent projection can help at larger $\lambda $}{5}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Adaptive per-sample step size: closed-form $\lambda _i$}{5}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:closed_form_lambda}{{4.4}{5}{Adaptive per-sample step size: closed-form \texorpdfstring {$\lambda _i$}{lambda}}{subsection.4.4}{}}
 \citation{elazar-goldberg-2018-adversarial}
 \citation{ravfogel-etal-2020-null}
 \citation{iskander-etal-2023-shielded}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Adaptive per-sample step size: closed-form $\lambda _i$}{6}{subsection.4.4}\protected@file@percent }
-\newlabel{sec:closed_form_lambda}{{4.4}{6}{Adaptive per-sample step size: closed-form \texorpdfstring {$\lambda _i$}{lambda}}{subsection.4.4}{}}
 \@writefile{toc}{\contentsline {paragraph}{Trust region.}{6}{section*.10}\protected@file@percent }
 \newlabel{eq:trust_region}{{10}{6}{Trust region}{equation.10}{}}
 \@writefile{toc}{\contentsline {paragraph}{Closed-form solution.}{6}{section*.11}\protected@file@percent }
@@ -62,19 +62,19 @@
 \@writefile{toc}{\contentsline {paragraph}{Training protocol.}{7}{section*.15}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Domain-specific controls.}{7}{section*.16}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Vision benchmarks.}{7}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Metrics}{7}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Erasure precision.}{7}{section*.18}\protected@file@percent }
+\newlabel{eq:precision_metric}{{13}{7}{Erasure precision}{equation.13}{}}
 \citation{perez-etal-2022-model-written}
 \citation{ji-etal-2024-pku-saferlhf}
 \citation{dearteaga-etal-2019-bias}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Metrics}{8}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Erasure precision.}{8}{section*.18}\protected@file@percent }
-\newlabel{eq:precision_metric}{{13}{8}{Erasure precision}{equation.13}{}}
+\citation{radford-etal-2021-clip}
+\citation{liu-etal-2015-celeba}
 \@writefile{toc}{\contentsline {paragraph}{Surgicality on control concepts.}{8}{section*.19}\protected@file@percent }
 \newlabel{eq:surgicality_metric}{{14}{8}{Surgicality on control concepts}{equation.14}{}}
 \@writefile{toc}{\contentsline {paragraph}{Language-model utility via cache-replay perplexity.}{8}{section*.20}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Datasets, Models, and Compared Methods}{8}{subsection.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}Experimental Domains}{8}{subsubsection.5.3.1}\protected@file@percent }
-\citation{radford-etal-2021-clip}
-\citation{liu-etal-2015-celeba}
 \citation{qwen-2024-qwen25}
 \citation{ravfogel-etal-2020-null}
 \citation{belrose-etal-2023-leace}
@@ -92,6 +92,9 @@
 \@writefile{toc}{\contentsline {paragraph}{INLP (Iterative Nullspace Projection).}{9}{section*.26}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{LEACE (Least-squares Concept Erasure).}{9}{section*.27}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{IGBP (Iterative Gradient-Based Projection).}{9}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{AmbGCE{}.}{9}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{9}{section.6}\protected@file@percent }
+\newlabel{sec:results}{{6}{9}{Results}{section.6}{}}
 \gdef \LT@i {\LT@entry 
     {5}{71.98949pt}\LT@entry 
     {5}{90.12938pt}\LT@entry 
@@ -103,9 +106,6 @@
     {5}{42.55566pt}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of concept erasure methods and reference baselines by family and role in this work.}}{10}{table.caption.30}\protected@file@percent }
 \newlabel{tab:method_comparison_scope}{{1}{10}{Comparison of concept erasure methods and reference baselines by family and role in this work}{table.caption.30}{}}
-\@writefile{toc}{\contentsline {paragraph}{AmbGCE{}.}{10}{section*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{10}{section.6}\protected@file@percent }
-\newlabel{sec:results}{{6}{10}{Results}{section.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Multi-Model Generalization}{10}{subsection.6.1}\protected@file@percent }
 \newlabel{sec:multi_model}{{6.1}{10}{Multi-Model Generalization}{subsection.6.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Multi-family comparison of core erasure methods across model families. Standard deviations in Appendix~Tables~\ref {tab:appendix_all_methods_sycophancy}--\ref {tab:appendix_all_methods_safety}.}}{10}{table.2}\protected@file@percent }
@@ -119,17 +119,17 @@
 \newlabel{tab:celeba_clip_fair}{{4}{13}{CLIP ViT-B/32 concept erasure on CelebA (validation HPO for $\lambda $). Each method's $\lambda ^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy; the same probe (MLP hidden 256, 1500 steps, AdamW lr=$10^{-3}$) is used for both HPO and evaluation. L/NL Leak: retrained linear / nonlinear probe accuracy on test (lower = better). $\Delta $Ctrl: mean control-task accuracy change across 5 least-correlated attributes (closer to zero = more surgical). Representation: CLIP ViT-B/32 pooled embedding (768 dimensions)}{table.caption.33}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3}The Lambda Sweep: On-Manifold Updates Support Larger Interventions}{13}{subsection.6.3}\protected@file@percent }
 \newlabel{sec:lambda_sweep}{{6.3}{13}{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}{subsection.6.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{13}{section.7}\protected@file@percent }
 \citation{aghajanyan-etal-2021-intrinsic}
 \citation{hu-etal-2022-lora}
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces $\lambda $ sweep comparing AmbGCE{} and TanGCE{} at fixed step sizes across three concept domains (Qwen2.5-0.5B, layer~8). NL: retrained nonlinear MLP probe accuracy (hidden 256, 1500 steps, AdamW lr=$10^{-3}$; same architecture used for HPO and evaluation) on the target concept (lower = stronger erasure). Both methods use the same GCE concept scorer (hidden 256, 1500 steps). AmbGCE{} becomes less effective at high $\lambda $ under the current protocol, while TanGCE{} continues improving. We interpret this as supportive evidence for the local manifold motivation of tangent-constrained updates, not as a complete characterization of the leakage-utility frontier. The expanded HPO grid $\{0.25,\ldots  ,32.0\}$ used in the multi-model experiments further tests this range. Bold: best NL per domain.}}{14}{table.caption.34}\protected@file@percent }
 \newlabel{tab:lambda_sweep}{{5}{14}{$\lambda $ sweep comparing \AmbGCE {} and \TanGCE {} at fixed step sizes across three concept domains (Qwen2.5-0.5B, layer~8). NL: retrained nonlinear MLP probe accuracy (hidden 256, 1500 steps, AdamW lr=$10^{-3}$; same architecture used for HPO and evaluation) on the target concept (lower = stronger erasure). Both methods use the same GCE concept scorer (hidden 256, 1500 steps). \AmbGCE {} becomes less effective at high $\lambda $ under the current protocol, while \TanGCE {} continues improving. We interpret this as supportive evidence for the local manifold motivation of tangent-constrained updates, not as a complete characterization of the leakage-utility frontier. The expanded HPO grid $\{0.25,\ldots ,32.0\}$ used in the multi-model experiments further tests this range. Bold: best NL per domain}{table.caption.34}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{14}{section.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Connection to low-rank fine-tuning.}{14}{section*.35}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{15}{section.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{15}{section.9}\protected@file@percent }
 \bibstyle{plainnat}
 \bibdata{references}
 \bibcite{aghajanyan-etal-2021-intrinsic}{{1}{2021}{{Aghajanyan et~al.}}{{Aghajanyan, Gupta, and Zettlemoyer}}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{15}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{15}{section.9}\protected@file@percent }
 \bibcite{avitan-etal-2025-practical}{{2}{2025}{{Avitan et~al.}}{{Avitan, Cotterell, Goldberg, and Ravfogel}}}
 \bibcite{belrose-etal-2023-leace}{{3}{2023}{{Belrose et~al.}}{{Belrose, Schneider-Joseph, Ravfogel, Cotterell, Raff, and Biderman}}}
 \bibcite{dearteaga-etal-2019-bias}{{4}{2019}{{De-Arteaga et~al.}}{{De-Arteaga, Romanov, Wallach, Chayes, Borgs, Chouldechova, Geyik, Kenthapadi, and Kalai}}}
@@ -149,13 +149,13 @@
 \newlabel{tab:full_comparison}{{6}{17}{Full erasure method comparison at layer~8 across three concept domains (Qwen2.5-0.5B), plus a Majority Class reference floor. Each $\lambda $-based method's $\lambda ^*$ is selected from $\{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation nonlinear probe accuracy; the same probe architecture (MLP hidden 256, 1500 steps, AdamW lr=$10^{-3}$) is used for both HPO and final evaluation, ensuring no ranking distortion from mismatched capacity. IGBP and linear baselines use their standard procedure. Majority Class is not an erasure method; it reports the label-imbalance floor implied by the test split. L/NL Leak: retrained linear logistic-regression / nonlinear MLP probe accuracy on the target concept (lower = stronger erasure). $\Delta $Ctrl: downstream control-task accuracy change relative to clean representations (closer to zero = more surgical). Control tasks: answer matching (sycophancy), profession classification (gender), helpfulness (safety)}{table.caption.37}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {A}Single-Model Layer-8 Comparison (All Methods)}{17}{appendix.A}\protected@file@percent }
 \newlabel{sec:appendix_full_comparison}{{A}{17}{Single-Model Layer-8 Comparison (All Methods)}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}All Methods, All Models, All Datasets}{17}{appendix.B}\protected@file@percent }
+\newlabel{sec:appendix_all_methods}{{B}{17}{All Methods, All Models, All Datasets}{appendix.B}{}}
 \gdef \LT@ii {\LT@entry 
     {5}{71.98949pt}\LT@entry 
     {5}{90.12938pt}\LT@entry 
     {5}{65.33351pt}\LT@entry 
     {5}{73.11131pt}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}All Methods, All Models, All Datasets}{18}{appendix.B}\protected@file@percent }
-\newlabel{sec:appendix_all_methods}{{B}{18}{All Methods, All Models, All Datasets}{appendix.B}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces All erasure methods on all models --- \textbf  {Sycophancy} concept. NL: retrained nonlinear MLP probe accuracy (lower = stronger erasure). $\Delta $Ctrl: downstream control-task accuracy change (closer to zero = more surgical). Values are mean\,$\pm $\,std across 25\%/50\%/75\% depth layers. \textbf  {Bold} marks the lowest NL per model among non-random methods.}}{18}{table.7}\protected@file@percent }
 \newlabel{tab:appendix_all_methods_sycophancy}{{7}{18}{All erasure methods on all models --- \textbf {Sycophancy} concept. NL: retrained nonlinear MLP probe accuracy (lower = stronger erasure). $\Delta $Ctrl: downstream control-task accuracy change (closer to zero = more surgical). Values are mean\,$\pm $\,std across 25\%/50\%/75\% depth layers. \textbf {Bold} marks the lowest NL per model among non-random methods}{table.7}{}}
 \gdef \LT@iii {\LT@entry 
@@ -179,8 +179,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {D.1}Iterative Sycophancy (Supplementary Comparison)}{24}{subsection.D.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {D.2}Iterative Safety (Supplementary Comparison)}{24}{subsection.D.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {D.3}Local CelebA Visual Table-2-Style Comparison}{24}{subsection.D.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.4}CelebA Per-Concept Detail (All 40 Attributes)}{25}{subsection.D.4}\protected@file@percent }
-\newlabel{sec:appendix_celeba_per_concept}{{D.4}{25}{CelebA Per-Concept Detail (All 40 Attributes)}{subsection.D.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.4}CelebA Per-Concept Detail (All 40 Attributes)}{24}{subsection.D.4}\protected@file@percent }
+\newlabel{sec:appendix_celeba_per_concept}{{D.4}{24}{CelebA Per-Concept Detail (All 40 Attributes)}{subsection.D.4}{}}
 \@writefile{toc}{\contentsline {paragraph}{Geometry Note.}{25}{section*.45}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Per-layer breakdown of TanGCE{} vs.\ AmbGCE{} across models and concepts. Each model is evaluated at three layers corresponding to 25\%, 50\%, and 75\% of its total depth. NL: nonlinear probe accuracy (lower = stronger erasure). $\Delta $Ctrl: downstream accuracy change (closer to zero = more surgical). $\lambda ^*$ selected from $\{0.25,0.5,1.0,2.0,4.0,8.0,16.0,32.0\}$.}}{33}{table.caption.38}\protected@file@percent }
 \newlabel{tab:multi_model_per_layer}{{10}{33}{Per-layer breakdown of \TanGCE {} vs.\ \AmbGCE {} across models and concepts. Each model is evaluated at three layers corresponding to 25\%, 50\%, and 75\% of its total depth. NL: nonlinear probe accuracy (lower = stronger erasure). $\Delta $Ctrl: downstream accuracy change (closer to zero = more surgical). $\lambda ^*$ selected from $\{0.25,0.5,1.0,2.0,4.0,8.0,16.0,32.0\}$}{table.caption.38}{}}

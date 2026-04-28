@@ -41,4 +41,7 @@ Let $q$ be a predictor for an annotated control label $c$ (e.g., profession for 
 \end{equation}
 Smaller $|\Delta_{\mathrm{ctrl}}|$ means the erasure is more surgical. In CelebA, where each target attribute is paired with multiple controls, we report the mean $\Delta_{\mathrm{ctrl}}$ across the selected controls.
 
-Together, these metrics ask whether an erasure method removes the target concept while preserving unrelated control concepts.
+\paragraph{Language-model utility via cache-replay perplexity.}
+Probe-based recoverability and control-task surgicality both bypass the language-model head: they read off the intervened representation $\tilde{\mathbf{x}}$ directly. To check that erasure does not silently break the LM's downstream behaviour, we additionally measure next-token perplexity when the erased representation is plugged back into the residual stream. Concretely, for each evaluation example we capture the layer-$\ell$ residual at the labelled token position, compute its erased counterpart $\tilde{\mathbf{x}} = f_{\mathrm{erase}}(\mathbf{x})$ offline, and re-run the forward pass with a hook that replaces the position's residual with $\tilde{\mathbf{x}}$ before continuing through the rest of the model. We report the resulting cross-entropy on the post-replacement suffix tokens together with $\Delta_{\mathrm{PPL}} = \mathrm{PPL}_{\tilde{\mathbf{x}}} - \mathrm{PPL}_{\mathbf{x}}$, with values averaged over three seeds. Smaller $\Delta_{\mathrm{PPL}}$ means the erasure preserves more of the LM's continuation behaviour on the very inputs it targets.
+
+Together, these metrics ask whether an erasure method removes the target concept while preserving unrelated control concepts and the LM's local continuation behaviour.

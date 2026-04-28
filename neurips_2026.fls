@@ -247,13 +247,13 @@ INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmri8t.tfm
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT ./sections/method.tex
 INPUT ./sections/method.tex
 INPUT ./sections/method.tex
 INPUT ./sections/method.tex
 INPUT sections/method.tex
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT ./sections/evaluation.tex
 INPUT ./sections/evaluation.tex
 INPUT ./sections/evaluation.tex
