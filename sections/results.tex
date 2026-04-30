@@ -19,6 +19,20 @@ To assess whether the ambient-vs-tangent comparison is specific to one backbone,
 \paragraph{Interpretation.}
 The pattern holds across architectures and training pipelines, spanning one to twenty-seven billion parameters. Within the Qwen2.5 family, AmbGCE NL increases monotonically with scale ($0.806 \to 0.812 \to 0.861$ on sycophancy), while \TanGCE{} remains consistently lower. A similar trend holds within Gemma-2 ($0.656 \to 0.746 \to 0.759$) and Llama-3.2 ($0.831 \to 0.882$). We treat this as cross-family and within-family scaling evidence that the tangent-projection advantage is not architecture-specific.
 
+\subsection{Pareto comparison vs.\ Obliviator under control-damage budgets}
+\label{sec:pareto_obliviator}
+
+We compare \TanGCE{} (with the canonical $\sigma$-preconditioned update of §\ref{sec:cov_tangce}, $\alpha = \tfrac{1}{2}$) against Obliviator on the 50\%-depth grid (13 model families $\times$ 3 concepts) using a control-damage budget formulation. For each panel and each $\Delta Y$ budget $B \in \{1, 3, 5, 10\}$ percentage points, we report the lowest probe accuracy $S$ achieved along the trajectory subject to $|Y_{\text{clean}} - Y_t| \leq B/100$. A panel is awarded to whichever method reaches a strictly lower $S$ at that budget; ties are reported as draws. Per-panel decisions across the four budgets are aggregated by majority vote.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/pareto/cov_alpha_0p5/winmargin_multi.png}
+\caption{Win-margin (\TanGCE{} $-$ Obliviator) per panel under control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$ pp at 50\%-depth. Negative values (left of zero) indicate \TanGCE{} reaches lower probe accuracy at the same budget; positive values favour Obliviator.}
+\label{fig:pareto_cov_obliv}
+\end{figure}
+
+Figure~\ref{fig:pareto_cov_obliv} reports the per-panel win margins. Across panels with both methods completed, the $\sigma$-preconditioned \TanGCE{} update is competitive with Obliviator, with no per-method tuning of $\varepsilon$.
+
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
 \ye{it's not about generalization to other modailities, just that the method works for other modalities.}

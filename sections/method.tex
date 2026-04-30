@@ -6,19 +6,20 @@
 We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. Our starting point is a local manifold approximation of representation space. If the neighborhood of a representation $\mathbf{x}$ is well approximated by a low-dimensional manifold $\mathcal{M}$, then the relevant first-order directions are those in the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than arbitrary ambient directions in $\mathbb{R}^d$. We do not observe this tangent space directly. Instead, we approximate it with local PCA/SVD on neighborhood secants and use that first-order estimate to constrain the erasure update. Each iteration therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
 
 \begin{algorithm}[t]
-\caption{Overview of \TanGCE{}. Each round trains a fresh scorer, estimates sample-wise tangent spaces by local PCA, projects the leakage gradient into the tangent space, and applies the resulting constrained erasure update.}
+\caption{Overview of \TanGCE{}. Each round trains a fresh scorer, estimates sample-wise tangent spaces with local PCA (cached spectrum $\boldsymbol\sigma_i$), projects the leakage gradient into the tangent space, applies the per-sample $\sigma$-preconditioned trust-region update, and iterates.}
 \label{alg:tangce}
 \begin{algorithmic}[1]
-\REQUIRE Representations $\mathbf{X} = \{\mathbf{x}_i\}_{i=1}^N$, concept labels $\mathbf{y}$, erasure strength $\lambda$, neighborhood size $k$, retained-variance rule for tangent rank, number of rounds $T$.
+\REQUIRE Representations $\mathbf{X} = \{\mathbf{x}_i\}_{i=1}^N$, concept labels $\mathbf{y}$, trust-region scale $\varepsilon$, anisotropy exponent $\alpha$ (default $\tfrac{1}{2}$), neighborhood size $k$, retained-variance rule for tangent rank, number of rounds $T$.
 \FOR{$t = 1, \ldots, T$}
     \STATE Train a fresh nonlinear concept scorer $f_t$ on the current representations.
     \FOR{each sample $\mathbf{x}_i$}
         \STATE Retrieve the $k$ nearest neighbors of $\mathbf{x}_i$ and form local secant vectors.
-        \STATE Run local PCA on those secants to obtain a tangent basis $\mathbf{B}_i$ and projector $\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top$.
+        \STATE Run local PCA on those secants to obtain a tangent basis $\mathbf{B}_i$, projector $\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top$, and singular values $\boldsymbol\sigma_i$.
         \STATE Compute the ambient unit gradient direction $\mathbf{u}_i = \nabla_{\mathbf{x}} f_t(\mathbf{x}_i) / \|\nabla_{\mathbf{x}} f_t(\mathbf{x}_i)\|$.
-        \STATE Project it onto the tangent space: $\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \mathbf{u}_i$.
-        \STATE Apply the tangent-constrained update:
-        \STATE \hspace{2em}$\displaystyle \tilde{\mathbf{x}}_i \leftarrow \mathbf{x}_i - \lambda (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \mathbf{u}_i^{\mathrm{tan}}.$
+        \STATE Project it onto the tangent space: $\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \mathbf{u}_i$, and form the unit-step displacement $\mathbf{v}_i = (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \mathbf{u}_i^{\mathrm{tan}}$.
+        \STATE Compute the local FMaHa scale $s_i = R_i^{\mathrm{white}} \cdot s_i^{\mathrm{maha}}$ (Eq.~\ref{eq:s_fmaha}) and the per-sample trust-region step $\lambda_i = \min(\lambda_{\max}, \varepsilon s_i / \|\mathbf{C}_i^{\,\alpha}\mathbf{v}_i\|)$.
+        \STATE Apply the $\sigma$-preconditioned tangent update (Eq.~\ref{eq:tangent_erase_cov}):
+        \STATE \hspace{2em}$\displaystyle \tilde{\mathbf{x}}_i \leftarrow \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{\,\alpha} \, \mathbf{v}_i.$
     \ENDFOR
     \STATE Replace $\mathbf{X}$ by the updated representations $\tilde{\mathbf{X}}$ and continue to the next round.
 \ENDFOR
@@ -72,6 +73,8 @@ The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$. It is la
 
 This construction is the core difference between \TanGCE{} and its ambient counterpart. \AmbGCE{} applies the update in the full hidden space, whereas \TanGCE{} restricts the update to directions supported by the local geometry estimated in the model's native coordinate system. We do not claim invariance under coordinate changes; the tangent basis is computed in the LayerNorm-induced geometry of the given representations.
 
+Equation~\ref{eq:tangent_erase} treats every direction within the tangent space symmetrically. We retain it here as the conceptual entry point and as the $\alpha = 0$ ablation, but the canonical \TanGCE{} update used throughout the paper is the $\sigma$-preconditioned generalization derived in §\ref{sec:cov_tangce} (Eq.~\ref{eq:tangent_erase_cov}), which respects the anisotropy of the local manifold by reweighting each tangent direction with its associated singular value.
+
 \subsection{Why tangent projection can help at larger \texorpdfstring{$\lambda$}{lambda}}
 
 \AmbGCE{} edits $\mathbf{x}_i$ in the full ambient space, where the gradient may contain components that are poorly aligned with the local representation support. Under the local manifold view, those components are the ones most likely to move the representation away from the neighborhood geometry captured by natural data. \TanGCE{} removes them at first order by replacing $\mathbf{u}_i$ with its projection $\mathbf{u}_i^{\mathrm{tan}}$ into the estimated tangent space. This motivates the hypothesis that tangent-constrained updates can remain effective at larger step sizes. We treat that statement as empirical rather than guaranteed, and evaluate it directly in the results section.
@@ -81,30 +84,70 @@ This construction is the core difference between \TanGCE{} and its ambient count
 
 A single global $\lambda$ over-edits some samples while under-editing others. Confident samples (large gradient norm and well-aligned tangent) move proportionally more for any fixed scalar; uncertain samples (small or off-manifold gradient) are dragged by the same scalar in noise-dominated directions. We address this with a per-sample step size $\lambda_i$ that respects the \emph{local trust region} of the manifold approximation.
 
-\paragraph{Trust region.} Recall that $\mathbf{B}_i$ is the local PCA basis at $\mathbf{x}_i$ and $r_i$ is the mean distance to its $k$ nearest neighbors. We use $r_i$ as a natural local-radius scale: it is the empirical scale on which the linear tangent approximation is reliable. We require that no sample moves further than a fraction $\varepsilon$ of its local neighborhood:
+\paragraph{Trust region.} Recall that $\mathbf{B}_i$ is the local PCA basis at $\mathbf{x}_i$ and let $s_i$ be a per-sample scale on which the linear tangent approximation is reliable. We require that no sample moves further than a fraction $\varepsilon$ of this local scale:
 \begin{equation}
 \label{eq:trust_region}
-\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \;\leq\; \varepsilon \cdot r_i.
+\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \;\leq\; \varepsilon \cdot s_i.
 \end{equation}
-Here $\varepsilon \in (0, \infty)$ is a single global trust-region scale, dimensionless and shared across panels. Smaller $\varepsilon$ yields surgical edits inside each local manifold patch; larger $\varepsilon$ admits steps that may leave the patch.
+Here $\varepsilon \in (0, \infty)$ is a single global trust-region scale, dimensionless and shared across panels. Smaller $\varepsilon$ yields surgical edits inside each local manifold patch; larger $\varepsilon$ admits steps that may leave the patch. The simplest choice is $s_i = r_i$, the mean distance to the $k$ nearest neighbors — the radial neighborhood scale. We use a tighter, anisotropy-aware scale by default; see Eq.~\ref{eq:s_fmaha} below.
 
 \paragraph{Closed-form solution.} Substituting Eq.~\ref{eq:tangent_erase} into Eq.~\ref{eq:trust_region}, the constraint becomes
 \begin{equation}
 \label{eq:lambda_constraint}
-\lambda_i \cdot |\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}| \cdot \|\mathbf{u}_i^{\mathrm{tan}}\| \;\leq\; \varepsilon \cdot r_i.
+\lambda_i \cdot |\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}| \cdot \|\mathbf{u}_i^{\mathrm{tan}}\| \;\leq\; \varepsilon \cdot s_i.
 \end{equation}
 Let $\mathbf{v}_i = (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}$ be the per-sample edit displacement at $\lambda{=}1$. The largest $\lambda_i$ satisfying Eq.~\ref{eq:lambda_constraint} is
 \begin{equation}
 \label{eq:lambda_closed_form}
 \boxed{ \;\;
-\lambda_i \;=\; \min\!\left( \lambda_{\max}, \; \frac{\varepsilon \cdot r_i}{\|\mathbf{v}_i\|} \right) \;\;
+\lambda_i \;=\; \min\!\left( \lambda_{\max}, \; \frac{\varepsilon \cdot s_i}{\|\mathbf{v}_i\|} \right) \;\;
 }
 \end{equation}
 where $\lambda_{\max}$ is a safety cap that prevents runaway updates when $\|\mathbf{v}_i\| \to 0$ (gradient nearly orthogonal to the tangent space). In practice we set $\lambda_{\max}=64$, large enough that it binds only for samples whose gradient has near-zero tangent component.
 
+\paragraph{Anisotropy-aware local scale.} Setting $s_i = r_i$ (mean $k$-NN distance) is the simplest valid choice, but treats every direction equally. The local manifold is generally an \emph{ellipsoid}, not a sphere: along the dominant principal directions of the local PCA, neighbors extend much further than along thin (low-$\sigma$) directions. We therefore prefer the \emph{whitened-tangent neighborhood radius}
+\begin{equation}
+\label{eq:s_fmaha}
+s_i \;=\; R_i^{\mathrm{white}} \cdot s_i^{\mathrm{maha}}, \qquad
+R_i^{\mathrm{white}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i^\top (\mathbf{x}_j - \mathbf{x}_i) \,/\, \boldsymbol\sigma_i \|_2,
+\end{equation}
+where $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$ is the local PCA spectrum and division is component-wise. The factor $R_i^{\mathrm{white}}$ measures how far neighbors typically reach in standardized tangent coordinates; the factor $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol\alpha_i / (\boldsymbol\sigma_i + \delta)\|_2$ rescales the per-sample step direction by its harmonic-$\sigma$ tangent length, where $\boldsymbol\alpha_i$ is the unit step direction in tangent coordinates. We refer to this scaling as \emph{fractional Mahalanobis} (FMaHa): under it, $\varepsilon$ is interpretable as a fraction of the local whitened-tangent neighborhood. Setting $s_i = r_i$ recovers the original Euclidean radial scale and is reported as an ablation.
+
 \paragraph{Why this matters.} Eq.~\ref{eq:lambda_closed_form} is a genuine \emph{trust region} per sample: confident samples move by exactly $\varepsilon \cdot r_i$ along their tangent; uncertain samples (small $\|\mathbf{v}_i\|$) get a larger nominal $\lambda_i$ but the actual movement $\lambda_i \cdot \|\mathbf{v}_i\|$ remains bounded by $\varepsilon \cdot r_i$ (or by the safety cap, in which case movement is small because $\|\mathbf{v}_i\|$ is small). This per-sample adaptation removes a hyperparameter (one global $\lambda$) and replaces it with a single dimensionless surgicality knob $\varepsilon$.
 
-The closed-form expression in Eq.~\ref{eq:lambda_closed_form} requires no bisection or auxiliary optimization: each iteration computes $\mathbf{v}_i$ once via a forward pass through the scorer, $r_i$ once via the cached $k$-NN distances, and $\lambda_i$ in $\mathcal{O}(1)$ per row. This makes the per-sample trust region essentially free relative to the cost of refitting the scorer and tangent.
+The closed-form expression in Eq.~\ref{eq:lambda_closed_form} requires no bisection or auxiliary optimization: each iteration computes $\mathbf{v}_i$ once via a forward pass through the scorer, $s_i$ once via the cached $k$-NN distances and the local SVD spectrum, and $\lambda_i$ in $\mathcal{O}(1)$ per row. This makes the per-sample trust region essentially free relative to the cost of refitting the scorer and tangent.
+
+\subsection{Anisotropic update via the local \texorpdfstring{$\sigma$}{sigma}-spectrum}
+\label{sec:cov_tangce}
+
+The closed-form $\lambda_i$ above controls the \emph{magnitude} of each sample's step. Its \emph{direction} is still isotropic in the tangent basis: every tangent component of $\mathbf{v}_i$ is rescaled by the same scalar $\lambda_i$. But the local PCA already tells us that the manifold is anisotropic — eigenvalues $\sigma_{i,k}^2$ at sample $i$ differ by orders of magnitude across $k$. Treating all tangent directions as equally safe to move along is exactly the assumption that the neighborhood is a sphere; in practice it is much closer to an ellipsoid stretched along the dominant principal directions and pinched in the rank-truncation tail. An isotropic step over-edits thin directions where the linear approximation is most fragile, and under-edits fat directions where the manifold easily accommodates further displacement.
+
+\paragraph{$\sigma$-eigenbasis decomposition.} Decompose the per-sample tangent displacement $\mathbf{v}_i$ in the local PCA basis:
+\begin{equation}
+\label{eq:eigen_decomp}
+\mathbf{v}_i \;=\; \sum_{k=1}^{r} a_{i,k} \, \mathbf{b}_i^{(k)}, \qquad a_{i,k} = \langle \mathbf{v}_i, \mathbf{b}_i^{(k)} \rangle,
+\end{equation}
+where $\{\mathbf{b}_i^{(k)}\}_{k=1}^{r}$ are the columns of $\mathbf{B}_i$ (eigenvectors of the local secant covariance, Eq.~\ref{eq:local_cov}) with associated singular values $\sigma_{i,k}$. The local covariance can be written as $\mathbf{C}_i = \mathbf{B}_i \, \mathrm{diag}(\sigma_{i,1}^2, \ldots, \sigma_{i,r}^2) \, \mathbf{B}_i^\top$.
+
+\paragraph{Anisotropic update.} We replace the isotropic step in Eq.~\ref{eq:tangent_erase} by a covariance-preconditioned step that respects the local ellipsoid. Define
+\begin{equation}
+\label{eq:tangent_erase_cov}
+\boxed{ \;\;
+\tilde{\mathbf{x}}_i \;=\; \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{\,\alpha} \, \mathbf{v}_i \;=\; \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k}^{\,2\alpha} \, a_{i,k} \, \mathbf{b}_i^{(k)} \;\;
+}
+\end{equation}
+where $\alpha \geq 0$ is an anisotropy exponent. The effect is direct: each tangent coefficient $a_{i,k}$ is reweighted by $\sigma_{i,k}^{2\alpha}$, so the update moves more along high-variance principal directions (where the manifold supports larger displacements) and less along thin directions (where the linear approximation is fragile).
+
+\paragraph{Three regimes.} Three values of $\alpha$ have natural interpretations:
+\begin{itemize}
+\item \textbf{$\alpha = 0$}: $\mathbf{C}_i^{\,0} = \mathbf{I}$, the update reduces to Eq.~\ref{eq:tangent_erase}. Reported as an ablation.
+\item \textbf{$\alpha = \tfrac{1}{2}$}: a \emph{mild} anisotropy. Each direction is reweighted by $\sigma_{i,k}$ rather than by $\sigma_{i,k}^2$, preserving information from low-variance directions while still respecting the dominant geometry. \textbf{This is the default in this paper.}
+\item \textbf{$\alpha = 1$}: full Mahalanobis preconditioning. The update direction $\mathbf{C}_i \mathbf{v}_i$ is the first-order optimum of $\min_{\boldsymbol\delta} \langle \mathbf{g}_i, \boldsymbol\delta \rangle$ subject to the Mahalanobis trust region $\boldsymbol\delta^\top \mathbf{C}_i^{-1} \boldsymbol\delta \leq \varepsilon^2$. Reported as an ablation; risks suppressing low-variance signal that may carry residual concept information.
+\end{itemize}
+
+\paragraph{Trust region preserved.} The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning, against the transformed step $\mathbf{C}_i^{\,\alpha} \mathbf{v}_i$ (i.e.\ we substitute $\|\mathbf{C}_i^{\,\alpha} \mathbf{v}_i\|$ for $\|\mathbf{v}_i\|$ in the denominator). The actual displacement $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2$ therefore remains bounded by $\varepsilon \cdot s_i$, exactly as in the isotropic case. Anisotropy reshapes the \emph{direction} of the step, not its budget.
+
+\paragraph{Implementation.} Eq.~\ref{eq:tangent_erase_cov} reuses the SVD already computed for the tangent basis; the per-sample spectrum $(\sigma_{i,k})_k$ is cached during local PCA. Concretely, the step decomposition (Eq.~\ref{eq:eigen_decomp}), eigenvalue reweighting, and reprojection to the ambient space are three batched einsums over the $(N, d, r)$ basis tensor. No additional SVDs and no per-sample loops are required. \TanGCE{} therefore inherits the same per-iteration cost as the isotropic update, modulo a single extra $\mathcal{O}(N d r)$ matrix multiplication.
 
 \subsection{Iterative \TanGCE{} and relation to baselines}
 
