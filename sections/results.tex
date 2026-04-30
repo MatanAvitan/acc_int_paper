@@ -26,9 +26,16 @@ We compare \TanGCE{} (with the canonical $\sigma$-preconditioned update of §\re
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{../figures/pareto/cov_alpha_0p5/winmargin_multi.png}
+\includegraphics[width=\linewidth]{figures/pareto/cov_alpha_0p5/winmargin_multi.png}
 \caption{Win-margin (\TanGCE{} $-$ Obliviator) per panel under control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$ pp at 50\%-depth. Negative values (left of zero) indicate \TanGCE{} reaches lower probe accuracy at the same budget; positive values favour Obliviator.}
 \label{fig:pareto_cov_obliv}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/pareto/cov_alpha_0p5/winmargin_multi_floor.png}
+\caption{Floor-metric win-margin (\TanGCE{} $-$ Obliviator) per panel: best $S_{\text{acc}}$ achieved without $\Delta Y$ constraint. Cov-\TanGCE{} reaches strictly lower probe accuracy than Obliviator's saturation floor on the gender panels.}
+\label{fig:pareto_cov_obliv_floor}
 \end{figure}
 
 Figure~\ref{fig:pareto_cov_obliv} reports the per-panel win margins. Across panels with both methods completed, the $\sigma$-preconditioned \TanGCE{} update is competitive with Obliviator, with no per-method tuning of $\varepsilon$.
