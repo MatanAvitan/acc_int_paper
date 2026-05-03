@@ -1,56 +1,56 @@
 \begin{table}[t]
 \centering
 \small
-\caption{\textbf{CelebA visual attributes — surgicality under entangled vs.\ non-entangled controls.} For each of the 40 binary CelebA attributes, we report nonlinear-probe leakage $S_{\text{acc}}$ under two control sets: \emph{5 least-correlated} attributes (low entanglement, easier surgicality) and \emph{5 most-correlated} attributes (high entanglement, harder surgicality). $S_{\text{acc}}$ is the lowest probe accuracy reached on a trajectory step satisfying mean $\Delta Y \geq -5$pp on the 5 controls. Both methods use \texttt{paper-HP} hyperparameters from their respective references; \TanGCE{} adds the Phase-1 LEACE + rank-2 covariance projection plus $h=512$, $\varepsilon=0.1$. Lower is better. Bold marks the lower of the two methods per row.}
+\caption{\textbf{CelebA visual attributes — surgicality under entangled vs.\ non-entangled controls.} For each of the 40 binary CelebA attributes, we report nonlinear-probe leakage $S_{\text{acc}}$ under two control sets: \emph{5 least-correlated} attributes (low entanglement, easier surgicality) and \emph{5 most-correlated} attributes (high entanglement, harder surgicality). $S_{\text{acc}}$ is the lowest probe accuracy reached on a trajectory step satisfying mean $\Delta Y \geq -5$pp on the 5 controls. The \textbf{Majority} column reports the per-concept majority-class probe-accuracy floor on the test split (the trivial lower bound any informative probe must beat); a method that drives $S_{\text{acc}}$ to this value has fully erased the concept under the control budget. Both methods use \texttt{paper-HP} hyperparameters from their respective references; \TanGCE{} adds the Phase-1 LEACE + rank-2 covariance projection plus $h=512$, $\varepsilon=0.1$. Lower is better (closer to Majority). Bold marks the lower of the two methods per row.}
 \label{tab:celeba_correlated_controls}
-\begin{tabular}{l c c c c}
+\begin{tabular}{l c c c c c}
 \toprule
- & \multicolumn{2}{c}{5 least-correlated controls} & \multicolumn{2}{c}{5 most-correlated controls} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Concept & TanGCE & Obliv & TanGCE & Obliv \\
+ & & \multicolumn{2}{c}{5 least-correlated controls} & \multicolumn{2}{c}{5 most-correlated controls} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Concept & Majority & TanGCE & Obliv & TanGCE & Obliv \\
 \midrule
-5\_o\_Clock\_Shadow & \textbf{0.903} & 0.910 & 0.903 & -- \\
-Arched\_Eyebrows & \textbf{0.700} & 0.733 & 0.707 & -- \\
-Attractive & 0.480 & \textbf{0.440} & 0.697 & -- \\
-Bags\_Under\_Eyes & \textbf{0.727} & 0.777 & \textbf{0.763} & 0.777 \\
-Bald & 0.983 & 0.983 & 0.983 & 0.983 \\
-Bangs & \textbf{0.827} & 0.833 & 0.833 & 0.833 \\
-Big\_Lips & \textbf{0.623} & 0.650 & \textbf{0.617} & 0.650 \\
-Big\_Nose & \textbf{0.713} & 0.767 & \textbf{0.680} & 0.767 \\
-Black\_Hair & 0.710 & \textbf{0.703} & 0.713 & \textbf{0.703} \\
-Blond\_Hair & 0.887 & 0.887 & 0.887 & 0.887 \\
-Blurry & 0.943 & 0.943 & 0.943 & 0.943 \\
-Brown\_Hair & \textbf{0.773} & 0.823 & \textbf{0.793} & 0.823 \\
-Bushy\_Eyebrows & \textbf{0.857} & 0.883 & 0.873 & -- \\
-Chubby & 0.957 & 0.957 & 0.957 & 0.957 \\
-Double\_Chin & \textbf{0.957} & 0.960 & \textbf{0.950} & 0.960 \\
-Eyeglasses & \textbf{0.930} & 0.937 & \textbf{0.910} & 0.937 \\
-Goatee & 0.957 & 0.957 & 0.957 & 0.957 \\
-Gray\_Hair & 0.947 & 0.947 & 0.947 & 0.947 \\
-Heavy\_Makeup & \textbf{0.533} & 0.600 & 0.777 & -- \\
-High\_Cheekbones & \textbf{0.500} & 0.503 & -- & -- \\
-Male & \textbf{0.533} & 0.617 & 0.953 & -- \\
-Mouth\_Slightly\_Open & \textbf{0.477} & 0.483 & \textbf{0.477} & 0.523 \\
-Mustache & 0.960 & 0.960 & 0.960 & 0.960 \\
-Narrow\_Eyes & 0.847 & -- & 0.847 & 0.847 \\
-No\_Beard & \textbf{0.850} & 0.873 & \textbf{0.870} & 0.873 \\
-Oval\_Face & \textbf{0.657} & 0.693 & \textbf{0.660} & 0.693 \\
-Pale\_Skin & \textbf{0.960} & 0.980 & \textbf{0.973} & 0.980 \\
-Pointy\_Nose & \textbf{0.657} & 0.713 & \textbf{0.657} & 0.713 \\
-Receding\_Hairline & 0.917 & 0.917 & \textbf{0.913} & 0.917 \\
-Rosy\_Cheeks & 0.940 & 0.940 & 0.940 & 0.940 \\
-Sideburns & 0.967 & 0.967 & 0.967 & 0.967 \\
-Smiling & \textbf{0.477} & 0.520 & -- & -- \\
-Straight\_Hair & \textbf{0.807} & 0.827 & 0.807 & -- \\
-Wavy\_Hair & \textbf{0.600} & 0.633 & \textbf{0.607} & 0.633 \\
-Wearing\_Earrings & \textbf{0.777} & 0.807 & \textbf{0.770} & 0.807 \\
-Wearing\_Hat & \textbf{0.957} & 0.967 & \textbf{0.960} & 0.967 \\
-Wearing\_Lipstick & 0.517 & \textbf{0.477} & 0.853 & -- \\
-Wearing\_Necklace & \textbf{0.843} & 0.857 & 0.857 & 0.857 \\
-Wearing\_Necktie & 0.937 & 0.937 & 0.937 & 0.937 \\
-Young & \textbf{0.710} & 0.753 & \textbf{0.697} & 0.753 \\
+5\_o\_Clock\_Shadow & 0.910 & \textbf{0.903} & 0.910 & 0.903 & -- \\
+Arched\_Eyebrows & 0.733 & \textbf{0.700} & 0.733 & 0.707 & -- \\
+Attractive & 0.560 & 0.480 & \textbf{0.440} & 0.697 & -- \\
+Bags\_Under\_Eyes & 0.777 & \textbf{0.727} & 0.777 & \textbf{0.763} & 0.777 \\
+Bald & 0.983 & 0.983 & 0.983 & 0.983 & 0.983 \\
+Bangs & 0.833 & \textbf{0.827} & 0.833 & 0.833 & 0.833 \\
+Big\_Lips & 0.650 & \textbf{0.623} & 0.650 & \textbf{0.617} & 0.650 \\
+Big\_Nose & 0.767 & \textbf{0.713} & 0.767 & \textbf{0.680} & 0.767 \\
+Black\_Hair & 0.703 & 0.710 & \textbf{0.703} & 0.713 & \textbf{0.703} \\
+Blond\_Hair & 0.887 & 0.887 & 0.887 & 0.887 & 0.887 \\
+Blurry & 0.943 & 0.943 & 0.943 & 0.943 & 0.943 \\
+Brown\_Hair & 0.823 & \textbf{0.773} & 0.823 & \textbf{0.793} & 0.823 \\
+Bushy\_Eyebrows & 0.883 & \textbf{0.857} & 0.883 & 0.873 & -- \\
+Chubby & 0.957 & 0.957 & 0.957 & 0.957 & 0.957 \\
+Double\_Chin & 0.960 & \textbf{0.957} & 0.960 & \textbf{0.950} & 0.960 \\
+Eyeglasses & 0.937 & \textbf{0.930} & 0.937 & \textbf{0.910} & 0.937 \\
+Goatee & 0.957 & 0.957 & 0.957 & 0.957 & 0.957 \\
+Gray\_Hair & 0.947 & 0.947 & 0.947 & 0.947 & 0.947 \\
+Heavy\_Makeup & 0.600 & \textbf{0.533} & 0.600 & 0.777 & -- \\
+High\_Cheekbones & 0.503 & \textbf{0.500} & 0.503 & -- & -- \\
+Male & 0.617 & \textbf{0.533} & 0.617 & 0.953 & -- \\
+Mouth\_Slightly\_Open & 0.523 & \textbf{0.477} & 0.483 & \textbf{0.477} & 0.523 \\
+Mustache & 0.960 & 0.960 & 0.960 & 0.960 & 0.960 \\
+Narrow\_Eyes & 0.847 & 0.847 & -- & 0.847 & 0.847 \\
+No\_Beard & 0.873 & \textbf{0.850} & 0.873 & \textbf{0.870} & 0.873 \\
+Oval\_Face & 0.693 & \textbf{0.657} & 0.693 & \textbf{0.660} & 0.693 \\
+Pale\_Skin & 0.980 & \textbf{0.960} & 0.980 & \textbf{0.973} & 0.980 \\
+Pointy\_Nose & 0.713 & \textbf{0.657} & 0.713 & \textbf{0.657} & 0.713 \\
+Receding\_Hairline & 0.917 & 0.917 & 0.917 & \textbf{0.913} & 0.917 \\
+Rosy\_Cheeks & 0.940 & 0.940 & 0.940 & 0.940 & 0.940 \\
+Sideburns & 0.967 & 0.967 & 0.967 & 0.967 & 0.967 \\
+Smiling & 0.520 & \textbf{0.477} & 0.520 & -- & -- \\
+Straight\_Hair & 0.827 & \textbf{0.807} & 0.827 & 0.807 & -- \\
+Wavy\_Hair & 0.633 & \textbf{0.600} & 0.633 & \textbf{0.607} & 0.633 \\
+Wearing\_Earrings & 0.807 & \textbf{0.777} & 0.807 & \textbf{0.770} & 0.807 \\
+Wearing\_Hat & 0.967 & \textbf{0.957} & 0.967 & \textbf{0.960} & 0.967 \\
+Wearing\_Lipstick & 0.523 & 0.517 & \textbf{0.477} & 0.853 & -- \\
+Wearing\_Necklace & 0.857 & \textbf{0.843} & 0.857 & 0.857 & 0.857 \\
+Wearing\_Necktie & 0.937 & 0.937 & 0.937 & 0.937 & 0.937 \\
+Young & 0.753 & \textbf{0.710} & 0.753 & \textbf{0.697} & 0.753 \\
 \midrule
-\textbf{Mean} & \textbf{0.782} & 0.798 & \textbf{0.831} & 0.850 \\
+\textbf{Mean} & 0.804 & \textbf{0.782} & 0.798 & \textbf{0.831} & 0.850 \\
 \bottomrule
 \end{tabular}
 \end{table}
