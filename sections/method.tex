@@ -69,7 +69,7 @@ Truncating to the top $r$ right singular vectors gives the tangent basis
 \label{eq:tangent_basis}
 \mathbf{B}_i = [\mathbf{v}_i^{(1)}, \ldots, \mathbf{v}_i^{(r)}] \in \mathbb{R}^{d \times r},
 \end{equation}
-where the intrinsic dimension $r$ is selected automatically by a retained-variance rule on $\sigma_{i,k}$. The resulting orthogonal projector onto the estimated tangent space is
+where the per-panel intrinsic dimension $r$ is estimated by the \emph{TwoNN} algorithm of \citet{facco-etal-2017-two-nn}, which exploits the ratio of the first two nearest-neighbor distances around each point to give a maximum-likelihood estimate of the local manifold dimension without any assumption on the neighborhood scale. We apply TwoNN once per panel and floor the result at $r \geq 8$ to keep the tangent basis well-conditioned even on panels where the estimator returns very small values; the floor never binds in practice on the language-model panels we evaluate. The resulting orthogonal projector onto the estimated tangent space is
 \begin{equation}
 \label{eq:tangent_proj}
 \mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top.
