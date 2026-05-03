@@ -7,7 +7,7 @@ We evaluate six erasure methods plus two random-projection baselines and a Major
 \subsection{Multi-Model Generalization}
 \label{sec:multi_model}
 
-To assess whether the ambient-vs-tangent comparison is specific to one backbone, we evaluate across five model families: Qwen2.5 (0.5B, 1.5B, 3B), Gemma-2 (2B, 9B, 27B), Llama-3.2 (1B, 3B), Mistral-7B, and Gemma-3 (1B, 4B, 12B, 27B). Each model is evaluated at the layers corresponding to 25\%, 50\%, and 75\% of its depth; we report the mean across these three layers (standard deviations in Appendix Tables~\ref{tab:appendix_all_methods_sycophancy}--\ref{tab:appendix_all_methods_safety}). We compare only \TanGCE{} and \AmbGCE{}, the two methods that differ solely in their gradient constraint, isolating the effect of tangent-space projection. The validation HPO protocol uses $\lambda^* \in \{0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0\}$ selected by lowest validation nonlinear probe accuracy. Per-layer results are in Table~\ref{tab:multi_model_per_layer}; the main table reports the corresponding mean results for all completed models.
+To assess whether the ambient-vs-tangent comparison is specific to one backbone, we evaluate across five model families: Qwen2.5 (0.5B, 1.5B, 3B), Gemma-2 (2B, 9B, 27B), Llama-3.2 (1B, 3B), Mistral-7B, and Gemma-3 (1B, 4B, 12B, 27B). Each model is evaluated at the layers corresponding to 25\%, 50\%, and 75\% of its depth; we report the mean across these three layers (standard deviations in Appendix Tables~\ref{tab:appendix_all_methods_sycophancy}--\ref{tab:appendix_all_methods_safety}). We compare only \TanGCE{} and \AmbGCE{}, the two methods that differ solely in their gradient constraint, isolating the effect of tangent-space projection. To make the comparison clean — same loop, same training data, same HPO budget — both methods use the legacy global-$\lambda$ form, with $\lambda^* \in \{0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0\}$ selected per panel by lowest validation nonlinear probe accuracy. The proposed full pipeline of §\ref{sec:hp_selection} (closed-form per-sample $\lambda_i$, no HPO) is evaluated separately in §\ref{sec:pareto_obliviator}. Per-layer results are in Table~\ref{tab:multi_model_per_layer}; the main table reports the corresponding mean results for all completed models.
 
 \textbf{Bold} marks the best cell per column among non-random methods (lowest NL or $|\Delta$Ctrl| closest to zero).
 
@@ -37,7 +37,7 @@ The corresponding ablation figures for the canonical $\sigma$-preconditioned var
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
 
-To test whether \TanGCE{} generalizes beyond language model representations, we apply all seven erasure methods to pooled CLIP ViT-B/32 image embeddings (768-dim) of CelebA face images (see Section~\ref{sec:evaluation} for preprocessing and split details). CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls. The same validation-HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy, hidden 256, 1500 steps) is applied uniformly across all methods.
+To test whether \TanGCE{} generalizes beyond language model representations, we apply all seven erasure methods to pooled CLIP ViT-B/32 image embeddings (768-dim) of CelebA face images (see Section~\ref{sec:evaluation} for preprocessing and split details). CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls. The legacy global-$\lambda$ baselines (and the canonical global-$\lambda$ \TanGCE{} reference row) use a validation-HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy, hidden 256, 1500 steps) applied uniformly across methods. The proposed pipeline (LEACE + rank-2 $\Delta\Sigma$ + closed-form $\lambda_i$ at fixed $\varepsilon{=}0.1$, §\ref{sec:hp_selection}) does \emph{not} sweep $\lambda$: a single trust-region radius is shared across all 40 attributes and both control sets.
 
 We treat this cross-modal setting as a generality check rather than the primary evidence for the paper's central claim.
 
@@ -55,6 +55,24 @@ The CelebA setting also lets us probe surgicality in a harder regime: instead of
 \input{tables/celeba_clip_correlated_controls}
 
 The high-correlation regime is structurally harder: erasing \emph{Male} while preserving \emph{Wearing\_Lipstick}, \emph{Heavy\_Makeup}, \emph{No\_Beard}, \emph{Attractive}, and \emph{5\_o\_Clock\_Shadow} (all $|r| > 0.4$ with Male) is closer to a true surgicality test than erasing Male while preserving \emph{Narrow\_Eyes} or \emph{Blurry} (essentially uncorrelated). The mean row in Table~\ref{tab:celeba_correlated_controls} captures the overall picture across both regimes; the per-concept rows reveal which targets remain surgical even when the controls are deeply entangled.
+
+\begin{figure}[t]
+\centering
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_least_winmargin_multi_floor.png}
+\subcaption{5 least-correlated controls (low entanglement).}
+\end{minipage}\hfill
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_most_winmargin_multi_floor.png}
+\subcaption{5 most-correlated controls (high entanglement).}
+\end{minipage}
+\caption{\textbf{CelebA per-attribute floor-distance win-margin under control-damage budgets.} Bars show $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\text{TanGCE}} - S_{\text{floor}}|\bigr)\!\times\!100$, i.e., positive (blue) = TanGCE closer to the per-concept majority-class floor at that $\Delta Y$ budget. Methods: TanGCE = the proposed pipeline (LEACE + rank-2 $\Delta\Sigma$ + closed-form $\lambda_i$ at fixed $\varepsilon{=}0.1$, §\ref{sec:hp_selection}); Obliv = Obliviator paper-HP. Concepts on the left panel are sorted by $\Delta Y \geq -5$pp margin. Tie band $\pm 0.5$pp shaded gray. Many rows are flat because for those concepts both methods already sit at the floor under the budget — the active comparisons are concentrated in the entangled (right) regime.}
+\label{fig:pareto_celeba_dual}
+\end{figure}
+
+Figure~\ref{fig:pareto_celeba_dual} reports the per-attribute version of this comparison across the same four control-damage budgets used in §\ref{sec:pareto_obliviator}: TanGCE wins or ties on every panel where either method has slack at $\Delta Y \geq -5$pp, and the most-correlated regime — where the rank-2 $\Delta\Sigma$ projection is most informative — is exactly where the proposed pipeline opens the largest absolute margin (e.g., $|S{-}\text{floor}|$ improvement on \emph{Black Hair} of $-1.0$pp at the same budget).
 
 \subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
 \label{sec:lambda_sweep}

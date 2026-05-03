@@ -44,3 +44,17 @@ Obliviator \citep{shao-etal-2024-obliviator} is the current state-of-the-art uns
 \AmbGCE{} is the direct ambient-space ablation of \TanGCE{}. It keeps the same nonlinear scorer loop but applies the update in the full hidden space rather than projecting it onto a local tangent approximation.
 
 \input{tables/method_comparison_scope}
+
+\subsubsection{Hyperparameter selection for the proposed pipeline}
+\label{sec:hp_selection}
+
+A consequence of the per-sample trust-region formulation in §\ref{sec:closed_form_lambda} is that the proposed \TanGCE{} pipeline has \emph{no $\lambda$ hyperparameter to sweep}. The step magnitude on each sample is determined in closed form from the trust-region radius $\varepsilon$ and the per-sample local geometry by Eq.~\ref{eq:lambda_closed_form}. We therefore do not run a validation HPO grid over $\lambda$ for any of the headline results in §\ref{sec:pareto_obliviator} (the 39-panel NLP comparison) or §\ref{sec:celeba} (the CelebA dual-controls comparison). Instead, we fix the trust-region radius once at $\varepsilon = 0.1$ and let $\lambda_i$ adapt per row.
+
+\paragraph{What is and is not selected.}
+For the headline pipeline we fix all step-controlling hyperparameters across panels: $\varepsilon = 0.1$, scorer hidden size $h = 512$, scorer training steps $= 800$, scorer-refit period $= 8$ outer iterations, $T = 60$ outer iterations, intrinsic-dimension floor $k_{\min} = 8$ (with $k_i$ from TwoNN per panel), and safety cap $\lambda_{\max} = 64$. The Phase-1 closed-form preprocessing (LEACE eraser + rank-2 $\Delta\Sigma$ projection, §\ref{sec:moment_preproc}) has no tunable hyperparameter beyond the projection rank, which we fix at $K = 2$ across all panels. We do not sweep any of these on a per-panel validation set: every panel — every (model, concept) cell in §\ref{sec:pareto_obliviator} and every (concept, control-set) cell in §\ref{sec:celeba} — uses the same hyperparameter values.
+
+\paragraph{Where a $\lambda$ grid is still used.}
+The $\lambda$ grid that appears in §\ref{sec:multi_model} (the 13-model \AmbGCE{}-vs-\TanGCE{} comparison) and in Table~\ref{tab:celeba_clip_all40} (the 40-attribute method comparison) is the legacy \emph{global-$\lambda$} form of the iterative loop, retained only for the ablation against \AmbGCE{} and for parity with prior published methods that share a single global step size. There a global $\lambda^* \in \{0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0\}$ is selected per panel by lowest validation nonlinear-probe accuracy; this gives those baselines an HPO advantage, since the proposed pipeline reports results at a fixed $\varepsilon$. Both the canonical global-$\lambda$ \TanGCE{} (with HPO) and the proposed closed-form pipeline (no HPO) appear in those tables to make the comparison explicit.
+
+\paragraph{Why this is fair to baselines.}
+The trust-region radius $\varepsilon$ is one global scalar shared across all panels and concepts; in contrast, the $\lambda$-HPO grid gives baseline methods a per-panel selection that strictly subsumes any single-$\varepsilon$ choice. Reporting fixed $\varepsilon=0.1$ for the proposed pipeline therefore understates rather than overstates its advantage relative to baselines that are allowed per-panel HPO.
