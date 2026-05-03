@@ -113,6 +113,31 @@ For \emph{Male}, the 5 most-correlated attributes are \emph{Wearing\_Lipstick} (
 \paragraph{Why two regimes per concept.}
 Reporting only one control set hides whichever regime the method happens to be weak in. A method that destroys the entire representation will pass the least-correlated test (controls are essentially independent of the edit anyway) and fail the most-correlated test catastrophically; conversely, a method that performs no erasure will pass both. The difference between the two regimes per method is therefore informative even when both individual numbers look acceptable. Section~\ref{sec:celeba} reads the difference as a measure of how much an erasure method confuses ``avoid this concept'' with ``avoid everything correlated with it''.
 
+\section{Closed-form per-row $\lambda_i$ statistics}
+\label{sec:appendix_lambda_stats}
+
+For each panel and each outer iteration of the proposed pipeline (Phase 2 with fixed trust-region $\varepsilon = 0.1$), the closed-form rule of Eq.~\ref{eq:lambda_closed_form} produces a per-row step magnitude $\lambda_i$ (capped at $\lambda_{\max} = 64$). Table~\ref{tab:lambda_stats} reports the distribution of these per-row $\lambda_i$ averaged across all 60 iterations of each trajectory and then aggregated across panels.
+
+\begin{table}[t]
+\centering
+\small
+\caption{\textbf{Per-row $\lambda_i$ statistics for the proposed pipeline ($\varepsilon = 0.1$, $\lambda_{\max}=64$) on the 39-panel NLP grid at 50\%-depth.} Each cell averages the per-row $\lambda_i$ first across all 60 outer iterations of one trajectory, then across the 13 model panels of the concept. The within-panel $p_{10}/p_{90}$ spread (mean across panels) is roughly $14/45$, i.e.\ a $\sim$10$\times$ ratio between the least- and most-confident rows in a single iteration. The safety cap $\lambda_{\max}=64$ is observed only sporadically (max 57.32 across 39$\times$60 = 2340 iterations); the closed-form rule rarely binds against it.}
+\label{tab:lambda_stats}
+\begin{tabular}{l r r r r r}
+\toprule
+Concept & $n$ & mean $\lambda_i$ & median & min & max \\
+\midrule
+Sycophancy & 13 & 29.58 & 37.15 & 4.89 & 49.38 \\
+Gender & 13 & 25.28 & 23.76 & 0.45 & 45.08 \\
+Safety & 13 & 33.07 & 33.30 & 1.71 & 57.32 \\
+\midrule
+\textbf{Overall} & \textbf{39} & \textbf{29.31} & \textbf{30.19} & \textbf{0.45} & \textbf{57.32} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The mean across the entire grid, $\bar{\lambda} \approx 29.31$, sits well above the legacy global-$\lambda$ HPO grid's typical winners ($\lambda^* \in \{1, 2, 4\}$ on most panels for the canonical AmbGCE/TanGCE form). This justifies the apples-to-apples ablation reported in Table~\ref{tab:multi_model}: when AmbGCE is forced to use a single global $\lambda = \bar{\lambda}_{\text{TanGCE}} = 29.31$ — i.e., the same effective step magnitude TanGCE's per-row rule produces — its iterative behaviour and final leakage are directly comparable, with the only difference being the gradient-direction constraint (tangent-projected vs. ambient).
+
 \section{Anisotropy regimes for $\mathbf{C}_i^{\alpha}$}
 \label{sec:appendix_alpha_regimes}
 
