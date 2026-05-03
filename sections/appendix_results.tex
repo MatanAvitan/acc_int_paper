@@ -81,3 +81,43 @@ This is the geometric reason why $\varepsilon = 0.1$ is interpretable as an orde
 
 \paragraph{Why $\varepsilon$ transfers across datasets without per-panel tuning.}
 A direct consequence of the whitening is that $\varepsilon$ no longer carries the units of the local representation geometry: each tangent axis is rescaled by its own $\sigma_{i,k}$ before $\varepsilon$ is applied, so a representation panel with a wide local spread along its dominant axes and one with a narrow local spread both report the same allowed move when expressed as a fraction of their respective whitened neighborhoods. This is why we can fix $\varepsilon = 0.1$ once and use it across all 39 NLP panels (13 language models $\times$ 3 concepts at 50\%-depth) and all 80 CelebA panels (40 attributes $\times$ 2 control sets) without any per-panel tuning of the trust-region radius. Crucially, this transferability requires that the per-axis scale $\sigma_{i,k}$ \emph{itself} be estimated from the local representation — exactly what the local SVD on the neighborhood-secant matrix provides. The legacy global $\lambda$ in §\ref{sec:evaluation} cannot have this property because its units are panel-specific: the same $\lambda$ moves a Gemma-3-27B representation by a much larger ambient distance than it does a Qwen2.5-0.5B one, which is why the legacy protocol must run a per-panel $\lambda$-HPO grid and ours does not.
+
+\section{CelebA control-set construction (least- vs.\ most-correlated five attributes)}
+\label{sec:appendix_celeba_controls}
+
+For each of the 40 binary CelebA attributes used as a target concept, we report two complementary control regimes (Section~\ref{sec:celeba}, Table~\ref{tab:celeba_correlated_controls}, Figure~\ref{fig:per_attr_bars_celeba}): the \emph{5 least-correlated} attributes and the \emph{5 most-correlated} attributes, both selected from the remaining 39 attributes. This appendix records exactly how the two control sets are computed.
+
+\paragraph{Computation.}
+Let $\mathbf{Y} \in \{0, 1\}^{N_{\text{train}} \times 40}$ be the train-split label matrix, with $\mathbf{Y}_{i,k}$ the label of training example $i$ on attribute $k$. We compute the empirical Pearson correlation matrix
+\begin{equation}
+\mathbf{R}_{k\ell} \;=\; \frac{\mathrm{Cov}(\mathbf{Y}_{:,k}, \mathbf{Y}_{:,\ell})}{\sqrt{\mathrm{Var}(\mathbf{Y}_{:,k}) \cdot \mathrm{Var}(\mathbf{Y}_{:,\ell})}}
+\quad \text{for } k, \ell \in \{1, \ldots, 40\}.
+\end{equation}
+For each target attribute $k$, we then rank the remaining $39$ attributes by absolute correlation $|\mathbf{R}_{k\ell}|$:
+\begin{itemize}
+\item the \emph{5 least-correlated} controls are the bottom 5 by $|\mathbf{R}_{k\ell}|$ — they share \emph{minimal} information with the target and isolate clean surgicality;
+\item the \emph{5 most-correlated} controls are the top 5 by $|\mathbf{R}_{k\ell}|$ — they share \emph{substantial} information with the target and form a stricter test of whether erasure can preserve genuinely related downstream features.
+\end{itemize}
+The target attribute itself is excluded from the candidate pool (i.e., $\ell \neq k$). Pairs are computed in float64 with no shrinkage. The full $40 \times 40$ correlation matrix and the resulting per-target control sets are stored in \texttt{outputs/celeba\_correlated\_controls.json} (committed for reproducibility) by \texttt{scripts/celeba\_compute\_correlations.py}.
+
+\paragraph{Concrete examples.}
+For \emph{Male}, the 5 most-correlated attributes are \emph{Wearing\_Lipstick} ($|r| \approx 0.78$), \emph{No\_Beard}, \emph{Heavy\_Makeup}, \emph{Attractive}, and \emph{5\_o\_Clock\_Shadow}; the 5 least-correlated are \emph{Narrow\_Eyes}, \emph{Blurry}, \emph{Straight\_Hair}, \emph{Receding\_Hairline}, and \emph{Pale\_Skin} (all $|r| < 0.05$). Erasing \emph{Male} while preserving the most-correlated controls is genuinely hard because the controls are partial proxies for the target; erasing while preserving the least-correlated controls tests whether the intervention is geographically narrow but not whether it disentangles correlated information. We therefore report both regimes side by side: each one isolates a different failure mode.
+
+\paragraph{Why two regimes per concept.}
+Reporting only one control set hides whichever regime the method happens to be weak in. A method that destroys the entire representation will pass the least-correlated test (controls are essentially independent of the edit anyway) and fail the most-correlated test catastrophically; conversely, a method that performs no erasure will pass both. The difference between the two regimes per method is therefore informative even when both individual numbers look acceptable. Section~\ref{sec:celeba} reads the difference as a measure of how much an erasure method confuses ``avoid this concept'' with ``avoid everything correlated with it''.
+
+\section{Anisotropy regimes for $\mathbf{C}_i^{\alpha}$}
+\label{sec:appendix_alpha_regimes}
+
+The $\sigma$-preconditioned update of Eq.~\ref{eq:tangent_erase_cov} reweights each tangent direction by $\sigma_{i,k}^{2\alpha}$, where $\alpha \geq 0$ is an anisotropy exponent. Three values of $\alpha$ have natural interpretations:
+\begin{itemize}
+\item \textbf{$\alpha = 0$}: $\mathbf{C}_i^{\,0} = \mathbf{I}$, the update reduces to Eq.~\ref{eq:tangent_erase}. Reported as an ablation.
+\item \textbf{$\alpha = \tfrac{1}{2}$}: a \emph{mild} anisotropy. Each direction is reweighted by $\sigma_{i,k}$ rather than by $\sigma_{i,k}^2$, preserving information from low-variance directions while still respecting the dominant geometry. \textbf{This is the default in this paper.}
+\item \textbf{$\alpha = 1$}: full Mahalanobis preconditioning. The update direction $\mathbf{C}_i \mathbf{v}_i$ is the first-order optimum of $\min_{\boldsymbol\delta} \langle \mathbf{g}_i, \boldsymbol\delta \rangle$ subject to the Mahalanobis trust region $\boldsymbol\delta^\top \mathbf{C}_i^{-1} \boldsymbol\delta \leq \varepsilon^2$. Reported as an ablation; risks suppressing low-variance signal that may carry residual concept information.
+\end{itemize}
+
+\paragraph{Relation to Mahalanobis whitening (and what $\alpha = \tfrac{1}{2}$ is \emph{not}).}
+A reader familiar with Mahalanobis whitening might wonder whether $\alpha = \tfrac{1}{2}$ is ``the whitening'' we are doing. It is not. Mahalanobis whitening transforms the data so the covariance becomes identity, $\mathbf{x}^{\mathrm{white}} = \mathbf{C}^{-1/2} \mathbf{x}$, and corresponds to the \emph{negative} half-power of $\mathbf{C}$ (i.e.\ $\alpha = -\tfrac{1}{2}$ in our notation). Whitening makes every direction equal-weighted, which would actively dilute the concept-specific signal we want to suppress and force every tangent axis to receive equal step magnitude.
+
+We use $\mathbf{C}^{+1/2}$ (positive half-power), which does the opposite: it reweights the tangent step \emph{toward} the high-$\sigma_{i,k}$ principal axes — exactly the directions where the local manifold has the most support and where the linear approximation is most reliable — and away from low-$\sigma$ thin tail directions where the linear approximation is fragile and where motion most easily leaves the manifold. The three values $\alpha \in \{0, \tfrac{1}{2}, 1\}$ thus form a one-parameter family interpolating between (i) treating every tangent direction as equally trustworthy ($\alpha = 0$, isotropic), (ii) respecting the local ellipsoid mildly with $\sigma_{i,k}$ scaling ($\alpha = \tfrac{1}{2}$, our default), and (iii) the natural-gradient / Mahalanobis trust-region optimum that maximally suppresses thin directions ($\alpha = 1$). Whitening ($\alpha = -\tfrac{1}{2}$) sits outside this useful range for our problem because it has the opposite sign of the geometric correction we want; we therefore do not include it.
+
