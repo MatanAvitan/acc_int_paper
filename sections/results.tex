@@ -32,6 +32,34 @@ We compare the full \TanGCE{} pipeline (Phase~1 LEACE + rank-2 covariance projec
 
 Figure~\ref{fig:pareto_sota_obliv_floor} reports per-panel win margins for the full pipeline against the strongest published baseline. \TanGCE{} achieves a strictly lower mean floor-distance at all four control-damage budgets, with the largest gain on gender panels — the regime where the rank-$2$ covariance projection is most informative because gender concept information loads heavily on second-moment structure (variance asymmetry) that LEACE alone cannot reach. We attribute the small remaining gap on tight $-1$pp budgets and a handful of safety panels to nonlinear residual structure beyond the rank-2 projection: Phase~2's iterative scorer recovers most of it but cannot fully close the floor distance on every panel within the trust region.
 
+\begin{figure}[t]
+\centering
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/dataset_bars_sycophancy.png}
+\subcaption{Sycophancy ($n{=}13$ models).}
+\end{minipage}\hfill
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/dataset_bars_gender.png}
+\subcaption{Gender — Bias in Bios ($n{=}13$ models).}
+\end{minipage}\\[6pt]
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/dataset_bars_safety.png}
+\subcaption{Safety ($n{=}13$ models).}
+\end{minipage}\hfill
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/dataset_bars_celeba_least.png}
+\subcaption{CelebA — 40 attributes ($n{=}40$, least-correlated controls).}
+\end{minipage}
+\caption{\textbf{Mean nonlinear-probe accuracy at four control-damage budgets, per dataset.} Each subplot reports the mean of the lowest in-budget probe accuracy across the panels in that dataset, evaluated with the same fresh nonlinear probe used in §\ref{sec:pareto_obliviator}. Blue: \TanGCE{}-stacked at $\varepsilon{=}0.1$. Red: Obliviator at paper-HP. The dashed line is the mean clean (no-erasure) probe accuracy on the same panels (reference high); the dotted line is the mean per-panel majority-class floor (reference low). Bar labels show the in-budget panel count $n$, since some methods do not have a trajectory point inside tight budgets on every panel. \TanGCE{} reaches floor on gender and safety at every budget; Obliv stays close to clean on gender and 1--3pp above floor on safety. Sycophancy is solved by both methods. CelebA shows the same monotone pattern with smaller absolute gaps because the 40-attribute floor mean is already $\approx 0.804$.}
+\label{fig:dataset_bars}
+\end{figure}
+
+For a high-level summary that complements the per-panel margin figure, Figure~\ref{fig:pareto_sota_obliv_floor}-style numbers averaged over all panels in each dataset are shown in Figure~\ref{fig:dataset_bars}: the mean post-erasure nonlinear-probe accuracy at each $\Delta Y$ budget, against the clean-rep and majority-class references. The gap between methods follows the same concept-specific pattern as Table~\ref{tab:leace_vs_tangce_nlp}: tight on sycophancy (where both methods reach floor), wide on gender (where only TanGCE reaches floor), and intermediate on safety and CelebA.
+
 The corresponding ablation figures for the canonical $\sigma$-preconditioned variant without the rank-2 covariance projection ($\varepsilon = 0.3$, scorer $h = 128$) at the same panels are summarized in the appendix. Adding the rank-2 covariance projection and tightening the trust region from $\varepsilon = 0.3$ to $\varepsilon = 0.1$ together closes the tight-budget gap that the canonical variant left open.
 
 \paragraph{What does Phase 1 alone get us? (closed-form ablation).}
