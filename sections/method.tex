@@ -6,28 +6,20 @@
 We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. The full pipeline has two phases. \textbf{Phase~1} is two closed-form, one-shot moment-matching projections that exhaust all first- and second-moment concept signal in the representation. \textbf{Phase~2} is the iterative tangent-constrained loop that erases the residual nonlinear concept structure left after Phase~1. The starting point of Phase~2 is a local manifold approximation of representation space: if the neighborhood of a representation $\mathbf{x}$ is well approximated by a low-dimensional manifold $\mathcal{M}$, then the relevant first-order directions are those in the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than arbitrary ambient directions in $\mathbb{R}^d$. We do not observe this tangent space directly. Instead, we approximate it with local PCA/SVD on neighborhood secants and use that first-order estimate to constrain the erasure update. Each iteration of Phase~2 therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
 
 \begin{algorithm}[t]
-\caption{Overview of \TanGCE{}. Phase~1 applies two closed-form, one-shot moment-matching projections (LEACE then rank-2 covariance projection) on full training data. Phase~2 iterates a fresh-scorer / local-PCA / $\sigma$-preconditioned trust-region update on the residual.}
+\caption{\TanGCE{} at a glance. Phase~1 is two closed-form, one-shot projections (LEACE then a rank-2 covariance-asymmetry projection); Phase~2 is an iterative tangent-constrained step on the residual. Mathematical details in §\ref{sec:moment_preproc}–\ref{sec:cov_tangce}.}
 \label{alg:tangce}
 \begin{algorithmic}[1]
-\REQUIRE Representations $\mathbf{X} = \{\mathbf{x}_i\}_{i=1}^N$, concept labels $\mathbf{y}$, trust-region scale $\varepsilon$ (default $0.1$), anisotropy exponent $\alpha$ (default $\tfrac{1}{2}$), neighborhood size $k$, retained-variance rule for tangent rank, scorer hidden size $h$ (default $512$), number of rounds $T$.
-\STATE \textbf{Phase~1 -- Closed-form moment preprocessing (one-shot, on training data, applied to all splits)}:
-\STATE \hspace{1em} (a) Fit LEACE eraser $\mathcal{L}$ on $(\mathbf{X}_{\text{train}}, \mathbf{y})$ and apply: $\mathbf{X} \leftarrow \mathcal{L}(\mathbf{X})$. \hfill (rank-1 mean-shift)
-\STATE \hspace{1em} (b) Compute $\Delta\mathbf{\Sigma} = \mathbf{\Sigma}_{+} - \mathbf{\Sigma}_{-}$ on the LEACE-projected $\mathbf{X}_{\text{train}}$, take the top-$2$ eigenvectors of $\Delta\mathbf{\Sigma}$ by $|\lambda|$, orthonormalize $\mathbf{D} = \text{QR}([\hat{\mathbf{d}}_{\text{mean}}\,|\,\text{eigvecs}])$, and project: $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$. \hfill (rank-2 covariance asymmetry)
-\STATE \textbf{Phase~2 -- Iterative tangent-constrained refinement}:
+\REQUIRE Representations $\mathbf{X}$, concept labels $\mathbf{y}$, $\#$rounds $T$, trust region $\varepsilon$, anisotropy $\alpha$, scorer hidden $h$.
+\STATE \textbf{Phase~1 -- closed-form moment preprocessing} (Eqs.~\ref{eq:delta_sigma}--\ref{eq:covmatch_apply}):
+\STATE \hspace{1em} \textbf{1a.} Linear:\ \ $\mathbf{X} \leftarrow \mathrm{LEACE}_{\mathbf{y}}(\mathbf{X})$ \hfill (rank-1 mean projection)
+\STATE \hspace{1em} \textbf{1b.} Covariance:\ \ $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$, with $\mathbf{D}$ = top-2 eigvecs of $\Delta\mathbf{\Sigma}$ \hfill (rank-2 covariance projection)
+\STATE \textbf{Phase~2 -- iterative tangent step} (Eqs.~\ref{eq:tangent_proj}--\ref{eq:tangent_erase_cov}):
 \FOR{$t = 1, \ldots, T$}
-    \STATE Train a fresh nonlinear concept scorer $f_t$ (2-layer MLP, hidden $h$) on the current representations.
-    \FOR{each sample $\mathbf{x}_i$}
-        \STATE Retrieve the $k$ nearest neighbors of $\mathbf{x}_i$ and form local secant vectors.
-        \STATE Run local PCA on those secants to obtain a tangent basis $\mathbf{B}_i$, projector $\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top$, and singular values $\boldsymbol\sigma_i$.
-        \STATE Compute the ambient unit gradient direction $\mathbf{u}_i = \nabla_{\mathbf{x}} f_t(\mathbf{x}_i) / \|\nabla_{\mathbf{x}} f_t(\mathbf{x}_i)\|$.
-        \STATE Project it onto the tangent space: $\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \mathbf{u}_i$, and form the unit-step displacement $\mathbf{v}_i = (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \mathbf{u}_i^{\mathrm{tan}}$.
-        \STATE Compute the local FMaHa scale $s_i = R_i^{\mathrm{white}} \cdot s_i^{\mathrm{maha}}$ (Eq.~\ref{eq:s_fmaha}) and the per-sample trust-region step $\lambda_i = \min(\lambda_{\max}, \varepsilon s_i / \|\mathbf{C}_i^{\,\alpha}\mathbf{v}_i\|)$.
-        \STATE Apply the $\sigma$-preconditioned tangent update (Eq.~\ref{eq:tangent_erase_cov}):
-        \STATE \hspace{2em}$\displaystyle \tilde{\mathbf{x}}_i \leftarrow \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{\,\alpha} \, \mathbf{v}_i.$
-    \ENDFOR
-    \STATE Replace $\mathbf{X}$ by the updated representations $\tilde{\mathbf{X}}$ and continue to the next round.
+    \STATE Train a fresh 2-layer MLP scorer $f_t$ (hidden $h$) on the current $(\mathbf{X}, \mathbf{y})$.
+    \STATE \textbf{For each row $\mathbf{x}_i$}: take a tangent-projected, $\sigma$-preconditioned trust-region step
+    \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \cdot \underbrace{\mathbf{C}_i^{\,\alpha}}_{\substack{\text{anisotropy} \\ \text{(}\sigma_{i,k}^{2\alpha}\text{ per axis)}}} \cdot \underbrace{\mathbf{P}_{T_i} \nabla f_t(\mathbf{x}_i)}_{\text{tangent-projected gradient}}, \quad \text{with } \|\mathbf{x}_i\,\text{step}\|_2 \leq \varepsilon \cdot s_i.$
 \ENDFOR
-\STATE \textbf{return} intervened representations after $T$ fresh-scorer rounds.
+\STATE \textbf{return} edited $\mathbf{X}$.
 \end{algorithmic}
 \end{algorithm}
 
@@ -177,6 +169,11 @@ where $\alpha \geq 0$ is an anisotropy exponent. The effect is direct: each tang
 \item \textbf{$\alpha = \tfrac{1}{2}$}: a \emph{mild} anisotropy. Each direction is reweighted by $\sigma_{i,k}$ rather than by $\sigma_{i,k}^2$, preserving information from low-variance directions while still respecting the dominant geometry. \textbf{This is the default in this paper.}
 \item \textbf{$\alpha = 1$}: full Mahalanobis preconditioning. The update direction $\mathbf{C}_i \mathbf{v}_i$ is the first-order optimum of $\min_{\boldsymbol\delta} \langle \mathbf{g}_i, \boldsymbol\delta \rangle$ subject to the Mahalanobis trust region $\boldsymbol\delta^\top \mathbf{C}_i^{-1} \boldsymbol\delta \leq \varepsilon^2$. Reported as an ablation; risks suppressing low-variance signal that may carry residual concept information.
 \end{itemize}
+
+\paragraph{Relation to Mahalanobis whitening (and what $\alpha = \tfrac{1}{2}$ is \emph{not}).}
+A reader familiar with Mahalanobis whitening might wonder whether $\alpha = \tfrac{1}{2}$ is "the whitening" we are doing. It is not. Mahalanobis whitening transforms the data so the covariance becomes identity, $\mathbf{x}^{\mathrm{white}} = \mathbf{C}^{-1/2} \mathbf{x}$, and corresponds to the \emph{negative} half-power of $\mathbf{C}$ (i.e.\ $\alpha = -\tfrac{1}{2}$ in our notation). Whitening makes every direction equal-weighted, which would actively dilute the concept-specific signal we want to suppress and force every tangent axis to receive equal step magnitude.
+
+We use $\mathbf{C}^{+1/2}$ (positive half-power), which does the opposite: it reweights the tangent step \emph{toward} the high-$\sigma_{i,k}$ principal axes — exactly the directions where the local manifold has the most support and where the linear approximation is most reliable — and away from low-$\sigma$ thin tail directions where the linear approximation is fragile and where motion most easily leaves the manifold. The three values $\alpha \in \{0, \tfrac{1}{2}, 1\}$ thus form a one-parameter family interpolating between (i) treating every tangent direction as equally trustworthy ($\alpha = 0$, isotropic), (ii) respecting the local ellipsoid mildly with $\sigma_{i,k}$ scaling ($\alpha = \tfrac{1}{2}$, our default), and (iii) the natural-gradient / Mahalanobis trust-region optimum that maximally suppresses thin directions ($\alpha = 1$). Whitening ($\alpha = -\tfrac{1}{2}$) sits outside this useful range for our problem because it has the opposite sign of the geometric correction we want; we therefore do not include it.
 
 \paragraph{Trust region preserved.} The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning, against the transformed step $\mathbf{C}_i^{\,\alpha} \mathbf{v}_i$ (i.e.\ we substitute $\|\mathbf{C}_i^{\,\alpha} \mathbf{v}_i\|$ for $\|\mathbf{v}_i\|$ in the denominator). The actual displacement $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2$ therefore remains bounded by $\varepsilon \cdot s_i$, exactly as in the isotropic case. Anisotropy reshapes the \emph{direction} of the step, not its budget.
 
