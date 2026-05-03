@@ -45,3 +45,36 @@ Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all
 
 \paragraph{Geometry Note.}
 The broader geometry report continues to support three useful points: early and mid-layer representations are effectively low-dimensional, on-manifold directions carry much of the model's sensitivity in these perturbation tests, and interpolation remains consistent with a connected representation space. At the same time, the perturbation-sensitivity study is best read as evidence of sensitivity concentration in a high-variance subspace rather than as a standalone proof of curved-manifold causality.
+
+\section{Intuition: ``fraction of the local whitened neighborhood''}
+\label{sec:appendix_fmaha_intuition}
+
+Section~\ref{sec:closed_form_lambda} introduces the per-sample trust region $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \leq \varepsilon \cdot s_i$ and offers two choices for the local scale $s_i$: the simple radial $k$-NN distance $r_i$, or the anisotropy-aware whitened-tangent radius (Eq.~\ref{eq:s_fmaha}). The paper says $\varepsilon$ then becomes ``a fraction of the local whitened-tangent neighborhood.'' This appendix unpacks what that phrase means in concrete terms.
+
+\paragraph{Reading the trust region as a budget.}
+With $s_i = r_i$ (the radial choice), the bound reads ``move at most $\varepsilon \cdot$ Euclidean $k$-NN radius.'' This is direction-agnostic: every direction inside ambient space gets the same budget. With $s_i$ defined by Eq.~\ref{eq:s_fmaha} (the FMaHa whitened-tangent radius), the bound instead reads ``move at most $\varepsilon$ of the neighborhood radius \emph{after normalising each local tangent axis by its own scale}.'' That distinction is what makes $\varepsilon$ direction-aware.
+
+\paragraph{Worked example.}
+Suppose the local tangent space at $\mathbf{x}_i$ is two-dimensional with right singular vectors $\mathbf{v}_1, \mathbf{v}_2$ and singular values $\sigma_{i,1} = 10$, $\sigma_{i,2} = 1$. Neighbors of $\mathbf{x}_i$ extend ten times further along $\mathbf{v}_1$ than along $\mathbf{v}_2$:
+\[
+\text{$\mathbf{v}_1$ direction: long / fat / well-supported,} \qquad
+\text{$\mathbf{v}_2$ direction: short / thin / fragile.}
+\]
+The whitened tangent coordinate of a neighbor offset $\mathbf{x}_j - \mathbf{x}_i$ along $\mathbf{v}_k$ is
+$z_k = \langle \mathbf{x}_j - \mathbf{x}_i, \mathbf{v}_k \rangle / \sigma_{i,k}$. Moving 1 ambient unit along $\mathbf{v}_1$ is therefore $1/10 = 0.1$ \emph{whitened} units, while moving 1 ambient unit along $\mathbf{v}_2$ is $1/1 = 1$ whitened unit. Expressed in whitened coordinates the local neighborhood is approximately spherical: ``10\% of the whitened neighborhood'' is the same allowed move \emph{regardless of direction inside the tangent}. Translated back through the singular spectrum, that allowed move is large in ambient norm along $\mathbf{v}_1$ and small along $\mathbf{v}_2$ — exactly the asymmetry we want, because the linear approximation is reliable along high-$\sigma$ axes and fragile along low-$\sigma$ ones.
+
+\paragraph{Comparison with the Euclidean radius.}
+The Euclidean form is the inequality
+\[
+\| \boldsymbol{\delta} \|_2 \;\leq\; \varepsilon \cdot r_i,
+\]
+which treats every direction equally. The whitened form is approximately
+\[
+\Big\| \mathbf{B}_i^\top \boldsymbol{\delta} \,/\, \boldsymbol\sigma_i \Big\|_2 \;\leq\; \varepsilon \cdot R_i^{\mathrm{white}},
+\]
+where division is component-wise and $R_i^{\mathrm{white}}$ is the median neighbour displacement in standardised tangent coordinates (Eq.~\ref{eq:s_fmaha}). Reading this inequality in plain English: \emph{after dividing each tangent coordinate of the edit by its local standard scale $\sigma_{i,k}$, the edit must be at most $\varepsilon$ times the typical neighbour displacement on that scale}. The same edit, projected onto a high-$\sigma$ axis, is allowed a larger ambient stride; projected onto a low-$\sigma$ axis, it is held to a much smaller stride.
+
+\paragraph{Mental model.}
+Imagine the local neighborhood as an ellipse stretched along its high-$\sigma$ axis and pinched along its low-$\sigma$ axis. A ``$\varepsilon$ Euclidean'' step ignores the ellipse shape — it steps the same length in any direction. A ``$\varepsilon$ whitened-neighborhood'' step instead asks: \emph{after reshaping the ellipse into a sphere, does the edit fit inside an $\varepsilon$ ball?} FMaHa then maps the allowed move back into the original representation space. The result is a direction-aware trust region: it prevents the iterative loop from taking a step that is numerically small in Euclidean norm but huge relative to a thin local tangent direction where the linear approximation is the least reliable.
+
+This is the geometric reason why $\varepsilon = 0.1$ is interpretable as an order-of-magnitude smaller knob than the legacy global $\lambda$ used in the appendix tables: it bounds the edit relative to the local neighborhood's natural scale on each axis, not to a global step size.
