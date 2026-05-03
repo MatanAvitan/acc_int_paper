@@ -53,7 +53,23 @@ Figure~\ref{fig:pareto_sota_obliv_floor} reports per-panel win margins for the f
 \label{fig:per_model_bars_safety}
 \end{figure}
 
-Figures~\ref{fig:per_model_bars_sycophancy}--\ref{fig:per_model_bars_safety} unpack Figure~\ref{fig:pareto_sota_obliv_floor} into per-(model, budget) cells: each model panel gets three bars (clean, \TanGCE{}-stacked, Obliviator) with that model's per-panel majority-class floor as a horizontal tick. The pattern mirrors Table~\ref{tab:leace_vs_tangce_nlp}: tight on sycophancy (both methods at floor), wide on gender (only \TanGCE{} reaches floor consistently), intermediate on safety. The model-by-model view confirms that the floor-reaching behavior is not driven by a small number of easy panels — it holds across architectures and scales from $0.5$B to $27$B parameters.
+\begin{figure}[t]
+\centering
+\begin{minipage}{\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/per_model_bars_celeba_least.png}
+\subcaption{5 \emph{least}-correlated controls (low entanglement).}
+\end{minipage}\\[4pt]
+\begin{minipage}{\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/per_model_bars_celeba_most.png}
+\subcaption{5 \emph{most}-correlated controls (high entanglement).}
+\end{minipage}
+\caption{\textbf{CelebA: per-attribute nonlinear-probe accuracy at four control-damage budgets, both control-set regimes.} Same layout as Figures~\ref{fig:per_model_bars_sycophancy}--\ref{fig:per_model_bars_safety} but with the 40 CelebA attributes as groups along the $x$-axis. Each group has three bars — gray = clean, blue = \TanGCE{}-stacked $\varepsilon{=}0.1$, red = Obliviator paper-HP — and a black horizontal tick at the per-attribute majority-class floor. ``n/a'' marks attributes where the method had no trajectory step inside the $\Delta Y$ budget; this is especially common for Obliv in the most-correlated regime, where its first step already exceeds the budget on heavily entangled attributes. \TanGCE{}-stacked stays at or below the per-attribute floor on the great majority of attributes in both regimes.}
+\label{fig:per_attr_bars_celeba}
+\end{figure}
+
+Figures~\ref{fig:per_model_bars_sycophancy}--\ref{fig:per_model_bars_safety} unpack Figure~\ref{fig:pareto_sota_obliv_floor} into per-(model, budget) cells: each model panel gets three bars (clean, \TanGCE{}-stacked, Obliviator) with that model's per-panel majority-class floor as a horizontal tick. The pattern mirrors Table~\ref{tab:leace_vs_tangce_nlp}: tight on sycophancy (both methods at floor), wide on gender (only \TanGCE{} reaches floor consistently), intermediate on safety. The model-by-model view confirms that the floor-reaching behavior is not driven by a small number of easy panels — it holds across architectures and scales from $0.5$B to $27$B parameters. Figure~\ref{fig:per_attr_bars_celeba} reports the same three-bar layout for the 40 CelebA attributes, separately for the 5-least- and 5-most-correlated control regimes; the per-attribute view shows the floor-reaching behavior holds at attribute granularity and visibly worsens for Obliv in the entangled regime, consistent with the walkover pattern in Figure~\ref{fig:pareto_celeba_dual}.
 
 The corresponding ablation figures for the canonical $\sigma$-preconditioned variant without the rank-2 covariance projection ($\varepsilon = 0.3$, scorer $h = 128$) at the same panels are summarized in the appendix. Adding the rank-2 covariance projection and tightening the trust region from $\varepsilon = 0.3$ to $\varepsilon = 0.1$ together closes the tight-budget gap that the canonical variant left open.
 
