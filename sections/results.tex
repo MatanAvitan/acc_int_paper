@@ -34,6 +34,20 @@ Figure~\ref{fig:pareto_sota_obliv_floor} reports per-panel win margins for the f
 
 The corresponding ablation figures for the canonical $\sigma$-preconditioned variant without the rank-2 covariance projection ($\varepsilon = 0.3$, scorer $h = 128$) at the same panels are summarized in the appendix. Adding the rank-2 covariance projection and tightening the trust region from $\varepsilon = 0.3$ to $\varepsilon = 0.1$ together closes the tight-budget gap that the canonical variant left open.
 
+\paragraph{What does Phase 1 alone get us? (closed-form ablation).}
+\label{par:phase1_only}
+Phase~1 of the proposed pipeline (LEACE + rank-2 $\Delta\Sigma$ projection) is closed-form and one-shot: it removes 1st- and 2nd-moment concept signal in seconds, with no iterative loop, no scorer, no tangent estimation. It is therefore important to ask whether the iterative Phase~2 buys anything beyond what Phase~1 already delivers. Table~\ref{tab:leace_vs_tangce_nlp} answers this directly: the same fresh nonlinear probe used for the trajectory evaluation ($h{=}128$, 200 SGD steps, patience 3) is trained on three representation states per panel — clean, post-LEACE, post-(LEACE+CovMatch K=2). The pattern is sharp and concept-specific:
+
+\input{tables/leace_vs_tangce_nlp}
+
+\begin{itemize}
+    \item \textbf{Sycophancy:} mean NL after LEACE+CovMatch is $0.563$, indistinguishable from the majority-class floor $0.560$ and from the full TanGCE-stacked NL of $0.560$. The iterative loop adds nothing on this concept — the closed-form Phase~1 alone is sufficient. This is consistent with sycophancy being a low-rank concept whose signal is exhausted by 1st- and 2nd-moment erasure.
+    \item \textbf{Gender:} LEACE+CovMatch reduces NL from clean $\approx 0.85$ to $0.687$, but leaves a $14.8$pp residual above the $0.539$ floor. The full pipeline closes that residual to $1.0$pp. Most of the gender concept information is \emph{not} reachable by closed-form moment matching; it is the iterative tangent loop that does the heavy lifting on this concept.
+    \item \textbf{Safety:} similar pattern — Phase~1 leaves an $11.5$pp residual ($0.625$ vs.\ floor $0.510$) that the iterative loop drives to within $0.2$pp of the floor.
+\end{itemize}
+
+The control-damage column tells a complementary story: Phase~1 alone is essentially surgical (mean $\Delta Y$ within $\pm 1.6$pp on every concept), while TanGCE-stacked introduces only marginally more damage ($\leq 2.1$pp) in exchange for the order-of-magnitude better NL erasure on the harder concepts. We read this as evidence that Phase~1 and Phase~2 attack structurally different parts of the concept signal: closed-form moment matching exhausts what is reachable by global affine projections, and the per-row tangent step erodes the residual nonlinear pocket. Reporting both lets the reader see that the iterative loop is not gilding; it is the operative ingredient on the panels where erasure is hardest.
+
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
 

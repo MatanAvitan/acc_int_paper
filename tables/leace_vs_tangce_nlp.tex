@@ -1,0 +1,69 @@
+\begin{table}[t]
+\centering
+\small
+\caption{\textbf{Phase-1 closed-form ablations on the 39-panel NLP grid (50\%-depth layer).} Same fresh nonlinear probe ($h=128$, 200 SGD steps, patience 3) is trained on each post-erasure representation. \emph{LEACE} is the affine LEACE eraser. \emph{LEACE\,+\,CovMatch K=2} additionally projects out the top-2 eigenvectors of $\Delta\Sigma = \Sigma_{+} - \Sigma_{-}$ (rank-3 closed-form erasure total). \emph{TanGCE-stacked} is the proposed full pipeline (Phase 1 + iterative tangent loop, $\varepsilon{=}0.1$); we report the best $|S{-}\text{floor}|$ trajectory step subject to $\Delta Y \geq -5$pp. NL = nonlinear probe accuracy on test (lower is better; floor is the per-panel majority class). $\Delta Y$ in pp on the control task. Bold marks the row's NL minimum.}
+\label{tab:leace_vs_tangce_nlp}
+\begin{tabular}{l l c | c c | c c | c c}
+\toprule
+ &  & Floor & \multicolumn{2}{c|}{LEACE} & \multicolumn{2}{c|}{LEACE\,+\,CovMatch K=2} & \multicolumn{2}{c}{TanGCE-stacked $\varepsilon{=}0.1$} \\
+Model & Concept & (NL$^*$) & NL & $\Delta Y$pp & NL & $\Delta Y$pp & NL & $\Delta Y$pp \\
+\midrule
+Qwen2.5-0.5B & Sycophancy & 0.550 & \textbf{0.550} & +0.0 & \textbf{0.550} & -2.1 & \textbf{0.550} & -0.1 \\
+ & Gender & 0.539 & 0.709 & -0.1 & 0.684 & -0.4 & \textbf{0.549} & -4.1 \\
+ & Safety & 0.510 & 0.752 & +0.0 & 0.529 & +0.0 & \textbf{0.510} & -0.1 \\
+\addlinespace[2pt]
+Qwen2.5-1.5B & Sycophancy & 0.550 & \textbf{0.550} & -0.1 & \textbf{0.550} & -1.5 & \textbf{0.550} & +1.2 \\
+ & Gender & 0.539 & 0.822 & -0.3 & 0.788 & -1.7 & \textbf{0.592} & -3.9 \\
+ & Safety & 0.510 & 0.759 & +2.9 & \textbf{0.510} & +2.9 & \textbf{0.510} & +0.0 \\
+\addlinespace[2pt]
+Qwen2.5-3B & Sycophancy & 0.675 & \textbf{0.675} & +0.1 & \textbf{0.675} & -2.7 & \textbf{0.675} & -0.7 \\
+ & Gender & 0.539 & 0.857 & -1.3 & 0.783 & -0.1 & \textbf{0.548} & -4.1 \\
+ & Safety & 0.510 & 0.718 & +0.5 & 0.520 & +0.5 & \textbf{0.510} & +0.0 \\
+\addlinespace[2pt]
+Gemma-2-2B & Sycophancy & 0.543 & 0.643 & +0.0 & \textbf{0.543} & -0.4 & \textbf{0.543} & -0.2 \\
+ & Gender & 0.539 & 0.722 & +0.3 & 0.681 & -0.7 & \textbf{0.539} & -4.9 \\
+ & Safety & 0.510 & 0.715 & +0.7 & 0.654 & +0.7 & \textbf{0.510} & +0.0 \\
+\addlinespace[2pt]
+Gemma-2-9B & Sycophancy & 0.569 & 0.751 & -0.1 & \textbf{0.569} & -0.7 & 0.569 & +0.0 \\
+ & Gender & 0.539 & 0.638 & +0.2 & 0.562 & -0.4 & \textbf{0.539} & -3.5 \\
+ & Safety & 0.510 & 0.623 & +0.0 & \textbf{0.510} & +0.0 & \textbf{0.510} & +0.0 \\
+\addlinespace[2pt]
+Gemma-2-27B & Sycophancy & 0.553 & 0.695 & -0.2 & \textbf{0.553} & -0.9 & \textbf{0.553} & -0.3 \\
+ & Gender & 0.539 & 0.663 & +0.0 & 0.605 & -2.5 & \textbf{0.539} & -0.5 \\
+ & Safety & 0.510 & 0.736 & +0.7 & 0.643 & +1.4 & \textbf{0.510} & +0.0 \\
+\addlinespace[2pt]
+Llama-3.2-1B & Sycophancy & 0.551 & 0.849 & -0.1 & \textbf{0.551} & -0.2 & \textbf{0.551} & +0.0 \\
+ & Gender & 0.539 & 0.855 & -0.4 & 0.738 & +0.8 & \textbf{0.536} & -3.9 \\
+ & Safety & 0.510 & 0.817 & +0.3 & 0.778 & +0.3 & \textbf{0.498} & +0.0 \\
+\addlinespace[2pt]
+Llama-3.2-3B & Sycophancy & 0.551 & 0.896 & -0.0 & \textbf{0.551} & +0.0 & \textbf{0.551} & +0.0 \\
+ & Gender & 0.539 & 0.889 & +0.2 & 0.794 & -0.4 & \textbf{0.535} & -2.8 \\
+ & Safety & 0.510 & 0.837 & +0.1 & 0.821 & +0.2 & \textbf{0.526} & +0.0 \\
+\addlinespace[2pt]
+Mistral-7B & Sycophancy & 0.551 & 0.920 & +0.0 & \textbf{0.551} & -0.1 & \textbf{0.551} & +0.2 \\
+ & Gender & 0.539 & 0.851 & -0.4 & 0.815 & -0.3 & \textbf{0.606} & -4.8 \\
+ & Safety & 0.510 & 0.825 & +0.0 & 0.811 & +0.0 & \textbf{0.532} & +0.2 \\
+\addlinespace[2pt]
+Gemma-3-1B & Sycophancy & 0.551 & 0.727 & -0.1 & \textbf{0.551} & -2.2 & \textbf{0.551} & -0.0 \\
+ & Gender & 0.539 & 0.708 & +0.0 & 0.613 & -0.8 & \textbf{0.539} & +2.0 \\
+ & Safety & 0.510 & 0.726 & +0.0 & 0.723 & -1.0 & \textbf{0.510} & +1.0 \\
+\addlinespace[2pt]
+Gemma-3-4B & Sycophancy & 0.551 & \textbf{0.551} & -0.0 & \textbf{0.551} & -0.9 & \textbf{0.551} & -0.4 \\
+ & Gender & 0.539 & 0.704 & -0.5 & 0.580 & -2.7 & \textbf{0.539} & +4.9 \\
+ & Safety & 0.510 & 0.735 & +1.0 & 0.609 & +1.0 & \textbf{0.510} & -0.2 \\
+\addlinespace[2pt]
+Gemma-3-12B & Sycophancy & 0.556 & 0.613 & +0.0 & \textbf{0.556} & -0.5 & \textbf{0.556} & -0.5 \\
+ & Gender & 0.539 & \textbf{0.539} & +3.5 & 0.606 & -8.7 & 0.539 & +3.1 \\
+ & Safety & 0.510 & 0.589 & +3.8 & \textbf{0.510} & +3.8 & \textbf{0.510} & +0.0 \\
+\addlinespace[2pt]
+Gemma-3-27B & Sycophancy & 0.526 & 0.586 & -0.2 & 0.566 & -0.1 & \textbf{0.526} & +0.0 \\
+ & Gender & 0.539 & 0.700 & +1.7 & 0.678 & -2.6 & \textbf{0.539} & -4.8 \\
+ & Safety & 0.510 & 0.686 & +0.9 & \textbf{0.510} & +0.7 & \textbf{0.510} & +0.0 \\
+\addlinespace[2pt]
+\midrule
+\textbf{Mean sycophancy} &  & 0.560 & 0.693 & -0.0 & 0.563   & -0.9 & \textbf{0.560} & -0.1 \\
+\textbf{Mean gender} &  & 0.539 & 0.743 & +0.2 & 0.687   & -1.6 & \textbf{0.549} & -2.1 \\
+\textbf{Mean safety} &  & 0.510 & 0.732 & +0.8 & 0.625   & +0.8 & \textbf{0.512} & +0.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
