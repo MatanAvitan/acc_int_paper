@@ -2,13 +2,12 @@
 \section{Results}
 \label{sec:results}
 
-We evaluate six erasure methods plus two random-projection baselines and a Majority Class reference floor across three concept domains---sycophancy, gender (Bias in Bios), and safety---on multiple model families \ye{why do you state the dataset for gender but not for the other two? here just remove any mention of datasets?}. Each method's erasure strength $\lambda^*$ is selected from the same shared validation protocol described in Section~\ref{sec:evaluation} \ye{unclear}. Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance. The main comparison is between ambient-space editing and tangent-constrained editing.
+We evaluate six erasure methods plus two random-projection baselines and a Majority Class reference floor across three concept domains---sycophancy, gender (Bias in Bios), and safety---on multiple model families. Each method's erasure strength $\lambda^*$ is selected from the same shared validation protocol described in Section~\ref{sec:evaluation}. Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance. The main comparison is between ambient-space editing and tangent-constrained editing.
 
 \subsection{Multi-Model Generalization}
 \label{sec:multi_model}
 
-\ye{the title doesn't fit. it's quite obvious you have to run on multiple models. how about "text encoders"?}
-To assess whether the ambient-vs-tangent comparison is specific to one backbone, we evaluate across five model families: Qwen2.5 (0.5B, 1.5B, 3B), Gemma-2 (2B, 9B, 27B), Llama-3.2 (1B, 3B), Mistral-7B, and Gemma-3 (1B, 4B, 12B, 27B). Each model is evaluated at the layers corresponding to 25\%, 50\%, and 75\% of its depth; we report the mean across these three layers (standard deviations in Appendix Tables~\ref{tab:appendix_all_methods_sycophancy}--\ref{tab:appendix_all_methods_safety}) \ye{why mean and not max?}. We compare only \TanGCE{} and \AmbGCE{}, the two methods that differ solely in their gradient constraint, isolating the effect of tangent-space projection. The validation HPO protocol uses $\lambda^* \in \{0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0\}$ selected by lowest validation nonlinear probe accuracy. Per-layer results are in Table~\ref{tab:multi_model_per_layer}; the main table reports the corresponding mean results for all completed models.
+To assess whether the ambient-vs-tangent comparison is specific to one backbone, we evaluate across five model families: Qwen2.5 (0.5B, 1.5B, 3B), Gemma-2 (2B, 9B, 27B), Llama-3.2 (1B, 3B), Mistral-7B, and Gemma-3 (1B, 4B, 12B, 27B). Each model is evaluated at the layers corresponding to 25\%, 50\%, and 75\% of its depth; we report the mean across these three layers (standard deviations in Appendix Tables~\ref{tab:appendix_all_methods_sycophancy}--\ref{tab:appendix_all_methods_safety}). We compare only \TanGCE{} and \AmbGCE{}, the two methods that differ solely in their gradient constraint, isolating the effect of tangent-space projection. The validation HPO protocol uses $\lambda^* \in \{0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0\}$ selected by lowest validation nonlinear probe accuracy. Per-layer results are in Table~\ref{tab:multi_model_per_layer}; the main table reports the corresponding mean results for all completed models.
 
 \textbf{Bold} marks the best cell per column among non-random methods (lowest NL or $|\Delta$Ctrl| closest to zero).
 
@@ -37,7 +36,7 @@ The corresponding ablation figures for the canonical $\sigma$-preconditioned var
 
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
-\ye{it's not about generalization to other modailities, just that the method works for other modalities.}
+
 To test whether \TanGCE{} generalizes beyond language model representations, we apply all seven erasure methods to pooled CLIP ViT-B/32 image embeddings (768-dim) of CelebA face images (see Section~\ref{sec:evaluation} for preprocessing and split details). CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls. The same validation-HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy, hidden 256, 1500 steps) is applied uniformly across all methods.
 
 We treat this cross-modal setting as a generality check rather than the primary evidence for the paper's central claim.
