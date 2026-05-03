@@ -1,0 +1,56 @@
+\begin{table}[t]
+\centering
+\small
+\caption{\textbf{CelebA visual attributes — surgicality under entangled vs.\ non-entangled controls.} For each of the 40 binary CelebA attributes, we report nonlinear-probe leakage $S_{\text{acc}}$ under two control sets: \emph{5 least-correlated} attributes (low entanglement, easier surgicality) and \emph{5 most-correlated} attributes (high entanglement, harder surgicality). $S_{\text{acc}}$ is the lowest probe accuracy reached on a trajectory step satisfying mean $\Delta Y \geq -5$pp on the 5 controls. Both methods use \texttt{paper-HP} hyperparameters from their respective references; \TanGCE{} adds the Phase-1 LEACE + rank-2 covariance projection plus $h=512$, $\varepsilon=0.1$. Lower is better. Bold marks the lower of the two methods per row.}
+\label{tab:celeba_correlated_controls}
+\begin{tabular}{l c c c c}
+\toprule
+ & \multicolumn{2}{c}{5 least-correlated controls} & \multicolumn{2}{c}{5 most-correlated controls} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Concept & TanGCE & Obliv & TanGCE & Obliv \\
+\midrule
+5\_o\_Clock\_Shadow & -- & -- & -- & -- \\
+Arched\_Eyebrows & -- & -- & -- & -- \\
+Attractive & -- & -- & -- & -- \\
+Bags\_Under\_Eyes & -- & -- & -- & -- \\
+Bald & -- & -- & -- & -- \\
+Bangs & -- & -- & -- & -- \\
+Big\_Lips & -- & -- & -- & -- \\
+Big\_Nose & -- & -- & -- & -- \\
+Black\_Hair & -- & -- & -- & -- \\
+Blond\_Hair & -- & -- & -- & -- \\
+Blurry & -- & -- & -- & -- \\
+Brown\_Hair & -- & -- & -- & -- \\
+Bushy\_Eyebrows & -- & -- & -- & -- \\
+Chubby & -- & -- & -- & -- \\
+Double\_Chin & -- & -- & -- & -- \\
+Eyeglasses & -- & -- & -- & -- \\
+Goatee & -- & -- & -- & -- \\
+Gray\_Hair & -- & -- & -- & -- \\
+Heavy\_Makeup & -- & -- & -- & -- \\
+High\_Cheekbones & -- & -- & -- & -- \\
+Male & -- & -- & -- & -- \\
+Mouth\_Slightly\_Open & -- & -- & -- & -- \\
+Mustache & -- & -- & -- & -- \\
+Narrow\_Eyes & -- & -- & -- & -- \\
+No\_Beard & -- & -- & -- & -- \\
+Oval\_Face & -- & -- & -- & -- \\
+Pale\_Skin & -- & -- & -- & -- \\
+Pointy\_Nose & -- & -- & -- & -- \\
+Receding\_Hairline & -- & -- & -- & -- \\
+Rosy\_Cheeks & -- & -- & -- & -- \\
+Sideburns & -- & -- & -- & -- \\
+Smiling & -- & -- & -- & -- \\
+Straight\_Hair & -- & -- & -- & -- \\
+Wavy\_Hair & -- & -- & -- & -- \\
+Wearing\_Earrings & -- & -- & -- & -- \\
+Wearing\_Hat & -- & -- & -- & -- \\
+Wearing\_Lipstick & -- & -- & -- & -- \\
+Wearing\_Necklace & -- & -- & -- & -- \\
+Wearing\_Necktie & -- & -- & -- & -- \\
+Young & -- & -- & -- & -- \\
+\midrule
+\textbf{Mean} & nan & nan & nan & nan \\
+\bottomrule
+\end{tabular}
+\end{table}

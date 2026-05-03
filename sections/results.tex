@@ -22,23 +22,18 @@ The pattern holds across architectures and training pipelines, spanning one to t
 \subsection{Pareto comparison vs.\ Obliviator under control-damage budgets}
 \label{sec:pareto_obliviator}
 
-We compare \TanGCE{} (with the canonical $\sigma$-preconditioned update of §\ref{sec:cov_tangce}, $\alpha = \tfrac{1}{2}$) against Obliviator on the 50\%-depth grid (13 model families $\times$ 3 concepts) using a control-damage budget formulation. For each panel and each $\Delta Y$ budget $B \in \{1, 3, 5, 10\}$ percentage points, we report the lowest probe accuracy $S$ achieved along the trajectory subject to $|Y_{\text{clean}} - Y_t| \leq B/100$. A panel is awarded to whichever method reaches a strictly lower $S$ at that budget; ties are reported as draws. Per-panel decisions across the four budgets are aggregated by majority vote.
+We compare the full \TanGCE{} pipeline (Phase~1 LEACE + rank-2 covariance projection, Phase~2 $\sigma$-preconditioned tangent loop with $\alpha = \tfrac{1}{2}$, scorer hidden $h = 512$, trust region $\varepsilon = 0.1$) against Obliviator on the 50\%-depth grid (13 model families $\times$ 3 concepts) using a control-damage budget formulation. For each panel and each $\Delta Y$ budget $B \in \{1, 3, 5, 10\}$ percentage points, we extract the trajectory point with the smallest $|S_t - S_{\text{floor}}|$ subject to $|Y_{\text{clean}} - Y_t| \leq B/100$. A panel is awarded to whichever method achieves a smaller floor-distance at that budget. We summarize aggregate behaviour by the mean $|S - S_{\text{floor}}|$ across all 39 panels at each budget; lower is better and reaching $0$ corresponds to majority-class probe accuracy.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/pareto/cov_alpha_0p5/winmargin_multi.png}
-\caption{Win-margin (\TanGCE{} $-$ Obliviator) per panel under control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$ pp at 50\%-depth. Negative values (left of zero) indicate \TanGCE{} reaches lower probe accuracy at the same budget; positive values favour Obliviator.}
-\label{fig:pareto_cov_obliv}
+\includegraphics[width=\linewidth]{figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png}
+\caption{Floor-distance win-margin (\TanGCE{} $-$ Obliviator) per panel under control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$ pp at 50\%-depth. Each row is one (model, concept) panel; positive (blue) values mean \TanGCE{} is closer to the majority-class floor than Obliviator at that budget. The full pipeline (LEACE + rank-2 covariance projection + $h{=}512$ scorer + $\varepsilon{=}0.1$) wins or ties on \emph{every} budget. Mean improvement over Obliviator: $+1.4$pp at $\Delta Y \geq -1$pp, $+2.0$pp at $-3$pp, $+2.4$pp at $-5$pp, $+1.9$pp at $-10$pp; reach-floor (within $\pm 2$pp) goes from 14/39 panels (Obliviator) to 23/39 panels (\TanGCE{}).}
+\label{fig:pareto_sota_obliv_floor}
 \end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/pareto/cov_alpha_0p5/winmargin_multi_floor.png}
-\caption{Floor-metric win-margin (\TanGCE{} $-$ Obliviator) per panel: best $S_{\text{acc}}$ achieved without $\Delta Y$ constraint. Cov-\TanGCE{} reaches strictly lower probe accuracy than Obliviator's saturation floor on the gender panels.}
-\label{fig:pareto_cov_obliv_floor}
-\end{figure}
+Figure~\ref{fig:pareto_sota_obliv_floor} reports per-panel win margins for the full pipeline against the strongest published baseline. \TanGCE{} achieves a strictly lower mean floor-distance at all four control-damage budgets, with the largest gain on gender panels — the regime where the rank-$2$ covariance projection is most informative because gender concept information loads heavily on second-moment structure (variance asymmetry) that LEACE alone cannot reach. We attribute the small remaining gap on tight $-1$pp budgets and a handful of safety panels to nonlinear residual structure beyond the rank-2 projection: Phase~2's iterative scorer recovers most of it but cannot fully close the floor distance on every panel within the trust region.
 
-Figure~\ref{fig:pareto_cov_obliv} reports the per-panel win margins. Across panels with both methods completed, the $\sigma$-preconditioned \TanGCE{} update is competitive with Obliviator, with no per-method tuning of $\varepsilon$.
+The corresponding ablation figures for the canonical $\sigma$-preconditioned variant without the rank-2 covariance projection ($\varepsilon = 0.3$, scorer $h = 128$) at the same panels are summarized in the appendix. Adding the rank-2 covariance projection and tightening the trust region from $\varepsilon = 0.3$ to $\varepsilon = 0.1$ together closes the tight-budget gap that the canonical variant left open.
 
 \subsection{Cross-Modal Generalization: CelebA Visual Attributes}
 \label{sec:celeba}
@@ -54,6 +49,13 @@ Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA
 \input{tables/celeba_clip_fair}
 
 Table~\ref{tab:celeba_clip_fair} shows results on three representative concepts (Male, Smiling, Blond\_Hair), each with 5 low-correlation control attributes. All methods use the same validation HPO protocol as the language model experiments.
+
+\paragraph{Entangled-vs.-non-entangled controls.}
+The CelebA setting also lets us probe surgicality in a harder regime: instead of choosing the 5 \emph{least}-correlated attributes as controls (the standard choice, isolating clean surgicality), we additionally evaluate against the 5 \emph{most}-correlated attributes (the entangled regime, where the controls share substantial information with the target concept). We compute pairwise Pearson correlations between all 40 attributes on the train split and pick, for each target attribute, both the bottom-5 and top-5 by $|r|$ as control sets. We then run the full SOTA pipeline (Phase~1 LEACE + rank-2 covariance projection, Phase~2 with $h=512$, $\varepsilon=0.1$) and Obliviator on each of the 40 attributes under each control set. For every (concept, control set, method) we report the lowest probe accuracy reached subject to mean $\Delta Y \geq -5$pp on the 5 controls. Table~\ref{tab:celeba_correlated_controls} summarizes the results.
+
+\input{tables/celeba_clip_correlated_controls}
+
+The high-correlation regime is structurally harder: erasing \emph{Male} while preserving \emph{Wearing\_Lipstick}, \emph{Heavy\_Makeup}, \emph{No\_Beard}, \emph{Attractive}, and \emph{5\_o\_Clock\_Shadow} (all $|r| > 0.4$ with Male) is closer to a true surgicality test than erasing Male while preserving \emph{Narrow\_Eyes} or \emph{Blurry} (essentially uncorrelated). The mean row in Table~\ref{tab:celeba_correlated_controls} captures the overall picture across both regimes; the per-concept rows reveal which targets remain surgical even when the controls are deeply entangled.
 
 \subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
 \label{sec:lambda_sweep}

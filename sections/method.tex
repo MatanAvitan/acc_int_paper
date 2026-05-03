@@ -3,15 +3,19 @@
 \section{Method: \TanGCE{}}
 \label{sec:method}
 
-We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. Our starting point is a local manifold approximation of representation space. If the neighborhood of a representation $\mathbf{x}$ is well approximated by a low-dimensional manifold $\mathcal{M}$, then the relevant first-order directions are those in the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than arbitrary ambient directions in $\mathbb{R}^d$. We do not observe this tangent space directly. Instead, we approximate it with local PCA/SVD on neighborhood secants and use that first-order estimate to constrain the erasure update. Each iteration therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
+We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. The full pipeline has two phases. \textbf{Phase~1} is two closed-form, one-shot moment-matching projections that exhaust all first- and second-moment concept signal in the representation. \textbf{Phase~2} is the iterative tangent-constrained loop that erases the residual nonlinear concept structure left after Phase~1. The starting point of Phase~2 is a local manifold approximation of representation space: if the neighborhood of a representation $\mathbf{x}$ is well approximated by a low-dimensional manifold $\mathcal{M}$, then the relevant first-order directions are those in the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than arbitrary ambient directions in $\mathbb{R}^d$. We do not observe this tangent space directly. Instead, we approximate it with local PCA/SVD on neighborhood secants and use that first-order estimate to constrain the erasure update. Each iteration of Phase~2 therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
 
 \begin{algorithm}[t]
-\caption{Overview of \TanGCE{}. Each round trains a fresh scorer, estimates sample-wise tangent spaces with local PCA (cached spectrum $\boldsymbol\sigma_i$), projects the leakage gradient into the tangent space, applies the per-sample $\sigma$-preconditioned trust-region update, and iterates.}
+\caption{Overview of \TanGCE{}. Phase~1 applies two closed-form, one-shot moment-matching projections (LEACE then rank-2 covariance projection) on full training data. Phase~2 iterates a fresh-scorer / local-PCA / $\sigma$-preconditioned trust-region update on the residual.}
 \label{alg:tangce}
 \begin{algorithmic}[1]
-\REQUIRE Representations $\mathbf{X} = \{\mathbf{x}_i\}_{i=1}^N$, concept labels $\mathbf{y}$, trust-region scale $\varepsilon$, anisotropy exponent $\alpha$ (default $\tfrac{1}{2}$), neighborhood size $k$, retained-variance rule for tangent rank, number of rounds $T$.
+\REQUIRE Representations $\mathbf{X} = \{\mathbf{x}_i\}_{i=1}^N$, concept labels $\mathbf{y}$, trust-region scale $\varepsilon$ (default $0.1$), anisotropy exponent $\alpha$ (default $\tfrac{1}{2}$), neighborhood size $k$, retained-variance rule for tangent rank, scorer hidden size $h$ (default $512$), number of rounds $T$.
+\STATE \textbf{Phase~1 -- Closed-form moment preprocessing (one-shot, on training data, applied to all splits)}:
+\STATE \hspace{1em} (a) Fit LEACE eraser $\mathcal{L}$ on $(\mathbf{X}_{\text{train}}, \mathbf{y})$ and apply: $\mathbf{X} \leftarrow \mathcal{L}(\mathbf{X})$. \hfill (rank-1 mean-shift)
+\STATE \hspace{1em} (b) Compute $\Delta\mathbf{\Sigma} = \mathbf{\Sigma}_{+} - \mathbf{\Sigma}_{-}$ on the LEACE-projected $\mathbf{X}_{\text{train}}$, take the top-$2$ eigenvectors of $\Delta\mathbf{\Sigma}$ by $|\lambda|$, orthonormalize $\mathbf{D} = \text{QR}([\hat{\mathbf{d}}_{\text{mean}}\,|\,\text{eigvecs}])$, and project: $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$. \hfill (rank-2 covariance asymmetry)
+\STATE \textbf{Phase~2 -- Iterative tangent-constrained refinement}:
 \FOR{$t = 1, \ldots, T$}
-    \STATE Train a fresh nonlinear concept scorer $f_t$ on the current representations.
+    \STATE Train a fresh nonlinear concept scorer $f_t$ (2-layer MLP, hidden $h$) on the current representations.
     \FOR{each sample $\mathbf{x}_i$}
         \STATE Retrieve the $k$ nearest neighbors of $\mathbf{x}_i$ and form local secant vectors.
         \STATE Run local PCA on those secants to obtain a tangent basis $\mathbf{B}_i$, projector $\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top$, and singular values $\boldsymbol\sigma_i$.
@@ -26,6 +30,35 @@ We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the 
 \STATE \textbf{return} intervened representations after $T$ fresh-scorer rounds.
 \end{algorithmic}
 \end{algorithm}
+
+\subsection{Phase~1: Closed-form moment preprocessing}
+\label{sec:moment_preproc}
+
+Before iteration begins, we apply two closed-form, one-shot moment-matching projections that exhaust all linear (1st-moment) and rank-2 quadratic (2nd-moment) concept signal in the representation. The iterative tangent loop then operates on the residual nonlinear structure that no closed-form linear projection can reach.
+
+\paragraph{LEACE (1st moment).}
+We fit a LEACE eraser \citep{belrose-etal-2023-leace} on $(\mathbf{X}_{\text{train}}, \mathbf{y})$ and apply it to all three splits. LEACE removes the rank-1 cross-covariance $\mathbf{\Sigma}_{xz}$: after this step, no \emph{linear} classifier can recover the concept above majority-class accuracy on training data, with provably minimum representation damage among affine projections enforcing this invariant. In our setting LEACE removes one rank from a representation of dimension $d \in \{2048, 3072, 3584\}$ at negligible utility cost.
+
+\paragraph{Covariance-asymmetry projection (2nd moment).}
+LEACE matches class means but leaves the within-class covariance asymmetry
+\begin{equation}
+\label{eq:delta_sigma}
+\Delta\mathbf{\Sigma} \;=\; \mathbf{\Sigma}_{+} - \mathbf{\Sigma}_{-}
+\end{equation}
+unchanged, where $\mathbf{\Sigma}_{\pm}$ are the per-class within-class covariances of the LEACE-projected features. A 2-layer MLP probe can still recover concept information from variance asymmetry along axes where $\mathbf{\Sigma}_{+}$ and $\mathbf{\Sigma}_{-}$ differ, even when the class means are equal — squared features expose this signal that is invisible to any linear classifier. We therefore append a rank-$2$ projection: take the top-$2$ eigenvectors of $\Delta\mathbf{\Sigma}$ ranked by $|\lambda|$, orthonormalize with a residual mean direction via QR,
+\begin{equation}
+\label{eq:covmatch_basis}
+\mathbf{D} \;=\; \mathrm{QR}\!\left([\,\hat{\mathbf{d}}_{\text{mean}} \;\big|\; \mathbf{e}_1, \mathbf{e}_2\,]\right) \;\in\; \mathbb{R}^{d \times 3},
+\end{equation}
+and project this rank-$3$ subspace out of every split:
+\begin{equation}
+\label{eq:covmatch_apply}
+\tilde{\mathbf{x}} \;=\; \mathbf{x} \;-\; \mathbf{D}\mathbf{D}^\top \mathbf{x}.
+\end{equation}
+Because LEACE has already aligned the class means, $\hat{\mathbf{d}}_{\text{mean}} \approx \mathbf{0}$ and the QR step keeps only the two eigenvector directions in practice, so the effective preprocessing rank removed is two. This step is a special case of the $k$-LEACE-style higher-moment erasure framework of \citet{singh-ravfogel-2024-representation-surgery}; we use the rank-2 instance because second-order eigenvectors are stable to estimate from $n \approx 7000$ training examples while higher-order tensors are not.
+
+\paragraph{Why two stages, both closed-form.}
+Each stage removes a structurally distinct part of the concept signal that the other cannot reach: LEACE eliminates the mean-shift any linear classifier exploits; the covariance projection eliminates the variance asymmetry a quadratic classifier exploits. Both stages have closed-form solutions on full training data, making them more accurate than per-step or kernelized estimates, and each costs $\mathcal{O}(d^2)$ time and a single rank-1-or-2 projection at inference. They remove rank $\leq 3$ dimensions out of $d \in \{2048, 3072, 3584\}$ — a negligible fraction of the representation budget — while exposing the residual nonlinear concept structure that the iterative loop in Phase~2 is designed to erase.
 
 \subsection{Local tangent estimation}
 
@@ -89,7 +122,7 @@ A single global $\lambda$ over-edits some samples while under-editing others. Co
 \label{eq:trust_region}
 \| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \;\leq\; \varepsilon \cdot s_i.
 \end{equation}
-Here $\varepsilon \in (0, \infty)$ is a single global trust-region scale, dimensionless and shared across panels. Smaller $\varepsilon$ yields surgical edits inside each local manifold patch; larger $\varepsilon$ admits steps that may leave the patch. The simplest choice is $s_i = r_i$, the mean distance to the $k$ nearest neighbors — the radial neighborhood scale. We use a tighter, anisotropy-aware scale by default; see Eq.~\ref{eq:s_fmaha} below.
+Here $\varepsilon \in (0, \infty)$ is a single global trust-region scale, dimensionless and shared across panels. Smaller $\varepsilon$ yields surgical edits inside each local manifold patch; larger $\varepsilon$ admits steps that may leave the patch. We use $\varepsilon = 0.1$ throughout (an order of magnitude smaller than the canonical $\varepsilon = 0.3$ used in our earlier ablations); see §~\ref{sec:results} for the empirical effect of this choice on tight-budget surgicality. The simplest choice is $s_i = r_i$, the mean distance to the $k$ nearest neighbors — the radial neighborhood scale. We use a tighter, anisotropy-aware scale by default; see Eq.~\ref{eq:s_fmaha} below.
 
 \paragraph{Closed-form solution.} Substituting Eq.~\ref{eq:tangent_erase} into Eq.~\ref{eq:trust_region}, the constraint becomes
 \begin{equation}
