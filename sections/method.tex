@@ -17,7 +17,7 @@ We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the 
 \FOR{$t = 1, \ldots, T$}
  \STATE Train a fresh 2-layer MLP scorer $f_t$ (hidden $h$) on the current $(\mathbf{X}, \mathbf{y})$.
  \STATE \textbf{For each row $\mathbf{x}_i$}: take a tangent-projected, $\sigma$-preconditioned trust-region step
- \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \cdot \underbrace{\mathbf{C}_i^{\,\alpha}}_{\substack{\text{anisotropy} \\ \text{(}\sigma_{i,k}^{2\alpha}\text{ per axis)}}} \cdot \underbrace{\mathbf{P}_{T_i} \nabla f_t(\mathbf{x}_i)}_{\text{tangent-projected gradient}}, \quad \text{with } \|\mathbf{x}_i\,\text{step}\|_2 \leq \varepsilon \cdot s_i.$
+ \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \cdot \underbrace{\mathbf{C}_i^{1/2}}_{\substack{\text{anisotropy} \\ \text{($\sigma_{i,k}$ per axis)}}} \cdot \underbrace{\mathbf{P}_{T_i} \nabla f_t(\mathbf{x}_i)}_{\text{tangent-projected gradient}}, \quad \text{with } \|\Delta\mathbf{x}_i\|_2 \leq \varepsilon \cdot s_i.$
 \ENDFOR
 \STATE \textbf{return} edited $\mathbf{X}$.
 \end{algorithmic}
@@ -162,14 +162,12 @@ where $\{\mathbf{v}_i^{(k)}\}_{k=1}^{r}$ are the columns of $\mathbf{B}_i$ (the 
 \begin{equation}
 \label{eq:tangent_erase_cov}
 \boxed{ \;\;
-\tilde{\mathbf{x}}_i \;=\; \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{\,\alpha} \, \mathbf{v}_i \;=\; \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k}^{\,2\alpha} \, a_{i,k} \, \mathbf{v}_i^{(k)} \;\;
+\tilde{\mathbf{x}}_i \;=\; \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{1/2} \, \mathbf{v}_i \;=\; \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k} \, a_{i,k} \, \mathbf{v}_i^{(k)} \;\;
 }
 \end{equation}
-where $\alpha \geq 0$ is an anisotropy exponent. The effect is direct: each tangent coefficient $a_{i,k}$ is reweighted by $\sigma_{i,k}^{2\alpha}$, so the update moves more along high-variance principal directions (where the manifold supports larger displacements) and less along thin directions (where the linear approximation is fragile).
+The effect is direct: each tangent coefficient $a_{i,k}$ is reweighted by its associated singular value $\sigma_{i,k}$, so the update moves more along high-variance principal directions (where the manifold supports larger displacements) and less along thin directions (where the linear approximation is fragile). The general $\mathbf{C}_i^{\alpha}$ family with $\alpha \in \{0, \tfrac{1}{2}, 1\}$ — and the reason we choose the \emph{positive} half-power rather than Mahalanobis whitening's $\mathbf{C}_i^{-1/2}$ — is detailed in Appendix~\ref{sec:appendix_alpha_regimes}; in the rest of the paper $\alpha = \tfrac{1}{2}$ is the only setting we use.
 
-We use $\alpha = \tfrac{1}{2}$ throughout: a \emph{mild} anisotropy that reweights each tangent direction by $\sigma_{i,k}$ rather than $\sigma_{i,k}^2$, preserving information from low-variance directions while still respecting the dominant geometry. The two adjacent regimes ($\alpha = 0$, isotropic; $\alpha = 1$, full Mahalanobis preconditioning) and the relation to Mahalanobis whitening — including why we use the \emph{positive} rather than the negative half-power of $\mathbf{C}_i$ — are detailed in Appendix~\ref{sec:appendix_alpha_regimes}.
-
-\paragraph{Trust region preserved.} The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning, against the transformed step $\mathbf{C}_i^{\,\alpha} \mathbf{v}_i$ (i.e.\ we substitute $\|\mathbf{C}_i^{\,\alpha} \mathbf{v}_i\|$ for $\|\mathbf{v}_i\|$ in the denominator). The actual displacement $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2$ therefore remains bounded by $\varepsilon \cdot s_i$, exactly as in the isotropic case. Anisotropy reshapes the \emph{direction} of the step, not its budget.
+\paragraph{Trust region preserved.} The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning, against the transformed step $\mathbf{C}_i^{1/2} \mathbf{v}_i$ (i.e.\ we substitute $\|\mathbf{C}_i^{1/2} \mathbf{v}_i\|$ for $\|\mathbf{v}_i\|$ in the denominator). The actual displacement $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2$ therefore remains bounded by $\varepsilon \cdot s_i$, exactly as in the isotropic case. Anisotropy reshapes the \emph{direction} of the step, not its budget.
 
 \paragraph{Implementation.} Eq.~\ref{eq:tangent_erase_cov} reuses the SVD already computed for the tangent basis; the per-sample singular spectrum $(\sigma_{i,k})_k$ is cached during the local SVD. Concretely, the step decomposition (Eq.~\ref{eq:eigen_decomp}), eigenvalue reweighting, and reprojection to the ambient space are three batched einsums over the $(N, d, r)$ basis tensor. No additional SVDs and no per-sample loops are required. \TanGCE{} therefore inherits the same per-iteration cost as the isotropic update, modulo a single extra $\mathcal{O}(N d r)$ matrix multiplication.
 
