@@ -1,11 +1,11 @@
 \begin{table}[t]
 \centering
 \small
-\caption{\textbf{Phase-1 closed-form ablations on the 39-panel NLP grid (50\%-depth layer).} Same fresh nonlinear probe ($h=128$, 200 SGD steps, patience 3) is trained on each post-erasure representation. \emph{LEACE} is the affine LEACE eraser. \emph{LEACE\,+\,CovMatch K=2} additionally projects out the top-2 eigenvectors of $\Delta\Sigma = \Sigma_{+} - \Sigma_{-}$ (rank-3 closed-form erasure total). \emph{TanGCE-stacked} is the proposed full pipeline (Phase 1 + iterative tangent loop, $\varepsilon{=}0.1$); we report the best $|S{-}\text{floor}|$ trajectory step subject to $\Delta Y \geq -5$pp. NL = nonlinear probe accuracy on test (lower is better; floor is the per-panel majority class). $\Delta Y$ in pp on the control task. Bold marks the row's NL minimum.}
+\caption{\textbf{Phase-1 closed-form ablations on the 39-panel NLP grid (50\%-depth layer).} Same fresh nonlinear probe ($h=128$, 200 SGD steps, patience 3) is trained on each post-erasure representation. \emph{LEACE} is the affine LEACE eraser. \emph{LEACE\,+\,CovMatch K=2} additionally projects out the top-2 eigenvectors of $\Delta\Sigma = \Sigma_{+} - \Sigma_{-}$ (rank-3 closed-form erasure total). \emph{TanGCE} is the proposed full pipeline (Phase 1 + iterative tangent loop, $\varepsilon{=}0.1$); we report the best $|S{-}\text{floor}|$ trajectory step subject to $\Delta Y \geq -5$pp. NL = nonlinear probe accuracy on test (lower is better; floor is the per-panel majority class). $\Delta Y$ in pp on the control task. Bold marks the row's NL minimum.}
 \label{tab:leace_vs_tangce_nlp}
 \begin{tabular}{l l c | c c | c c | c c}
 \toprule
- &  & Floor & \multicolumn{2}{c|}{LEACE} & \multicolumn{2}{c|}{LEACE\,+\,CovMatch K=2} & \multicolumn{2}{c}{TanGCE-stacked $\varepsilon{=}0.1$} \\
+ &  & Floor & \multicolumn{2}{c|}{LEACE} & \multicolumn{2}{c|}{LEACE\,+\,CovMatch K=2} & \multicolumn{2}{c}{TanGCE $\varepsilon{=}0.1$} \\
 Model & Concept & (NL$^*$) & NL & $\Delta Y$pp & NL & $\Delta Y$pp & NL & $\Delta Y$pp \\
 \midrule
 Qwen2.5-0.5B & Sycophancy & 0.550 & \textbf{0.550} & +0.0 & \textbf{0.550} & -2.1 & \textbf{0.550} & -0.1 \\

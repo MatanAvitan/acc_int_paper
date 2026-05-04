@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -11,6 +11,12 @@ Armen Aghajanyan, Sonal Gupta, and Luke Zettlemoyer.
 \newblock In \emph{Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)}, pages 7319--7328. Association for Computational Linguistics, 2021.
 \newblock \doi{10.18653/v1/2021.acl-long.568}.
 \newblock URL \url{https://aclanthology.org/2021.acl-long.568}.
+
+\bibitem[Akbari et~al.(2026)Akbari, Afshari, and Boddeti]{akbari-etal-2026-obliviator}
+Ramin Akbari, Milad Afshari, and Vishnu~Naresh Boddeti.
+\newblock Obliviator reveals the cost of nonlinear guardedness in concept erasure.
+\newblock \emph{arXiv preprint arXiv:2603.07529}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.07529}.
 
 \bibitem[Avitan et~al.(2025)Avitan, Cotterell, Goldberg, and Ravfogel]{avitan-etal-2025-practical}
 Matan Avitan, Ryan Cotterell, Yoav Goldberg, and Shauli Ravfogel.
@@ -45,6 +51,12 @@ Yanai Elazar, Shauli Ravfogel, Alon Jacovi, and Yoav Goldberg.
 \newblock \doi{10.1162/tacl_a_00359}.
 \newblock URL \url{https://aclanthology.org/2021.tacl-1.10/}.
 
+\bibitem[Facco et~al.(2017)Facco, d'Errico, Rodriguez, and Laio]{facco-etal-2017-two-nn}
+Elena Facco, Maria d'Errico, Alex Rodriguez, and Alessandro Laio.
+\newblock Estimating the intrinsic dimension of datasets by a minimal neighborhood information.
+\newblock \emph{Scientific Reports}, 7:\penalty0 12140, 2017.
+\newblock \doi{10.1038/s41598-017-11873-y}.
+
 \bibitem[Hu et~al.(2022)Hu, Shen, Wallis, Allen-Zhu, Li, Wang, Wang, and Chen]{hu-etal-2022-lora}
 Edward~J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu~Wang, and Weizhu Chen.
 \newblock {LoRA}: Low-rank adaptation of large language models.
@@ -58,11 +70,12 @@ Shadi Iskander, Kira Radinsky, and Yonatan Belinkov.
 \newblock \doi{10.18653/v1/2023.findings-acl.369}.
 \newblock URL \url{https://aclanthology.org/2023.findings-acl.369/}.
 
-\bibitem[Ji et~al.(2024)Ji, Hong, Zhang, Chen, Dai, Zheng, Qiu, Li, and Yang]{ji-etal-2024-pku-saferlhf}
-Jiaming Ji, Donghai Hong, Borong Zhang, Boyuan Chen, Josef Dai, Boren Zheng, Tianyi Qiu, Boxun Li, and Yaodong Yang.
-\newblock {PKU-SafeRLHF}: A multi-level safety alignment dataset for large language models.
-\newblock \emph{arXiv preprint arXiv:2406.15513}, 2024.
+\bibitem[Ji et~al.(2025)Ji, Hong, Zhang, Chen, Dai, Zheng, Qiu, Zhou, Wang, Li, Han, Guo, and Yang]{ji-etal-2025-pku-saferlhf}
+Jiaming Ji, Donghai Hong, Borong Zhang, Boyuan Chen, Juntao Dai, Boren Zheng, Tianyi Qiu, Jiayi Zhou, Kaile Wang, Boxuan Li, Sirui Han, Yike Guo, and Yaodong Yang.
+\newblock {PKU-SafeRLHF}: Towards multi-level safety alignment for {LLMs} with human preference.
+\newblock In \emph{Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Main Conference)}. Association for Computational Linguistics, 2025.
 \newblock URL \url{https://arxiv.org/abs/2406.15513}.
+\newblock arXiv:2406.15513.
 
 \bibitem[Liu et~al.(2015)Liu, Luo, Wang, and Tang]{liu-etal-2015-celeba}
 Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
@@ -70,10 +83,10 @@ Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
 \newblock In \emph{Proceedings of the IEEE International Conference on Computer Vision (ICCV)}, pages 3730--3738, 2015.
 \newblock \doi{10.1109/ICCV.2015.425}.
 
-\bibitem[Perez et~al.(2023)Perez, Ringer, Luko\v{s}i\={u}t\={e}, Nguyen, Chen, Heiner, Pettit, Olsson, Kundu, Kadavath, Jones, Chen, Mann, Israel, Seethor, McKinnon, Jones, Yan, Kaplan, Shenk, Phang, Landis, Clark, Kravec, Tamkin, Joseph, Bowman, and Li]{perez-etal-2022-model-written}
-Ethan Perez, Sam Ringer, Kamil\={e} Luko\v{s}i\={u}t\={e}, Karina Nguyen, Edwin Chen, Scott Heiner, Craig Pettit, Catherine Olsson, Sandipan Kundu, Saurav Kadavath, Andy Jones, Anna Chen, Ben Mann, Brian Israel, Bryan Seethor, Cameron McKinnon, Carol Jones, Jie Yan, Jared Kaplan, Jordan Shenk, Jason Phang, Jack Landis, Jack Clark, Shauna Kravec, Alex Tamkin, Nicholas Joseph, Sam Bowman, and Jared Li.
+\bibitem[Perez et~al.(2023)Perez, Ringer, Luko{\v{s}}i{\=u}t{\.e}, Nguyen, Chen, Heiner, Pettit, Olsson, Kundu, Kadavath, Jones, Chen, Mann, Israel, Seethor, McKinnon, Olah, Yan, Amodei, Amodei, Drain, Li, Tran-Johnson, Khundadze, Kernion, Landis, Kerr, Mueller, Hyun, Landau, Ndousse, Goldberg, Lovitt, Lucas, Sellitto, Zhang, Kingsland, Elhage, Joseph, Mercado, DasSarma, Rausch, Larson, McCandlish, Johnston, Kravec, {El Showk}, Lanham, Telleen-Lawton, Brown, Henighan, Hume, Bai, Hatfield-Dodds, Clark, Bowman, Askell, Grosse, Hernandez, Ganguli, Hubinger, Schiefer, and Kaplan]{perez-etal-2022-model-written}
+Ethan Perez, Sam Ringer, Kamil{\.e} Luko{\v{s}}i{\=u}t{\.e}, Karina Nguyen, Edwin Chen, Scott Heiner, Craig Pettit, Catherine Olsson, Sandipan Kundu, Saurav Kadavath, Andy Jones, Anna Chen, Benjamin Mann, Brian Israel, Bryan Seethor, Cameron McKinnon, Christopher Olah, Da~Yan, Daniela Amodei, Dario Amodei, Dawn Drain, Dustin Li, Eli Tran-Johnson, Guro Khundadze, Jackson Kernion, James Landis, Jamie Kerr, Jared Mueller, Jeeyoon Hyun, Joshua Landau, Kamal Ndousse, Landon Goldberg, Liane Lovitt, Martin Lucas, Michael Sellitto, Miranda Zhang, Neerav Kingsland, Nelson Elhage, Nicholas Joseph, Noemi Mercado, Nova DasSarma, Oliver Rausch, Robin Larson, Sam McCandlish, Scott Johnston, Shauna Kravec, Sheer {El Showk}, Tamera Lanham, Timothy Telleen-Lawton, Tom Brown, Tom Henighan, Tristan Hume, Yuntao Bai, Zac Hatfield-Dodds, Jack Clark, Samuel~R. Bowman, Amanda Askell, Roger Grosse, Danny Hernandez, Deep Ganguli, Evan Hubinger, Nicholas Schiefer, and Jared Kaplan.
 \newblock Discovering language model behaviors with model-written evaluations.
-\newblock In \emph{Findings of the Association for Computational Linguistics: ACL 2023}, pages 13387--13412, Toronto, Canada, 2023. Association for Computational Linguistics.
+\newblock In \emph{Findings of the Association for Computational Linguistics: ACL 2023}, pages 13387--13434, Toronto, Canada, 2023. Association for Computational Linguistics.
 \newblock \doi{10.18653/v1/2023.findings-acl.847}.
 \newblock URL \url{https://aclanthology.org/2023.findings-acl.847}.
 
@@ -103,11 +116,12 @@ Shauli Ravfogel, Francisco Vargas, Yoav Goldberg, and Ryan Cotterell.
 \newblock \doi{10.18653/v1/2022.emnlp-main.405}.
 \newblock URL \url{https://aclanthology.org/2022.emnlp-main.405/}.
 
-\bibitem[Shao et~al.(2024)Shao, Roth, and Ravfogel]{shao-etal-2024-obliviator}
-Rui Shao, Dan Roth, and Shauli Ravfogel.
-\newblock Obliviator: Unsupervised nonlinear concept erasure via iterative hsic-rff projection.
-\newblock In \emph{Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, 2024.
-\newblock placeholder citation; please verify exact authors/venue.
+\bibitem[Singh et~al.(2024)Singh, Ravfogel, Herzig, Aharoni, Cotterell, and Kumaraguru]{singh-ravfogel-2024-representation-surgery}
+Shashwat Singh, Shauli Ravfogel, Jonathan Herzig, Roee Aharoni, Ryan Cotterell, and Ponnurangam Kumaraguru.
+\newblock Representation surgery: Theory and practice of affine steering.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, Proceedings of Machine Learning Research. PMLR, 2024.
+\newblock URL \url{https://arxiv.org/abs/2402.09631}.
+\newblock arXiv:2402.09631.
 
 \bibitem[Tu(2011)]{tu-2011-manifolds}
 Loring~W. Tu.
