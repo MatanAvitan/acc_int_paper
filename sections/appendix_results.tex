@@ -9,7 +9,7 @@ Table~\ref{tab:full_comparison} reports the full eight-method comparison at laye
 \section{CelebA three-concept comparison (legacy protocol)}
 \label{sec:appendix_celeba_clip_fair}
 
-Table~\ref{tab:celeba_clip_fair} reports the focused three-concept CelebA comparison (Male, Smiling, Blond\_Hair) on 5 least-correlation controls each, under the legacy global-$\lambda$ HPO protocol used by Tables~\ref{tab:celeba_clip_all40} and~\ref{tab:multi_model}. We retain it as a supplementary slice; the headline CelebA evidence is the 40-attribute, two-control-regime comparison in Table~\ref{tab:celeba_correlated_controls}.
+Table~\ref{tab:celeba_clip_fair} reports the focused three-concept CelebA comparison (Male, Smiling, Blond\_Hair) on 5 least-correlation controls each, under the legacy global-$\lambda$ HPO protocol used by Tables~\ref{tab:celeba_clip_all40} and~\ref{tab:multi_model}. We retain it as a supplementary slice; the headline CelebA evidence is the 40-attribute, two-control-regime comparison in Table~\ref{tab:celeba_per_panel_breakdown}.
 
 \input{tables/celeba_clip_fair}
 
@@ -65,9 +65,13 @@ Sycophancy and safety analogues of the gender per-model bar chart in the main te
 \section{CelebA all-40 aggregate table and per-attribute bars}
 \label{sec:appendix_celeba_extended}
 
-Tab.~\ref{tab:celeba_clip_all40} aggregates the per-attribute results across all 40 CelebA binary attributes under the legacy global-$\lambda$ HPO protocol; the headline CelebA evidence in Tab.~\ref{tab:celeba_correlated_controls} (main text) instead reports the dual control-set regimes under the proposed fixed-$\varepsilon$ pipeline.
+Tab.~\ref{tab:celeba_clip_all40} aggregates the per-attribute results across all 40 CelebA binary attributes under the legacy global-$\lambda$ HPO protocol; the headline CelebA evidence in Tab.~\ref{tab:celeba_per_panel_breakdown} (main text) instead reports the dual control-set regimes under the proposed fixed-$\varepsilon$ pipeline.
 
 \input{tables/celeba_clip_all40_summary}
+
+Tab.~\ref{tab:celeba_correlated_controls} reports the same dual-control-regime comparison as Tab.~\ref{tab:celeba_per_panel_breakdown} but as raw $S_{\text{acc}}$ values rather than signed deviations from floor, and only for \TanGCE{} and Obliviator. We retain it as a supplementary slice for readers who want the absolute probe accuracies; the per-attribute breakdown across the five methods (signed deviation from floor) is the more informative comparison.
+
+\input{tables/celeba_clip_correlated_controls}
 
 Fig.~\ref{fig:per_attr_bars_celeba} reports the per-attribute floor-distance win-margin between \TanGCE{} and Obliviator on the CelebA grid, separately for the 5-least- and 5-most-correlated control regimes. The walkover$^{\star}$ bars on the most-correlated regime mark attributes where Obliviator's first trajectory step already exceeds the budget; \TanGCE{} retains an admissible operating point.
 
@@ -152,7 +156,7 @@ A direct consequence of the whitening is that $\varepsilon$ no longer carries th
 \section{CelebA control-set construction (least- vs.\ most-correlated five attributes)}
 \label{sec:appendix_celeba_controls}
 
-For each of the 40 binary CelebA attributes used as a target concept, we report two complementary control regimes (Section~\ref{sec:celeba}, Table~\ref{tab:celeba_correlated_controls}, Figure~\ref{fig:per_attr_bars_celeba}): the \emph{5 least-correlated} attributes and the \emph{5 most-correlated} attributes, both selected from the remaining 39 attributes. This appendix records exactly how the two control sets are computed.
+For each of the 40 binary CelebA attributes used as a target concept, we report two complementary control regimes (Section~\ref{sec:celeba}, Table~\ref{tab:celeba_per_panel_breakdown}, Figure~\ref{fig:per_attr_bars_celeba}): the \emph{5 least-correlated} attributes and the \emph{5 most-correlated} attributes, both selected from the remaining 39 attributes. This appendix records exactly how the two control sets are computed.
 
 \paragraph{Computation.}
 Let $\mathbf{Y} \in \{0, 1\}^{N_{\text{train}} \times 40}$ be the train-split label matrix, with $\mathbf{Y}_{i,k}$ the label of training example $i$ on attribute $k$. We compute the empirical Pearson correlation matrix
