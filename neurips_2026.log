@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  4 MAY 2026 12:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  4 MAY 2026 13:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -576,45 +576,45 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `phv' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-) (./sections/introduction.tex [1
+) (./sections/introduction.tex
+Underfull \vbox (badness 1603) has occurred while \output is active []
+
+ [1
 
 
-{/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]) (./sections/related_work.tex) (./sections/notation.tex [2]) (./sections/method.tex
+{/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]) (./sections/related_work.tex) (./sections/notation.tex) (./sections/method.tex
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 9.
- [3] [4]) (./sections/evaluation.tex [5]) (./sections/experiments.tex [6]) (./sections/results.tex (./tables/main_results_unified.tex)
-<figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png, id=354, 1445.4pt x 903.375pt>
+ [2] [3] [4]) (./sections/evaluation.tex) (./sections/experiments.tex) (./sections/results.tex
+Underfull \vbox (badness 1442) has occurred while \output is active []
+
+ [5] (./tables/main_results_unified.tex)
+<figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png, id=326, 1445.4pt x 903.375pt>
 File: figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png Graphic file (type png)
 <use figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png>
 Package pdftex.def Info: figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png  used on input line 21.
 (pdftex.def)             Requested size: 397.48499pt x 248.422pt.
-<figures/per_model_bars_gender.png, id=356, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_gender.png, id=328, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_gender.png Graphic file (type png)
 <use figures/per_model_bars_gender.png>
 Package pdftex.def Info: figures/per_model_bars_gender.png  used on input line 28.
 (pdftex.def)             Requested size: 397.48499pt x 395.20279pt.
- [7] (./tables/celeba_clip_correlated_controls.tex)) (./sections/discussion.tex
-Underfull \vbox (badness 2538) has occurred while \output is active []
-
- [8 <./figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png>] [9 <./figures/per_model_bars_gender.png>]) (./sections/limitations.tex
-Underfull \vbox (badness 2875) has occurred while \output is active []
-
- [10]) (./sections/conclusion.tex) (./neurips_2026.bbl [11] [12]
-Underfull \hbox (badness 1205) in paragraph at lines 121--126
+ (./tables/celeba_clip_correlated_controls.tex)) (./sections/discussion.tex [6]) (./neurips_2026.bbl [7 <./figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png>] [8 <./figures/per_model_bars_gender.png>] [9]
+Underfull \hbox (badness 1205) in paragraph at lines 108--113
 []\T1/ptm/m/n/10 (+20) Loring W. Tu.  \T1/ptm/m/it/10 (+20) An In-tro-duc-tion to Man-i-folds\T1/ptm/m/n/10 (+20) .  Uni-ver-si-text. Springer, 2 edi-tion, 2011.
  []
 
 
-Underfull \hbox (badness 4531) in paragraph at lines 121--126
+Underfull \hbox (badness 4531) in paragraph at lines 108--113
 \T1/ptm/m/n/10 (+20) doi: $10 . 1007 / 978-[]1-[]4419-[]7400-[]6$.  URL []$\T1/cmtt/m/n/10 https : / / luis . impa . br / aulas / anvar / Tu _
  []
 
 ) (./sections/appendix_results.tex (./tables/full_comparison.tex) (./tables/celeba_clip_fair.tex) (./tables/appendix_all_methods.tex
+ignored error: Infinite glue shrinkage found in box being split [10]
+ignored error: Infinite glue shrinkage found in box being split [11] [12]
 ignored error: Infinite glue shrinkage found in box being split [13]
-ignored error: Infinite glue shrinkage found in box being split [14] [15]
-ignored error: Infinite glue shrinkage found in box being split [16]
-ignored error: Infinite glue shrinkage found in box being split [17]
-ignored error: Infinite glue shrinkage found in box being split [18]
-ignored error: Infinite glue shrinkage found in box being split [19])
+ignored error: Infinite glue shrinkage found in box being split [14]
+ignored error: Infinite glue shrinkage found in box being split [15]
+ignored error: Infinite glue shrinkage found in box being split [16])
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 23.
@@ -652,8 +652,8 @@ Overfull \hbox (20.633pt too wide) in alignment at lines 22--117
  [] [] [] [] [] [] [] [] 
  []
 
-ignored error: Infinite glue shrinkage found in box being split [20]
-ignored error: Infinite glue shrinkage found in box being split [21]) (./tables/multi_model_per_layer.tex
+ignored error: Infinite glue shrinkage found in box being split [17]
+ignored error: Infinite glue shrinkage found in box being split [18]) (./tables/multi_model_per_layer.tex
 
 LaTeX Warning: Float too large for page by 13.71944pt on input line 85.
 
@@ -676,7 +676,7 @@ Overfull \hbox (15.56277pt too wide) in paragraph at lines 6--69
  []
 
 )
-<figures/per_model_bars_sycophancy.png, id=524, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_sycophancy.png, id=467, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_sycophancy.png Graphic file (type png)
 <use figures/per_model_bars_sycophancy.png>
 Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input line 53.
@@ -685,7 +685,7 @@ Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input li
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figures/per_model_bars_safety.png, id=527, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_safety.png, id=470, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_safety.png Graphic file (type png)
 <use figures/per_model_bars_safety.png>
 Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 60.
@@ -694,12 +694,12 @@ Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 6
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 (./tables/celeba_clip_all40_summary.tex)
-<figures/pareto_celeba_sota_least_winmargin_multi_floor.png, id=534, 1589.94pt x 1069.596pt>
+<figures/pareto_celeba_sota_least_winmargin_multi_floor.png, id=477, 1589.94pt x 1069.596pt>
 File: figures/pareto_celeba_sota_least_winmargin_multi_floor.png Graphic file (type png)
 <use figures/pareto_celeba_sota_least_winmargin_multi_floor.png>
 Package pdftex.def Info: figures/pareto_celeba_sota_least_winmargin_multi_floor.png  used on input line 78.
 (pdftex.def)             Requested size: 194.76982pt x 131.02257pt.
-<figures/pareto_celeba_sota_most_winmargin_multi_floor.png, id=535, 1589.94pt x 1069.596pt>
+<figures/pareto_celeba_sota_most_winmargin_multi_floor.png, id=478, 1589.94pt x 1069.596pt>
 File: figures/pareto_celeba_sota_most_winmargin_multi_floor.png Graphic file (type png)
 <use figures/pareto_celeba_sota_most_winmargin_multi_floor.png>
 Package pdftex.def Info: figures/pareto_celeba_sota_most_winmargin_multi_floor.png  used on input line 83.
@@ -711,11 +711,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 (./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/local_celeba_visual_table2.tex
 Underfull \vbox (badness 1668) has occurred while \output is active []
 
- [22]) (./tables/celeba_clip_all40_per_concept.tex [23 <./figures/per_model_bars_sycophancy.png>]) (./tables/main_text_geometry_schedule.tex) [24 <./figures/per_model_bars_safety.png>] [25 <./figures/pareto_celeba_sota_least_winmargin_multi_floor.png> <./figures/pareto_celeba_sota_most_winmargin_multi_floor.png>]
+ [19]) (./tables/celeba_clip_all40_per_concept.tex [20 <./figures/per_model_bars_sycophancy.png>]) (./tables/main_text_geometry_schedule.tex) [21 <./figures/per_model_bars_safety.png>] [22 <./figures/pareto_celeba_sota_least_winmargin_multi_floor.png> <./figures/pareto_celeba_sota_most_winmargin_multi_floor.png>]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 165.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [26]
+) [23]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 176.
@@ -752,27 +752,27 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 201.
 
-[27] (./tables/per_panel_breakdown.tex)) [28] (./checklist.tex [29] [30] [31] [32] [33] [34]) [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] (./neurips_2026.aux)
+[24] (./tables/per_panel_breakdown.tex)) [25] (./checklist.tex [26] [27] [28] [29] [30] [31]) [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] (./neurips_2026.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-29>
  ***********
 Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
-(rerunfilecheck)             Checksum: 5EBE12B7DE96F16DBB72E1AAA0B0A4E3;9584.
+(rerunfilecheck)             Checksum: 98CE4AD3AC92000A640D4C41307A1116;9098.
  ) 
 Here is how much of TeX's memory you used:
- 16546 strings out of 469476
- 269287 string characters out of 5467624
- 979466 words of memory out of 5000000
- 44264 multiletter control sequences out of 15000+600000
- 706375 words of font info for 362 fonts, out of 8000000 for 9000
+ 16480 strings out of 469476
+ 268165 string characters out of 5467624
+ 979084 words of memory out of 5000000
+ 44242 multiletter control sequences out of 15000+600000
+ 705290 words of font info for 348 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 72i,14n,79p,1769b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,14n,79p,1340b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (45 pages, 2181644 bytes).
+Output written on neurips_2026.pdf (42 pages, 2162559 bytes).
 PDF statistics:
- 925 PDF objects out of 1000 (max. 8388607)
- 777 compressed objects within 8 object streams
- 210 named destinations out of 1000 (max. 500000)
- 77663 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 868 PDF objects out of 1000 (max. 8388607)
+ 723 compressed objects within 8 object streams
+ 193 named destinations out of 1000 (max. 500000)
+ 77631 words of extra memory for PDF output out of 89155 (max. 10000000)
 
