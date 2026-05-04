@@ -9,31 +9,32 @@
 \citation{ravfogel-etal-2022-adversarial}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \citation{belrose-etal-2023-leace}
+\citation{zhang-zha-2004-ltsa}
 \citation{ravfogel-etal-2020-null}
 \citation{belrose-etal-2023-leace}
 \citation{elazar-goldberg-2018-adversarial}
 \citation{elazar-etal-2021-amnesic}
 \citation{iskander-etal-2023-shielded}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
 \citation{tu-2011-manifolds}
 \citation{elazar-goldberg-2018-adversarial}
 \citation{belrose-etal-2023-leace}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
-\newlabel{sec:related}{{2}{3}{Related Work}{section.2}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces TanGCE{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step.}}{3}{algorithm.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{alg:tangce}{{1}{3}{\TanGCE {} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step}{algorithm.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Problem setup and geometric motivation}{3}{section.3}\protected@file@percent }
 \newlabel{sec:notation}{{3}{3}{Problem setup and geometric motivation}{section.3}{}}
 \@writefile{toc}{\contentsline {paragraph}{Local manifold hypothesis.}{3}{section*.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Recoverability.}{3}{section*.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Method: TanGCE{}}{3}{section.4}\protected@file@percent }
 \newlabel{sec:method}{{4}{3}{Method: \TanGCE {}}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Phase~1: closed-form moment preprocessing}{3}{subsection.4.1}\protected@file@percent }
-\newlabel{sec:moment_preproc}{{4.1}{3}{Phase~1: closed-form moment preprocessing}{subsection.4.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{LEACE (1st moment).}{3}{section*.5}\protected@file@percent }
 \citation{singh-ravfogel-2024-representation-surgery}
 \citation{zhang-zha-2004-ltsa}
 \citation{facco-etal-2017-two-nn}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces TanGCE{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step.}}{4}{algorithm.1}\protected@file@percent }
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{alg:tangce}{{1}{4}{\TanGCE {} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Phase~1: closed-form moment preprocessing}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:moment_preproc}{{4.1}{4}{Phase~1: closed-form moment preprocessing}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{LEACE (1st moment).}{4}{section*.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Covariance-asymmetry projection (2nd moment).}{4}{section*.6}\protected@file@percent }
 \newlabel{eq:delta_sigma}{{1}{4}{Covariance-asymmetry projection (2nd moment)}{equation.1}{}}
 \newlabel{eq:covmatch_basis}{{2}{4}{Covariance-asymmetry projection (2nd moment)}{equation.2}{}}
@@ -42,9 +43,12 @@
 \newlabel{eq:secant_svd}{{4}{4}{Local tangent estimation}{equation.4}{}}
 \newlabel{eq:tangent_basis}{{5}{4}{Local tangent estimation}{equation.5}{}}
 \newlabel{eq:tangent_proj}{{6}{4}{Local tangent estimation}{equation.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Tangent-constrained update}{5}{subsection.4.3}\protected@file@percent }
-\newlabel{eq:tangent_direction}{{7}{5}{Tangent-constrained update}{equation.7}{}}
-\newlabel{eq:tangent_erase}{{8}{5}{Tangent-constrained update}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Tangent-constrained update}{4}{subsection.4.3}\protected@file@percent }
+\newlabel{eq:tangent_direction}{{7}{4}{Tangent-constrained update}{equation.7}{}}
+\newlabel{eq:tangent_erase}{{8}{4}{Tangent-constrained update}{equation.8}{}}
+\citation{elazar-goldberg-2018-adversarial}
+\citation{iskander-etal-2023-shielded}
+\citation{akbari-etal-2026-obliviator}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Adaptive per-sample step size: closed-form $\lambda _i$}{5}{subsection.4.4}\protected@file@percent }
 \newlabel{sec:closed_form_lambda}{{4.4}{5}{Adaptive per-sample step size: closed-form \texorpdfstring {$\lambda _i$}{lambda}}{subsection.4.4}{}}
 \newlabel{eq:trust_region}{{9}{5}{Adaptive per-sample step size: closed-form \texorpdfstring {$\lambda _i$}{lambda}}{equation.9}{}}
@@ -54,9 +58,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Anisotropic update via the local $\sigma $-spectrum}{5}{subsection.4.5}\protected@file@percent }
 \newlabel{sec:cov_tangce}{{4.5}{5}{Anisotropic update via the local \texorpdfstring {$\sigma $}{sigma}-spectrum}{subsection.4.5}{}}
 \newlabel{eq:tangent_erase_sigma}{{12}{5}{Anisotropic update via the local \texorpdfstring {$\sigma $}{sigma}-spectrum}{equation.12}{}}
-\citation{elazar-goldberg-2018-adversarial}
-\citation{iskander-etal-2023-shielded}
-\citation{akbari-etal-2026-obliviator}
+\@writefile{toc}{\contentsline {paragraph}{Relation to local covariance and Mahalanobis scaling.}{5}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Iterative loop and relation to baselines}{5}{subsection.4.6}\protected@file@percent }
 \citation{perez-etal-2022-model-written}
 \citation{dearteaga-etal-2019-bias}
 \citation{ji-etal-2025-pku-saferlhf}
@@ -66,8 +69,6 @@
 \citation{ravfogel-etal-2020-null}
 \citation{iskander-etal-2023-shielded}
 \citation{akbari-etal-2026-obliviator}
-\@writefile{toc}{\contentsline {paragraph}{Relation to local covariance and Mahalanobis scaling.}{6}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Iterative loop and relation to baselines}{6}{subsection.4.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Metrics}{6}{subsection.4.7}\protected@file@percent }
 \newlabel{sec:evaluation}{{4.7}{6}{Metrics}{subsection.4.7}{}}
 \@writefile{toc}{\contentsline {paragraph}{Erasure precision $S$.}{6}{section*.9}\protected@file@percent }
@@ -76,33 +77,34 @@
 \newlabel{sec:hp_selection}{{4.8}{6}{Experimental setup}{subsection.4.8}{}}
 \@writefile{toc}{\contentsline {paragraph}{Panels and probe.}{6}{section*.11}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Compared methods.}{6}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Hyperparameters.}{6}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{6}{section.5}\protected@file@percent }
+\newlabel{sec:results}{{5}{6}{Results}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Headline: distance to majority-class chance under control-damage budgets}{6}{subsection.5.1}\protected@file@percent }
+\newlabel{sec:multi_model}{{5.1}{6}{Headline: distance to majority-class chance under control-damage budgets}{subsection.5.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Main result.} Best-in-budget distance to majority-class chance (signed $S - S_{\text  {floor}}$ at the trajectory step closest to floor in pp; $0$ = at chance, lower in absolute value is better) and panels at floor ($|S{-}S_{\text  {floor}}| \le 0.5$pp) over reachable panels, on all 39 NLP panels (13 model families $\times $ 3 concepts) at 50\%-depth using a fresh nonlinear probe ($h{=}128$, 200 SGD, patience 3). $\lambda $-based methods use $\lambda \approx 29.31$, the mean per-row $\lambda _i$ produced by the proposed pipeline (App.~Tab.~\ref {tab:lambda_stats}); LEACE-only and LEACE$+$CovMatch $K{=}2$ are one-shot closed-form. Obliviator uses paper-HP. TanGCE{} is the proposed pipeline at fixed $\varepsilon {=}0.1$, $h{=}512$. Bold = column-best; multiple methods within 0.05pp of the best are all bolded. Per-panel detail across all 39 panels is in App.~Tab.~\ref {tab:per_panel_breakdown}.}}{7}{table.caption.14}\protected@file@percent }
 \newlabel{tab:main_results_unified}{{1}{7}{\textbf {Main result.} Best-in-budget distance to majority-class chance (signed $S - S_{\text {floor}}$ at the trajectory step closest to floor in pp; $0$ = at chance, lower in absolute value is better) and panels at floor ($|S{-}S_{\text {floor}}| \le 0.5$pp) over reachable panels, on all 39 NLP panels (13 model families $\times $ 3 concepts) at 50\%-depth using a fresh nonlinear probe ($h{=}128$, 200 SGD, patience 3). $\lambda $-based methods use $\lambda \approx 29.31$, the mean per-row $\lambda _i$ produced by the proposed pipeline (App.~Tab.~\ref {tab:lambda_stats}); LEACE-only and LEACE$+$CovMatch $K{=}2$ are one-shot closed-form. Obliviator uses paper-HP. \TanGCE {} is the proposed pipeline at fixed $\varepsilon {=}0.1$, $h{=}512$. Bold = column-best; multiple methods within 0.05pp of the best are all bolded. Per-panel detail across all 39 panels is in App.~Tab.~\ref {tab:per_panel_breakdown}}{table.caption.14}{}}
-\@writefile{toc}{\contentsline {paragraph}{Hyperparameters.}{7}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{7}{section.5}\protected@file@percent }
-\newlabel{sec:results}{{5}{7}{Results}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Headline: distance to majority-class chance under control-damage budgets}{7}{subsection.5.1}\protected@file@percent }
-\newlabel{sec:multi_model}{{5.1}{7}{Headline: distance to majority-class chance under control-damage budgets}{subsection.5.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Per-model bars and the surgicality signal}{7}{subsection.5.2}\protected@file@percent }
 \newlabel{sec:pareto_obliviator}{{5.2}{7}{Per-model bars and the surgicality signal}{subsection.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Cross-modal generalization: CelebA dual control regimes}{7}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:celeba}{{5.3}{7}{Cross-modal generalization: CelebA dual control regimes}{subsection.5.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Setup.}{7}{section*.16}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Gender (Bias in Bios): per-model nonlinear-probe accuracy at four control-damage budgets.} Each row is one budget. Each model group has three bars (gray = clean, blue = TanGCE{} at $\varepsilon {=}0.1$, red = Obliviator paper-HP) plus a black tick at the per-model majority-class floor. Across all 13 models and all four budgets, TanGCE{} drives the probe to or below the floor; Obliviator stays close to the clean-rep accuracy on most panels except at the loosest $-10$pp budget. Sycophancy and safety analogues are in App.~Fig.~\ref {fig:per_model_bars_sycophancy_app}--\ref {fig:per_model_bars_safety_app}.}}{8}{figure.caption.15}\protected@file@percent }
 \newlabel{fig:per_model_bars_gender}{{1}{8}{\textbf {Gender (Bias in Bios): per-model nonlinear-probe accuracy at four control-damage budgets.} Each row is one budget. Each model group has three bars (gray = clean, blue = \TanGCE {} at $\varepsilon {=}0.1$, red = Obliviator paper-HP) plus a black tick at the per-model majority-class floor. Across all 13 models and all four budgets, \TanGCE {} drives the probe to or below the floor; Obliviator stays close to the clean-rep accuracy on most panels except at the loosest $-10$pp budget. Sycophancy and safety analogues are in App.~Fig.~\ref {fig:per_model_bars_sycophancy_app}--\ref {fig:per_model_bars_safety_app}}{figure.caption.15}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Cross-modal generalization: CelebA dual control regimes}{8}{subsection.5.3}\protected@file@percent }
-\newlabel{sec:celeba}{{5.3}{8}{Cross-modal generalization: CelebA dual control regimes}{subsection.5.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Setup.}{8}{section*.16}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {CelebA cross-modal results (CLIP ViT-B/32, 40 binary attributes).} Best-in-budget distance to the per-attribute majority-class chance: signed $S - S_{\text  {floor}}$ at the trajectory step closest to floor (in pp), and panels at floor ($|S-S_{\text  {floor}}| \le 0.5$pp) over panels reaching the budget. Each method is run on 40 attributes under each control regime (5 least- vs.\ 5 most-correlated controls per target). $\lambda $-based methods use $\lambda \approx 30$, matching the NLP setup. Best per column in \textbf  {bold}. `--' = no in-budget step at that budget for that method.}}{9}{table.caption.17}\protected@file@percent }
 \newlabel{tab:celeba_unified_summary}{{2}{9}{\textbf {CelebA cross-modal results (CLIP ViT-B/32, 40 binary attributes).} Best-in-budget distance to the per-attribute majority-class chance: signed $S - S_{\text {floor}}$ at the trajectory step closest to floor (in pp), and panels at floor ($|S-S_{\text {floor}}| \le 0.5$pp) over panels reaching the budget. Each method is run on 40 attributes under each control regime (5 least- vs.\ 5 most-correlated controls per target). $\lambda $-based methods use $\lambda \approx 30$, matching the NLP setup. Best per column in \textbf {bold}. `--' = no in-budget step at that budget for that method}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{9}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Two coupled mechanisms produce the surgicality gain.}{9}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why the gain is largest on gender.}{9}{section*.19}\protected@file@percent }
 \citation{aghajanyan-etal-2021-intrinsic}
 \citation{hu-etal-2022-lora}
 \citation{elazar-goldberg-2018-adversarial}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{10}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Two coupled mechanisms produce the surgicality gain.}{10}{section*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Why the gain is largest on gender.}{10}{section*.19}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Connection to low-rank fine-tuning.}{10}{section*.20}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}Limitations}{10}{section.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Single-seed snapshot.}{10}{section*.21}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Measurement scope.}{10}{section*.22}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Geometry as supporting evidence, not causal proof.}{10}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{10}{section.8}\protected@file@percent }
 \bibstyle{plainnat}
 \bibdata{references}
 \bibcite{aghajanyan-etal-2021-intrinsic}{{1}{2021}{{Aghajanyan et~al.}}{{Aghajanyan, Gupta, and Zettlemoyer}}}
@@ -113,7 +115,6 @@
 \bibcite{elazar-goldberg-2018-adversarial}{{6}{2018}{{Elazar and Goldberg}}{{}}}
 \bibcite{elazar-etal-2021-amnesic}{{7}{2021}{{Elazar et~al.}}{{Elazar, Ravfogel, Jacovi, and Goldberg}}}
 \bibcite{facco-etal-2017-two-nn}{{8}{2017}{{Facco et~al.}}{{Facco, d'Errico, Rodriguez, and Laio}}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{11}{section.8}\protected@file@percent }
 \bibcite{hu-etal-2022-lora}{{9}{2022}{{Hu et~al.}}{{Hu, Shen, Wallis, Allen-Zhu, Li, Wang, Wang, and Chen}}}
 \bibcite{iskander-etal-2023-shielded}{{10}{2023}{{Iskander et~al.}}{{Iskander, Radinsky, and Belinkov}}}
 \bibcite{ji-etal-2025-pku-saferlhf}{{11}{2025}{{Ji et~al.}}{{Ji, Hong, Zhang, Chen, Dai, Zheng, Qiu, Zhou, Wang, Li, Han, Guo, and Yang}}}
@@ -125,46 +126,46 @@
 \bibcite{singh-ravfogel-2024-representation-surgery}{{17}{2024}{{Singh et~al.}}{{Singh, Ravfogel, Herzig, Aharoni, Cotterell, and Kumaraguru}}}
 \bibcite{tu-2011-manifolds}{{18}{2011}{{Tu}}{{}}}
 \bibcite{zhang-zha-2004-ltsa}{{19}{2004}{{Zhang and Zha}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Phase-1 closed-form ablation}{13}{appendix.A}\protected@file@percent }
-\newlabel{sec:appendix_phase1_ablation}{{A}{13}{Phase-1 closed-form ablation}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Phase-1 closed-form ablation}{12}{appendix.A}\protected@file@percent }
+\newlabel{sec:appendix_phase1_ablation}{{A}{12}{Phase-1 closed-form ablation}{appendix.A}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {B}Per-model bar charts (sycophancy and safety)}{13}{appendix.B}\protected@file@percent }
 \newlabel{sec:appendix_per_model_bars}{{B}{13}{Per-model bar charts (sycophancy and safety)}{appendix.B}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Sycophancy: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}.}}{13}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:per_model_bars_sycophancy_app}{{2}{13}{\textbf {Sycophancy: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}}{figure.caption.26}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {C}NLP full per-panel breakdown}{13}{appendix.C}\protected@file@percent }
 \newlabel{sec:appendix_per_panel}{{C}{13}{NLP full per-panel breakdown}{appendix.C}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D}CelebA full per-attribute breakdown}{13}{appendix.D}\protected@file@percent }
-\newlabel{sec:appendix_celeba_extended}{{D}{13}{CelebA full per-attribute breakdown}{appendix.D}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E}Intuition: ``fraction of the local whitened neighborhood''}{13}{appendix.E}\protected@file@percent }
-\newlabel{sec:appendix_fmaha_intuition}{{E}{13}{Intuition: ``fraction of the local whitened neighborhood''}{appendix.E}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Sycophancy: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}.}}{14}{figure.caption.26}\protected@file@percent }
-\newlabel{fig:per_model_bars_sycophancy_app}{{2}{14}{\textbf {Sycophancy: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}}{figure.caption.26}{}}
-\@writefile{toc}{\contentsline {paragraph}{Reading the trust region as a budget.}{14}{section*.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Worked example.}{14}{section*.32}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Safety: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}.}}{15}{figure.caption.27}\protected@file@percent }
-\newlabel{fig:per_model_bars_safety_app}{{3}{15}{\textbf {Safety: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}}{figure.caption.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Safety: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}.}}{14}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:per_model_bars_safety_app}{{3}{14}{\textbf {Safety: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref {fig:per_model_bars_gender}}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}CelebA full per-attribute breakdown}{14}{appendix.D}\protected@file@percent }
+\newlabel{sec:appendix_celeba_extended}{{D}{14}{CelebA full per-attribute breakdown}{appendix.D}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}Intuition: ``fraction of the local whitened neighborhood''}{14}{appendix.E}\protected@file@percent }
+\newlabel{sec:appendix_fmaha_intuition}{{E}{14}{Intuition: ``fraction of the local whitened neighborhood''}{appendix.E}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl  (|S^{\text  {Obliv}} - S_{\text  {floor}}| - |S^{TanGCE{}} - S_{\text  {floor}}|\bigr  )\!\times \!100$ on panels where both methods reach the budget; positive (blue) = TanGCE{} closer to floor. Hatched dark-blue ($^{\star }$) marks walkover panels where TanGCE{} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded.}}{15}{figure.caption.30}\protected@file@percent }
+\newlabel{fig:per_attr_bars_celeba}{{4}{15}{\textbf {CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl (|S^{\text {Obliv}} - S_{\text {floor}}| - |S^{\TanGCE {}} - S_{\text {floor}}|\bigr )\!\times \!100$ on panels where both methods reach the budget; positive (blue) = \TanGCE {} closer to floor. Hatched dark-blue ($^{\star }$) marks walkover panels where \TanGCE {} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded}{figure.caption.30}{}}
+\@writefile{toc}{\contentsline {paragraph}{Reading the trust region as a budget.}{15}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Worked example.}{15}{section*.32}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Comparison with the Euclidean radius.}{15}{section*.33}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Mental model.}{15}{section*.34}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl  (|S^{\text  {Obliv}} - S_{\text  {floor}}| - |S^{TanGCE{}} - S_{\text  {floor}}|\bigr  )\!\times \!100$ on panels where both methods reach the budget; positive (blue) = TanGCE{} closer to floor. Hatched dark-blue ($^{\star }$) marks walkover panels where TanGCE{} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded.}}{16}{figure.caption.30}\protected@file@percent }
-\newlabel{fig:per_attr_bars_celeba}{{4}{16}{\textbf {CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl (|S^{\text {Obliv}} - S_{\text {floor}}| - |S^{\TanGCE {}} - S_{\text {floor}}|\bigr )\!\times \!100$ on panels where both methods reach the budget; positive (blue) = \TanGCE {} closer to floor. Hatched dark-blue ($^{\star }$) marks walkover panels where \TanGCE {} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded}{figure.caption.30}{}}
 \@writefile{toc}{\contentsline {paragraph}{Why $\varepsilon $ transfers across datasets without per-panel tuning.}{16}{section*.35}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {F}CelebA control-set construction (least- vs.\ most-correlated five attributes)}{16}{appendix.F}\protected@file@percent }
 \newlabel{sec:appendix_celeba_controls}{{F}{16}{CelebA control-set construction (least- vs.\ most-correlated five attributes)}{appendix.F}{}}
 \@writefile{toc}{\contentsline {paragraph}{Computation.}{16}{section*.36}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Concrete examples.}{17}{section*.37}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Why two regimes per concept.}{17}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Concrete examples.}{16}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why two regimes per concept.}{16}{section*.38}\protected@file@percent }
+\citation{tu-2011-manifolds}
 \@writefile{toc}{\contentsline {section}{\numberline {G}Closed-form per-row $\lambda _i$ statistics}{17}{appendix.G}\protected@file@percent }
 \newlabel{sec:appendix_lambda_stats}{{G}{17}{Closed-form per-row $\lambda _i$ statistics}{appendix.G}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {H}Anisotropy regimes for the local-$\sigma $ spectrum}{17}{appendix.H}\protected@file@percent }
 \newlabel{sec:appendix_alpha_regimes}{{H}{17}{Anisotropy regimes for the local-$\sigma $ spectrum}{appendix.H}{}}
 \@writefile{toc}{\contentsline {paragraph}{Relation to Mahalanobis whitening (and what $\alpha = 1$ is \emph  {not}).}{17}{section*.40}\protected@file@percent }
-\citation{tu-2011-manifolds}
-\@writefile{toc}{\contentsline {section}{\numberline {I}Coordinate-chart definition of the tangent space}{18}{appendix.I}\protected@file@percent }
-\newlabel{sec:appendix_geometry}{{I}{18}{Coordinate-chart definition of the tangent space}{appendix.I}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Coordinate-chart definition of the tangent space}{17}{appendix.I}\protected@file@percent }
+\newlabel{sec:appendix_geometry}{{I}{17}{Coordinate-chart definition of the tangent space}{appendix.I}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Phase-1 closed-form ablations on the 39-panel NLP grid (50\%-depth layer).} Same fresh nonlinear probe ($h=128$, 200 SGD steps, patience 3) is trained on each post-erasure representation. \emph  {LEACE} is the affine LEACE eraser. \emph  {LEACE\,+\,CovMatch K=2} additionally projects out the top-2 eigenvectors of $\Delta \Sigma = \Sigma _{+} - \Sigma _{-}$ (rank-3 closed-form erasure total). \emph  {TanGCE} is the proposed full pipeline (Phase 1 + iterative tangent loop, $\varepsilon {=}0.1$); we report the best $|S{-}\text  {floor}|$ trajectory step subject to $\Delta Y \geq -5$pp. NL = nonlinear probe accuracy on test (lower is better; floor is the per-panel majority class). $\Delta Y$ in pp on the control task. Bold marks the row's NL minimum.}}{19}{table.caption.25}\protected@file@percent }
 \newlabel{tab:leace_vs_tangce_nlp}{{3}{19}{\textbf {Phase-1 closed-form ablations on the 39-panel NLP grid (50\%-depth layer).} Same fresh nonlinear probe ($h=128$, 200 SGD steps, patience 3) is trained on each post-erasure representation. \emph {LEACE} is the affine LEACE eraser. \emph {LEACE\,+\,CovMatch K=2} additionally projects out the top-2 eigenvectors of $\Delta \Sigma = \Sigma _{+} - \Sigma _{-}$ (rank-3 closed-form erasure total). \emph {TanGCE} is the proposed full pipeline (Phase 1 + iterative tangent loop, $\varepsilon {=}0.1$); we report the best $|S{-}\text {floor}|$ trajectory step subject to $\Delta Y \geq -5$pp. NL = nonlinear probe accuracy on test (lower is better; floor is the per-panel majority class). $\Delta Y$ in pp on the control task. Bold marks the row's NL minimum}{table.caption.25}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Per-panel breakdown.} Signed $(S-S_{\text  {floor}})$ in pp at the trajectory step closest to the per-panel majority-class floor, subject to $|\Delta Y| \le B$pp control-damage budget. Bold = best (smallest absolute deviation from floor) per panel per budget block. `--' = no in-budget step at that budget for that method. Final rows: per-budget per-method mean across the 39 panels and TanGCE{} W/T/L counts vs.\ the best other method (0.5pp tie band).}}{20}{table.caption.28}\protected@file@percent }
 \newlabel{tab:per_panel_breakdown}{{4}{20}{\textbf {Per-panel breakdown.} Signed $(S-S_{\text {floor}})$ in pp at the trajectory step closest to the per-panel majority-class floor, subject to $|\Delta Y| \le B$pp control-damage budget. Bold = best (smallest absolute deviation from floor) per panel per budget block. `--' = no in-budget step at that budget for that method. Final rows: per-budget per-method mean across the 39 panels and \TanGCE {} W/T/L counts vs.\ the best other method (0.5pp tie band)}{table.caption.28}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \textbf  {CelebA per-attribute breakdown (40 attributes $\times $ 2 control regimes).} Signed $(S-S_{\text  {floor}})$ in pp at the trajectory step closest to the per-attribute majority-class floor, subject to mean $\Delta Y \ge -5$pp on the 5 controls. Bold = best (smallest absolute deviation from floor) per attribute per regime block. `--' = no in-budget step at that budget for that method. Final rows: per-regime per-method mean and TanGCE{} W/T/L counts vs.\ the best other method (0.5pp tie band).}}{21}{table.caption.29}\protected@file@percent }
 \newlabel{tab:celeba_per_panel_breakdown}{{5}{21}{\textbf {CelebA per-attribute breakdown (40 attributes $\times $ 2 control regimes).} Signed $(S-S_{\text {floor}})$ in pp at the trajectory step closest to the per-attribute majority-class floor, subject to mean $\Delta Y \ge -5$pp on the 5 controls. Bold = best (smallest absolute deviation from floor) per attribute per regime block. `--' = no in-budget step at that budget for that method. Final rows: per-regime per-method mean and \TanGCE {} W/T/L counts vs.\ the best other method (0.5pp tie band)}{table.caption.29}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces \textbf  {Per-row $\lambda _i$ statistics for the proposed method ($\varepsilon = 0.1$, $\lambda _{\max }=64$) on the 39-panel NLP grid at 50\%-depth.} Each cell averages the per-row $\lambda _i$ first across all 60 outer iterations of one trajectory, then across the 13 model panels of the concept. The within-panel $p_{10}/p_{90}$ spread (mean across panels) is roughly $14/45$, i.e.\ a $\sim $10$\times $ ratio between the least- and most-confident rows in a single iteration. The safety cap $\lambda _{\max }=64$ is observed only sporadically (max 57.32 across 39$\times $60 = 2340 iterations); the closed-form rule rarely binds against it.}}{21}{table.caption.39}\protected@file@percent }
-\newlabel{tab:lambda_stats}{{6}{21}{\textbf {Per-row $\lambda _i$ statistics for the proposed method ($\varepsilon = 0.1$, $\lambda _{\max }=64$) on the 39-panel NLP grid at 50\%-depth.} Each cell averages the per-row $\lambda _i$ first across all 60 outer iterations of one trajectory, then across the 13 model panels of the concept. The within-panel $p_{10}/p_{90}$ spread (mean across panels) is roughly $14/45$, i.e.\ a $\sim $10$\times $ ratio between the least- and most-confident rows in a single iteration. The safety cap $\lambda _{\max }=64$ is observed only sporadically (max 57.32 across 39$\times $60 = 2340 iterations); the closed-form rule rarely binds against it}{table.caption.39}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces \textbf  {Per-row $\lambda _i$ statistics for the proposed algorithm ($\varepsilon = 0.1$, $\lambda _{\max }=64$) on the 39-panel NLP grid at 50\%-depth.} Each cell averages the per-row $\lambda _i$ first across all 60 outer iterations of one trajectory, then across the 13 model panels of the concept. The within-panel $p_{10}/p_{90}$ spread (mean across panels) is roughly $14/45$, i.e.\ a $\sim $10$\times $ ratio between the least- and most-confident rows in a single iteration. The safety cap $\lambda _{\max }=64$ is observed only sporadically (max 57.32 across 39$\times $60 = 2340 iterations); the closed-form rule rarely binds against it.}}{21}{table.caption.39}\protected@file@percent }
+\newlabel{tab:lambda_stats}{{6}{21}{\textbf {Per-row $\lambda _i$ statistics for the proposed algorithm ($\varepsilon = 0.1$, $\lambda _{\max }=64$) on the 39-panel NLP grid at 50\%-depth.} Each cell averages the per-row $\lambda _i$ first across all 60 outer iterations of one trajectory, then across the 13 model panels of the concept. The within-panel $p_{10}/p_{90}$ spread (mean across panels) is roughly $14/45$, i.e.\ a $\sim $10$\times $ ratio between the least- and most-confident rows in a single iteration. The safety cap $\lambda _{\max }=64$ is observed only sporadically (max 57.32 across 39$\times $60 = 2340 iterations); the closed-form rule rarely binds against it}{table.caption.39}{}}
 \gdef \@abspage@last{21}

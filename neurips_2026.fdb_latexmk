@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex neurips_2026"] 1777928487.33432 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777928491.643 0
+["bibtex neurips_2026"] 1777928375.37237 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777928379.77065 0
   "./references.bib" 1777927506.92798 11311 4e455129ac0a811e5f7629439585baf8 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "neurips_2026.aux" 1777928491.45827 27135 e31690b53539d44f4acfdf84fc1391d1 "pdflatex"
+  "neurips_2026.aux" 1777928379.58921 27169 a4f5ed84dfb6bc933570fe53d50f5f93 "pdflatex"
   (generated)
   "neurips_2026.bbl"
   "neurips_2026.blg"
   (rewritten before read)
-["pdflatex"] 1777928487.36341 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777928491.64333 0
+["pdflatex"] 1777928375.40589 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777928379.77117 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -178,23 +178,23 @@
   "figures/per_model_bars_gender.png" 1777897662.67504 181101 c0802a4d6d301992aa7be056b8663164 ""
   "figures/per_model_bars_safety.png" 1777897662.67904 194074 4dd32146c6329929ffb066a957dd7b2e ""
   "figures/per_model_bars_sycophancy.png" 1777897662.68204 191822 345ec3e1ace23bee47597fe3a3a19f1a ""
-  "neurips_2026.aux" 1777928491.45827 27135 e31690b53539d44f4acfdf84fc1391d1 "pdflatex"
-  "neurips_2026.bbl" 1777928487.35623 10893 526854c8ab2b408b7df5ca13368c0f81 "bibtex neurips_2026"
-  "neurips_2026.out" 1777928491.46327 6278 909343a63fe5260902ed4b0eba4e8333 "pdflatex"
+  "neurips_2026.aux" 1777928379.58921 27169 a4f5ed84dfb6bc933570fe53d50f5f93 "pdflatex"
+  "neurips_2026.bbl" 1777928375.39717 10893 526854c8ab2b408b7df5ca13368c0f81 "bibtex neurips_2026"
+  "neurips_2026.out" 1777928379.59321 6278 909343a63fe5260902ed4b0eba4e8333 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
   "neurips_2026.tex" 1777899763.06096 5574 ad024a5dc89ab6a8d0c8604dccf794a7 ""
   "sections/abstract.tex" 1777897662.45904 1529 2a28050b79f4243b5eb242fc21f1e325 ""
-  "sections/appendix_results.tex" 1777928477.92814 20165 a0bea929dd525eaa7db6be57e5557175 ""
-  "sections/conclusion.tex" 1777928477.90314 1634 38822ca51152c8231eb750d78968416f ""
+  "sections/appendix_results.tex" 1777928364.55007 20171 83438fc51c00ebc11748f77016bcb3ea ""
+  "sections/conclusion.tex" 1777928342.33786 1640 4edecb8dd039b1f10cb5f8c148056027 ""
   "sections/discussion.tex" 1777915065.74576 3200 11b30136539bdddc9eb9b2768eb0444e ""
   "sections/evaluation.tex" 1777888880.62795 871 b4facc56ce9867b369c3f843b20465fb ""
-  "sections/experiments.tex" 1777928477.89614 2971 c9dbc8683ec9b110f3ee770991072630 ""
-  "sections/introduction.tex" 1777928477.92014 7095 1efd9781f5ab015406e076e9d345312e ""
+  "sections/experiments.tex" 1777928327.29272 2980 804caddd3dd0cdb40d619b23f10cb7e3 ""
+  "sections/introduction.tex" 1777928305.98352 5795 64f7ca40bf3abad71ebd9a32a4ab8a28 ""
   "sections/limitations.tex" 1777889986.36254 1636 064cdafe9815ca1a377ce49fbbaaade3 ""
   "sections/method.tex" 1777927523.65914 12262 0b083a9abe4c8d408742f2882fbd2682 ""
   "sections/notation.tex" 1777888264.80407 2141 e47cb806d923f56682640742ae9b691e ""
   "sections/related_work.tex" 1777913735.58412 1919 e8526a00ce05ba3fe482a7b8e3231a7d ""
-  "sections/results.tex" 1777928477.91314 7387 8d588bf88a2ed2b72e2148115fc9ae43 ""
+  "sections/results.tex" 1777928348.36392 7390 e4668352d08066d1882ce92daed1f676 ""
   "tables/celeba_per_panel_breakdown.tex" 1777913482.02572 8970 6b0403d4ac2b59b173834ffdc2c0f773 ""
   "tables/celeba_unified_summary.tex" 1777913479.69369 2716 6719d27afb61be23f58f8c6cfc4df661 ""
   "tables/leace_vs_tangce_nlp.tex" 1777885336.60519 4978 0b3e9b8d4881a7e8a4168ac5023adb4e ""
