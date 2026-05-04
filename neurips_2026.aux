@@ -54,8 +54,8 @@
 \newlabel{eq:s_fmaha}{{11}{5}{Anisotropy-aware local scale (FMaHa)}{equation.11}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Anisotropic update via the local $\sigma $-spectrum}{5}{subsection.4.5}\protected@file@percent }
 \newlabel{sec:cov_tangce}{{4.5}{5}{Anisotropic update via the local \texorpdfstring {$\sigma $}{sigma}-spectrum}{subsection.4.5}{}}
-\newlabel{eq:tangent_erase_cov}{{12}{5}{Anisotropic update via the local \texorpdfstring {$\sigma $}{sigma}-spectrum}{equation.12}{}}
-\@writefile{toc}{\contentsline {paragraph}{Relation to Mahalanobis.}{5}{section*.8}\protected@file@percent }
+\newlabel{eq:tangent_erase_sigma}{{12}{5}{Anisotropic update via the local \texorpdfstring {$\sigma $}{sigma}-spectrum}{equation.12}{}}
+\@writefile{toc}{\contentsline {paragraph}{Relation to local covariance and Mahalanobis scaling.}{5}{section*.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Iterative loop and relation to baselines}{5}{subsection.4.6}\protected@file@percent }
 \citation{perez-etal-2022-model-written}
 \citation{dearteaga-etal-2019-bias}
@@ -88,23 +88,23 @@
 \@writefile{toc}{\contentsline {paragraph}{Setup.}{7}{section*.16}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Gender (Bias in Bios): per-model nonlinear-probe accuracy at four control-damage budgets.} Each row is one budget; each model group has three bars — gray = clean, blue = TanGCE{} ($\varepsilon {=}0.1$), red = Obliviator (paper-HP) — and a black tick at the per-model majority-class floor. Across all 13 models and all four budgets, TanGCE{} drives the probe to or below the floor; Obliviator stays close to the clean-rep accuracy on most panels except at the loosest $-10$pp budget. Sycophancy and safety analogues are in App.~Fig.~\ref {fig:per_model_bars_sycophancy_app}--\ref {fig:per_model_bars_safety_app}.}}{8}{figure.caption.15}\protected@file@percent }
 \newlabel{fig:per_model_bars_gender}{{1}{8}{\textbf {Gender (Bias in Bios): per-model nonlinear-probe accuracy at four control-damage budgets.} Each row is one budget; each model group has three bars — gray = clean, blue = \TanGCE {} ($\varepsilon {=}0.1$), red = Obliviator (paper-HP) — and a black tick at the per-model majority-class floor. Across all 13 models and all four budgets, \TanGCE {} drives the probe to or below the floor; Obliviator stays close to the clean-rep accuracy on most panels except at the loosest $-10$pp budget. Sycophancy and safety analogues are in App.~Fig.~\ref {fig:per_model_bars_sycophancy_app}--\ref {fig:per_model_bars_safety_app}}{figure.caption.15}{}}
-\citation{aghajanyan-etal-2021-intrinsic}
-\citation{hu-etal-2022-lora}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {CelebA cross-modal results (CLIP ViT-B/32, 40 binary attributes).} Best-in-budget distance to the per-attribute majority-class chance: signed $S - S_{\text  {floor}}$ at the trajectory step closest to floor (in pp), and panels at floor ($|S-S_{\text  {floor}}| \le 0.5$pp) over panels reaching the budget. Each method is run on 40 attributes under each control regime (5 least- vs.\ 5 most-correlated controls per target). $\lambda $-based methods use $\lambda \approx 30$, matching the NLP setup. Best per column in \textbf  {bold}. `--' = no in-budget step at that budget for that method.}}{9}{table.caption.17}\protected@file@percent }
 \newlabel{tab:celeba_unified_summary}{{2}{9}{\textbf {CelebA cross-modal results (CLIP ViT-B/32, 40 binary attributes).} Best-in-budget distance to the per-attribute majority-class chance: signed $S - S_{\text {floor}}$ at the trajectory step closest to floor (in pp), and panels at floor ($|S-S_{\text {floor}}| \le 0.5$pp) over panels reaching the budget. Each method is run on 40 attributes under each control regime (5 least- vs.\ 5 most-correlated controls per target). $\lambda $-based methods use $\lambda \approx 30$, matching the NLP setup. Best per column in \textbf {bold}. `--' = no in-budget step at that budget for that method}{table.caption.17}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{9}{section.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Two coupled mechanisms produce the surgicality gain.}{9}{section*.18}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Why the gain is largest on gender.}{9}{section*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Connection to low-rank fine-tuning.}{9}{section*.20}\protected@file@percent }
+\citation{aghajanyan-etal-2021-intrinsic}
+\citation{hu-etal-2022-lora}
 \citation{elazar-goldberg-2018-adversarial}
-\bibstyle{plainnat}
-\bibdata{references}
-\bibcite{aghajanyan-etal-2021-intrinsic}{{1}{2021}{{Aghajanyan et~al.}}{{Aghajanyan, Gupta, and Zettlemoyer}}}
+\@writefile{toc}{\contentsline {paragraph}{Connection to low-rank fine-tuning.}{10}{section*.20}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}Limitations}{10}{section.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Single-seed snapshot.}{10}{section*.21}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Measurement scope.}{10}{section*.22}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Geometry as supporting evidence, not causal proof.}{10}{section*.23}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{10}{section.8}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{aghajanyan-etal-2021-intrinsic}{{1}{2021}{{Aghajanyan et~al.}}{{Aghajanyan, Gupta, and Zettlemoyer}}}
 \bibcite{akbari-etal-2026-obliviator}{{2}{2026}{{Akbari et~al.}}{{Akbari, Afshari, and Boddeti}}}
 \bibcite{avitan-etal-2025-practical}{{3}{2025}{{Avitan et~al.}}{{Avitan, Cotterell, Goldberg, and Ravfogel}}}
 \bibcite{belrose-etal-2023-leace}{{4}{2023}{{Belrose et~al.}}{{Belrose, Schneider-Joseph, Ravfogel, Cotterell, Raff, and Biderman}}}
@@ -196,9 +196,9 @@
 \@writefile{toc}{\contentsline {paragraph}{Why two regimes per concept.}{26}{section*.45}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {K}Closed-form per-row $\lambda _i$ statistics}{26}{appendix.K}\protected@file@percent }
 \newlabel{sec:appendix_lambda_stats}{{K}{26}{Closed-form per-row $\lambda _i$ statistics}{appendix.K}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {L}Anisotropy regimes for $\mathbf  {C}_i^{\alpha }$}{26}{appendix.L}\protected@file@percent }
-\newlabel{sec:appendix_alpha_regimes}{{L}{26}{Anisotropy regimes for $\mathbf {C}_i^{\alpha }$}{appendix.L}{}}
-\@writefile{toc}{\contentsline {paragraph}{Relation to Mahalanobis whitening (and what $\alpha = \tfrac  {1}{2}$ is \emph  {not}).}{26}{section*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {L}Anisotropy regimes for the local-$\sigma $ spectrum}{26}{appendix.L}\protected@file@percent }
+\newlabel{sec:appendix_alpha_regimes}{{L}{26}{Anisotropy regimes for the local-$\sigma $ spectrum}{appendix.L}{}}
+\@writefile{toc}{\contentsline {paragraph}{Relation to Mahalanobis whitening (and what $\alpha = 1$ is \emph  {not}).}{26}{section*.47}\protected@file@percent }
 \citation{tu-2011-manifolds}
 \@writefile{toc}{\contentsline {section}{\numberline {M}Coordinate-chart definition of the tangent space}{27}{appendix.M}\protected@file@percent }
 \newlabel{sec:appendix_geometry}{{M}{27}{Coordinate-chart definition of the tangent space}{appendix.M}{}}

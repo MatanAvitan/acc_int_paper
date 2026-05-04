@@ -12,11 +12,11 @@
 \STATE \textbf{Phase~1 -- closed-form moment preprocessing} (Eqs.~\ref{eq:delta_sigma}--\ref{eq:covmatch_apply}):
 \STATE \hspace{1em} \textbf{1a.} $\mathbf{X} \leftarrow \mathrm{LEACE}_{\mathbf{y}}(\mathbf{X})$ \hfill (rank-1 mean projection)
 \STATE \hspace{1em} \textbf{1b.} $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$, with $\mathbf{D}$ = top-2 eigvecs of $\Delta\mathbf{\Sigma}$ \hfill (rank-2 covariance projection)
-\STATE \textbf{Phase~2 -- iterative tangent step} (Eqs.~\ref{eq:tangent_proj}--\ref{eq:tangent_erase_cov}):
+\STATE \textbf{Phase~2 -- iterative tangent step} (Eqs.~\ref{eq:tangent_proj}--\ref{eq:tangent_erase_sigma}):
 \FOR{$t = 1, \ldots, T$}
  \STATE Train a fresh 2-layer MLP scorer $f_t$ (hidden $h$) on the current $(\mathbf{X}, \mathbf{y})$.
  \STATE \textbf{For each row $\mathbf{x}_i$}: tangent-projected, $\sigma$-preconditioned trust-region step
- \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \cdot \mathbf{C}_i^{1/2} \cdot \mathbf{P}_{T_i} \nabla f_t(\mathbf{x}_i), \quad \|\Delta\mathbf{x}_i\|_2 \leq \varepsilon \cdot s_i.$
+ \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k}^{\alpha} \, a_{i,k} \, \mathbf{v}_i^{(k)}, \quad \|\Delta\mathbf{x}_i\|_2 \leq \varepsilon \cdot s_i, \quad \alpha = 1.$
 \ENDFOR
 \STATE \textbf{return} edited $\mathbf{X}$.
 \end{algorithmic}
@@ -107,18 +107,21 @@ with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$ and $s_i^{\mat
 \subsection{Anisotropic update via the local \texorpdfstring{$\sigma$}{sigma}-spectrum}
 \label{sec:cov_tangce}
 
-The closed-form $\lambda_i$ controls the magnitude of each step; its direction is still isotropic in the tangent basis. The local SVD already exposes anisotropy — the squared singular values $\sigma_{i,k}^2$ differ by orders of magnitude across $k$. An isotropic step over-edits thin tail directions where the linear approximation is fragile, and under-edits dominant directions where the manifold easily accommodates motion.
+The closed-form $\lambda_i$ controls the magnitude of each step, but the direction of Eq.~\ref{eq:tangent_erase} is still isotropic in the tangent basis. The local SVD already exposes anisotropy: the singular values $\sigma_{i,k}$ can vary substantially across tangent axes. An isotropic tangent step can therefore over-edit thin directions where the local linear approximation is fragile, while under-using directions along which the neighborhood actually extends.
 
-We replace Eq.~\ref{eq:tangent_erase} with a covariance-preconditioned step,
+We replace Eq.~\ref{eq:tangent_erase} with a local-$\sigma$-preconditioned tangent step,
 \begin{equation}
-\label{eq:tangent_erase_cov}
-\boxed{\;\;\tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{1/2} \, \mathbf{v}_i = \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k} \, a_{i,k} \, \mathbf{v}_i^{(k)}\;\;}
+\label{eq:tangent_erase_sigma}
+\boxed{\;\;
+\tilde{\mathbf{x}}_i \;=\; \mathbf{x}_i \;-\; \lambda_i \sum_{k=1}^{r} \sigma_{i,k}^{\alpha} \, a_{i,k} \, \mathbf{v}_i^{(k)}
+\;\;}
 \end{equation}
-where $a_{i,k} = \langle \mathbf{v}_i, \mathbf{v}_i^{(k)} \rangle$ are the SVD-basis coordinates of $\mathbf{v}_i$. Each tangent coefficient is reweighted by its singular value: the update moves more along high-$\sigma$ directions and less along thin ones.
+where $a_{i,k} = \langle \mathbf{v}_i, \mathbf{v}_i^{(k)} \rangle$ are the coordinates of the unpreconditioned tangent displacement $\mathbf{v}_i$ in the local SVD basis $\{\mathbf{v}_i^{(k)}\}_{k=1}^{r}$. We use $\alpha = 1$ in the main experiments. Each tangent coefficient is then scaled by the local extent of the neighborhood along that axis: high-$\sigma$ directions receive larger updates, while thin directions are suppressed.
 
-\paragraph{Relation to Mahalanobis.} Mahalanobis distance normalizes by a \emph{global} covariance $\mathbf{\Sigma}^{-1/2}$. Eq.~\ref{eq:tangent_erase_cov} normalizes by a \emph{local, per-direction} factor $\sigma_{i,k}$ instead. This choice is forced by the geometry: we have already decomposed the tangent step in the local SVD eigenvector coordinates $\{\mathbf{v}_i^{(k)}\}$, and the natural per-axis normalization in those coordinates is the corresponding eigenvalues. The general $\mathbf{C}_i^{\alpha}$ family is detailed in App.~\ref{sec:appendix_alpha_regimes}; we use $\alpha = \tfrac{1}{2}$ (positive half-power) throughout, never the whitening sign $\alpha = -\tfrac{1}{2}$.
+\paragraph{Relation to local covariance and Mahalanobis scaling.}
+The update can also be viewed as applying a positive spectral power of the local secant covariance. The empirical covariance of the centered secants has eigenvectors $\mathbf{v}_i^{(k)}$ and eigenvalues proportional to $\sigma_{i,k}^2$, so scaling each tangent coordinate by $\sigma_{i,k}$ corresponds, up to a global constant, to applying the positive square root of this local covariance ($\mathbf{C}_i^{1/2}$). This is the opposite of whitening: Mahalanobis normalization downweights high-variance directions through an inverse covariance power, whereas we use a positive power to move preferentially along directions that are well supported by nearby representations. The full $\sigma_{i,k}^{\alpha}$ family with $\alpha \in \{0, 1, 2\}$ — corresponding to isotropic, our default, and the natural-gradient / full-Mahalanobis trust-region optimum — is detailed in App.~\ref{sec:appendix_alpha_regimes}.
 
-The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning (replacing $\|\mathbf{v}_i\|$ by $\|\mathbf{C}_i^{1/2}\mathbf{v}_i\|$ in the denominator), so the displacement still respects $\varepsilon \cdot s_i$. Anisotropy reshapes the \emph{direction} of the step, not its budget.
+The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning (replacing $\|\mathbf{v}_i\|$ by the norm of the preconditioned displacement in the denominator), so the actual ambient move still respects $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i$. Anisotropy reshapes the \emph{direction} of the step, not its budget.
 
 \subsection{Iterative loop and relation to baselines}
 
