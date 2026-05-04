@@ -69,7 +69,7 @@ Tab.~\ref{tab:celeba_clip_all40} aggregates the per-attribute results across all
 
 \input{tables/celeba_clip_all40_summary}
 
-Fig.~\ref{fig:per_attr_bars_celeba} reports the per-attribute version of the main-text Pareto comparison (Fig.~\ref{fig:pareto_sota_obliv_floor}) on the CelebA grid, separately for the 5-least- and 5-most-correlated control regimes. The walkover$^{\star}$ bars on the most-correlated regime mark attributes where Obliviator's first trajectory step already exceeds the budget; \TanGCE{} retains an admissible operating point.
+Fig.~\ref{fig:per_attr_bars_celeba} reports the per-attribute floor-distance win-margin between \TanGCE{} and Obliviator on the CelebA grid, separately for the 5-least- and 5-most-correlated control regimes. The walkover$^{\star}$ bars on the most-correlated regime mark attributes where Obliviator's first trajectory step already exceeds the budget; \TanGCE{} retains an admissible operating point.
 
 \begin{figure}[h]
 \centering
@@ -223,11 +223,4 @@ T_{\mathbf{x}}\mathcal{M} = d(\varphi^{-1})_{0}(\mathbb{R}^m) \subset \mathbb{R}
 where $d(\varphi^{-1})_0$ is the differential of $\varphi^{-1}$ at the origin (its Jacobian, in ML language). It maps an infinitesimal coordinate displacement in $\mathbb{R}^m$ to the corresponding first-order ambient displacement. Because $\mathcal{M}$ is embedded in $\mathbb{R}^d$, $T_{\mathbf{x}}\mathcal{M}$ is an $m$-dimensional linear subspace of the ambient hidden space.
 
 In \TanGCE{} we never construct $\varphi$ or $\varphi^{-1}$. The leading right singular vectors of the local secant matrix (Eq.~\ref{eq:secant_svd}) serve as an empirical first-order basis for $T_{\mathbf{x}}\mathcal{M}$, and the orthogonal projector $\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top$ implements the tangent component $\mathbf{g}^{\top}$ of any ambient vector $\mathbf{g}$. We do not claim that $\mathcal{M}$ is smooth in any theorem-level sense, only that this approximation tracks the local sample structure well enough to attenuate updates in directions unsupported by it.
-
-\section{Per-panel breakdown of the headline comparison}
-\label{sec:appendix_per_panel}
-
-Table~\ref{tab:per_panel_breakdown} reports, for every one of the 39 NLP panels and each of the four control-damage budgets used in the main text, the signed deviation from the per-panel majority-class floor for all five methods compared in Tab.~\ref{tab:main_results_unified}. Each entry is the trajectory step closest to floor (smallest $|S - S_{\text{floor}}|$) subject to the budget. The trailing \emph{\TanGCE{} W/T/L} row counts panels where \TanGCE{} is strictly closer to floor than the best other method (W), within $0.5$pp of it (T), or strictly further (L).
-
-\input{tables/per_panel_breakdown}
 

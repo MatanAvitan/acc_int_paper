@@ -2,26 +2,17 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{Headline: distance to majority-class chance under control-damage budgets}
+\subsection{Headline: per-panel comparison and overall floor distance}
 \label{sec:multi_model}
 
-Tab.~\ref{tab:main_results_unified} reports the headline number for each method at four control-damage budgets. For each panel and budget $B \in \{1, 3, 5, 10\}$pp we extract the trajectory step closest to the per-panel majority-class floor (smallest $|S - S_{\text{floor}}|$) subject to $|Y_{\text{clean}} - Y| \le B/100$. Reported is the signed $(S - S_{\text{floor}})$ in pp averaged across the 39 panels; $0$ corresponds to majority-class chance, lower in absolute value is better. The right sub-column of each block reports panels at floor ($|S - S_{\text{floor}}| \le 0.5$pp) over panels reaching the budget.
+Tab.~\ref{tab:per_panel_breakdown} reports, for each of the 39 NLP panels and each of four control-damage budgets, the signed deviation from the per-panel majority-class floor for all five methods. For each panel and budget $B \in \{1,3,5,10\}$pp we extract the trajectory step closest to floor (smallest $|S - S_{\text{floor}}|$) subject to $|Y_{\text{clean}} - Y| \le B/100$ and report $(S - S_{\text{floor}})$ in pp. Bold marks the row-best per budget block. The trailing rows summarize across the 39 panels: per-method mean and the \TanGCE{} W/T/L count vs.\ the best other method (0.5pp tie band).
 
-\input{tables/main_results_unified}
+\input{tables/per_panel_breakdown}
 
-\TanGCE{} is the only method whose mean approaches the floor at every budget: $+2.6 \to +0.4$pp from $\le 1$pp to $\le 10$pp. Obliviator plateaus at $+4.0 \to +2.7$pp; \AmbGCE{}-vanilla — same trust region, no tangent constraint — leaves $+7$ to $+10$pp and fails to reach the budget on $6$ to $15$ of $39$ panels. LEACE alone leaves an $\approx 18$pp gap; closed-form rank-2 covariance matching halves it. The per-panel breakdown across all 5 methods at all 4 budgets is in App.~Tab.~\ref{tab:per_panel_breakdown}; the 8-method legacy comparison including Random Global, Random Per-Sample, Linear Projection, INLP, IGBP, and GCE-Ambient under global-$\lambda$ HPO is in App.~\ref{sec:appendix_legacy_multimodel}.
+\TanGCE{} is the only method whose overall mean approaches the floor at every budget ($+2.6 \to +0.4$pp from $\le 1$pp to $\le 10$pp); Obliviator plateaus at $+4.0$ then $+2.7$pp; \AmbGCE{}-vanilla leaves $+7$ to $+10$pp and fails to reach the budget on $6$ to $15$ of $39$ panels; LEACE alone leaves an $\approx 18$pp gap that closed-form rank-2 covariance matching halves. The per-panel breakdown shows the same pattern at panel granularity: \TanGCE{} wins or ties on $33$ to $36$ of $39$ panels at every budget. The 8-method legacy comparison including Random Global, Random Per-Sample, Linear Projection, INLP, IGBP, and GCE-Ambient under global-$\lambda$ HPO is in App.~\ref{sec:appendix_legacy_multimodel}.
 
-\subsection{Pareto vs.\ Obliviator: surgicality is the manifold-awareness signal}
+\subsection{Per-model bars and the surgicality signal}
 \label{sec:pareto_obliviator}
-
-Fig.~\ref{fig:pareto_sota_obliv_floor} reports the per-panel floor-distance win-margin against Obliviator across the 39-panel grid. \TanGCE{} is closer to floor at every budget on every panel, with zero strict losses outside the $\pm 5$pp tie band. Mean margin: $+1.7 / +2.7 / +3.4 / +2.3$pp at the four budgets; reach-floor $26\!-\!33/39$ for \TanGCE{} versus $22\!-\!26/39$ for Obliviator.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png}
-\caption{Floor-distance win-margin (\TanGCE{} $-$ Obliviator) per panel under control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$ pp. Each row is one (model, concept) panel; positive (blue) = \TanGCE{} closer to floor. Tie band $\pm 5$pp shaded.}
-\label{fig:pareto_sota_obliv_floor}
-\end{figure}
 
 \begin{figure}[t]
 \centering
