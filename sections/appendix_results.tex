@@ -1,34 +1,3 @@
-% Appendix snapshot tables
-\section{Single-Model Layer-8 Comparison (All Methods)}
-\label{sec:appendix_full_comparison}
-
-Table~\ref{tab:full_comparison} reports the full eight-method comparison at layer~8 of Qwen2.5-0.5B across sycophancy, gender, and safety. This table provides the detailed single-model benchmark that supports the multi-model summary in the main text.
-
-\input{tables/full_comparison}
-
-\section{All Methods, All Models, All Datasets}
-\label{sec:appendix_all_methods}
-
-Tables~\ref{tab:appendix_all_methods_sycophancy}, \ref{tab:appendix_all_methods_gender}, and~\ref{tab:appendix_all_methods_safety} report nonlinear leakage (NL) and control-task change ($\Delta$Ctrl) for all eight erasure methods across thirteen models spanning five families (Qwen2.5, Gemma-2, Llama-3.2, Mistral, Gemma-3) and all three concept domains. Values are mean\,$\pm$\,std over the 25\%, 50\%, and 75\% depth layers. The lowest NL per model among non-random methods is marked in \textbf{bold}. Gemma-3 coverage now includes completed 1B, 4B, 12B, and 27B results in the aggregate tables; the per-layer table below is narrower and should be read as the supporting breakdown for the models currently mirrored there.
-
-\input{tables/appendix_all_methods}
-
-\section{Legacy multi-model comparison (global-$\lambda$ protocol)}
-\label{sec:appendix_legacy_multimodel}
-
-Tab.~\ref{tab:multi_model} reports the eight-method comparison across 13 model families and 3 concepts under the legacy global-$\lambda$ HPO protocol: each $\lambda$-based method selects a single $\lambda^* \in \{0.25, 0.5, 1, 2, 4, 8, 16, 32\}$ per panel by lowest validation nonlinear-probe accuracy. We retain this as the only comparison axis covering Random Global, Random Per-Sample, Linear Projection, and GCE-Ambient at scale; INLP and IGBP also appear here for legacy reference, but their main-text numbers in Tab.~\ref{tab:main_results_unified} use the same trajectory-probe protocol as every other method. The headline pipeline does not use this grid. Tab.~\ref{tab:multi_model_per_layer} expands the same comparison at 25\%, 50\%, and 75\% depth.
-
-\input{tables/multi_model_comparison}
-
-\input{tables/multi_model_per_layer}
-
-\section{Global-$\lambda$ lambda sweep ablation}
-\label{sec:appendix_lambda_sweep}
-
-Tab.~\ref{tab:lambda_sweep} isolates the effect of step size on the legacy global-$\lambda$ form of \AmbGCE{} and \TanGCE{} at three fixed values ($0.5, 4.0, 8.0$) on Qwen2.5-0.5B layer~8. As $\lambda$ increases, \AmbGCE{} leakage worsens (rising to $0.734/0.702/0.770$ on syc/gen/saf at $\lambda{=}8$); \TanGCE{} improves and reaches its best precision at the largest tested step size. We retain this as a legacy ablation; the proposed pipeline replaces the global $\lambda$ with the closed-form per-row $\lambda_i$ of Eq.~\ref{eq:lambda_closed_form}.
-
-\input{tables/lambda_sweep}
-
 \section{Phase-1 closed-form ablation}
 \label{sec:appendix_phase1_ablation}
 
@@ -87,27 +56,6 @@ Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \T
 \label{fig:per_attr_bars_celeba}
 \end{figure}
 
-\section{Supplementary Deeper-Layer Comparisons}
-\label{sec:appendix_snapshots}
-
-This appendix records broader deeper-layer comparisons that are directionally consistent with the main text but are not part of the core quantitative evidence used for the paper's principal claims. We include them to show how the same comparison pattern extends beyond the main layer-8 evaluation and to motivate future matched-leakage analyses.
-
-\subsection{Iterative Sycophancy (Supplementary Comparison)}
-\input{tables/repo_snapshot_sycophancy}
-
-\subsection{Iterative Safety (Supplementary Comparison)}
-\input{tables/repo_snapshot_safety}
-
-\subsection{Local CelebA Visual Table-2-Style Comparison}
-\input{tables/local_celeba_visual_table2}
-
-To provide a modality-matched supplementary slice, this appendix reports a local vision-only CelebA run (CLIP ViT-B/32 embeddings) over the same method family, with three least-correlated controls per target concept. This local check is separate from the paper-locked main-text protocol and is included only as supplementary context.
-
-\input{tables/main_text_geometry_schedule}
-
-\paragraph{Geometry Note.}
-The broader geometry report continues to support three useful points: early and mid-layer representations are effectively low-dimensional, on-manifold directions carry much of the model's sensitivity in these perturbation tests, and interpolation remains consistent with a connected representation space. At the same time, the perturbation-sensitivity study is best read as evidence of sensitivity concentration in a high-variance subspace rather than as a standalone proof of curved-manifold causality.
-
 \section{Intuition: ``fraction of the local whitened neighborhood''}
 \label{sec:appendix_fmaha_intuition}
 
@@ -139,10 +87,10 @@ where division is component-wise and $R_i^{\mathrm{white}}$ is the median neighb
 \paragraph{Mental model.}
 Imagine the local neighborhood as an ellipse stretched along its high-$\sigma$ axis and pinched along its low-$\sigma$ axis. A ``$\varepsilon$ Euclidean'' step ignores the ellipse shape — it steps the same length in any direction. A ``$\varepsilon$ whitened-neighborhood'' step instead asks: \emph{after reshaping the ellipse into a sphere, does the edit fit inside an $\varepsilon$ ball?} FMaHa then maps the allowed move back into the original representation space. The result is a direction-aware trust region: it prevents the iterative loop from taking a step that is numerically small in Euclidean norm but huge relative to a thin local tangent direction where the linear approximation is the least reliable.
 
-This is the geometric reason why $\varepsilon = 0.1$ is interpretable as an order-of-magnitude smaller knob than the legacy global $\lambda$ used in the appendix tables: it bounds the edit relative to the local neighborhood's natural scale on each axis, not to a global step size.
+This is the geometric reason why $\varepsilon = 0.1$ is interpretable as a smaller knob than a single global step size $\lambda$ would be: it bounds the edit relative to the local neighborhood's natural scale on each axis, not to a panel-independent constant.
 
 \paragraph{Why $\varepsilon$ transfers across datasets without per-panel tuning.}
-A direct consequence of the whitening is that $\varepsilon$ no longer carries the units of the local representation geometry: each tangent axis is rescaled by its own $\sigma_{i,k}$ before $\varepsilon$ is applied, so a representation panel with a wide local spread along its dominant axes and one with a narrow local spread both report the same allowed move when expressed as a fraction of their respective whitened neighborhoods. This is why we can fix $\varepsilon = 0.1$ once and use it across all 39 NLP panels (13 language models $\times$ 3 concepts at 50\%-depth) and all 80 CelebA panels (40 attributes $\times$ 2 control sets) without any per-panel tuning of the trust-region radius. Crucially, this transferability requires that the per-axis scale $\sigma_{i,k}$ \emph{itself} be estimated from the local representation — exactly what the local SVD on the neighborhood-secant matrix provides. The legacy global $\lambda$ in §\ref{sec:evaluation} cannot have this property because its units are panel-specific: the same $\lambda$ moves a Gemma-3-27B representation by a much larger ambient distance than it does a Qwen2.5-0.5B one, which is why the legacy protocol must run a per-panel $\lambda$-HPO grid and ours does not.
+A direct consequence of the whitening is that $\varepsilon$ no longer carries the units of the local representation geometry: each tangent axis is rescaled by its own $\sigma_{i,k}$ before $\varepsilon$ is applied, so a representation panel with a wide local spread along its dominant axes and one with a narrow local spread both report the same allowed move when expressed as a fraction of their respective whitened neighborhoods. This is why we can fix $\varepsilon = 0.1$ once and use it across all 39 NLP panels (13 language models $\times$ 3 concepts at 50\%-depth) and all 80 CelebA panels (40 attributes $\times$ 2 control sets) without any per-panel tuning of the trust-region radius. Crucially, this transferability requires that the per-axis scale $\sigma_{i,k}$ \emph{itself} be estimated from the local representation — exactly what the local SVD on the neighborhood-secant matrix provides. A single global step size cannot have this property because its units are panel-specific: the same constant moves a Gemma-3-27B representation by a much larger ambient distance than it does a Qwen2.5-0.5B one.
 
 \section{CelebA control-set construction (least- vs.\ most-correlated five attributes)}
 \label{sec:appendix_celeba_controls}
@@ -191,7 +139,7 @@ Safety & 13 & 33.07 & 33.30 & 1.71 & 57.32 \\
 \end{tabular}
 \end{table}
 
-The mean across the entire grid, $\bar{\lambda} \approx 29.31$, sits well above the legacy global-$\lambda$ HPO grid's typical winners ($\lambda^* \in \{1, 2, 4\}$ on most panels for the canonical AmbGCE/TanGCE form). This justifies the apples-to-apples ablation reported in Table~\ref{tab:multi_model}: when AmbGCE is forced to use a single global $\lambda = \bar{\lambda}_{\text{TanGCE}} = 29.31$ — i.e., the same effective step magnitude TanGCE's per-row rule produces — its iterative behaviour and final leakage are directly comparable, with the only difference being the gradient-direction constraint (tangent-projected vs. ambient).
+The mean across the entire grid, $\bar{\lambda} \approx 29.31$, is the value at which \AmbGCE{} appears in Tab.~\ref{tab:main_results_unified}: forcing the unconstrained ambient method to take the same effective step magnitude that the closed-form per-row rule produces under \TanGCE{} isolates the gradient-direction constraint (tangent-projected vs.\ ambient) as the only remaining axis of variation between the two methods.
 
 \section{Anisotropy regimes for the local-$\sigma$ spectrum}
 \label{sec:appendix_alpha_regimes}
