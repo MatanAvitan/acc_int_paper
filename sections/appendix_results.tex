@@ -20,12 +20,72 @@ Tables~\ref{tab:appendix_all_methods_sycophancy}, \ref{tab:appendix_all_methods_
 
 \input{tables/appendix_all_methods}
 
-\section{Per-Layer Multi-Model Breakdown}
-\label{sec:appendix_per_layer}
+\section{Legacy multi-model comparison (global-$\lambda$ protocol)}
+\label{sec:appendix_legacy_multimodel}
 
-Table~\ref{tab:multi_model_per_layer} gives the full per-layer results underlying the mean\,$\pm$\,std values in Table~\ref{tab:multi_model}. Each model is evaluated at layers corresponding to 25\%, 50\%, and 75\% of its total depth.
+Tab.~\ref{tab:multi_model} reports the eight-method comparison across 13 model families and 3 concepts under the legacy global-$\lambda$ HPO protocol: each $\lambda$-based method selects a single $\lambda^* \in \{0.25, 0.5, 1, 2, 4, 8, 16, 32\}$ per panel by lowest validation nonlinear-probe accuracy. We retain this as the only comparison axis covering Random Global, Random Per-Sample, Linear Projection, INLP, IGBP, and GCE-Ambient at scale; the headline pipeline does not use this grid. Tab.~\ref{tab:multi_model_per_layer} expands the same comparison at 25\%, 50\%, and 75\% depth.
+
+\input{tables/multi_model_comparison}
 
 \input{tables/multi_model_per_layer}
+
+\section{Global-$\lambda$ lambda sweep ablation}
+\label{sec:appendix_lambda_sweep}
+
+Tab.~\ref{tab:lambda_sweep} isolates the effect of step size on the legacy global-$\lambda$ form of \AmbGCE{} and \TanGCE{} at three fixed values ($0.5, 4.0, 8.0$) on Qwen2.5-0.5B layer~8. As $\lambda$ increases, \AmbGCE{} leakage worsens (rising to $0.734/0.702/0.770$ on syc/gen/saf at $\lambda{=}8$); \TanGCE{} improves and reaches its best precision at the largest tested step size. We retain this as a legacy ablation; the proposed pipeline replaces the global $\lambda$ with the closed-form per-row $\lambda_i$ of Eq.~\ref{eq:lambda_closed_form}.
+
+\input{tables/lambda_sweep}
+
+\section{Phase-1 closed-form ablation}
+\label{sec:appendix_phase1_ablation}
+
+Tab.~\ref{tab:leace_vs_tangce_nlp} reports a fresh nonlinear probe ($h{=}128$, 200 SGD steps, patience 3) trained on three representation states per panel: clean, post-LEACE, post-(LEACE\,+\,CovMatch K=2). Sycophancy is fully exhausted by Phase~1 (mean NL $0.563$ indistinguishable from floor $0.560$ and from full \TanGCE{}'s $0.560$). Gender is not: Phase~1 leaves $14.8$pp residual above floor that the iterative Phase~2 closes to $1.0$pp. Safety follows the gender pattern with $11.5 \to 0.2$pp.
+
+\input{tables/leace_vs_tangce_nlp}
+
+\section{Per-model bar charts (sycophancy and safety)}
+\label{sec:appendix_per_model_bars}
+
+Sycophancy and safety analogues of the gender per-model bar chart in the main text (Fig.~\ref{fig:per_model_bars_gender}). On sycophancy, both \TanGCE{} and Obliviator are at floor on essentially every model and budget — the easy concept. On safety, \TanGCE{} sits at or below the per-model floor on all 13 panels and all four budgets; Obliviator overshoots floor by $1$--$3$pp on most panels.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/per_model_bars_sycophancy.png}
+\caption{\textbf{Sycophancy: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref{fig:per_model_bars_gender}.}
+\label{fig:per_model_bars_sycophancy_app}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/per_model_bars_safety.png}
+\caption{\textbf{Safety: per-model nonlinear-probe accuracy at four control-damage budgets.} Layout matches Fig.~\ref{fig:per_model_bars_gender}.}
+\label{fig:per_model_bars_safety_app}
+\end{figure}
+
+\section{CelebA all-40 aggregate table and per-attribute bars}
+\label{sec:appendix_celeba_extended}
+
+Tab.~\ref{tab:celeba_clip_all40} aggregates the per-attribute results across all 40 CelebA binary attributes under the legacy global-$\lambda$ HPO protocol; the headline CelebA evidence in Tab.~\ref{tab:celeba_correlated_controls} (main text) instead reports the dual control-set regimes under the proposed fixed-$\varepsilon$ pipeline.
+
+\input{tables/celeba_clip_all40_summary}
+
+Fig.~\ref{fig:per_attr_bars_celeba} reports the per-attribute version of the main-text Pareto comparison (Fig.~\ref{fig:pareto_sota_obliv_floor}) on the CelebA grid, separately for the 5-least- and 5-most-correlated control regimes. The walkover$^{\star}$ bars on the most-correlated regime mark attributes where Obliviator's first trajectory step already exceeds the budget; \TanGCE{} retains an admissible operating point.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_least_winmargin_multi_floor.png}
+\subcaption{5 least-correlated controls (low entanglement).}
+\end{minipage}\hfill
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_most_winmargin_multi_floor.png}
+\subcaption{5 most-correlated controls (high entanglement).}
+\end{minipage}
+\caption{\textbf{CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\TanGCE{}} - S_{\text{floor}}|\bigr)\!\times\!100$ on panels where both methods reach the budget; positive (blue) = \TanGCE{} closer to floor. Hatched dark-blue ($^{\star}$) marks walkover panels where \TanGCE{} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded.}
+\label{fig:per_attr_bars_celeba}
+\end{figure}
 
 \section{Supplementary Deeper-Layer Comparisons}
 \label{sec:appendix_snapshots}

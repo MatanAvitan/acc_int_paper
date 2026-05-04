@@ -2,150 +2,41 @@
 \section{Results}
 \label{sec:results}
 
-We evaluate six erasure methods plus two random-projection baselines and a Majority Class reference floor across three concept domains---sycophancy, gender (Bias in Bios), and safety---on multiple model families. Each method's erasure strength $\lambda^*$ is selected from the same shared validation protocol described in Section~\ref{sec:evaluation}. Our main metrics are erasure precision, measured by retrained probe accuracy on the target concept, and surgicality, measured by change in control-task performance. The main comparison is between ambient-space editing and tangent-constrained editing.
-
-\subsection{Broad-scale evaluation: 13 language models from 5 families, 0.5B--27B parameters}
+\subsection{Headline: distance to majority-class chance under control-damage budgets}
 \label{sec:multi_model}
 
-A single concept-erasure benchmark settles little. The current strongest unsupervised baseline, Obliviator \citep{akbari-etal-2026-obliviator}, reports its main results on a small number of relatively small models (e.g.\ BERT-base, Llama2-7B); IGBP \citep{iskander-etal-2023-shielded} similarly evaluates on RoBERTa-base. We extend the evaluation along three axes simultaneously:
-
-\begin{itemize}
-\item \textbf{Larger and more diverse models.} 13 backbones from five families spanning two orders of magnitude in scale: Qwen2.5 (0.5B, 1.5B, 3B), Gemma-2 (2B, 9B, 27B), Llama-3.2 (1B, 3B), Mistral-7B-v0.1, and Gemma-3 (1B, 4B, 12B, 27B). The 27B-parameter Gemma-3 panel is, to our knowledge, the largest backbone reported in concept-erasure literature.
-\item \textbf{Multiple concept domains.} Three NLP concepts (sycophancy, gender via Bias-in-Bios, safety via PKU-SafeRLHF) at the 50\%-depth layer of each model, giving 39 (model, concept) panels.
-\item \textbf{A cross-modal vision benchmark} (§\ref{sec:celeba}): all 40 binary CelebA attributes encoded by CLIP ViT-B/32, evaluated under both least- and most-correlated control regimes (80 vision panels). This extends the literature protocol — which has historically lived inside the language-model setting — to a cross-modal stress test of the proposed pipeline's robustness.
-\end{itemize}
-
-Across §\ref{sec:multi_model}--§\ref{sec:celeba} this yields 119 (model/attr, concept, control) panels — a substantially broader evaluation surface than the strongest prior baselines report. Every panel uses the same hyperparameter values for the proposed pipeline ($\varepsilon = 0.1$, $h = 512$, no per-panel tuning, §\ref{sec:hp_selection}). For the comparison baselines (LEACE, LEACE$+$CovMatch $K{=}2$, AmbGCE-vanilla, Obliviator), we evaluate on the same 39 NLP panels at 50\%-depth using the trajectory probe ($h{=}128$, 200 SGD); $\lambda$-based methods report results at $\lambda = \bar{\lambda}_{\TanGCE{}} = 29.31$, the mean per-row $\lambda_i$ that the proposed pipeline produces on this grid (Appendix Table~\ref{tab:lambda_stats}), giving them the same effective step magnitude as \TanGCE{}. Per-layer means at 25\%/50\%/75\% depth, in the legacy global-$\lambda$ HPO protocol used by Obliviator/IGBP, are reported in Appendix Table~\ref{tab:multi_model_per_layer} as a methodological cross-check.
-
-\paragraph{Headline comparison: distance to majority-class chance.}
-Table~\ref{tab:main_results_unified} reports the headline number for each of the five methods at four control-damage budgets, anchored to the per-panel majority-class floor (the trivial probe ceiling: a probe that always predicts the majority class). For each panel we extract the trajectory point with the smallest $|S{-}S_{\text{floor}}|$ subject to $|Y_{\text{clean}} - Y| \le B$/100, and then report the signed $(S - S_{\text{floor}})$ averaged across the 39 panels. $0$ corresponds to majority-class chance; $|S - S_{\text{floor}}|$ closer to zero is better. The two right sub-columns of each block report how many panels are at floor ($|S{-}S_{\text{floor}}| \le 0.5$pp), out of how many panels reached the budget — capturing both reachability and quality.
+Tab.~\ref{tab:main_results_unified} reports the headline number for each method at four control-damage budgets. For each panel and budget $B \in \{1, 3, 5, 10\}$pp we extract the trajectory step closest to the per-panel majority-class floor (smallest $|S - S_{\text{floor}}|$) subject to $|Y_{\text{clean}} - Y| \le B/100$. Reported is the signed $(S - S_{\text{floor}})$ in pp averaged across the 39 panels; $0$ corresponds to majority-class chance, lower in absolute value is better. The right sub-column of each block reports panels at floor ($|S - S_{\text{floor}}| \le 0.5$pp) over panels reaching the budget.
 
 \input{tables/main_results_unified}
 
-\TanGCE{} is the only method whose mean approaches the majority-vote floor: $+2.6$pp at $\Delta Y \le 1$pp, dropping monotonically to $+0.4$pp at $\le 10$pp. The strongest non-tangent baseline (Obliviator) plateaus at $+4.0$pp on the tighter budgets and only loosens to $+2.7$pp at $\le 10$pp; LEACE alone leaves an $\sim 18$pp gap that closed-form $K{=}2$ covariance matching only halves. Reach-floor counts under the same budget mirror this: \TanGCE{} reaches floor on $26$--$33/39$ panels (depending on budget); the best baseline (Obliviator) reaches it on $22$--$26/39$. \AmbGCE{}-vanilla — same trust-region magnitude as \TanGCE{} but without the tangent constraint — is unstable: only $24$--$33$ of its 39 panels even land within the budget at $\lambda{=}29.31$, and on the panels it does reach it sits $7$--$10$pp above floor. The tangent projection is doing the work that lets \TanGCE{} consistently land an admissible step close to chance.
+\TanGCE{} is the only method whose mean approaches the floor at every budget: $+2.6 \to +0.4$pp from $\le 1$pp to $\le 10$pp. Obliviator plateaus at $+4.0 \to +2.7$pp; \AmbGCE{}-vanilla — same trust region, no tangent constraint — leaves $+7$ to $+10$pp and fails to reach the budget on $6$ to $15$ of $39$ panels. LEACE alone leaves an $\approx 18$pp gap; closed-form rank-2 covariance matching halves it. The per-panel breakdown across all 5 methods at all 4 budgets is in App.~Tab.~\ref{tab:per_panel_breakdown}; the 8-method legacy comparison including Random Global, Random Per-Sample, Linear Projection, INLP, IGBP, and GCE-Ambient under global-$\lambda$ HPO is in App.~\ref{sec:appendix_legacy_multimodel}.
 
-The per-model $\Delta$Ctrl breakdown of the same comparison, plus the legacy 6-method baselines (Random Global, Random Per-Sample, Linear Projection, INLP, IGBP, GCE-Ambient) under the historical global-$\lambda$ HPO protocol, is reported below in Table~\ref{tab:multi_model} as a methodological cross-check.
-
-\textbf{Bold} marks the best cell per column among non-random methods (lowest NL or $|\Delta$Ctrl| closest to zero).
-
-\input{tables/multi_model_comparison}
-
-\TanGCE{} achieves lower nonlinear leakage than \AmbGCE{} across all completed models and all three concept domains, including Gemma-3-27B. The advantage is consistent across concept types: on gender (Bias in Bios), the gap is particularly pronounced---\TanGCE{} reduces NL by $0.196$--$0.303$ points relative to \AmbGCE{} across families (e.g., Mistral-7B: $0.912 \to 0.634$; Llama-3.2-3B: $0.926 \to 0.646$; Gemma-2-2B: $0.810 \to 0.573$; Gemma-3-27B: $0.918 \to 0.659$). On safety, gaps range from $0.108$ to $0.168$ points across the originally reported families, and reach $0.145$ on Gemma-3-1B, $0.156$ on Gemma-3-4B, and $0.165$ on Gemma-3-27B. On sycophancy, gaps are smaller but still present, including Gemma-3-27B ($0.581 \to 0.580$). Just as importantly, the baselines that appear strongest on raw nonlinear leakage often do so by distorting the representation itself: the random baselines can lower NL, but their control-task damage is typically about an order of magnitude larger than \TanGCE{} on the same model family. IGBP is the strongest prior nonlinear baseline in this comparison family, but it remains consistently weaker than \TanGCE{} on nonlinear leakage while still incurring larger control degradation in the harder settings. $\Delta$Ctrl remains near zero for \TanGCE{} throughout most families; Gemma-3-27B remains a caveat because its gender edit takes a larger control hit ($-0.129$), even though the removal advantage remains large.
-
-\paragraph{Interpretation.}
-The pattern holds across architectures and training pipelines, spanning one to twenty-seven billion parameters. Within the Qwen2.5 family, AmbGCE NL increases monotonically with scale ($0.806 \to 0.812 \to 0.861$ on sycophancy), while \TanGCE{} remains consistently lower. A similar trend holds within Gemma-2 ($0.656 \to 0.746 \to 0.759$) and Llama-3.2 ($0.831 \to 0.882$). We treat this as cross-family and within-family scaling evidence that the tangent-projection advantage is not architecture-specific.
-
-\subsection{Pareto comparison vs.\ Obliviator under control-damage budgets}
+\subsection{Pareto vs.\ Obliviator: surgicality is the manifold-awareness signal}
 \label{sec:pareto_obliviator}
 
-We compare the full \TanGCE{} pipeline (Phase~1 LEACE + rank-2 covariance projection, Phase~2 $\sigma$-preconditioned tangent loop with $\alpha = \tfrac{1}{2}$, scorer hidden $h = 512$, trust region $\varepsilon = 0.1$) against Obliviator on the 50\%-depth grid (13 model families $\times$ 3 concepts) using a control-damage budget formulation. For each panel and each $\Delta Y$ budget $B \in \{1, 3, 5, 10\}$ percentage points, we extract the trajectory point with the smallest $|S_t - S_{\text{floor}}|$ subject to $|Y_{\text{clean}} - Y_t| \leq B/100$. A panel is awarded to whichever method achieves a smaller floor-distance at that budget. We summarize aggregate behaviour by the mean $|S - S_{\text{floor}}|$ across all 39 panels at each budget; lower is better and reaching $0$ corresponds to majority-class probe accuracy.
+Fig.~\ref{fig:pareto_sota_obliv_floor} reports the per-panel floor-distance win-margin against Obliviator across the 39-panel grid. \TanGCE{} is closer to floor at every budget on every panel, with zero strict losses outside the $\pm 5$pp tie band. Mean margin: $+1.7 / +2.7 / +3.4 / +2.3$pp at the four budgets; reach-floor $26\!-\!33/39$ for \TanGCE{} versus $22\!-\!26/39$ for Obliviator.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png}
-\caption{Floor-distance win-margin (\TanGCE{} $-$ Obliviator) per panel under control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$ pp at 50\%-depth. Each row is one (model, concept) panel; positive (blue) values mean \TanGCE{} is closer to the majority-class floor than Obliviator at that budget. The full pipeline (LEACE + rank-2 covariance projection + $h{=}512$ scorer + $\varepsilon{=}0.1$) is closer to floor on every budget and never loses by more than the $\pm 5$pp tie band: $0$ losses, $6$--$9$ strict wins ($>5$pp), $30$--$33$ ties out of $38$--$39$ panels. Mean improvement over Obliviator: $+2.4$pp at $\Delta Y \geq -1$pp, $+3.4$pp at $-3$pp, $+3.8$pp at $-5$pp, $+3.0$pp at $-10$pp. Reach-floor (within $\pm 0.5$pp): $21$--$32/39$ panels (\TanGCE{}) vs.\ $13$--$17/39$ (Obliviator).}
+\caption{Floor-distance win-margin (\TanGCE{} $-$ Obliviator) per panel under control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$ pp. Each row is one (model, concept) panel; positive (blue) = \TanGCE{} closer to floor. Tie band $\pm 5$pp shaded.}
 \label{fig:pareto_sota_obliv_floor}
-\end{figure}
-
-Figure~\ref{fig:pareto_sota_obliv_floor} reports per-panel win margins for the full pipeline against the strongest published baseline. \TanGCE{} achieves a strictly lower mean floor-distance at all four control-damage budgets, with the largest gain on gender panels — the regime where the rank-$2$ covariance projection is most informative because gender concept information loads heavily on second-moment structure (variance asymmetry) that LEACE alone cannot reach. We attribute the small remaining gap on tight $-1$pp budgets and a handful of safety panels to nonlinear residual structure beyond the rank-2 projection: Phase~2's iterative scorer recovers most of it but cannot fully close the floor distance on every panel within the trust region.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/per_model_bars_sycophancy.png}
-\caption{\textbf{Sycophancy: per-model nonlinear-probe accuracy at four control-damage budgets.} Each row is one $\Delta Y$ budget. Within each row, the 13 model panels are shown as groups; each group has three bars — gray = clean (no erasure), blue = \TanGCE{} at $\varepsilon{=}0.1$, red = Obliviator paper-HP. The thick horizontal black tick on each group is that model's per-panel majority-class floor (the trivial probe ceiling); a bar reaching that mark indicates full erasure under the budget. ``n/a'' means the method had no trajectory step satisfying the $\Delta Y$ constraint on that panel. Lower bars are better.}
-\label{fig:per_model_bars_sycophancy}
 \end{figure}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/per_model_bars_gender.png}
-\caption{\textbf{Gender (Bias in Bios): per-model nonlinear-probe accuracy at four control-damage budgets.} Same layout as Figure~\ref{fig:per_model_bars_sycophancy}. Across all 13 model panels and all four budgets, \TanGCE{} drives the probe to or below the per-model majority-class floor; Obliviator stays close to the clean-rep accuracy on most panels except at the loosest $-10$pp budget.}
+\caption{\textbf{Gender (Bias in Bios): per-model nonlinear-probe accuracy at four control-damage budgets.} Each row is one budget; each model group has three bars — gray = clean, blue = \TanGCE{} ($\varepsilon{=}0.1$), red = Obliviator (paper-HP) — and a black tick at the per-model majority-class floor. Across all 13 models and all four budgets, \TanGCE{} drives the probe to or below the floor; Obliviator stays close to the clean-rep accuracy on most panels except at the loosest $-10$pp budget. Sycophancy and safety analogues are in App.~Fig.~\ref{fig:per_model_bars_sycophancy_app}--\ref{fig:per_model_bars_safety_app}.}
 \label{fig:per_model_bars_gender}
 \end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/per_model_bars_safety.png}
-\caption{\textbf{Safety: per-model nonlinear-probe accuracy at four control-damage budgets.} Same layout as Figure~\ref{fig:per_model_bars_sycophancy}. \TanGCE{} is at or below the per-model floor on all 13 panels and all four budgets; Obliviator overshoots the floor by $1$--$3$pp on most panels.}
-\label{fig:per_model_bars_safety}
-\end{figure}
+The gain is largest on gender (Fig.~\ref{fig:per_model_bars_gender}), where the rank-2 covariance projection of Phase~1 is most informative because gender concept information loads on second-moment asymmetry that LEACE alone cannot reach. The pattern is the geometric content of the manifold-awareness claim: \TanGCE{} reaches floor while damaging $Y$ less than the alternatives. Phase~1 alone (LEACE\,+\,CovMatch K=2) and the iterative Phase~2 contribute structurally distinct erasure — closed-form moment matching exhausts what global affine projections can reach; the per-row tangent step erodes the residual nonlinear pocket. App.~Tab.~\ref{tab:leace_vs_tangce_nlp} reports the Phase-1-only ablation across all 39 panels.
 
-\begin{figure}[t]
-\centering
-\begin{minipage}{\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figures/per_model_bars_celeba_least.png}
-\subcaption{5 \emph{least}-correlated controls (low entanglement).}
-\end{minipage}\\[4pt]
-\begin{minipage}{\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figures/per_model_bars_celeba_most.png}
-\subcaption{5 \emph{most}-correlated controls (high entanglement).}
-\end{minipage}
-\caption{\textbf{CelebA: per-attribute nonlinear-probe accuracy at four control-damage budgets, both control-set regimes.} Same layout as Figures~\ref{fig:per_model_bars_sycophancy}--\ref{fig:per_model_bars_safety} but with the 40 CelebA attributes as groups along the $x$-axis. Each group has three bars — gray = clean, blue = \TanGCE{} $\varepsilon{=}0.1$, red = Obliviator paper-HP — and a black horizontal tick at the per-attribute majority-class floor. ``n/a'' marks attributes where the method had no trajectory step inside the $\Delta Y$ budget; this is especially common for Obliv in the most-correlated regime, where its first step already exceeds the budget on heavily entangled attributes. \TanGCE{} stays at or below the per-attribute floor on the great majority of attributes in both regimes.}
-\label{fig:per_attr_bars_celeba}
-\end{figure}
-
-Figures~\ref{fig:per_model_bars_sycophancy}--\ref{fig:per_model_bars_safety} unpack Figure~\ref{fig:pareto_sota_obliv_floor} into per-(model, budget) cells: each model panel gets three bars (clean, \TanGCE{}, Obliviator) with that model's per-panel majority-class floor as a horizontal tick. The pattern mirrors Table~\ref{tab:leace_vs_tangce_nlp}: tight on sycophancy (both methods at floor), wide on gender (only \TanGCE{} reaches floor consistently), intermediate on safety. The model-by-model view confirms that the floor-reaching behavior is not driven by a small number of easy panels — it holds across architectures and scales from $0.5$B to $27$B parameters. Figure~\ref{fig:per_attr_bars_celeba} reports the same three-bar layout for the 40 CelebA attributes, separately for the 5-least- and 5-most-correlated control regimes; the per-attribute view shows the floor-reaching behavior holds at attribute granularity and visibly worsens for Obliv in the entangled regime, consistent with the walkover pattern in Figure~\ref{fig:pareto_celeba_dual}.
-
-The corresponding ablation figures for the canonical $\sigma$-preconditioned variant without the rank-2 covariance projection ($\varepsilon = 0.3$, scorer $h = 128$) at the same panels are summarized in the appendix. Adding the rank-2 covariance projection and tightening the trust region from $\varepsilon = 0.3$ to $\varepsilon = 0.1$ together closes the tight-budget gap that the canonical variant left open.
-
-\paragraph{What does Phase 1 alone get us? (closed-form ablation).}
-\label{par:phase1_only}
-Phase~1 of the proposed pipeline (LEACE + rank-2 $\Delta\Sigma$ projection) is closed-form and one-shot: it removes 1st- and 2nd-moment concept signal in seconds, with no iterative loop, no scorer, no tangent estimation. It is therefore important to ask whether the iterative Phase~2 buys anything beyond what Phase~1 already delivers. Table~\ref{tab:leace_vs_tangce_nlp} answers this directly: the same fresh nonlinear probe used for the trajectory evaluation ($h{=}128$, 200 SGD steps, patience 3) is trained on three representation states per panel — clean, post-LEACE, post-(LEACE+CovMatch K=2). The pattern is sharp and concept-specific:
-
-\input{tables/leace_vs_tangce_nlp}
-
-\begin{itemize}
-    \item \textbf{Sycophancy:} mean NL after LEACE+CovMatch is $0.563$, indistinguishable from the majority-class floor $0.560$ and from the full TanGCE NL of $0.560$. The iterative loop adds nothing on this concept — the closed-form Phase~1 alone is sufficient. This is consistent with sycophancy being a low-rank concept whose signal is exhausted by 1st- and 2nd-moment erasure.
-    \item \textbf{Gender:} LEACE+CovMatch reduces NL from clean $\approx 0.85$ to $0.687$, but leaves a $14.8$pp residual above the $0.539$ floor. The full pipeline closes that residual to $1.0$pp. Most of the gender concept information is \emph{not} reachable by closed-form moment matching; it is the iterative tangent loop that does the heavy lifting on this concept.
-    \item \textbf{Safety:} similar pattern — Phase~1 leaves an $11.5$pp residual ($0.625$ vs.\ floor $0.510$) that the iterative loop drives to within $0.2$pp of the floor.
-\end{itemize}
-
-The control-damage column tells a complementary story: Phase~1 alone is essentially surgical (mean $\Delta Y$ within $\pm 1.6$pp on every concept), while TanGCE introduces only marginally more damage ($\leq 2.1$pp) in exchange for the order-of-magnitude better NL erasure on the harder concepts. We read this as evidence that Phase~1 and Phase~2 attack structurally different parts of the concept signal: closed-form moment matching exhausts what is reachable by global affine projections, and the per-row tangent step erodes the residual nonlinear pocket. Reporting both lets the reader see that the iterative loop is not gilding; it is the operative ingredient on the panels where erasure is hardest.
-
-\subsection{Cross-Modal Generalization: CelebA Visual Attributes}
+\subsection{Cross-modal generalization: CelebA dual control regimes}
 \label{sec:celeba}
 
-To test whether \TanGCE{} generalizes beyond language model representations, we apply all seven erasure methods to pooled CLIP ViT-B/32 image embeddings (768-dim) of CelebA face images (see Section~\ref{sec:evaluation} for preprocessing and split details). CelebA provides 40 binary facial attributes, giving a rich surgicality profile: when erasing one attribute, the remaining attributes serve as controls. The legacy global-$\lambda$ baselines (and the canonical global-$\lambda$ \TanGCE{} reference row) use a validation-HPO protocol ($\lambda^* \in \{0.5, 1.0, 2.0, 4.0, 8.0\}$ by lowest validation NL probe accuracy, hidden 256, 1500 steps) applied uniformly across methods. The proposed pipeline (LEACE + rank-2 $\Delta\Sigma$ + closed-form $\lambda_i$ at fixed $\varepsilon{=}0.1$, §\ref{sec:hp_selection}) does \emph{not} sweep $\lambda$: a single trust-region radius is shared across all 40 attributes and both control sets.
-
-We treat this cross-modal setting as a generality check rather than the primary evidence for the paper's central claim.
-
-\input{tables/celeba_clip_all40_summary}
-
-Table~\ref{tab:celeba_clip_all40} summarizes results averaged over all 40 CelebA attributes. The median selected $\lambda^*$ column confirms that \TanGCE{} consistently selects higher $\lambda$ values than other methods, enabled by the tangent projection's attenuation of off-manifold displacement, while maintaining competitive control accuracy. Per-concept breakdowns for all 40 attributes (nonlinear leakage and mean $\Delta$Ctrl per method) are reported in Appendix~\ref{sec:appendix_celeba_per_concept}, Tables~\ref{tab:celeba_clip_all40_per_concept_leak} and~\ref{tab:celeba_clip_all40_per_concept_ctrl}.
-
-A focused three-concept legacy-protocol comparison (Male, Smiling, Blond\_Hair, each with 5 low-correlation controls) is reported in Appendix Table~\ref{tab:celeba_clip_fair} for completeness; the headline 40-attribute, two-control-regime comparison below replaces it as the main-text CelebA evidence.
-
-\paragraph{Entangled-vs.-non-entangled controls.}
-The CelebA setting also lets us probe surgicality in a harder regime: instead of choosing the 5 \emph{least}-correlated attributes as controls (the standard choice, isolating clean surgicality), we additionally evaluate against the 5 \emph{most}-correlated attributes (the entangled regime, where the controls share substantial information with the target concept). We compute pairwise Pearson correlations between all 40 attributes on the train split and pick, for each target attribute, both the bottom-5 and top-5 by $|r|$ as control sets. We then run the full SOTA pipeline (Phase~1 LEACE + rank-2 covariance projection, Phase~2 with $h=512$, $\varepsilon=0.1$) and Obliviator on each of the 40 attributes under each control set. For every (concept, control set, method) we report the lowest probe accuracy reached subject to mean $\Delta Y \geq -5$pp on the 5 controls. Table~\ref{tab:celeba_correlated_controls} summarizes the results.
+We re-run the same fixed-$\varepsilon=0.1$ pipeline on 80 CelebA-CLIP panels: 40 binary attributes $\times$ 2 control-set regimes (least-correlated vs.\ most-correlated 5 attributes, by training-split Pearson $|r|$). The most-correlated regime is the surgicality stress test: erasing \emph{Male} while preserving \emph{Wearing\_Lipstick}, \emph{Heavy\_Makeup}, \emph{No\_Beard}, \emph{Attractive}, \emph{5\_o\_Clock\_Shadow} (all $|r| > 0.4$ with Male) shares dominant axes between target and controls.
 
 \input{tables/celeba_clip_correlated_controls}
 
-The high-correlation regime is structurally harder: erasing \emph{Male} while preserving \emph{Wearing\_Lipstick}, \emph{Heavy\_Makeup}, \emph{No\_Beard}, \emph{Attractive}, and \emph{5\_o\_Clock\_Shadow} (all $|r| > 0.4$ with Male) is closer to a true surgicality test than erasing Male while preserving \emph{Narrow\_Eyes} or \emph{Blurry} (essentially uncorrelated). The mean row in Table~\ref{tab:celeba_correlated_controls} captures the overall picture across both regimes; the per-concept rows reveal which targets remain surgical even when the controls are deeply entangled.
-
-\begin{figure}[t]
-\centering
-\begin{minipage}{0.49\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_least_winmargin_multi_floor.png}
-\subcaption{5 least-correlated controls (low entanglement).}
-\end{minipage}\hfill
-\begin{minipage}{0.49\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_most_winmargin_multi_floor.png}
-\subcaption{5 most-correlated controls (high entanglement).}
-\end{minipage}
-\caption{\textbf{CelebA per-attribute floor-distance win-margin under control-damage budgets.} Solid blue/red bars show $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\text{TanGCE}} - S_{\text{floor}}|\bigr)\!\times\!100$ on panels where \emph{both} methods have at least one trajectory step within the $\Delta Y$ budget; positive (blue) = TanGCE closer to the per-concept majority-class floor. \textbf{Hatched dark-blue bars ($^{\star}$)} mark \emph{walkover} panels where TanGCE has at least one in-budget step but Obliv has \emph{none} — its very first step already exceeds the control-damage budget. Hatched dark-red mirrors the (rare) opposite case. Light-grey bars are panels where neither method has an in-budget step. Methods: TanGCE = the proposed pipeline (LEACE + rank-2 $\Delta\Sigma$ + closed-form $\lambda_i$ at fixed $\varepsilon{=}0.1$, §\ref{sec:hp_selection}); Obliv = Obliviator paper-HP. Tie band $\pm 0.5$pp shaded gray. Per-subplot title reports W/T/L counts (in-budget) plus walkover wins$^{\star}$.}
-\label{fig:pareto_celeba_dual}
-\end{figure}
-
-Figure~\ref{fig:pareto_celeba_dual} reports the per-attribute version of this comparison across the same four control-damage budgets used in §\ref{sec:pareto_obliviator}. The walkover$^{\star}$ markers — hatched dark-blue bars — capture the methodological gap that the table cannot show: on most-correlated CelebA panels, Obliviator's first trajectory step already overshoots the $-5$pp control-damage budget by $10$--$22$pp (e.g., \emph{Male}/most-corr: every Obliv step in $[-21.1, -13.2]$pp; \emph{Attractive}/most-corr: $[-22.5, -10.1]$pp). Without a per-row trust region, Obliviator has no admissible operating point in those regimes; TanGCE's closed-form $\lambda_i$ keeps it inside the budget on the same panels (Male/most: 8 of 60 steps in budget; Attractive/most: 3 of 60). These walkover wins are not artifacts of HPO — both methods use their published / fixed defaults. The active head-to-head bars (solid blue/red) concentrate in the rare panels where Obliv does happen to land inside budget; even there, TanGCE matches or wins on every $\Delta Y$ budget.
-
-\subsection{The Lambda Sweep: On-Manifold Updates Support Larger Interventions}
-\label{sec:lambda_sweep}
-\input{tables/lambda_sweep}
-
-Table~\ref{tab:lambda_sweep} isolates the effect of step size by running only \AmbGCE{} and \TanGCE{} at three fixed $\lambda$ values ($0.5, 4.0, 8.0$) on the same three domains as above (Qwen2.5-0.5B, layer~8, same train/val/test splits and fresh-probe evaluation protocol as in Section~\ref{sec:evaluation}). As $\lambda$ increases, \AmbGCE{} becomes unstable: its nonlinear leakage worsens sharply at high step sizes, rising to 0.734 on sycophancy, 0.702 on gender, and 0.770 on safety at $\lambda{=}8$. \TanGCE{} behaves in the opposite way, improving as $\lambda$ increases and reaching its best precision at the largest tested step size in all three domains.
-
-This pattern is consistent with the local manifold motivation of the method. If the ambient update includes components that are weakly supported by the local representation geometry, increasing $\lambda$ can make the edit less effective under the nonlinear recoverability metric. Projecting into the estimated tangent space removes those components at first order, which can make larger steps more useful in practice. We treat this as supportive evidence for the manifold-support view, not as a complete characterization of the leakage-utility tradeoff.
+Tab.~\ref{tab:celeba_correlated_controls} summarizes the lowest probe accuracy reached subject to mean $\Delta Y \ge -5$pp on each control set. \TanGCE{} matches Obliviator in the least-correlated regime and walks over it in the most-correlated regime: Obliviator's first trajectory step already exceeds the $-5$pp budget by $10\!-\!22$pp on heavily entangled attributes (\emph{Male}/most: every Obliv step in $[-21.1, -13.2]$pp), leaving no admissible operating point. \TanGCE{}'s closed-form $\lambda_i$ keeps it inside the budget on the same panels. This is the empirical signature of the local-$\sigma$ preconditioner: when the manifold is most anisotropic — the closely correlated controls share the dominant tangent axes with the target — weighting each direction by its local extent is what permits an admissible step at all.

@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex neurips_2026"] 1777888279.04694 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777888286.11184 0
+["bibtex neurips_2026"] 1777888534.4337 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777888539.89814 0
   "./references.bib" 1777821212.88098 10986 5f081b942241af4d9bff3e7ad4328a1d ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "neurips_2026.aux" 1777888285.92327 54726 0abf19c781617d7708cba9767020f8f2 "pdflatex"
+  "neurips_2026.aux" 1777888539.70369 49876 3908c88c42fad8f872ac8bb8b8054009 "pdflatex"
   (generated)
   "neurips_2026.bbl"
   "neurips_2026.blg"
   (rewritten before read)
-["pdflatex"] 1777888279.07792 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777888286.11223 0
+["pdflatex"] 1777888534.46815 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777888539.89867 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -187,18 +187,16 @@
   "figures/pareto/F_LEACE_CovMatchK2_h512_eps0p1/winmargin_multi_floor.png" 1777822131.26875 379599 c333a3bfb2aacec7cda48ba110fc0039 ""
   "figures/pareto_celeba_sota_least_winmargin_multi_floor.png" 1777822131.27375 431260 f833065bb440ca7cace02d3dae1ecfda ""
   "figures/pareto_celeba_sota_most_winmargin_multi_floor.png" 1777822131.27775 497040 5c4c1c90ee85d011c202b8e2a4261dc0 ""
-  "figures/per_model_bars_celeba_least.png" 1777822131.25975 428936 8830b165877c9a2183d2e7484133f0f8 ""
-  "figures/per_model_bars_celeba_most.png" 1777822131.26375 594206 e5fd9b8ff3f3f02586c9700f83caf71f ""
   "figures/per_model_bars_gender.png" 1777886345.20187 205098 0264e1a7a20abe481d43e17156f06b79 ""
   "figures/per_model_bars_safety.png" 1777886345.20587 217443 5c397835b433d4e41c2623c5f32106b1 ""
   "figures/per_model_bars_sycophancy.png" 1777886345.19787 220269 912b1364efdbf225b346f1d191b58d75 ""
-  "neurips_2026.aux" 1777888285.92327 54726 0abf19c781617d7708cba9767020f8f2 "pdflatex"
-  "neurips_2026.bbl" 1777888279.06921 10614 4683ccafefb425e3dabb5e6e9334f94c "bibtex neurips_2026"
-  "neurips_2026.out" 1777888285.92727 8890 955efe560198cc0128156c453206d652 "pdflatex"
+  "neurips_2026.aux" 1777888539.70369 49876 3908c88c42fad8f872ac8bb8b8054009 "pdflatex"
+  "neurips_2026.bbl" 1777888534.45964 10614 4683ccafefb425e3dabb5e6e9334f94c "bibtex neurips_2026"
+  "neurips_2026.out" 1777888539.70769 9584 5ebe12b7de96f16dbb72e1aaa0b0a4e3 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
   "neurips_2026.tex" 1777887813.9058 5573 d7a6b2ac459059d77c82f136e2230e98 ""
   "sections/abstract.tex" 1777815005.77182 1738 12fd7ae2a806a28807fcf0558c4eca89 ""
-  "sections/appendix_results.tex" 1777888219.32664 21645 740f38948b7f0264989665a02a92a494 ""
+  "sections/appendix_results.tex" 1777888520.99851 26301 14f44453efb5b66d5659857fd66c3120 ""
   "sections/conclusion.tex" 1777137078.35737 1585 b080ec0a6545e5834fac828911ad8af8 ""
   "sections/discussion.tex" 1776896875.63837 5022 6b607ed1c27e6c0121abb4881a4cb963 ""
   "sections/evaluation.tex" 1777368824.52758 6972 7b04a48fe6462d6c40e5d738c639b2e3 ""
@@ -208,7 +206,7 @@
   "sections/method.tex" 1777888264.80507 11524 97c5932130e90f1b56aee941305d20ca ""
   "sections/notation.tex" 1777888264.80407 2141 e47cb806d923f56682640742ae9b691e ""
   "sections/related_work.tex" 1776362547.54363 1792 f3f55dba8f0831c31e78aa25cebfcdf6 ""
-  "sections/results.tex" 1777886208.95757 24780 2f51428b42c58e910064a0425ea647c0 ""
+  "sections/results.tex" 1777888453.22787 5461 5560c6e33da53d9363926009f87f07bd ""
   "tables/appendix_all_methods.tex" 1776947624.444 22637 23659eb09ac6ce877e1f9e367fcbd052 ""
   "tables/celeba_clip_all40_per_concept.tex" 1776797150.49144 7358 3b3e92e4d07d7edf7765b818956a27c2 ""
   "tables/celeba_clip_all40_summary.tex" 1777776924.93878 1943 b1712b20096815c8c8602ddb0c4abfbc ""
