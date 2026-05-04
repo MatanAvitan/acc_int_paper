@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex neurips_2026"] 1777885640.6691 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777886216.49393 0
+["bibtex neurips_2026"] 1777887951.6742 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777887958.72422 0
   "./references.bib" 1777821212.88098 10986 5f081b942241af4d9bff3e7ad4328a1d ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "neurips_2026.aux" 1777886216.27164 57686 f37e3d063eaa205c049e3d0a31ef186f "pdflatex"
+  "neurips_2026.aux" 1777887958.51617 59048 ad607e5a048e4593e82cb3ee2c0f3203 "pdflatex"
   (generated)
   "neurips_2026.bbl"
   "neurips_2026.blg"
   (rewritten before read)
-["pdflatex"] 1777886209.23232 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777886216.49435 0
+["pdflatex"] 1777887951.7057 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777887958.72465 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -190,16 +190,16 @@
   "figures/pareto_celeba_sota_most_winmargin_multi_floor.png" 1777822131.27775 497040 5c4c1c90ee85d011c202b8e2a4261dc0 ""
   "figures/per_model_bars_celeba_least.png" 1777822131.25975 428936 8830b165877c9a2183d2e7484133f0f8 ""
   "figures/per_model_bars_celeba_most.png" 1777822131.26375 594206 e5fd9b8ff3f3f02586c9700f83caf71f ""
-  "figures/per_model_bars_gender.png" 1777886202.61051 205098 0264e1a7a20abe481d43e17156f06b79 ""
-  "figures/per_model_bars_safety.png" 1777886202.61651 217443 5c397835b433d4e41c2623c5f32106b1 ""
-  "figures/per_model_bars_sycophancy.png" 1777886202.60551 220269 912b1364efdbf225b346f1d191b58d75 ""
-  "neurips_2026.aux" 1777886216.27164 57686 f37e3d063eaa205c049e3d0a31ef186f "pdflatex"
-  "neurips_2026.bbl" 1777885640.69411 10822 113a2ec694d04fcecc793c08fdfa1aea "bibtex neurips_2026"
-  "neurips_2026.out" 1777886216.27664 9491 3aae9b5a985b113fe3ac0bac21d1b94e "pdflatex"
+  "figures/per_model_bars_gender.png" 1777886345.20187 205098 0264e1a7a20abe481d43e17156f06b79 ""
+  "figures/per_model_bars_safety.png" 1777886345.20587 217443 5c397835b433d4e41c2623c5f32106b1 ""
+  "figures/per_model_bars_sycophancy.png" 1777886345.19787 220269 912b1364efdbf225b346f1d191b58d75 ""
+  "neurips_2026.aux" 1777887958.51617 59048 ad607e5a048e4593e82cb3ee2c0f3203 "pdflatex"
+  "neurips_2026.bbl" 1777887951.69711 10822 113a2ec694d04fcecc793c08fdfa1aea "bibtex neurips_2026"
+  "neurips_2026.out" 1777887958.52017 9781 7f70b8fa2ada95a93b546722a992b617 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
-  "neurips_2026.tex" 1777885600.87673 5573 d7a6b2ac459059d77c82f136e2230e98 ""
+  "neurips_2026.tex" 1777887813.9058 5573 d7a6b2ac459059d77c82f136e2230e98 ""
   "sections/abstract.tex" 1777815005.77182 1738 12fd7ae2a806a28807fcf0558c4eca89 ""
-  "sections/appendix_results.tex" 1777824443.81684 19299 ddec6f75fad34749be7a0ef8fcb89e45 ""
+  "sections/appendix_results.tex" 1777887921.52882 19994 446d97c1355f0e2a3d677eaff77ff011 ""
   "sections/conclusion.tex" 1777137078.35737 1585 b080ec0a6545e5834fac828911ad8af8 ""
   "sections/discussion.tex" 1776896875.63837 5022 6b607ed1c27e6c0121abb4881a4cb963 ""
   "sections/evaluation.tex" 1777368824.52758 6972 7b04a48fe6462d6c40e5d738c639b2e3 ""
@@ -224,6 +224,7 @@
   "tables/method_comparison_scope.tex" 1777820006.98838 862 cfb689270ce705bcc1e9926eb26de587 ""
   "tables/multi_model_comparison.tex" 1777370025.95534 8907 c4e29381eac8fffd632cba549e212c99 ""
   "tables/multi_model_per_layer.tex" 1776695096.9468 6552 3fb5c6785b4572f475b170a3d348d1f8 ""
+  "tables/per_panel_breakdown.tex" 1777887921.52882 9843 8a34901642f2528f1d288241688f8a94 ""
   "tables/repo_snapshot_safety.tex" 1776947036.45561 997 fd2cfc77e2545d4d7678d32ea819bb9e ""
   "tables/repo_snapshot_sycophancy.tex" 1776947033.31758 1029 6a320cb4e340566fa20d28d6e4bdc37c ""
   (generated)
