@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex neurips_2026"] 1777915173.13691 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777915177.58039 0
+["bibtex neurips_2026"] 1777916104.5756 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777916108.99797 0
   "./references.bib" 1777821212.88098 10986 5f081b942241af4d9bff3e7ad4328a1d ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "neurips_2026.aux" 1777915177.39182 26989 44d492b95fc66450f47627298a73ae4c "pdflatex"
+  "neurips_2026.aux" 1777916108.81668 27045 30926a1d99221ecf6461d8d00f0db6df "pdflatex"
   (generated)
   "neurips_2026.bbl"
   "neurips_2026.blg"
   (rewritten before read)
-["pdflatex"] 1777915173.17172 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777915177.58077 0
+["pdflatex"] 1777916104.60976 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777916108.99888 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -172,24 +172,24 @@
   "/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1771861240 391721 59240605006c742963da307251b693ef ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt" 1771861273 2285651 5ad8a4952eee17c7c4e5eb2ce9480a40 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf.cnf" 1768362267 637 edd806fb06a89761a6034e1968af9017 ""
-  "checklist.tex" 1776369877.11282 24742 91487eae9b795e4618b3b92d8340a56b ""
+  "checklist.tex" 1777915572.54358 0 d41d8cd98f00b204e9800998ecf8427e ""
   "figures/pareto_celeba_sota_least_winmargin_multi_floor.png" 1777822131.27375 431260 f833065bb440ca7cace02d3dae1ecfda ""
   "figures/pareto_celeba_sota_most_winmargin_multi_floor.png" 1777822131.27775 497040 5c4c1c90ee85d011c202b8e2a4261dc0 ""
   "figures/per_model_bars_gender.png" 1777897662.67504 181101 c0802a4d6d301992aa7be056b8663164 ""
   "figures/per_model_bars_safety.png" 1777897662.67904 194074 4dd32146c6329929ffb066a957dd7b2e ""
   "figures/per_model_bars_sycophancy.png" 1777897662.68204 191822 345ec3e1ace23bee47597fe3a3a19f1a ""
-  "neurips_2026.aux" 1777915177.39182 26989 44d492b95fc66450f47627298a73ae4c "pdflatex"
-  "neurips_2026.bbl" 1777915173.15978 10614 4683ccafefb425e3dabb5e6e9334f94c "bibtex neurips_2026"
-  "neurips_2026.out" 1777915177.39582 6278 909343a63fe5260902ed4b0eba4e8333 "pdflatex"
+  "neurips_2026.aux" 1777916108.81668 27045 30926a1d99221ecf6461d8d00f0db6df "pdflatex"
+  "neurips_2026.bbl" 1777916104.59864 10614 4683ccafefb425e3dabb5e6e9334f94c "bibtex neurips_2026"
+  "neurips_2026.out" 1777916108.81968 6278 909343a63fe5260902ed4b0eba4e8333 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
   "neurips_2026.tex" 1777899763.06096 5574 ad024a5dc89ab6a8d0c8604dccf794a7 ""
   "sections/abstract.tex" 1777897662.45904 1529 2a28050b79f4243b5eb242fc21f1e325 ""
-  "sections/appendix_results.tex" 1777915149.95456 20404 512a45c6d1dc8d5fb8e65e26c77231f3 ""
+  "sections/appendix_results.tex" 1777915572.54658 20169 bb4b1456af4ac17b0832aa8f65af115d ""
   "sections/conclusion.tex" 1777915034.15046 1638 380776b6775e667ea062b2a1eca89737 ""
   "sections/discussion.tex" 1777915065.74576 3200 11b30136539bdddc9eb9b2768eb0444e ""
   "sections/evaluation.tex" 1777888880.62795 871 b4facc56ce9867b369c3f843b20465fb ""
   "sections/experiments.tex" 1777914966.89482 2977 65c58c851335a748297f7ca0ac1693b7 ""
-  "sections/introduction.tex" 1777902401.706 6519 8366fa59bc981fc62bc06ead5a34a6c8 ""
+  "sections/introduction.tex" 1777916090.90351 7101 f704c893eb79ecfd923be8582f53c445 ""
   "sections/limitations.tex" 1777889986.36254 1636 064cdafe9815ca1a377ce49fbbaaade3 ""
   "sections/method.tex" 1777915003.96817 12084 35aa3cee4dd21b444046b350cb9141af ""
   "sections/notation.tex" 1777888264.80407 2141 e47cb806d923f56682640742ae9b691e ""
