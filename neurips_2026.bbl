@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{18}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -89,12 +89,6 @@ Ethan Perez, Sam Ringer, Kamil{\.e} Luko{\v{s}}i{\=u}t{\.e}, Karina Nguyen, Edwi
 \newblock In \emph{Findings of the Association for Computational Linguistics: ACL 2023}, pages 13387--13434, Toronto, Canada, 2023. Association for Computational Linguistics.
 \newblock \doi{10.18653/v1/2023.findings-acl.847}.
 \newblock URL \url{https://aclanthology.org/2023.findings-acl.847}.
-
-\bibitem[{Qwen Team}(2024)]{qwen-2024-qwen25}
-{Qwen Team}.
-\newblock {Qwen2.5} technical report.
-\newblock \emph{arXiv preprint arXiv:2412.15115}, 2024.
-\newblock URL \url{https://arxiv.org/abs/2412.15115}.
 
 \bibitem[Radford et~al.(2021)Radford, Kim, Hallacy, Ramesh, Goh, Agarwal, Sastry, Askell, Mishkin, Clark, Krueger, and Sutskever]{radford-etal-2021-clip}
 Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, Gretchen Krueger, and Ilya Sutskever.

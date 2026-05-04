@@ -1,51 +1,9 @@
 % Problem setup and geometric motivation
-\section{Problem Setup and Geometric Motivation}
+\section{Problem setup and geometric motivation}
 \label{sec:notation}
 
-We first define the representation-editing problem, then introduce the geometric language used throughout the paper. Our notation follows the manifold viewpoint in Tu's introduction to smooth manifolds \citep{tu-2011-manifolds}: we use local coordinate maps, tangent spaces, and differentials only as local approximations, not as theorem-level guarantees about neural representations. 
+Let $\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ be the hidden state at layer $\ell$ of a language model over vocabulary $\Sigma$. For each sample $i$ we have a representation $\mathbf{x}_i = \mathrm{enc}_\ell(s_i) \in \mathbb{R}^d$, a binary concept label $y_i \in \{0,1\}$, and an optional control label $z_i$. The dataset is $\mathcal{D} = \{(\mathbf{x}_i, y_i, z_i)\}_{i=1}^N$ with class subsets $\mathcal{D}_c = \{i : y_i = c\}$. A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a 2-layer MLP with input gradient $\nabla f_\theta(\mathbf{x}_i)$.
 
-\paragraph{Language model and encoder.}
-Let $\Sigma^*$ denote the set of all strings over a vocabulary $\Sigma$. A language model $p$ defines a distribution over $\Sigma^*$. We write $\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ for the hidden representation at layer $\ell$, where $d$ is the hidden dimension. For a fixed layer $\ell$ (omitted when clear from context), the representation of string $s$ is $\mathbf{x} = \mathrm{enc}_\ell(s) \in \mathbb{R}^d$.
+\paragraph{Local manifold hypothesis.} We adopt the modeling assumption that the representations $\{\mathbf{x}_i\}$ lie near a locally low-dimensional support $\mathcal{M} \subset \mathbb{R}^d$. Its operational consequence is that we can approximate the neighborhood of any $\mathbf{x} \in \mathcal{M}$ by its tangent space $T_{\mathbf{x}}\mathcal{M}$ \citep{tu-2011-manifolds} and apply linear-algebraic operations (SVD, projection, anisotropic scaling) inside it. The tangent space is not observed directly; we estimate it from nearby representations by local SVD on the secant matrix (§\ref{sec:method}). For an ambient vector $\mathbf{g} \in \mathbb{R}^d$, the decomposition $\mathbf{g} = \mathbf{g}^{\top} + \mathbf{g}^{\perp}$ with $\mathbf{g}^{\top} \in T_{\mathbf{x}}\mathcal{M}$ separates the part of $\mathbf{g}$ supported by the local sample structure from the part orthogonal to it. \TanGCE{} acts on the tangent component only; \AmbGCE{} retains both. Formal coordinate-chart definitions and the differential $d(\varphi^{-1})_0$ identification with $T_{\mathbf{x}}\mathcal{M}$ are deferred to App.~\ref{sec:appendix_geometry}.
 
-\paragraph{Concepts and data.}
-A binary concept is defined by a labeling function $\phi : \Sigma^* \to \mathcal{C}$, where $\mathcal{C} = \{0,1\}$. Each sample $i$ has representation $\mathbf{x}_i \in \mathbb{R}^d$ and concept label $y_i = \phi(s_i) \in \mathcal{C}$, with an optional control label $z_i$ (e.g., profession for gender erasure). We write $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ for the dataset and $\mathcal{D}_c = \{i : y_i = c\}$ for the class-$c$ subset, with $N_c = |\mathcal{D}_c|$.
-
-The class-conditional representation is the random variable $X_c \sim \mathrm{enc}_\ell(s) \mid \phi(s) = c$, i.e., the distribution of hidden states for strings labeled $c$. 
-
-\paragraph{Concept scorer.}
-A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a differentiable nonlinear function trained to predict $y$ from $\mathbf{x}$. In the experiments we instantiate it as a two-layer MLP trained with binary cross-entropy, but the geometric construction below depends only on the scorer being differentiable. Its per-sample gradient with respect to the input is $\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i) \in \mathbb{R}^d$, which points in the direction of steepest increase in concept probability at $\mathbf{x}_i$.
-
-\paragraph{Representation manifold.}
-Each layer representation $\mathbf{x} = \mathrm{enc}_\ell(s)$ is formally a point in the ambient hidden space $\mathbb{R}^d$, where $d$ is the full hidden-state dimension. We adopt a local manifold hypothesis: the representations that occur for natural inputs lie near a smooth embedded submanifold $\mathcal{M} \subset \mathbb{R}^d$, or more cautiously, near a locally low-dimensional support. This is a modeling assumption rather than a theorem about neural representations. Its operational consequence is local: every smooth manifold is, by definition, \emph{locally Euclidean} — in a neighborhood of any point $\mathbf{x} \in \mathcal{M}$ there exists a coordinate chart that maps onto an open subset of $\mathbb{R}^m$ \citep{tu-2011-manifolds} — so it is meaningful to approximate the neighborhood of $\mathcal{M}$ around $\mathbf{x}$ by its tangent space $T_{\mathbf{x}}\mathcal{M}$ and to apply ordinary linear-algebraic operations (SVD, projection, anisotropic scaling) inside it. In the method below, this tangent space is not observed directly; it is estimated from nearby representations by local SVD on the secant matrix. 
-
-Now fix a point $\mathbf{x} \in \mathcal{M}$. Let $U \subset \mathcal{M}$ be a small local neighborhood around $\mathbf{x}$, and let
-\begin{equation}
-\varphi : U \to \Omega \subset \mathbb{R}^m
-\end{equation}
-be a local coordinate map. Here $\Omega$ is an open set in the coordinate space $\mathbb{R}^m$. Intuitively, $\varphi$ assigns $m$ local coordinates to nearby points on the manifold. We choose the coordinates so that $\varphi(\mathbf{x}) = 0$, meaning that the point $\mathbf{x}$ is represented by the origin in local coordinates. The inverse map $\varphi^{-1} : \Omega \to U \subset \mathcal{M} \subset \mathbb{R}^d$ is the corresponding local parametrization back into the ambient hidden space.
-
-The tangent space at $\mathbf{x}$ is the best local linear approximation to the manifold near $\mathbf{x}$. Formally, it is the $m$-dimensional linear space
-\begin{equation}
-\label{eq:tangent_space_chart}
-T_{\mathbf{x}}\mathcal{M} = d(\varphi^{-1})_{0}(\mathbb{R}^m) \subset \mathbb{R}^d,
-\end{equation}
-where $d(\varphi^{-1})_0$ is the differential of the local parametrization $\varphi^{-1}$ at the origin. In ordinary ML language, this differential can be read as the Jacobian or best local linear approximation of $\varphi^{-1}$ at $0$. It maps an infinitesimal coordinate displacement in $\mathbb{R}^m$ to the corresponding first-order displacement in the ambient space $\mathbb{R}^d$. Because $\mathcal{M}$ is embedded in $\mathbb{R}^d$, we can treat $T_{\mathbf{x}}\mathcal{M}$ as an $m$-dimensional linear subspace of the ambient hidden space.
-
-\paragraph{Ambient versus tangent directions.}
-For any \emph{ambient vector} $\mathbf{g} \in \mathbb{R}^d$ attached to the point $\mathbf{x}$, the local geometric picture suggests a decomposition
-\begin{equation}
-\label{eq:tangent_normal_decomp}
-\mathbf{g} = \mathbf{g}^{\top} + \mathbf{g}^{\perp},
-\qquad
-\mathbf{g}^{\top} \in T_{\mathbf{x}}\mathcal{M},
-\quad
-\mathbf{g}^{\perp} \perp T_{\mathbf{x}}\mathcal{M}.
-\end{equation}
-Here $\mathbf{g}^{\top}$ is the tangent component, namely the part of $\mathbf{g}$ that lies in the estimated tangent space, and $\mathbf{g}^{\perp}$ is the normal component, namely the part orthogonal to it. In this local approximation, the tangent component changes the representation along directions spanned by nearby samples in the training set, while the normal component is orthogonal to that local linear subspace. This is the geometric distinction used later by \TanGCE{}: ambient gradient updates may contain both parts, but tangent-projected updates keep only the component that remains aligned with the estimated local geometry. We do not claim that the normal component is causally responsible for off-manifold displacement, only that the tangent projection is a practical way to attenuate directions unsupported by the local sample structure.
-
-\paragraph{Recoverability after erasure.}
-Throughout the paper, concept removal is judged only after training a \emph{fresh} probe on the edited representations. This follows the lesson of \citet{elazar-goldberg-2018-adversarial}: erasure succeeds only if a newly trained classifier still fails to recover the concept from $\tilde{\mathbf{x}}$.
-
-\paragraph{Conventions.}
-Index $i$ ranges over samples.
-$\|\cdot\|$ denotes the Euclidean norm unless stated otherwise.
+\paragraph{Recoverability.} Concept removal is judged only after training a \emph{fresh} probe on the edited representations \citep{elazar-goldberg-2018-adversarial}: erasure succeeds if a newly trained nonlinear classifier fails to recover the concept from $\tilde{\mathbf{x}}$, not merely if the old scorer is fooled.

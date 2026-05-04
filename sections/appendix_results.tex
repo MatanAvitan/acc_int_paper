@@ -153,6 +153,17 @@ A reader familiar with Mahalanobis whitening might wonder whether $\alpha = \tfr
 
 We use $\mathbf{C}^{+1/2}$ (positive half-power), which does the opposite: it reweights the tangent step \emph{toward} the high-$\sigma_{i,k}$ principal axes — exactly the directions where the local manifold has the most support and where the linear approximation is most reliable — and away from low-$\sigma$ thin tail directions where the linear approximation is fragile and where motion most easily leaves the manifold. The three values $\alpha \in \{0, \tfrac{1}{2}, 1\}$ thus form a one-parameter family interpolating between (i) treating every tangent direction as equally trustworthy ($\alpha = 0$, isotropic), (ii) respecting the local ellipsoid mildly with $\sigma_{i,k}$ scaling ($\alpha = \tfrac{1}{2}$, our default), and (iii) the natural-gradient / Mahalanobis trust-region optimum that maximally suppresses thin directions ($\alpha = 1$). Whitening ($\alpha = -\tfrac{1}{2}$) sits outside this useful range for our problem because it has the opposite sign of the geometric correction we want; we therefore do not include it.
 
+\section{Coordinate-chart definition of the tangent space}
+\label{sec:appendix_geometry}
+
+We adopt the formal definition from \citet{tu-2011-manifolds}. Fix $\mathbf{x} \in \mathcal{M}$. A small local neighborhood $U \subset \mathcal{M}$ around $\mathbf{x}$ admits a coordinate map $\varphi : U \to \Omega \subset \mathbb{R}^m$ with $\varphi(\mathbf{x}) = 0$. The inverse $\varphi^{-1} : \Omega \to U \subset \mathbb{R}^d$ is a local parametrization back into the ambient hidden space. The tangent space at $\mathbf{x}$ is the $m$-dimensional linear subspace
+\begin{equation}
+T_{\mathbf{x}}\mathcal{M} = d(\varphi^{-1})_{0}(\mathbb{R}^m) \subset \mathbb{R}^d,
+\end{equation}
+where $d(\varphi^{-1})_0$ is the differential of $\varphi^{-1}$ at the origin (its Jacobian, in ML language). It maps an infinitesimal coordinate displacement in $\mathbb{R}^m$ to the corresponding first-order ambient displacement. Because $\mathcal{M}$ is embedded in $\mathbb{R}^d$, $T_{\mathbf{x}}\mathcal{M}$ is an $m$-dimensional linear subspace of the ambient hidden space.
+
+In \TanGCE{} we never construct $\varphi$ or $\varphi^{-1}$. The leading right singular vectors of the local secant matrix (Eq.~\ref{eq:secant_svd}) serve as an empirical first-order basis for $T_{\mathbf{x}}\mathcal{M}$, and the orthogonal projector $\mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top$ implements the tangent component $\mathbf{g}^{\top}$ of any ambient vector $\mathbf{g}$. We do not claim that $\mathcal{M}$ is smooth in any theorem-level sense, only that this approximation tracks the local sample structure well enough to attenuate updates in directions unsupported by it.
+
 \section{Per-panel breakdown of the headline comparison}
 \label{sec:appendix_per_panel}
 

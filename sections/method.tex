@@ -3,182 +3,124 @@
 \section{Method: \TanGCE{}}
 \label{sec:method}
 
-We now introduce \emph{Tangent Gradient-based Concept Erasure} (\TanGCE{}), the method presented in this paper. The full pipeline has two phases. \textbf{Phase~1} is two closed-form, one-shot moment-matching projections that exhaust all first- and second-moment concept signal in the representation. \textbf{Phase~2} is the iterative tangent-constrained loop that erases the residual nonlinear concept structure left after Phase~1. The starting point of Phase~2 is a local manifold approximation of representation space: if the neighborhood of a representation $\mathbf{x}$ is well approximated by a low-dimensional manifold $\mathcal{M}$, then the relevant first-order directions are those in the tangent space $T_{\mathbf{x}}\mathcal{M}$ rather than arbitrary ambient directions in $\mathbb{R}^d$. We do not observe this tangent space directly. Instead, we approximate it via the local SVD of the neighborhood secant matrix and use that first-order estimate to constrain the erasure update. Each iteration of Phase~2 therefore follows the same four-step pattern: train a fresh concept scorer, estimate a local tangent basis, project the scorer gradient into that tangent space, and apply the resulting constrained update.
+\TanGCE{} (\emph{Tangent Gradient-based Concept Erasure}) has two phases. Phase~1 applies two closed-form moment-matching projections that exhaust 1st- and 2nd-moment concept signal. Phase~2 iterates a tangent-constrained step on the residual: each round trains a fresh nonlinear scorer, projects its gradient onto a locally estimated tangent basis, and applies the projection-and-preconditioning update.
 
 \begin{algorithm}[t]
-\caption{\TanGCE{} at a glance. Phase~1 is two closed-form, one-shot projections (LEACE then a rank-2 covariance-asymmetry projection); Phase~2 is an iterative tangent-constrained step on the residual. Mathematical details in §\ref{sec:moment_preproc}–\ref{sec:cov_tangce}.}
+\caption{\TanGCE{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step.}
 \label{alg:tangce}
 \begin{algorithmic}[1]
 \REQUIRE Representations $\mathbf{X}$, concept labels $\mathbf{y}$, $\#$rounds $T$, trust region $\varepsilon$, anisotropy $\alpha$, scorer hidden $h$.
 \STATE \textbf{Phase~1 -- closed-form moment preprocessing} (Eqs.~\ref{eq:delta_sigma}--\ref{eq:covmatch_apply}):
-\STATE \hspace{1em} \textbf{1a.} Linear:\ \ $\mathbf{X} \leftarrow \mathrm{LEACE}_{\mathbf{y}}(\mathbf{X})$ \hfill (rank-1 mean projection)
-\STATE \hspace{1em} \textbf{1b.} Covariance:\ \ $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$, with $\mathbf{D}$ = top-2 eigvecs of $\Delta\mathbf{\Sigma}$ \hfill (rank-2 covariance projection)
+\STATE \hspace{1em} \textbf{1a.} $\mathbf{X} \leftarrow \mathrm{LEACE}_{\mathbf{y}}(\mathbf{X})$ \hfill (rank-1 mean projection)
+\STATE \hspace{1em} \textbf{1b.} $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$, with $\mathbf{D}$ = top-2 eigvecs of $\Delta\mathbf{\Sigma}$ \hfill (rank-2 covariance projection)
 \STATE \textbf{Phase~2 -- iterative tangent step} (Eqs.~\ref{eq:tangent_proj}--\ref{eq:tangent_erase_cov}):
 \FOR{$t = 1, \ldots, T$}
  \STATE Train a fresh 2-layer MLP scorer $f_t$ (hidden $h$) on the current $(\mathbf{X}, \mathbf{y})$.
- \STATE \textbf{For each row $\mathbf{x}_i$}: take a tangent-projected, $\sigma$-preconditioned trust-region step
- \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \cdot \underbrace{\mathbf{C}_i^{1/2}}_{\substack{\text{anisotropy} \\ \text{($\sigma_{i,k}$ per axis)}}} \cdot \underbrace{\mathbf{P}_{T_i} \nabla f_t(\mathbf{x}_i)}_{\text{tangent-projected gradient}}, \quad \text{with } \|\Delta\mathbf{x}_i\|_2 \leq \varepsilon \cdot s_i.$
+ \STATE \textbf{For each row $\mathbf{x}_i$}: tangent-projected, $\sigma$-preconditioned trust-region step
+ \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \cdot \mathbf{C}_i^{1/2} \cdot \mathbf{P}_{T_i} \nabla f_t(\mathbf{x}_i), \quad \|\Delta\mathbf{x}_i\|_2 \leq \varepsilon \cdot s_i.$
 \ENDFOR
 \STATE \textbf{return} edited $\mathbf{X}$.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Phase~1: Closed-form moment preprocessing}
+\subsection{Phase~1: closed-form moment preprocessing}
 \label{sec:moment_preproc}
 
-Before iteration begins, we apply two closed-form, one-shot moment-matching projections that exhaust all linear (1st-moment) and rank-2 quadratic (2nd-moment) concept signal in the representation. The iterative tangent loop then operates on the residual nonlinear structure that no closed-form linear projection can reach.
-
 \paragraph{LEACE (1st moment).}
-We fit a LEACE eraser \citep{belrose-etal-2023-leace} on $(\mathbf{X}_{\text{train}}, \mathbf{y})$ and apply it to all three splits. LEACE removes the rank-1 cross-covariance $\mathbf{\Sigma}_{xz}$: after this step, no \emph{linear} classifier can recover the concept above majority-class accuracy on training data, with provably minimum representation damage among affine projections enforcing this invariant. In our setting LEACE removes one rank from a representation of dimension $d \in \{2048, 3072, 3584\}$ at negligible utility cost.
+Fit a LEACE eraser \citep{belrose-etal-2023-leace} on $(\mathbf{X}_{\text{train}}, \mathbf{y})$ and apply to all splits. LEACE removes the rank-1 cross-covariance $\mathbf{\Sigma}_{xz}$, leaving no \emph{linear} classifier above majority-class accuracy with provably minimum representation damage among affine projections.
 
 \paragraph{Covariance-asymmetry projection (2nd moment).}
-LEACE matches class means but leaves the within-class covariance asymmetry
+LEACE matches class means but leaves the within-class asymmetry
 \begin{equation}
 \label{eq:delta_sigma}
-\Delta\mathbf{\Sigma} \;=\; \mathbf{\Sigma}_{+} - \mathbf{\Sigma}_{-}
+\Delta\mathbf{\Sigma} = \mathbf{\Sigma}_{+} - \mathbf{\Sigma}_{-}.
 \end{equation}
-unchanged, where $\mathbf{\Sigma}_{\pm}$ are the per-class within-class covariances of the LEACE-projected features. A 2-layer MLP probe can still recover concept information from variance asymmetry along axes where $\mathbf{\Sigma}_{+}$ and $\mathbf{\Sigma}_{-}$ differ, even when the class means are equal — squared features expose this signal that is invisible to any linear classifier. We therefore append a rank-$2$ projection: take the top-$2$ eigenvectors of $\Delta\mathbf{\Sigma}$ ranked by $|\lambda|$, orthonormalize with a residual mean direction via QR,
+A nonlinear probe still recovers concept information from variance asymmetry along axes where $\mathbf{\Sigma}_{+}$ and $\mathbf{\Sigma}_{-}$ differ. We append a rank-$2$ projection: the top-$2$ eigenvectors of $\Delta\mathbf{\Sigma}$ ranked by $|\lambda|$, orthonormalized with a residual mean direction via QR,
 \begin{equation}
 \label{eq:covmatch_basis}
-\mathbf{D} \;=\; \mathrm{QR}\!\left([\,\hat{\mathbf{d}}_{\text{mean}} \;\big|\; \mathbf{e}_1, \mathbf{e}_2\,]\right) \;\in\; \mathbb{R}^{d \times 3},
+\mathbf{D} = \mathrm{QR}\!\left([\,\hat{\mathbf{d}}_{\text{mean}} \;\big|\; \mathbf{e}_1, \mathbf{e}_2\,]\right) \in \mathbb{R}^{d \times 3},
 \end{equation}
-and project this rank-$3$ subspace out of every split:
 \begin{equation}
 \label{eq:covmatch_apply}
-\tilde{\mathbf{x}} \;=\; \mathbf{x} \;-\; \mathbf{D}\mathbf{D}^\top \mathbf{x}.
+\tilde{\mathbf{x}} = \mathbf{x} - \mathbf{D}\mathbf{D}^\top \mathbf{x}.
 \end{equation}
-Because LEACE has already aligned the class means, $\hat{\mathbf{d}}_{\text{mean}} \approx \mathbf{0}$ and the QR step keeps only the two eigenvector directions in practice, so the effective preprocessing rank removed is two. This step is a special case of the $k$-LEACE-style higher-moment erasure framework of \citet{singh-ravfogel-2024-representation-surgery}; we use the rank-2 instance because second-order eigenvectors are stable to estimate from $n \approx 7000$ training examples while higher-order tensors are not.
+Because LEACE has aligned class means, $\hat{\mathbf{d}}_{\text{mean}} \approx \mathbf{0}$ and the effective rank removed is two. This is a special case of the $k$-LEACE framework of \citet{singh-ravfogel-2024-representation-surgery} restricted to second-order eigenvectors, which are stable to estimate from $n \approx 7000$ examples while higher-order tensors are not. We fix $K{=}2$ across all 119 panels: for a binary concept, the top-2 eigenvectors of $\Delta\mathbf{\Sigma}$ carry the two axes of class-conditional variance asymmetry; subsequent eigenvectors describe noise rather than class-discriminative signal. Empirically, $K{\ge}3$ adds no leakage reduction and begins to erode control accuracy (see App.~\ref{sec:appendix_per_panel}).
 
-\paragraph{Why $K{=}2$.} The choice of $K$ in the $\Delta\mathbf{\Sigma}$ projection is not a free hyperparameter we tuned per panel: we fix $K = 2$ once across all 119 panels for two reasons. (i) \emph{Structural:} for a binary concept, the leading eigenvector of $\Delta\mathbf{\Sigma}$ aligns with the dominant axis of variance asymmetry between the two class-conditional distributions; the second eigenvector captures the next axis of asymmetry; subsequent eigenvectors describe second-moment differences that are not class-discriminative — they are residual noise in the $\mathbf{\Sigma}_+ - \mathbf{\Sigma}_-$ estimate, not signal. (ii) \emph{Empirical:} we found that $K{=}2$ recovers essentially all the leakage reduction that the covariance projection can provide ($\approx 9$pp drop in mean above-floor leakage vs.\ $K{=}0$ on the 39-panel grid), while $K{\ge}3$ adds no further leakage reduction but begins to erode control-task accuracy as the projection consumes directions that carry utility signal. $K{=}2$ is also a structural complement to Phase~2: a rank-3 closed-form erasure (LEACE + 2 covariance directions) is small enough to leave a defined low-rank residual for the iterative tangent loop to clean up, rather than over-erasing closed-form and starving Phase~2 of work on the easy concepts.
-
-\paragraph{Why two stages, both closed-form.}
-Each stage removes a structurally distinct part of the concept signal that the other cannot reach: LEACE eliminates the mean-shift any linear classifier exploits; the covariance projection eliminates the variance asymmetry a quadratic classifier exploits. Both stages have closed-form solutions on full training data, making them more accurate than per-step or kernelized estimates, and each costs $\mathcal{O}(d^2)$ time and a single rank-1-or-2 projection at inference. They remove rank $\leq 3$ dimensions out of $d \in \{2048, 3072, 3584\}$ — a negligible fraction of the representation budget — while exposing the residual nonlinear concept structure that the iterative loop in Phase~2 is designed to erase.
+The two stages erase structurally distinct signal (mean shift vs.\ variance asymmetry) and together remove rank $\le 3$ from $d \in \{2048, 3072, 3584\}$, exposing the residual nonlinear structure that Phase~2 attacks.
 
 \subsection{Local tangent estimation}
 
-For each query point $\mathbf{x}_i$, we estimate the tangent space $T_{\mathbf{x}_i}\mathcal{M}$ via the SVD of a local secant matrix. Let $\mathcal{N}_k(\mathbf{x}_i) = \{\mathbf{x}_{j_1}, \ldots, \mathbf{x}_{j_k}\}$ denote the $k$ nearest neighbors of $\mathbf{x}_i$ in the training set, excluding $\mathbf{x}_i$ itself. We stack the centered secant vectors $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ row-wise into the secant matrix $\mathbf{S}_i \in \mathbb{R}^{k \times d}$ and compute its SVD,
+For each query $\mathbf{x}_i$, let $\mathcal{N}_k(\mathbf{x}_i)$ be its $k$ nearest neighbors. Stack the centered secants $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ row-wise into $\mathbf{S}_i \in \mathbb{R}^{k \times d}$ and take its SVD,
 \begin{equation}
 \label{eq:secant_svd}
-\mathbf{S}_i \;=\; \mathbf{U}_i \, \mathrm{diag}(\sigma_{i,1}, \ldots, \sigma_{i,k}) \, \mathbf{V}_i^\top,
+\mathbf{S}_i = \mathbf{U}_i \, \mathrm{diag}(\sigma_{i,1}, \ldots, \sigma_{i,k}) \, \mathbf{V}_i^\top.
 \end{equation}
-which yields the right singular vectors $\mathbf{V}_i \in \mathbb{R}^{d \times k}$ (the directions in which neighbors extend) and the singular values $\sigma_{i,k}$ (how far they extend along each direction). The implied local covariance — the second moment of the secants in the ambient space — is then $\mathbf{C}_i = \tfrac{1}{k}\mathbf{S}_i^\top \mathbf{S}_i = \tfrac{1}{k} \mathbf{V}_i \, \mathrm{diag}(\sigma_{i,k}^2) \, \mathbf{V}_i^\top$:
-\begin{equation}
-\label{eq:local_cov}
-\mathbf{C}_i = \frac{1}{k} \sum_{m=1}^{k} \mathbf{s}_{j_m} \mathbf{s}_{j_m}^\top \in \mathbb{R}^{d \times d}.
-\end{equation}
-Truncating to the top $r$ right singular vectors gives the tangent basis
+The right singular vectors $\mathbf{V}_i$ are the directions in which neighbors extend; the singular values $\sigma_{i,k}$ are how far they extend along each. The implied local covariance is $\mathbf{C}_i = \tfrac{1}{k}\mathbf{V}_i \, \mathrm{diag}(\sigma_{i,k}^2) \, \mathbf{V}_i^\top$. Truncating to the top $r$ right singular vectors gives the tangent basis
 \begin{equation}
 \label{eq:tangent_basis}
 \mathbf{B}_i = [\mathbf{v}_i^{(1)}, \ldots, \mathbf{v}_i^{(r)}] \in \mathbb{R}^{d \times r},
 \end{equation}
-where the per-panel intrinsic dimension $r$ is estimated by the \emph{TwoNN} algorithm of \citet{facco-etal-2017-two-nn}, which exploits the ratio of the first two nearest-neighbor distances around each point to give a maximum-likelihood estimate of the local manifold dimension without any assumption on the neighborhood scale. We apply TwoNN once per panel and floor the result at $r \geq 8$ to keep the tangent basis well-conditioned even on panels where the estimator returns very small values; the floor never binds in practice on the language-model panels we evaluate. The resulting orthogonal projector onto the estimated tangent space is
+with $r$ estimated per panel by TwoNN \citep{facco-etal-2017-two-nn} and floored at $r \ge 8$. The tangent projector is
 \begin{equation}
 \label{eq:tangent_proj}
 \mathbf{P}_{T_i} = \mathbf{B}_i \mathbf{B}_i^\top.
 \end{equation}
-
-This is the operational approximation used in \TanGCE{}: the leading right singular vectors of the local secant matrix serve as an empirical linear basis for $T_{\mathbf{x}_i}\mathcal{M}$. We treat the SVD basis as a practical first-order stand-in for a tangent space, not as a theorem-level guarantee that the representations form a smooth manifold.
+We treat the SVD basis as a first-order stand-in for $T_{\mathbf{x}_i}\mathcal{M}$, not as a guarantee of smooth-manifold structure.
 
 \subsection{Tangent-constrained update}
 
-To define the tangent-constrained update, we start from the ambient unit gradient direction
-\begin{equation}
-\label{eq:ambient_direction}
-\mathbf{u}_i = \frac{\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)}{\|\nabla_{\mathbf{x}} f_\theta(\mathbf{x}_i)\|}.
-\end{equation}
-\TanGCE{} then defines the tangent-constrained direction by projecting onto the local tangent space:
+The ambient unit gradient at $\mathbf{x}_i$ is $\mathbf{u}_i = \nabla f_t(\mathbf{x}_i) / \|\nabla f_t(\mathbf{x}_i)\|$. \TanGCE{} replaces it with its tangent projection,
 \begin{equation}
 \label{eq:tangent_direction}
-\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \, \mathbf{u}_i = \mathbf{B}_i (\mathbf{B}_i^\top \mathbf{u}_i).
+\mathbf{u}_i^{\mathrm{tan}} = \mathbf{P}_{T_i} \mathbf{u}_i = \mathbf{B}_i (\mathbf{B}_i^\top \mathbf{u}_i),
 \end{equation}
-The projected direction is \emph{not} re-normalized to unit length. Its norm $\|\mathbf{u}_i^{\mathrm{tan}}\| \leq 1$ acts as an overlap weight: when the ambient concept gradient has little support in the estimated tangent space, the update is naturally attenuated.
-
-\TanGCE{} then applies the update
+not re-normalized: $\|\mathbf{u}_i^{\mathrm{tan}}\| \le 1$ acts as an overlap weight that attenuates the update when the ambient gradient has little support in the estimated tangent space. The isotropic update is
 \begin{equation}
 \label{eq:tangent_erase}
-\tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}.
+\tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}},
 \end{equation}
-where $\lambda$ is a step-size scalar; in §\ref{sec:closed_form_lambda} it becomes a per-sample $\lambda_i$ chosen by a closed-form trust-region rule. The update in Eq.~\ref{eq:tangent_erase} is a heuristic design choice, not the solution to an explicit optimization problem. It projects the representation onto the estimated tangent direction and subtracts a scaled multiple, analogous to a one-step descent along the constrained direction.
-
-The effective step size is $\lambda \|\mathbf{u}_i^{\mathrm{tan}}\|^2$. It is larger when the gradient has more support in the estimated tangent space and smaller when it has less, but this does not guarantee monotonic improvement in either leakage or utility.
-
-This construction is the core difference between \TanGCE{} and its ambient counterpart. \AmbGCE{} applies the update in the full hidden space, whereas \TanGCE{} restricts the update to directions supported by the local geometry estimated in the model's native coordinate system. We do not claim invariance under coordinate changes; the tangent basis is computed in the LayerNorm-induced geometry of the given representations.
-
-Equation~\ref{eq:tangent_erase} treats every direction within the tangent space symmetrically. We retain it here as the conceptual entry point and as the $\alpha = 0$ ablation, but the canonical \TanGCE{} update used throughout the paper is the $\sigma$-preconditioned generalization derived in §\ref{sec:cov_tangce} (Eq.~\ref{eq:tangent_erase_cov}), which respects the anisotropy of the local manifold by reweighting each tangent direction with its associated singular value.
-
-\subsection{Why tangent projection can help at larger \texorpdfstring{$\lambda$}{lambda}}
-
-\AmbGCE{} edits $\mathbf{x}_i$ in the full ambient space, where the gradient may contain components that are poorly aligned with the local representation support. Under the local manifold view, those components are the ones most likely to move the representation away from the neighborhood geometry captured by natural data. \TanGCE{} removes them at first order by replacing $\mathbf{u}_i$ with its projection $\mathbf{u}_i^{\mathrm{tan}}$ into the estimated tangent space. This motivates the hypothesis that tangent-constrained updates can remain effective at larger step sizes. We treat that statement as empirical rather than guaranteed, and evaluate it directly in the results section.
+with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCE{} is the direct ablation: same loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the $\sigma$-preconditioned generalization in §\ref{sec:cov_tangce}.
 
 \subsection{Adaptive per-sample step size: closed-form \texorpdfstring{$\lambda_i$}{lambda}}
 \label{sec:closed_form_lambda}
 
-A single global $\lambda$ over-edits some samples while under-editing others. Confident samples (large gradient norm and well-aligned tangent) move proportionally more for any fixed scalar; uncertain samples (small or off-manifold gradient) are dragged by the same scalar in noise-dominated directions. We address this with a per-sample step size $\lambda_i$ that respects the \emph{local trust region} of the manifold approximation.
-
-\paragraph{Trust region.} Recall that $\mathbf{B}_i$ is the local SVD basis at $\mathbf{x}_i$ (the top-$r$ right singular vectors of the secant matrix, Eq.~\ref{eq:tangent_basis}) and let $s_i$ be a per-sample scale on which the linear tangent approximation is reliable. We require that no sample moves further than a fraction $\varepsilon$ of this local scale:
+A single global $\lambda$ over-edits some samples while under-editing others. We replace it with a per-sample step size that respects a \emph{local trust region}: no sample moves more than a fraction $\varepsilon$ of a per-sample local scale $s_i$,
 \begin{equation}
 \label{eq:trust_region}
-\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \;\leq\; \varepsilon \cdot s_i.
+\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i.
 \end{equation}
-Here $\varepsilon \in (0, \infty)$ is a single global trust-region scale, dimensionless and shared across panels. Smaller $\varepsilon$ yields surgical edits inside each local manifold patch; larger $\varepsilon$ admits steps that may leave the patch. We use $\varepsilon = 0.1$ throughout (an order of magnitude smaller than the canonical $\varepsilon = 0.3$ used in our earlier ablations); see §~\ref{sec:results} for the empirical effect of this choice on tight-budget surgicality. The simplest choice is $s_i = r_i$, the mean distance to the $k$ nearest neighbors — the radial neighborhood scale. We use a tighter, anisotropy-aware scale by default; see Eq.~\ref{eq:s_fmaha} below.
-
-\paragraph{Closed-form solution.} Substituting Eq.~\ref{eq:tangent_erase} into Eq.~\ref{eq:trust_region}, the constraint becomes
-\begin{equation}
-\label{eq:lambda_constraint}
-\lambda_i \cdot |\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}| \cdot \|\mathbf{u}_i^{\mathrm{tan}}\| \;\leq\; \varepsilon \cdot s_i.
-\end{equation}
-Let $\mathbf{v}_i = (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}}$ be the per-sample edit displacement at $\lambda{=}1$. The largest $\lambda_i$ satisfying Eq.~\ref{eq:lambda_constraint} is
+Substituting Eq.~\ref{eq:tangent_erase} and letting $\mathbf{v}_i = (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \mathbf{u}_i^{\mathrm{tan}}$ be the per-sample displacement at $\lambda{=}1$, the largest admissible step is
 \begin{equation}
 \label{eq:lambda_closed_form}
-\boxed{ \;\;
-\lambda_i \;=\; \min\!\left( \lambda_{\max}, \; \frac{\varepsilon \cdot s_i}{\|\mathbf{v}_i\|} \right) \;\;
-}
+\boxed{\;\;\lambda_i = \min\!\left( \lambda_{\max}, \; \frac{\varepsilon \cdot s_i}{\|\mathbf{v}_i\|} \right)\;\;}
 \end{equation}
-where $\lambda_{\max}$ is a safety cap that prevents runaway updates when $\|\mathbf{v}_i\| \to 0$ (gradient nearly orthogonal to the tangent space). In practice we set $\lambda_{\max}=64$, large enough that it binds only for samples whose gradient has near-zero tangent component.
+with $\lambda_{\max}=64$ a safety cap when $\|\mathbf{v}_i\| \to 0$. We use $\varepsilon = 0.1$ across every panel.
 
-\paragraph{Anisotropy-aware local scale.} Setting $s_i = r_i$ (mean $k$-NN distance) is the simplest valid choice, but treats every direction equally. The local manifold is generally an \emph{ellipsoid}, not a sphere: along the dominant right singular vectors of the secant matrix, neighbors extend much further than along thin (low-$\sigma$) directions. We therefore prefer the \emph{whitened-tangent neighborhood radius}
+\paragraph{Anisotropy-aware local scale (FMaHa).}
+The local manifold is an ellipsoid: along high-$\sigma$ singular directions, neighbors extend much further than along thin tail directions. We therefore use the \emph{whitened-tangent neighborhood radius}
 \begin{equation}
 \label{eq:s_fmaha}
-s_i \;=\; R_i^{\mathrm{white}} \cdot s_i^{\mathrm{maha}}, \qquad
-R_i^{\mathrm{white}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i^\top (\mathbf{x}_j - \mathbf{x}_i) \,/\, \boldsymbol\sigma_i \|_2,
+s_i = R_i^{\mathrm{white}} \cdot s_i^{\mathrm{maha}}, \qquad
+R_i^{\mathrm{white}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i^\top (\mathbf{x}_j - \mathbf{x}_i) / \boldsymbol\sigma_i \|_2,
 \end{equation}
-where $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$ is the local singular spectrum and division is component-wise. The factor $R_i^{\mathrm{white}}$ measures how far neighbors typically reach in standardized tangent coordinates; the factor $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol\alpha_i / (\boldsymbol\sigma_i + \delta)\|_2$ rescales the per-sample step direction by its harmonic-$\sigma$ tangent length, where $\boldsymbol\alpha_i$ is the unit step direction in tangent coordinates. We refer to this scaling as \emph{fractional Mahalanobis} (FMaHa): under it, $\varepsilon$ is interpretable as a fraction of the local whitened-tangent neighborhood. Setting $s_i = r_i$ recovers the original Euclidean radial scale and is reported as an ablation.
-
-\paragraph{Why this matters.} Eq.~\ref{eq:lambda_closed_form} is a genuine \emph{trust region} per sample: confident samples move by exactly $\varepsilon \cdot r_i$ along their tangent; uncertain samples (small $\|\mathbf{v}_i\|$) get a larger nominal $\lambda_i$ but the actual movement $\lambda_i \cdot \|\mathbf{v}_i\|$ remains bounded by $\varepsilon \cdot r_i$ (or by the safety cap, in which case movement is small because $\|\mathbf{v}_i\|$ is small). This per-sample adaptation removes a hyperparameter (one global $\lambda$) and replaces it with a single dimensionless surgicality knob $\varepsilon$.
-
-The closed-form expression in Eq.~\ref{eq:lambda_closed_form} requires no bisection or auxiliary optimization: each iteration computes $\mathbf{v}_i$ once via a forward pass through the scorer, $s_i$ once via the cached $k$-NN distances and the local SVD spectrum, and $\lambda_i$ in $\mathcal{O}(1)$ per row. This makes the per-sample trust region essentially free relative to the cost of refitting the scorer and tangent.
+with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$ and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol\alpha_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise). $\varepsilon$ is then a fraction of the local whitened-tangent neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
 
 \subsection{Anisotropic update via the local \texorpdfstring{$\sigma$}{sigma}-spectrum}
 \label{sec:cov_tangce}
 
-The closed-form $\lambda_i$ above controls the \emph{magnitude} of each sample's step. Its \emph{direction} is still isotropic in the tangent basis: every tangent component of $\mathbf{v}_i$ is rescaled by the same scalar $\lambda_i$. But the local SVD already tells us that the manifold is anisotropic — squared singular values $\sigma_{i,k}^2$ at sample $i$ differ by orders of magnitude across $k$. Treating all tangent directions as equally safe to move along is exactly the assumption that the neighborhood is a sphere; in practice it is much closer to an ellipsoid stretched along the dominant right singular vectors and pinched in the rank-truncation tail. An isotropic step over-edits thin directions where the linear approximation is most fragile, and under-edits fat directions where the manifold easily accommodates further displacement.
+The closed-form $\lambda_i$ controls the magnitude of each step; its direction is still isotropic in the tangent basis. The local SVD already exposes anisotropy — the squared singular values $\sigma_{i,k}^2$ differ by orders of magnitude across $k$. An isotropic step over-edits thin tail directions where the linear approximation is fragile, and under-edits dominant directions where the manifold easily accommodates motion.
 
-\paragraph{Singular-vector decomposition.} Decompose the per-sample tangent displacement $\mathbf{v}_i$ in the local SVD basis:
-\begin{equation}
-\label{eq:eigen_decomp}
-\mathbf{v}_i \;=\; \sum_{k=1}^{r} a_{i,k} \, \mathbf{v}_i^{(k)}, \qquad a_{i,k} = \langle \mathbf{v}_i, \mathbf{v}_i^{(k)} \rangle,
-\end{equation}
-where $\{\mathbf{v}_i^{(k)}\}_{k=1}^{r}$ are the columns of $\mathbf{B}_i$ (the leading right singular vectors of the local secant matrix, Eq.~\ref{eq:secant_svd}) with associated singular values $\sigma_{i,k}$. The implied local covariance is $\mathbf{C}_i = \mathbf{B}_i \, \mathrm{diag}(\sigma_{i,1}^2, \ldots, \sigma_{i,r}^2) \, \mathbf{B}_i^\top$, with eigenvalues $\sigma_{i,k}^2$.
-
-\paragraph{Anisotropic update.} We replace the isotropic step in Eq.~\ref{eq:tangent_erase} by a covariance-preconditioned step that respects the local ellipsoid. Define
+We replace Eq.~\ref{eq:tangent_erase} with a covariance-preconditioned step,
 \begin{equation}
 \label{eq:tangent_erase_cov}
-\boxed{ \;\;
-\tilde{\mathbf{x}}_i \;=\; \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{1/2} \, \mathbf{v}_i \;=\; \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k} \, a_{i,k} \, \mathbf{v}_i^{(k)} \;\;
-}
+\boxed{\;\;\tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda_i \, \mathbf{C}_i^{1/2} \, \mathbf{v}_i = \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k} \, a_{i,k} \, \mathbf{v}_i^{(k)}\;\;}
 \end{equation}
-The effect is direct: each tangent coefficient $a_{i,k}$ is reweighted by its associated singular value $\sigma_{i,k}$, so the update moves more along high-variance principal directions (where the manifold supports larger displacements) and less along thin directions (where the linear approximation is fragile). The general $\mathbf{C}_i^{\alpha}$ family with $\alpha \in \{0, \tfrac{1}{2}, 1\}$ — and the reason we choose the \emph{positive} half-power rather than Mahalanobis whitening's $\mathbf{C}_i^{-1/2}$ — is detailed in Appendix~\ref{sec:appendix_alpha_regimes}; in the rest of the paper $\alpha = \tfrac{1}{2}$ is the only setting we use.
+where $a_{i,k} = \langle \mathbf{v}_i, \mathbf{v}_i^{(k)} \rangle$ are the SVD-basis coordinates of $\mathbf{v}_i$. Each tangent coefficient is reweighted by its singular value: the update moves more along high-$\sigma$ directions and less along thin ones.
 
-\paragraph{Trust region preserved.} The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning, against the transformed step $\mathbf{C}_i^{1/2} \mathbf{v}_i$ (i.e.\ we substitute $\|\mathbf{C}_i^{1/2} \mathbf{v}_i\|$ for $\|\mathbf{v}_i\|$ in the denominator). The actual displacement $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2$ therefore remains bounded by $\varepsilon \cdot s_i$, exactly as in the isotropic case. Anisotropy reshapes the \emph{direction} of the step, not its budget.
+\paragraph{Relation to Mahalanobis.} Mahalanobis distance normalizes by a \emph{global} covariance $\mathbf{\Sigma}^{-1/2}$. Eq.~\ref{eq:tangent_erase_cov} normalizes by a \emph{local, per-direction} factor $\sigma_{i,k}$ instead. This choice is forced by the geometry: we have already decomposed the tangent step in the local SVD eigenvector coordinates $\{\mathbf{v}_i^{(k)}\}$, and the natural per-axis normalization in those coordinates is the corresponding eigenvalues. The general $\mathbf{C}_i^{\alpha}$ family is detailed in App.~\ref{sec:appendix_alpha_regimes}; we use $\alpha = \tfrac{1}{2}$ (positive half-power) throughout, never the whitening sign $\alpha = -\tfrac{1}{2}$.
 
-\paragraph{Implementation.} Eq.~\ref{eq:tangent_erase_cov} reuses the SVD already computed for the tangent basis; the per-sample singular spectrum $(\sigma_{i,k})_k$ is cached during the local SVD. Concretely, the step decomposition (Eq.~\ref{eq:eigen_decomp}), eigenvalue reweighting, and reprojection to the ambient space are three batched einsums over the $(N, d, r)$ basis tensor. No additional SVDs and no per-sample loops are required. \TanGCE{} therefore inherits the same per-iteration cost as the isotropic update, modulo a single extra $\mathcal{O}(N d r)$ matrix multiplication.
+The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning (replacing $\|\mathbf{v}_i\|$ by $\|\mathbf{C}_i^{1/2}\mathbf{v}_i\|$ in the denominator), so the displacement still respects $\varepsilon \cdot s_i$. Anisotropy reshapes the \emph{direction} of the step, not its budget.
 
-\subsection{Iterative \TanGCE{} and relation to baselines}
+\subsection{Iterative loop and relation to baselines}
 
-We implement \TanGCE{} using an iterative protocol with probe recycling. Each round begins by training a fresh concept scorer on the current representations, computing per-sample gradients, and applying the tangent-constrained update in Eq.~\ref{eq:tangent_erase}. This turns the method into an iterative nonlinear eraser: every new scorer is trained specifically to recover whatever target information survived the previous round. The tangent estimator is also refit in every round to track the evolving local geometry.
-
-The rationale follows Elazar and Goldberg \citep{elazar-goldberg-2018-adversarial}: success against a single trained classifier is not evidence that the concept has been exhausted. We therefore evaluate every erasure method against a retrained probe after each full erasure procedure, and the erasure itself iterates to remove residual recoverable signal. This nonlinear fresh-scorer loop is the conceptual analogue of iterative linear removal in INLP \citep{ravfogel-etal-2020-null}, but with a newly trained nonlinear scorer at each round.
-
-This setup also clarifies the relation between \TanGCE{} and the baselines. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline, performing a one-shot correction to the current decision boundary in each round. \AmbGCE{} is the direct ablation of \TanGCE{}: it keeps the same fresh-scorer loop but applies the update in the full ambient space. \TanGCE{} is the full method, adding the tangent-space restriction.
-
-Two diagnostics monitor tangent quality throughout the iterative process. \emph{Tangent Gradient Capture} (TGC) measures the fraction of the leakage gradient lying within the estimated tangent space. \emph{Tangent Neighbor Residual} (TNR) measures the fraction of local secant variation not explained by the tangent basis. High TGC and low TNR indicate that the local linear approximation is informative enough for the tangent-constrained update to be meaningful.
+Each round trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, recomputes per-sample gradients, and applies the update. The fresh-scorer loop follows \citet{elazar-goldberg-2018-adversarial}: success against any single trained classifier is not evidence the concept is gone. \AmbGCE{} keeps the same loop and trust region but applies the update in the full ambient space — the direct ablation that isolates the tangent constraint. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline; Obliviator \citep{akbari-etal-2026-obliviator} is the strongest published unsupervised baseline.
