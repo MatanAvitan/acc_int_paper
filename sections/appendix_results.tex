@@ -119,12 +119,12 @@ Reporting only one control set hides whichever regime the method happens to be w
 \section{Closed-form per-row $\lambda_i$ statistics}
 \label{sec:appendix_lambda_stats}
 
-For each panel and each outer iteration of the proposed pipeline (Phase 2 with fixed trust-region $\varepsilon = 0.1$), the closed-form rule of Eq.~\ref{eq:lambda_closed_form} produces a per-row step magnitude $\lambda_i$ (capped at $\lambda_{\max} = 64$). Table~\ref{tab:lambda_stats} reports the distribution of these per-row $\lambda_i$ averaged across all 60 iterations of each trajectory and then aggregated across panels.
+For each panel and each outer iteration of the proposed algorithm (Phase 2 with fixed trust-region $\varepsilon = 0.1$), the closed-form rule of Eq.~\ref{eq:lambda_closed_form} produces a per-row step magnitude $\lambda_i$ (capped at $\lambda_{\max} = 64$). Table~\ref{tab:lambda_stats} reports the distribution of these per-row $\lambda_i$ averaged across all 60 iterations of each trajectory and then aggregated across panels.
 
 \begin{table}[t]
 \centering
 \small
-\caption{\textbf{Per-row $\lambda_i$ statistics for the proposed pipeline ($\varepsilon = 0.1$, $\lambda_{\max}=64$) on the 39-panel NLP grid at 50\%-depth.} Each cell averages the per-row $\lambda_i$ first across all 60 outer iterations of one trajectory, then across the 13 model panels of the concept. The within-panel $p_{10}/p_{90}$ spread (mean across panels) is roughly $14/45$, i.e.\ a $\sim$10$\times$ ratio between the least- and most-confident rows in a single iteration. The safety cap $\lambda_{\max}=64$ is observed only sporadically (max 57.32 across 39$\times$60 = 2340 iterations); the closed-form rule rarely binds against it.}
+\caption{\textbf{Per-row $\lambda_i$ statistics for the proposed algorithm ($\varepsilon = 0.1$, $\lambda_{\max}=64$) on the 39-panel NLP grid at 50\%-depth.} Each cell averages the per-row $\lambda_i$ first across all 60 outer iterations of one trajectory, then across the 13 model panels of the concept. The within-panel $p_{10}/p_{90}$ spread (mean across panels) is roughly $14/45$, i.e.\ a $\sim$10$\times$ ratio between the least- and most-confident rows in a single iteration. The safety cap $\lambda_{\max}=64$ is observed only sporadically (max 57.32 across 39$\times$60 = 2340 iterations); the closed-form rule rarely binds against it.}
 \label{tab:lambda_stats}
 \begin{tabular}{l r r r r r}
 \toprule
