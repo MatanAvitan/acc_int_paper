@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  4 MAY 2026 15:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  4 MAY 2026 15:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -585,12 +585,15 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
 Underfull \vbox (badness 3758) has occurred while \output is active []
 
  [3] [4]) (./sections/evaluation.tex [5]) (./sections/experiments.tex) (./sections/results.tex (./tables/per_panel_breakdown.tex) [6]
-<figures/per_model_bars_gender.png, id=333, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_gender.png, id=325, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_gender.png Graphic file (type png)
 <use figures/per_model_bars_gender.png>
 Package pdftex.def Info: figures/per_model_bars_gender.png  used on input line 19.
 (pdftex.def)             Requested size: 397.48499pt x 395.20279pt.
- (./tables/celeba_per_panel_breakdown.tex)) (./sections/discussion.tex [7] [8 <./figures/per_model_bars_gender.png>]) (./sections/limitations.tex) (./sections/conclusion.tex [9]) (./neurips_2026.bbl [10]
+ [7] (./tables/celeba_unified_summary.tex)
+Underfull \vbox (badness 1237) has occurred while \output is active []
+
+ [8 <./figures/per_model_bars_gender.png>]) (./sections/discussion.tex) (./sections/limitations.tex [9]) (./sections/conclusion.tex) (./neurips_2026.bbl [10] [11]
 Underfull \hbox (badness 1205) in paragraph at lines 121--126
 []\T1/ptm/m/n/10 (+20) Loring W. Tu.  \T1/ptm/m/it/10 (+20) An In-tro-duc-tion to Man-i-folds\T1/ptm/m/n/10 (+20) .  Uni-ver-si-text. Springer, 2 edi-tion, 2011.
  []
@@ -600,26 +603,26 @@ Underfull \hbox (badness 4531) in paragraph at lines 121--126
 \T1/ptm/m/n/10 (+20) doi: $10 . 1007 / 978-[]1-[]4419-[]7400-[]6$.  URL []$\T1/cmtt/m/n/10 https : / / luis . impa . br / aulas / anvar / Tu _
  []
 
-[11]) (./sections/appendix_results.tex (./tables/full_comparison.tex) (./tables/celeba_clip_fair.tex) (./tables/appendix_all_methods.tex
-ignored error: Infinite glue shrinkage found in box being split [12]
+) (./sections/appendix_results.tex (./tables/full_comparison.tex) (./tables/appendix_all_methods.tex [12]
 ignored error: Infinite glue shrinkage found in box being split [13]
 ignored error: Infinite glue shrinkage found in box being split [14]
 ignored error: Infinite glue shrinkage found in box being split [15]
 ignored error: Infinite glue shrinkage found in box being split [16]
-ignored error: Infinite glue shrinkage found in box being split [17])
+ignored error: Infinite glue shrinkage found in box being split [17]
+ignored error: Infinite glue shrinkage found in box being split [18])
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 23.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\lambda' on input line 23.
+(hyperref)                removing `math shift' on input line 16.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 23.
+(hyperref)                removing `\lambda' on input line 16.
 
-[18] (./tables/multi_model_comparison.tex
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 16.
+
+(./tables/multi_model_comparison.tex
 Overfull \hbox (20.633pt too wide) in alignment at lines 1--10
  [] [] [] [] [] [] [] [] 
  []
@@ -644,123 +647,124 @@ Overfull \hbox (20.633pt too wide) in alignment at lines 22--117
  [] [] [] [] [] [] [] [] 
  []
 
-ignored error: Infinite glue shrinkage found in box being split [19]) (./tables/multi_model_per_layer.tex
+[19]
+ignored error: Infinite glue shrinkage found in box being split [20]) (./tables/multi_model_per_layer.tex
 
 LaTeX Warning: Float too large for page by 13.71944pt on input line 85.
 
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 32.
+(hyperref)                removing `math shift' on input line 25.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\lambda' on input line 32.
+(hyperref)                removing `\lambda' on input line 25.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 32.
+(hyperref)                removing `math shift' on input line 25.
 
 (./tables/lambda_sweep.tex) (./tables/leace_vs_tangce_nlp.tex
 Overfull \hbox (15.56277pt too wide) in paragraph at lines 6--69
  [][] 
  []
 
-) [20]
-<figures/per_model_bars_sycophancy.png, id=493, 967.56776pt x 962.04123pt>
+)
+Underfull \vbox (badness 3735) has occurred while \output is active []
+
+ [21]
+<figures/per_model_bars_sycophancy.png, id=495, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_sycophancy.png Graphic file (type png)
 <use figures/per_model_bars_sycophancy.png>
-Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input line 53.
+Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input line 46.
 (pdftex.def)             Requested size: 397.48499pt x 395.20279pt.
-<figures/per_model_bars_safety.png, id=496, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_safety.png, id=498, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_safety.png Graphic file (type png)
 <use figures/per_model_bars_safety.png>
-Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 60.
+Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 53.
 (pdftex.def)             Requested size: 397.48499pt x 395.20279pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(./tables/celeba_clip_all40_summary.tex) (./tables/celeba_clip_correlated_controls.tex) [21 <./figures/per_model_bars_sycophancy.png>]
-<figures/pareto_celeba_sota_least_winmargin_multi_floor.png, id=510, 1589.94pt x 1069.596pt>
+(./tables/celeba_per_panel_breakdown.tex) [22 <./figures/per_model_bars_sycophancy.png>]
+<figures/pareto_celeba_sota_least_winmargin_multi_floor.png, id=511, 1589.94pt x 1069.596pt>
 File: figures/pareto_celeba_sota_least_winmargin_multi_floor.png Graphic file (type png)
 <use figures/pareto_celeba_sota_least_winmargin_multi_floor.png>
-Package pdftex.def Info: figures/pareto_celeba_sota_least_winmargin_multi_floor.png  used on input line 82.
+Package pdftex.def Info: figures/pareto_celeba_sota_least_winmargin_multi_floor.png  used on input line 71.
 (pdftex.def)             Requested size: 194.76982pt x 131.02257pt.
-<figures/pareto_celeba_sota_most_winmargin_multi_floor.png, id=511, 1589.94pt x 1069.596pt>
+<figures/pareto_celeba_sota_most_winmargin_multi_floor.png, id=512, 1589.94pt x 1069.596pt>
 File: figures/pareto_celeba_sota_most_winmargin_multi_floor.png Graphic file (type png)
 <use figures/pareto_celeba_sota_most_winmargin_multi_floor.png>
-Package pdftex.def Info: figures/pareto_celeba_sota_most_winmargin_multi_floor.png  used on input line 87.
+Package pdftex.def Info: figures/pareto_celeba_sota_most_winmargin_multi_floor.png  used on input line 76.
 (pdftex.def)             Requested size: 194.76982pt x 131.02257pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/local_celeba_visual_table2.tex)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [22 <./figures/per_model_bars_safety.png>] (./tables/celeba_clip_all40_per_concept.tex) (./tables/main_text_geometry_schedule.tex) [23 <./figures/pareto_celeba_sota_least_winmargin_multi_floor.png> <./figures/pareto_celeba_sota_most_winmargin_multi_floor.png>] [24]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 169.
+(./tables/repo_snapshot_sycophancy.tex) (./tables/repo_snapshot_safety.tex) (./tables/local_celeba_visual_table2.tex) [23 <./figures/per_model_bars_safety.png>] (./tables/main_text_geometry_schedule.tex) [24 <./figures/pareto_celeba_sota_least_winmargin_multi_floor.png> <./figures/pareto_celeba_sota_most_winmargin_multi_floor.png>]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 153.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
+) [25]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 180.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\lambda' on input line 180.
+(hyperref)                removing `math shift' on input line 164.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 180.
+(hyperref)                removing `\lambda' on input line 164.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 180.
+(hyperref)                removing `subscript' on input line 164.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 205.
+(hyperref)                removing `math shift' on input line 164.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 205.
+(hyperref)                removing `math shift' on input line 189.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 205.
+(hyperref)                removing `subscript' on input line 189.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\alpha' on input line 205.
+(hyperref)                removing `superscript' on input line 189.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 205.
+(hyperref)                removing `\alpha' on input line 189.
 
-[25]) [26] (./checklist.tex [27] [28] [29] [30] [31] [32]) [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] (./neurips_2026.aux)
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 189.
+
+[26]) [27] (./checklist.tex [28] [29] [30] [31] [32] [33]) [34] [35] [36] [37] [38] [39] [40] (./neurips_2026.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-29>
  ***********
 Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
-(rerunfilecheck)             Checksum: C2C7349695E68B6444D6E2139E61FC1B;8787.
+(rerunfilecheck)             Checksum: 3562FE7C923399BA1913F74E6C0A09BB;8080.
  ) 
 Here is how much of TeX's memory you used:
- 16502 strings out of 469476
- 268362 string characters out of 5467624
- 941379 words of memory out of 5000000
- 44250 multiletter control sequences out of 15000+600000
- 705163 words of font info for 346 fonts, out of 8000000 for 9000
+ 16453 strings out of 469476
+ 266957 string characters out of 5467624
+ 850409 words of memory out of 5000000
+ 44225 multiletter control sequences out of 15000+600000
+ 702331 words of font info for 342 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  72i,14n,79p,1558b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (44 pages, 1778415 bytes).
+</home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on neurips_2026.pdf (40 pages, 1785297 bytes).
 PDF statistics:
- 883 PDF objects out of 1000 (max. 8388607)
- 745 compressed objects within 8 object streams
- 204 named destinations out of 1000 (max. 500000)
- 77634 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 853 PDF objects out of 1000 (max. 8388607)
+ 716 compressed objects within 8 object streams
+ 195 named destinations out of 1000 (max. 500000)
+ 73522 words of extra memory for PDF output out of 74296 (max. 10000000)
 
