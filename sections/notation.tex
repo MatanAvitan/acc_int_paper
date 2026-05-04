@@ -1,6 +1,206 @@
+
 % Problem setup and geometric motivation
 \section{Problem setup and geometric motivation}
 \label{sec:notation}
+
+
+% In the preamble:
+% \usepackage{tikz}
+% \usetikzlibrary{arrows.meta,calc,positioning}
+% \usepackage{graphicx}
+% \usepackage{amsmath,amssymb}
+%
+\definecolor{TanBlue}{HTML}{1F77B4}
+\definecolor{TanLightBlue}{HTML}{6BAED6}
+\definecolor{TanOrange}{HTML}{FF7F0E}
+\definecolor{TanLightOrange}{HTML}{FDBF6F}
+\definecolor{PanelGray}{HTML}{F6F6F6}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.985\textwidth}{!}{%
+\begin{tikzpicture}[
+  x=1cm,y=1cm,
+  >=Latex,
+  font=\small,
+  title/.style={font=\bfseries, align=center},
+  lab/.style={font=\scriptsize},
+  tinyLab/.style={font=\tiny},
+  pt/.style={circle, fill=black, inner sep=1.2pt},
+  nb/.style={circle, fill=black!45, inner sep=1.0pt},
+  support/.style={TanBlue, line width=1.15pt},
+  tanline/.style={TanBlue!70, dashed, line width=0.95pt},
+  bad/.style={->, very thick, TanOrange},
+  good/.style={->, very thick, TanBlue},
+  aux/.style={->, thick, gray!65},
+  panel/.style={draw=gray!35, rounded corners=2.4pt, fill=PanelGray},
+  foot/.style={
+    draw=gray!35,
+    fill=PanelGray,
+    rounded corners=2.4pt,
+    inner sep=3.2pt,
+    align=center,
+    font=\scriptsize,
+    text width=4.55cm
+  }
+]
+
+% Shared manifold shape for A and B
+% coordinates:
+% (0.38,1.28) (0.92,1.42) (1.48,1.96) (2.08,2.46)
+% (2.72,2.10) (3.35,1.56) (4.02,1.74) (4.48,1.95)
+
+% ==========================================================
+% Panel A
+% ==========================================================
+\begin{scope}[shift={(0,0)}]
+\node[title] at (2.45,3.86) {(A) Ambient update};
+
+\draw[panel] (0,1.00) rectangle (4.9,3.42);
+
+\draw[support]
+  plot[smooth] coordinates {
+    (0.38,1.28) (0.92,1.42) (1.48,1.96) (2.08,2.46)
+    (2.72,2.10) (3.35,1.56) (4.02,1.74) (4.48,1.95)
+  };
+
+\coordinate (xa) at (2.08,2.46);
+\node[pt,label={[lab]above left=-1pt:$\mathbf{x}_i$}] at (xa) {};
+
+\foreach \p in {(1.55,2.10),(2.55,2.08),(3.15,1.68)} {
+  \node[nb] at \p {};
+}
+
+\node[lab, TanBlue, align=center] at (1.05,2.96)
+{representation\\manifold};
+
+\node[tinyLab, gray!65] at (3.95,3.18) {ambient space};
+
+\draw[bad] (xa) -- ++(0.88,0.88)
+  node[pos=0.55, above left=-1pt, lab, black] {$-\nabla f(\mathbf{x}_i)$};
+
+\draw[TanOrange!70, dashed] ($(xa)+(0.88,0.88)$) circle (0.21);
+\node[lab, TanOrange!90!black] at (3.68,2.98) {off-manifold};
+
+\node[foot] at (2.45,0.42)
+{Can reduce concept score\\by moving away from\\natural representations.};
+\end{scope}
+
+\draw[aux] (5.15,2.18) -- (5.70,2.18);
+
+% ==========================================================
+% Panel B
+% ==========================================================
+\begin{scope}[shift={(6.0,0)}]
+\node[title] at (2.45,3.86) {(B) Local tangent estimate};
+
+\draw[panel] (0,1.00) rectangle (4.9,3.42);
+
+% Same manifold as in panel A
+\draw[support]
+  plot[smooth] coordinates {
+    (0.38,1.28) (0.92,1.42) (1.48,1.96) (2.08,2.46)
+    (2.72,2.10) (3.35,1.56) (4.02,1.74) (4.48,1.95)
+  };
+
+\coordinate (xb) at (2.08,2.46);
+\node[pt,label={[lab]above left=-1pt:$\mathbf{x}_i$}] at (xb) {};
+
+% local neighbors near x_i
+\coordinate (n1) at (1.58,2.06);
+\coordinate (n2) at (1.86,2.28);
+\coordinate (n3) at (1.98,2.40);
+\coordinate (n4) at (2.38,2.30);
+\coordinate (n5) at (2.64,2.16);
+\coordinate (n6) at (2.90,2.00);
+
+\foreach \n in {n1,n2,n3,n4,n5,n6} {
+  \node[nb] at (\n) {};
+  \draw[gray!70, dashed] (xb) -- (\n);
+}
+
+% dashed line = tangent
+\draw[tanline] (1.55,2.03) -- (2.95,2.60);
+\node[lab, TanBlue] at (3.68,2.76) {$P_{T_i}\nabla f(\mathbf{x}_i)$};
+
+% orange ambient gradient
+\draw[bad] (xb) -- ++(0.82,0.70);
+\node[lab, TanOrange!90!black] at (2.18,3.22) {$\nabla f(\mathbf{x}_i)$};
+
+% blue arrow = projected gradient
+\draw[good] (xb) -- ++(0.88,0.36);
+\node[lab, black] at (3.62,2.34) {$T_{\mathbf{x}_i}\mathcal{M}$};
+
+% compact SVD footer
+\node[foot] at (2.42,0.08)
+{$S_i^{(k)}=[\mathbf{x}_j-\mathbf{x}_i]_{j\in\mathcal{N}_k(i)}$ \quad
+ $S_i^{(k)}=U_i\Sigma_iV_i^\top$\\[0.4mm]
+$B_i=[\mathbf{v}_i^{(1)},\ldots,\mathbf{v}_i^{(r)}]$ \quad
+$T_{\mathbf{x}_i}\mathcal{M}\approx \mathrm{span}(B_i)$};
+\end{scope}
+
+% ==========================================================
+% Panel C
+% ==========================================================
+\begin{scope}[shift={(12.0,0)}]
+\node[title] at (2.45,3.86) {(C) $\sigma$-scaled tangent step};
+
+\draw[panel] (0,1.50) rectangle (4.9,3.42);
+
+\coordinate (xc) at (1.85,2.28);
+\node[pt,label={[lab]above left=-1pt:$\mathbf{x}_i$}] at (xc) {};
+
+% ellipse
+\draw[TanBlue!70, line width=1.0pt]
+  (xc) ellipse [x radius=1.40, y radius=0.48];
+
+% axes
+\draw[->, gray!65] (xc) -- ++(1.14,0)
+  node[midway, below=1.5mm, lab] {$\mathbf{v}_i^{(1)}$};
+
+\draw[->, gray!65] (xc) -- ++(0,0.68)
+  node[midway, above=2.2mm, lab] {$\mathbf{v}_i^{(2)}$};
+
+% labels outside ellipse
+\node[lab, TanBlue, align=center] at (3.85,3.12)
+{local tangent\\neighborhood};
+
+\node[lab] at (0.78,3.08) {$\sigma_{i,2}$ small};
+\node[lab] at (3.25,1.78) {$\sigma_{i,1}$ large};
+
+% update arrow
+\draw[good] (xc) -- ++(0.96,0.22)
+  node[pos=0.88, above right=-1pt, lab, black]
+  {$\tilde{\mathbf{x}}_i-\mathbf{x}_i$};
+
+\node[foot] at (2.45,0.44) {%
+$\begin{aligned}
+\tilde{\mathbf{x}}_i
+&=
+\mathbf{x}_i-\lambda_i\mathbf{d}_i
+\\[0.45mm]
+\mathbf{d}_i
+&=
+\sum_{k=1}^{r}\sigma_{i,k}a_{i,k}\mathbf{v}_i^{(k)}
+\\[0.45mm]
+\lambda_i
+&=
+\max\!\left\{\lambda:\|\lambda\mathbf{d}_i\|_2\le \epsilon s_i\right\}
+\end{aligned}$%
+};
+\end{scope}
+
+\end{tikzpicture}%
+}
+
+\caption{
+\textbf{Intuition for \TanGCE{}.}
+\textbf{(A)} An ambient nonlinear erasure step can reduce concept score by moving a representation away from the support of natural inputs.
+\textbf{(B)} \TanGCE{} estimates a local tangent space $T_{\mathbf{x}_i}\mathcal{M}$ from $k$ nearest-neighbor secants and projects the scorer gradient onto it.
+\textbf{(C)} The projected update is scaled by the local singular spectrum, so motion is larger along well-supported tangent directions and smaller along thin, fragile ones, while remaining inside a local trust region.
+}
+\label{fig:tangce-intuition}
+\end{figure*}
 
 Let $\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ be the hidden state at layer $\ell$ of a language model over vocabulary $\Sigma$. For each sample $i$ we have a representation $\mathbf{x}_i = \mathrm{enc}_\ell(s_i) \in \mathbb{R}^d$, a binary concept label $y_i \in \{0,1\}$, and an optional control label $z_i$. The dataset is $\mathcal{D} = \{(\mathbf{x}_i, y_i, z_i)\}_{i=1}^N$ with class subsets $\mathcal{D}_c = \{i : y_i = c\}$. A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a 2-layer MLP with input gradient $\nabla f_\theta(\mathbf{x}_i)$.
 
