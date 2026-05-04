@@ -1,7 +1,7 @@
 % Limitations
 \section{Limitations}
 
-\paragraph{Single-seed snapshot.} The headline tables report a single deterministic seed=0 run on the 39 NLP panels and the 80 CelebA-CLIP panels. Multi-seed variance across the 39 NLP panels will be reported in App.\ as the additional runs complete; the seed=0 numbers are not preregistered as the final headline values, only the result available at submission.
+\paragraph{Single-seed snapshot.} The headline tables report a single deterministic seed=0 run on the 39 NLP settings and the 80 CelebA-CLIP settings. Multi-seed variance across the 39 NLP settings will be reported in App.\ as the additional runs complete; the seed=0 numbers are not preregistered as the final headline values, only the result available at submission.
 
 \paragraph{Measurement scope.} Concept removal is judged by retraining a fresh 2-layer MLP probe ($h{=}128$, 200 SGD steps, patience 3) on the edited representations. This captures recoverability under the protocol of \citet{elazar-goldberg-2018-adversarial} and surgicality through control-task accuracy on the labelled control concepts. It does not by itself establish broad capability preservation across unrelated tasks: a corpus-level evaluation on held-out general-domain text is left to future work. The cross-modal evidence comes from a single CLIP encoder (ViT-B/32 on CelebA); evaluations against other vision encoders or domains are out of scope here.
 

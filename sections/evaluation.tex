@@ -2,6 +2,6 @@
 \subsection{Metrics}
 \label{sec:evaluation}
 
-\paragraph{Erasure precision $S$.} A fresh 2-layer MLP probe ($h{=}128$, 200 SGD steps, patience 3) is trained on the intervened representations $\tilde{\mathbf{X}}$ and reports test accuracy $S = \mathrm{Acc}(h_{\mathrm{NL}}(\tilde{\mathbf{X}}), y)$. Lower is stronger erasure; the per-panel majority-class accuracy $S_{\text{floor}}$ is the trivial lower bound. We report $S - S_{\text{floor}}$ in pp throughout.
+\paragraph{Erasure precision $S$.} A fresh 2-layer MLP probe ($h{=}128$, 200 SGD steps, patience 3) is trained on the intervened representations $\tilde{\mathbf{X}}$ and reports test accuracy $S = \mathrm{Acc}(h_{\mathrm{NL}}(\tilde{\mathbf{X}}), y)$. Lower is stronger erasure; the per-setting majority-class accuracy $S_{\text{floor}}$ is the trivial lower bound. We report $S - S_{\text{floor}}$ in pp throughout.
 
 \paragraph{Surgicality on control concepts $\Delta Y$.} An $\ell_2$-regularized logistic regression $q$ is trained on the clean control-task labels $z$ and applied without retraining to the intervened representations: $\Delta Y = \mathrm{Acc}(q(\tilde{\mathbf{X}}), z) - \mathrm{Acc}(q(\mathbf{X}), z)$. Smaller $|\Delta Y|$ is more surgical.
