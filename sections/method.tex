@@ -107,7 +107,7 @@ with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$ and $s_i^{\mat
 \subsection{Anisotropic update via the local \texorpdfstring{$\sigma$}{sigma}-spectrum}
 \label{sec:cov_tangce}
 
-The closed-form $\lambda_i$ controls the magnitude of each step; its direction is still isotropic in the tangent basis. The local SVD already exposes anisotropy — the squared singular values $\sigma_{i,k}^2$ differ by orders of magnitude across $k$. An isotropic step over-edits thin tail directions where the linear approximation is fragile, and under-edits dominant directions where the manifold easily accommodates motion.
+The closed-form $\lambda_i$ controls the magnitude of each step; its direction is still isotropic in the tangent basis. The local SVD already exposes anisotropy, the squared singular values $\sigma_{i,k}^2$ differ by orders of magnitude across $k$. An isotropic step over-edits thin tail directions where the linear approximation is fragile, and under-edits dominant directions where the manifold easily accommodates motion.
 
 We replace Eq.~\ref{eq:tangent_erase} with a covariance-preconditioned step,
 \begin{equation}
