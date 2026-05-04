@@ -1,4 +1,4 @@
-\begin{thebibliography}{18}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -123,5 +123,10 @@ Loring~W. Tu.
 \newblock Universitext. Springer, 2 edition, 2011.
 \newblock \doi{10.1007/978-1-4419-7400-6}.
 \newblock URL \url{https://luis.impa.br/aulas/anvar/Tu_AnIntroductionToManifolds.pdf}.
+
+\bibitem[Zhang and Zha(2004)]{zhang-zha-2004-ltsa}
+Zhenyue Zhang and Hongyuan Zha.
+\newblock Principal manifolds and nonlinear dimensionality reduction via tangent space alignment.
+\newblock \emph{SIAM journal on scientific computing}, 26\penalty0 (1):\penalty0 313--338, 2004.
 
 \end{thebibliography}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  4 MAY 2026 20:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  4 MAY 2026 23:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -582,7 +582,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 {/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]) (./sections/related_work.tex [2]) (./sections/notation.tex) (./sections/method.tex
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 8.
  [3] [4] [5]) (./sections/evaluation.tex) (./sections/experiments.tex [6]) (./sections/results.tex (./tables/main_results_unified.tex)
-<figures/per_model_bars_gender.png, id=304, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_gender.png, id=307, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_gender.png Graphic file (type png)
 <use figures/per_model_bars_gender.png>
 Package pdftex.def Info: figures/per_model_bars_gender.png  used on input line 19.
@@ -606,7 +606,7 @@ Overfull \hbox (15.56277pt too wide) in paragraph at lines 6--69
  []
 
 )
-<figures/per_model_bars_sycophancy.png, id=408, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_sycophancy.png, id=411, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_sycophancy.png Graphic file (type png)
 <use figures/per_model_bars_sycophancy.png>
 Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input line 15.
@@ -615,7 +615,7 @@ Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input li
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figures/per_model_bars_safety.png, id=411, 967.56776pt x 962.04123pt>
+<figures/per_model_bars_safety.png, id=414, 967.56776pt x 962.04123pt>
 File: figures/per_model_bars_safety.png Graphic file (type png)
 <use figures/per_model_bars_safety.png>
 Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 22.
@@ -624,12 +624,12 @@ Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 2
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 (./tables/per_panel_breakdown.tex) (./tables/celeba_per_panel_breakdown.tex)
-<figures/pareto_celeba_sota_least_winmargin_multi_floor.png, id=420, 1589.94pt x 1069.596pt>
+<figures/pareto_celeba_sota_least_winmargin_multi_floor.png, id=423, 1589.94pt x 1069.596pt>
 File: figures/pareto_celeba_sota_least_winmargin_multi_floor.png Graphic file (type png)
 <use figures/pareto_celeba_sota_least_winmargin_multi_floor.png>
 Package pdftex.def Info: figures/pareto_celeba_sota_least_winmargin_multi_floor.png  used on input line 47.
 (pdftex.def)             Requested size: 194.76982pt x 131.02257pt.
-<figures/pareto_celeba_sota_most_winmargin_multi_floor.png, id=421, 1589.94pt x 1069.596pt>
+<figures/pareto_celeba_sota_most_winmargin_multi_floor.png, id=424, 1589.94pt x 1069.596pt>
 File: figures/pareto_celeba_sota_most_winmargin_multi_floor.png Graphic file (type png)
 <use figures/pareto_celeba_sota_most_winmargin_multi_floor.png>
 Package pdftex.def Info: figures/pareto_celeba_sota_most_winmargin_multi_floor.png  used on input line 52.
@@ -638,10 +638,7 @@ Package pdftex.def Info: figures/pareto_celeba_sota_most_winmargin_multi_floor.p
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[13] [14 <./figures/per_model_bars_sycophancy.png>]
-Underfull \vbox (badness 1117) has occurred while \output is active []
-
- [15 <./figures/per_model_bars_safety.png>]
+[13] [14 <./figures/per_model_bars_sycophancy.png>] [15 <./figures/per_model_bars_safety.png>]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 108.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
@@ -679,22 +676,26 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-29>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
 (rerunfilecheck)             Checksum: 909343A63FE5260902ED4B0EBA4E8333;6278.
  ) 
 Here is how much of TeX's memory you used:
- 16285 strings out of 469476
- 263310 string characters out of 5467624
- 875686 words of memory out of 5000000
- 44147 multiletter control sequences out of 15000+600000
+ 16289 strings out of 469476
+ 263415 string characters out of 5467624
+ 876955 words of memory out of 5000000
+ 44150 multiletter control sequences out of 15000+600000
  700814 words of font info for 335 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  72i,12n,79p,1558b,630s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (21 pages, 1685375 bytes).
+Output written on neurips_2026.pdf (21 pages, 1686019 bytes).
 PDF statistics:
- 651 PDF objects out of 1000 (max. 8388607)
- 550 compressed objects within 6 object streams
- 137 named destinations out of 1000 (max. 500000)
+ 654 PDF objects out of 1000 (max. 8388607)
+ 553 compressed objects within 6 object streams
+ 138 named destinations out of 1000 (max. 500000)
  73466 words of extra memory for PDF output out of 74296 (max. 10000000)
 

@@ -49,7 +49,7 @@ The two stages erase structurally distinct signal (mean shift vs.\ variance asym
 
 \subsection{Local tangent estimation}
 
-For each query $\mathbf{x}_i$, let $\mathcal{N}_k(\mathbf{x}_i)$ be its $k$ nearest neighbors. Stack the centered secants $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ row-wise into $\mathbf{S}_i \in \mathbb{R}^{k \times d}$ and take its SVD,
+We estimate $T_{\mathbf{x}_i}\mathcal{M}$ by local PCA/SVD of nearest-neighbor secants, following the local tangent-space approximation used in LTSA \citep{zhang-zha-2004-ltsa}. For each query $\mathbf{x}_i$, let $\mathcal{N}_k(\mathbf{x}_i)$ be its $k$ nearest neighbors. Stack the centered secants $\mathbf{s}_{j_m} = \mathbf{x}_{j_m} - \mathbf{x}_i$ row-wise into $\mathbf{S}_i \in \mathbb{R}^{k \times d}$ and take its SVD,
 \begin{equation}
 \label{eq:secant_svd}
 \mathbf{S}_i = \mathbf{U}_i \, \mathrm{diag}(\sigma_{i,1}, \ldots, \sigma_{i,k}) \, \mathbf{V}_i^\top.
