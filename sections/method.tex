@@ -116,7 +116,7 @@ with $\lambda_{\max}=64$ a safety cap that bites only when $\|\mathbf{v}_i\| \to
 \paragraph{Tangent axes have different ``lengths''.}
 The local linear approximation produced by the secant SVD (Eq.~\ref{eq:secant_svd}) decomposes the tangent space into right singular vectors $\{\mathbf{v}_i^{(k)}\}$ and singular values $\{\sigma_{i,k}\}$. The singular values are the per-axis ``lengths'' --- how far neighbors of $\mathbf{x}_i$ extend along each tangent direction. We will call the directions with large $\sigma_{i,k}$ the \emph{long axes} of the neighborhood (high-$\sigma$ for short) and the directions with small $\sigma_{i,k}$ the \emph{thin axes} (low-$\sigma$). A direction-agnostic Euclidean radius treats every axis identically: it over-allocates step budget along thin axes (where the linear approximation is fragile and a small step in coordinate space already escapes the manifold) and under-allocates along long axes (where neighbors give the linear approximation generous support).
 
-\paragraph{Per-axis budget via spectral normalisation.}
+\paragraph{Per-axis budget via spectral normalization.}
 Respecting the per-axis lengths means measuring step magnitude in $\sigma$-normalised coordinates: divide each tangent coordinate of the move by the local singular value of its axis. This is Mahalanobis whitening expressed through the SVD, the local secant covariance is $\mathbf{C}_i = \tfrac{1}{k}\mathbf{V}_i \mathrm{diag}(\sigma_{i,k}^2)\mathbf{V}_i^\top$ and so $\mathbf{C}_i^{-1/2}$ acts diagonally as $\sigma_{i,k}^{-1}$ in the SVD basis, recovering the per-axis division for free. Concretely, we use the spectrally-normalised neighborhood radius
 \begin{equation}
 \label{eq:s_spectral}
