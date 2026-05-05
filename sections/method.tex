@@ -95,14 +95,14 @@ Substituting Eq.~\ref{eq:tangent_erase} and letting $\mathbf{v}_i = (\mathbf{x}_
 \end{equation}
 with $\lambda_{\max}=64$ a safety cap when $\|\mathbf{v}_i\| \to 0$. We use $\varepsilon = 0.1$ across every setting.
 
-\paragraph{Anisotropy-aware local scale (FMaHa).}
-The local manifold is an ellipsoid: along high-$\sigma$ singular directions, neighbors extend much further than along thin tail directions. We therefore use the \emph{whitened-tangent neighborhood radius}
+\paragraph{Anisotropy-aware local scale via spectral normalization.}
+The local manifold is an ellipsoid: along high-$\sigma$ singular directions, neighbors extend much further than along thin tail directions. A direction-agnostic Euclidean radius therefore over-allocates budget along thin axes and under-allocates along thick ones. Working in the tangent SVD coordinates $\{\mathbf{v}_i^{(k)}\}_{k=1}^{r}$ already produced by the secant decomposition (Eq.~\ref{eq:secant_svd}) makes the natural correction explicit: divide each tangent coordinate by its own singular value $\sigma_{i,k}$. This is spectral normalization in the spirit of Mahalanobis covariance whitening, but expressed through singular values rather than a covariance square root --- the natural choice once the tangent step is already written in SVD coordinates, since the local secant covariance is $\mathbf{C}_i = \tfrac{1}{k}\mathbf{V}_i \mathrm{diag}(\sigma_{i,k}^2)\mathbf{V}_i^\top$ and so $\mathbf{C}_i^{-1/2}$ acts diagonally as $\sigma_{i,k}^{-1}$ in this basis. We therefore use the spectrally-normalized neighborhood radius
 \begin{equation}
-\label{eq:s_fmaha}
-s_i = R_i^{\mathrm{white}} \cdot s_i^{\mathrm{maha}}, \qquad
-R_i^{\mathrm{white}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i^\top (\mathbf{x}_j - \mathbf{x}_i) / \boldsymbol\sigma_i \|_2,
+\label{eq:s_spectral}
+s_i = R_i^{\mathrm{spec}} \cdot s_i^{\mathrm{maha}}, \qquad
+R_i^{\mathrm{spec}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i^\top (\mathbf{x}_j - \mathbf{x}_i) / \boldsymbol\sigma_i \|_2,
 \end{equation}
-with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$, $\boldsymbol{a}_i = (a_{i,1}, \ldots, a_{i,r})$ the tangent coordinates of the displacement (defined in Eq.~\ref{eq:tangent_erase_sigma}), and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol{a}_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise). $\varepsilon$ is then a fraction of the local whitened-tangent neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
+with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$, $\boldsymbol{a}_i = (a_{i,1}, \ldots, a_{i,r})$ the tangent coordinates of the displacement (defined in Eq.~\ref{eq:tangent_erase_sigma}), and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol{a}_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise). $\varepsilon$ is then a fraction of the local spectrally-normalized neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
 
 \subsection{Anisotropic update via the local \texorpdfstring{$\sigma$}{sigma}-spectrum}
 \label{sec:cov_tangce}
