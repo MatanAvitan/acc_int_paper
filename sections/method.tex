@@ -2,15 +2,17 @@
 \section{Method: \TanGCE{} family}
 \label{sec:method}
 
-\TanGCE{} (\emph{Tangent Gradient-based Concept Erasure}) is the manifold-aware iterative erasure step at the core of this paper: at each round it trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, projects the scorer's gradient onto a locally estimated tangent basis of the representation manifold, and applies a $\sigma$-preconditioned trust-region update. The scorer used to drive the update is a 2-layer MLP with hidden width $h{=}512$ trained for $800$ steps; this is intentionally distinct from the smaller evaluation probe ($h{=}128$, 200 SGD steps, §\ref{sec:evaluation}) so that erasure quality is judged by an independently trained classifier rather than the one that produced the gradient.
+\paragraph{The idea.}
+Concept erasure should remove a target attribute from a representation \emph{without} damaging the unrelated structure that downstream computation relies on. The proposition we build on --- the \emph{Manifold Representation Hypothesis} --- is that natural representations of a model concentrate on a low-dimensional manifold $\mathcal{M} \subset \mathbb{R}^d$, and that an erasure step which moves each point \emph{along} $\mathcal{M}$ is structurally \emph{surgical}: it edits exactly the degrees of freedom the model itself uses to encode information, while leaving the orthogonal ambient directions --- which carry no learned signal --- untouched. \TanGCE{} (\emph{Tangent Gradient-based Concept Erasure}) operationalizes this idea by constraining every erasure update to lie in the tangent space of $\mathcal{M}$ at the current point. At each round it trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, projects the scorer's gradient onto a locally estimated tangent basis, and applies a spectrally-normalized trust-region update. The scorer (a 2-layer MLP with hidden width $h{=}512$, $800$ steps) is intentionally distinct from the smaller evaluation probe ($h{=}128$, 200 SGD steps, §\ref{sec:evaluation}), so that erasure quality is judged by an independently trained classifier rather than by the one that produced the update.
 
-We present three nested variants, indexed by how much closed-form linear preprocessing precedes the manifold loop:
-\begin{itemize}
-    \item \TanGCE{} --- the manifold-aware iterative loop alone (no closed-form preprocessing). Isolates the contribution of the manifold projection.
-    \item \TanGCEp{} --- LEACE preprocessing followed by \TanGCE{}. Adds rank-1 mean alignment between target classes; isolates the contribution of the rank-2 covariance step.
-    \item \TanGCEpp{} --- LEACE + rank-2 CovMatch K=2 preprocessing followed by \TanGCE{}. The full pipeline; this is the headline empirical configuration on the NLP grid.
-\end{itemize}
-The closed-form preprocessing (§\ref{sec:moment_preproc}) and the iterative manifold loop (§\ref{sec:closed_form_lambda}--§\ref{sec:cov_tangce}) are both described below; the three variants are obtained by composing them as listed.
+\paragraph{Local estimation of the manifold.}
+A globally consistent estimate of $\mathcal{M}$ is intractable in the moderate-sample regime that erasure operates in (typically $n \approx 7000$ representations per setting in our experiments). We therefore estimate only the local tangent space $T_{\mathbf{x}_i}\mathcal{M}$ at each query point, using the local-PCA-of-secants construction of LTSA \citep{zhang-zha-2004-ltsa}. This local view is well matched to concept erasure for two reasons. First, every smooth manifold is locally Euclidean, so the tangent estimate is asymptotically exact in a sufficiently small neighborhood and the standard linear-algebraic operations we need --- gradient projection, trust-region step --- transfer without modification. Second, internal representations encode a concept along different directions in different regions of $\mathcal{M}$: the axis that distinguishes the concept in one neighborhood is generally not the axis that distinguishes it elsewhere. Training a fresh nonlinear scorer at each iteration and projecting its gradient onto the locally estimated tangent basis lets us extract the locally relevant concept direction wherever a sample lies, and remove only its on-manifold component.
+
+\paragraph{Limitation of the local estimate, and the closed-form fix.}
+A first-order tangent estimate is only accurate within a small neighborhood. This makes \TanGCE{} effective at removing the local nonlinear concept structure that nonlinear probes most readily exploit, but it is poorly suited to absorbing class-conditioned distributional moments that span the entire dataset --- in particular the rank-1 mean shift between the two classes, and the rank-$\le 2$ variance asymmetry along axes where the class-conditional second moments differ. These global moments are linear, not local: a closed-form affine eraser on the full distribution removes them in a single step with provably minimum representation damage. We therefore precompose \TanGCE{} with two such closed-form preprocessing stages --- LEACE \citep{belrose-etal-2023-leace} for the first-moment alignment, and a rank-$2$ covariance-asymmetry projection (a $K{=}2$ specialization of the $k$-LEACE family of \citealt{singh-ravfogel-2024-representation-surgery}) for the second-moment residual --- after which the iterative manifold loop refines what remains. We call these compositions \TanGCEp{} (LEACE only) and \TanGCEpp{} (LEACE $+$ rank-$2$ CovMatch $K{=}2$), retaining bare \TanGCE{} (no preprocessing) as the variant that isolates the contribution of the manifold step. The closed-form stages are detailed in §\ref{sec:moment_preproc}; the iterative manifold loop is detailed in §\ref{sec:closed_form_lambda}--§\ref{sec:cov_tangce}.
+
+\paragraph{Manifold-aware erasure as a complementary refinement.}
+Beyond the \TanGCEpp{} pipeline, the manifold step composes with \emph{any} prior erasure technique: in §\ref{sec:tangce_on_baseline} we show that running \TanGCE{} on top of LEACE, INLP, IGBP, Obliviator, or AmbGCE further reduces nonlinear-probe leakage on every panel while preserving control accuracy. This complementarity --- the same local manifold step strengthens otherwise unrelated methods --- is the empirical evidence behind the \emph{Manifold Representation Hypothesis}: the gain is not specific to any one preprocessor, but to the fact that all of them leave behind the same locally curved residue that \TanGCE{} removes.
 
 \begin{algorithm}[t]
 \caption{\TanGCEpp{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step. Dropping line 1b yields \TanGCEp{}; dropping Phase 1 entirely yields \TanGCE{}.}
@@ -23,7 +25,7 @@ The closed-form preprocessing (§\ref{sec:moment_preproc}) and the iterative man
 \STATE \textbf{Phase~2 -- iterative tangent step} (Eqs.~\ref{eq:tangent_proj}--\ref{eq:tangent_erase_sigma}):
 \FOR{$t = 1, \ldots, T$}
  \STATE Train a fresh 2-layer MLP scorer $f_t$ (hidden $h$) on the current $(\mathbf{X}, \mathbf{y})$.
- \STATE \textbf{For each row $\mathbf{x}_i$}: tangent-projected, $\sigma$-preconditioned trust-region step
+ \STATE \textbf{For each row $\mathbf{x}_i$}: tangent-projected, spectrally-normalized trust-region step
  \STATE \hspace{2em} $\displaystyle \mathbf{x}_i \;\leftarrow\; \mathbf{x}_i - \lambda_i \sum_{k=1}^{r} \sigma_{i,k}^{\alpha} \, a_{i,k} \, \mathbf{v}_i^{(k)}, \quad \|\Delta\mathbf{x}_i\|_2 \leq \varepsilon \cdot s_i, \quad \alpha = 1.$
 \ENDFOR
 \STATE \textbf{return} edited $\mathbf{X}$.
@@ -88,7 +90,7 @@ not re-normalized: $\|\mathbf{u}_i^{\mathrm{tan}}\| \le 1$ acts as an overlap we
 \label{eq:tangent_erase}
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}},
 \end{equation}
-with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCEpp{} (and its CelebA counterpart \AmbGCEp{}) is the direct ambient ablation: same closed-form preprocessing, same iterative loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the manifold projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the $\sigma$-preconditioned generalization in §\ref{sec:cov_tangce}.
+with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCEpp{} (and its CelebA counterpart \AmbGCEp{}) is the direct ambient ablation: same closed-form preprocessing, same iterative loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the manifold projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the spectrally-normalized generalization in §\ref{sec:cov_tangce}.
 
 \subsection{Adaptive per-sample step size: closed-form \texorpdfstring{$\lambda_i$}{lambda}}
 \label{sec:closed_form_lambda}
@@ -114,12 +116,12 @@ R_i^{\mathrm{spec}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i
 \end{equation}
 with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$, $\boldsymbol{a}_i = (a_{i,1}, \ldots, a_{i,r})$ the tangent coordinates of the displacement (defined in Eq.~\ref{eq:tangent_erase_sigma}), and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol{a}_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise). $\varepsilon$ is then a fraction of the local spectrally-normalized neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
 
-\subsection{Anisotropic update via the local \texorpdfstring{$\sigma$}{sigma}-spectrum}
+\subsection{Anisotropic update via local spectral normalization}
 \label{sec:cov_tangce}
 
 The closed-form $\lambda_i$ controls the magnitude of each step, but the direction of Eq.~\ref{eq:tangent_erase} is still isotropic in the tangent basis. The local SVD already exposes anisotropy: the singular values $\sigma_{i,k}$ can vary substantially across tangent axes. An isotropic tangent step can therefore over-edit thin directions where the local linear approximation is fragile, while under-using directions along which the neighborhood actually extends.
 
-We replace Eq.~\ref{eq:tangent_erase} with a local-$\sigma$-preconditioned tangent step,
+We replace Eq.~\ref{eq:tangent_erase} with a spectrally-normalized tangent step that rescales each tangent coordinate by the local singular value $\sigma_{i,k}$ produced by the secant SVD,
 \begin{equation}
 \label{eq:tangent_erase_sigma}
 \boxed{\;\;
@@ -131,7 +133,7 @@ where $a_{i,k} = \langle \mathbf{v}_i, \mathbf{v}_i^{(k)} \rangle$ are the coord
 \paragraph{Relation to local covariance and Mahalanobis scaling.}
 The update can also be viewed as applying a positive spectral power of the local secant covariance. The empirical covariance of the centered secants has eigenvectors $\mathbf{v}_i^{(k)}$ and eigenvalues proportional to $\sigma_{i,k}^2$, so scaling each tangent coordinate by $\sigma_{i,k}$ corresponds, up to a global constant, to applying the positive square root of this local covariance ($\mathbf{C}_i^{1/2}$). This is the opposite of whitening: Mahalanobis normalization downweights high-variance directions through an inverse covariance power, whereas we use a positive power to move preferentially along directions that are well supported by nearby representations. App.~\ref{sec:appendix_alpha_regimes} details the full $\sigma_{i,k}^{\alpha}$ family with $\alpha \in \{0, 1, 2\}$, corresponding respectively to the isotropic ablation, our default, and the natural-gradient / full-Mahalanobis trust-region optimum.
 
-The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after preconditioning (replacing $\|\mathbf{v}_i\|$ by the norm of the preconditioned displacement in the denominator), so the actual ambient move still respects $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i$. Anisotropy reshapes the \emph{direction} of the step, not its budget.
+The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after spectral normalization (replacing $\|\mathbf{v}_i\|$ by the norm of the spectrally-normalized displacement in the denominator), so the actual ambient move still respects $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i$. Anisotropy reshapes the \emph{direction} of the step, not its budget.
 
 \subsection{Iterative loop and relation to baselines}
 
