@@ -12,11 +12,11 @@ Armen Aghajanyan, Sonal Gupta, and Luke Zettlemoyer.
 \newblock \doi{10.18653/v1/2021.acl-long.568}.
 \newblock URL \url{https://aclanthology.org/2021.acl-long.568}.
 
-\bibitem[Akbari et~al.(2026)Akbari, Afshari, and Boddeti]{akbari-etal-2026-obliviator}
+\bibitem[Akbari et~al.(2025)Akbari, Afshari, and Boddeti]{akbari-etal-2025-obliviator}
 Ramin Akbari, Milad Afshari, and Vishnu~Naresh Boddeti.
 \newblock Obliviator reveals the cost of nonlinear guardedness in concept erasure.
-\newblock \emph{arXiv preprint arXiv:2603.07529}, 2026.
-\newblock URL \url{https://arxiv.org/abs/2603.07529}.
+\newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2025.
+\newblock URL \url{https://neurips.cc/virtual/2025/poster/118956}.
 
 \bibitem[Avitan et~al.(2025)Avitan, Cotterell, Goldberg, and Ravfogel]{avitan-etal-2025-practical}
 Matan Avitan, Ryan Cotterell, Yoav Goldberg, and Shauli Ravfogel.

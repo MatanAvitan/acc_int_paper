@@ -2,7 +2,7 @@
 \section{Method: \TanGCE{}}
 \label{sec:method}
 
-\TanGCE{} (\emph{Tangent Gradient-based Concept Erasure}) has two phases. Phase~1 applies two closed-form moment-matching projections that exhaust 1st- and 2nd-moment concept signal. Phase~2 iterates a tangent-constrained step on the residual: each round trains a fresh nonlinear scorer, projects its gradient onto a locally estimated tangent basis, and applies the projection-and-preconditioning update.
+\TanGCE{} (\emph{Tangent Gradient-based Concept Erasure}) has two phases. Phase~1 applies two closed-form moment-matching projections that exhaust 1st- and 2nd-moment concept signal. Phase~2 iterates a tangent-constrained step on the residual: each round trains a fresh nonlinear scorer, projects its gradient onto a locally estimated tangent basis, and applies the projection-and-preconditioning update. The scorer used to drive the update is a 2-layer MLP with hidden width $h{=}512$ trained for $800$ steps; this is intentionally distinct from the smaller evaluation probe ($h{=}128$, 200 SGD steps, §\ref{sec:evaluation}) so that erasure quality is judged by an independently trained classifier rather than the one that produced the gradient.
 
 \begin{algorithm}[t]
 \caption{\TanGCE{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step.}
@@ -11,7 +11,7 @@
 \REQUIRE Representations $\mathbf{X}$, concept labels $\mathbf{y}$, $\#$rounds $T$, trust region $\varepsilon$, anisotropy $\alpha$, scorer hidden $h$.
 \STATE \textbf{Phase~1 -- closed-form moment preprocessing} (Eqs.~\ref{eq:delta_sigma}--\ref{eq:covmatch_apply}):
 \STATE \hspace{1em} \textbf{1a.} $\mathbf{X} \leftarrow \mathrm{LEACE}_{\mathbf{y}}(\mathbf{X})$ \hfill (rank-1 mean projection)
-\STATE \hspace{1em} \textbf{1b.} $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$, with $\mathbf{D}$ = top-2 eigvecs of $\Delta\mathbf{\Sigma}$ \hfill (rank-2 covariance projection)
+\STATE \hspace{1em} \textbf{1b.} $\mathbf{X} \leftarrow \mathbf{X} - \mathbf{D}\mathbf{D}^\top \mathbf{X}$, with $\mathbf{D}$ from Eq.~\ref{eq:covmatch_basis} \hfill (effective rank 2 post-LEACE)
 \STATE \textbf{Phase~2 -- iterative tangent step} (Eqs.~\ref{eq:tangent_proj}--\ref{eq:tangent_erase_sigma}):
 \FOR{$t = 1, \ldots, T$}
  \STATE Train a fresh 2-layer MLP scorer $f_t$ (hidden $h$) on the current $(\mathbf{X}, \mathbf{y})$.
@@ -45,7 +45,7 @@ A nonlinear probe still recovers concept information from variance asymmetry alo
 \end{equation}
 Because LEACE has aligned class means, $\hat{\mathbf{d}}_{\text{mean}} \approx \mathbf{0}$ and the effective rank removed is two. This is a special case of the $k$-LEACE framework of \citet{singh-ravfogel-2024-representation-surgery} restricted to second-order eigenvectors, which are stable to estimate from $n \approx 7000$ examples while higher-order tensors are not. We fix $K{=}2$ across all 119 settings: for a binary concept, the top-2 eigenvectors of $\Delta\mathbf{\Sigma}$ carry the two axes of class-conditional variance asymmetry; subsequent eigenvectors describe noise rather than class-discriminative signal. Empirically, $K{\ge}3$ adds no leakage reduction and begins to erode control accuracy (see Tab.~\ref{tab:per_panel_breakdown}).
 
-The two stages erase structurally distinct signal (mean shift vs.\ variance asymmetry) and together remove rank $\le 3$ from $d \in \{2048, 3072, 3584\}$, exposing the residual nonlinear structure that Phase~2 attacks.
+The two stages erase structurally distinct signal (mean shift vs.\ variance asymmetry) and together remove an effective rank of at most $3$, negligible relative to the ambient dimension $d$ across our settings ($d = 768$ for the CLIP ViT-B/32 image embedding, and $d \in [896, 5376]$ across the 13 LLM hidden sizes), exposing the residual nonlinear structure that Phase~2 attacks.
 
 \subsection{Local tangent estimation}
 
@@ -102,7 +102,7 @@ The local manifold is an ellipsoid: along high-$\sigma$ singular directions, nei
 s_i = R_i^{\mathrm{white}} \cdot s_i^{\mathrm{maha}}, \qquad
 R_i^{\mathrm{white}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i^\top (\mathbf{x}_j - \mathbf{x}_i) / \boldsymbol\sigma_i \|_2,
 \end{equation}
-with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$ and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol\alpha_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise). $\varepsilon$ is then a fraction of the local whitened-tangent neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
+with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$, $\boldsymbol{a}_i = (a_{i,1}, \ldots, a_{i,r})$ the tangent coordinates of the displacement (defined in Eq.~\ref{eq:tangent_erase_sigma}), and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol{a}_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise). $\varepsilon$ is then a fraction of the local whitened-tangent neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
 
 \subsection{Anisotropic update via the local \texorpdfstring{$\sigma$}{sigma}-spectrum}
 \label{sec:cov_tangce}
@@ -125,4 +125,4 @@ The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after 
 
 \subsection{Iterative loop and relation to baselines}
 
-Each round trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, recomputes per-sample gradients, and applies the update. The fresh-scorer loop follows \citet{elazar-goldberg-2018-adversarial}: success against any single trained classifier is not evidence the concept is gone. \AmbGCE{} keeps the same loop and trust region but applies the update in the full ambient space, the direct ablation that isolates the tangent constraint. IGBP \citep{iskander-etal-2023-shielded} is the closest prior nonlinear baseline; Obliviator \citep{akbari-etal-2026-obliviator} is the strongest published unsupervised baseline.
+Each round trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, recomputes per-sample gradients, and applies the update. The fresh-scorer loop follows \citet{elazar-goldberg-2018-adversarial}: success against any single trained classifier is not evidence the concept is gone. \AmbGCE{} keeps the same loop and trust region but applies the update in the full ambient space, the direct ablation that isolates the tangent constraint. The two nonlinear baselines we compare against, IGBP \citep{iskander-etal-2023-shielded} and Obliviator \citep{akbari-etal-2025-obliviator}, share our supervision regime (target labels used during fitting, control concepts never seen by the eraser) and differ only in how the update is constructed: IGBP retracts toward an iteratively-retrained 2-class probe boundary; Obliviator solves an HSIC-penalised RKHS objective via random Fourier feature eigenvalue projection. \TanGCE{} differs from both by constraining each update to a locally estimated tangent space.
