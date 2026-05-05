@@ -423,6 +423,11 @@ INPUT ./figures/aggregated_nlp_results.png
 INPUT ./figures/aggregated_nlp_results.png
 INPUT ./figures/aggregated_nlp_results.png
 INPUT ./figures/aggregated_nlp_results.png
+INPUT ./tables/tangce_on_baseline.tex
+INPUT ./tables/tangce_on_baseline.tex
+INPUT ./tables/tangce_on_baseline.tex
+INPUT ./tables/tangce_on_baseline.tex
+INPUT tables/tangce_on_baseline.tex
 INPUT ./figures/per_model_bars_gender_slim.png
 INPUT ./figures/per_model_bars_gender_slim.png
 INPUT ./figures/per_model_bars_gender_slim.png
@@ -439,13 +444,13 @@ INPUT ./sections/discussion.tex
 INPUT ./sections/discussion.tex
 INPUT ./sections/discussion.tex
 INPUT sections/discussion.tex
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT ./sections/limitations.tex
 INPUT ./sections/limitations.tex
 INPUT ./sections/limitations.tex
 INPUT ./sections/limitations.tex
 INPUT sections/limitations.tex
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT ./sections/conclusion.tex
 INPUT ./sections/conclusion.tex
 INPUT ./sections/conclusion.tex
