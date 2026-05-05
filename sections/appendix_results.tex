@@ -45,21 +45,16 @@ Table~\ref{tab:celeba_per_panel_breakdown} reports the per-attribute version of 
 
 \input{tables/celeba_per_panel_breakdown}
 
-Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \TanGCEpp{} vs.\ Obliviator as a per-attribute floor-distance win-margin plot, separately for the 5-least- and 5-most-correlated control regimes. Cross-hatched bars (annotated ``N/A'') flag settings where at least one method has no in-budget step at the budget shown --- most commonly Obliviator overshoots its $\Delta Y$ budget at $\le 1$pp on the entangled targets (39 of 40 attributes in the most-correlated regime, 25 of 40 in the least-correlated), so the comparison substitutes the missing method's clean (no-erasure) probe accuracy as a stand-in. The cross-hatching distinguishes these substituted/walkover bars from solid in-budget head-to-head comparisons.
+Fig.~\ref{fig:per_attr_bars_celeba} reports the per-attribute nonlinear-probe accuracy $S$ for each of the 40 CelebA attributes at all four control-damage budgets, in the same bar-chart style as the NLP per-model figures (Fig.~\ref{fig:per_model_bars_gender}, App.~Fig.~\ref{fig:per_model_bars_gender_full}--\ref{fig:per_model_bars_safety_app}): three bars per attribute (Clean / \TanGCEpp{} / Obliviator) and a horizontal tick at the per-attribute majority-class floor. Hatched bars annotated ``N/A'' indicate that the method had no in-budget step at the shown $\Delta Y$ budget; we substitute its clean (un-erased) $S$ so the visual height communicates ``failed to land'' rather than a real measurement. A clear win for \TanGCEpp{} reads as a low solid blue bar paired with a high (often hatched-N/A) orange Obliviator bar --- common at $\Delta Y \le 1$pp in the most-correlated regime, where Obliviator overshoots the budget on $39$ of $40$ entangled targets while \TanGCEpp{} lands at floor on $15$.
 
 \begin{figure}[h]
 \centering
-\begin{minipage}{0.49\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_least_winmargin_multi_floor.png}
-\subcaption{5 least-correlated controls (low entanglement).}
-\end{minipage}\hfill
-\begin{minipage}{0.49\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figures/pareto_celeba_sota_most_winmargin_multi_floor.png}
-\subcaption{5 most-correlated controls (high entanglement).}
-\end{minipage}
-\caption{\textbf{CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\TanGCEpp{}} - S_{\text{floor}}|\bigr)\!\times\!100$ on settings where both methods reach the budget; positive (blue) = \TanGCEpp{} closer to floor. Cross-hatched bars (annotated ``N/A'') mark settings where at least one method has no in-budget step at that budget; the missing method's clean (un-erased) probe accuracy is substituted as a stand-in, so the bar is read as a walkover rather than a head-to-head margin. Tie band $\pm 0.5$pp shaded.}
+\includegraphics[width=\linewidth]{figures/per_attr_bars_celeba_least.png}
+\caption*{(a) 5 least-correlated controls (low entanglement).}
+\vspace{0.5em}
+\includegraphics[width=\linewidth]{figures/per_attr_bars_celeba_most.png}
+\caption*{(b) 5 most-correlated controls (high entanglement).}
+\caption{\textbf{CelebA per-attribute nonlinear-probe accuracy at four control-damage budgets.} Same bar-chart layout as the NLP per-model figures. For each attribute, three bars: Clean (gray, no erasure), \TanGCEpp{} (blue, the proposed pipeline), Obliviator (orange, baseline). Black tick: per-attribute majority-class floor (lower bars are better; bars at the floor mean the probe is at chance). Hatched bars marked ``N/A'' = the method had no in-budget step at that $\Delta Y$; we substitute its clean (un-erased) $S$ as a stand-in, so a hatched-orange tall bar next to a low solid-blue bar is a clean \TanGCEpp{} win on a setting Obliviator could not reach. Most-correlated regime at $\Delta Y \le 1$pp: $39/40$ Obliviator bars are hatched while \TanGCEpp{} reaches the budget on $16/40$.}
 \label{fig:per_attr_bars_celeba}
 \end{figure}
 
