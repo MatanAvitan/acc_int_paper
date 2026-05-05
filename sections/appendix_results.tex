@@ -41,11 +41,11 @@ Table~\ref{tab:per_panel_breakdown} reports the per-setting version of the main-
 \section{CelebA full per-attribute breakdown}
 \label{sec:appendix_celeba_extended}
 
-Table~\ref{tab:celeba_per_panel_breakdown} reports the per-attribute version of the main-text Tab.~\ref{tab:celeba_unified_summary}: for each of the 40 CelebA-CLIP attributes and each of the two control regimes, the signed deviation $(S - S_{\text{floor}})$ in pp at the trajectory step closest to the per-attribute majority-class floor, subject to mean $\Delta Y \ge -5$pp on the 5 controls. Bold marks the row-best per regime block. The trailing rows summarize across the 40 attributes: per-method mean and \TanGCEp{} W/T/L count vs.\ the best other method (0.5pp tie band).
+Table~\ref{tab:celeba_per_panel_breakdown} reports the per-attribute version of the main-text Tab.~\ref{tab:celeba_unified_summary}: for each of the 40 CelebA-CLIP attributes and each of the two control regimes, the signed deviation $(S - S_{\text{floor}})$ in pp at the trajectory step closest to the per-attribute majority-class floor, subject to mean $\Delta Y \ge -5$pp on the 5 controls. Bold marks the row-best per regime block. The trailing rows summarize across the 40 attributes: per-method mean and \TanGCEpp{} W/T/L count vs.\ the best other method (0.5pp tie band).
 
 \input{tables/celeba_per_panel_breakdown}
 
-Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \TanGCEp{} vs.\ Obliviator as a per-attribute floor-distance win-margin plot, separately for the 5-least- and 5-most-correlated control regimes. Hatched dark-blue bars mark walkover settings where \TanGCEp{} has at least one in-budget step but Obliviator has none; these are exactly the entangled-target attributes that Tab.~\ref{tab:celeba_unified_summary} flags as walkovers in the most-correlated regime.
+Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \TanGCEpp{} vs.\ Obliviator as a per-attribute floor-distance win-margin plot, separately for the 5-least- and 5-most-correlated control regimes. Cross-hatched bars (annotated ``N/A'') flag settings where at least one method has no in-budget step at the budget shown --- most commonly Obliviator overshoots its $\Delta Y$ budget at $\le 1$pp on the entangled targets (39 of 40 attributes in the most-correlated regime, 25 of 40 in the least-correlated), so the comparison substitutes the missing method's clean (no-erasure) probe accuracy as a stand-in. The cross-hatching distinguishes these substituted/walkover bars from solid in-budget head-to-head comparisons.
 
 \begin{figure}[h]
 \centering
@@ -59,7 +59,7 @@ Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \T
 \includegraphics[width=\linewidth]{figures/pareto_celeba_sota_most_winmargin_multi_floor.png}
 \subcaption{5 most-correlated controls (high entanglement).}
 \end{minipage}
-\caption{\textbf{CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\TanGCEp{}} - S_{\text{floor}}|\bigr)\!\times\!100$ on settings where both methods reach the budget; positive (blue) = \TanGCEp{} closer to floor. Hatched dark-blue ($^{\star}$) marks walkover settings where \TanGCEp{} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded.}
+\caption{\textbf{CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\TanGCEpp{}} - S_{\text{floor}}|\bigr)\!\times\!100$ on settings where both methods reach the budget; positive (blue) = \TanGCEpp{} closer to floor. Cross-hatched bars (annotated ``N/A'') mark settings where at least one method has no in-budget step at that budget; the missing method's clean (un-erased) probe accuracy is substituted as a stand-in, so the bar is read as a walkover rather than a head-to-head margin. Tie band $\pm 0.5$pp shaded.}
 \label{fig:per_attr_bars_celeba}
 \end{figure}
 

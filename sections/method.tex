@@ -89,7 +89,7 @@ not re-normalized: $\|\mathbf{u}_i^{\mathrm{tan}}\| \le 1$ acts as an overlap we
 \label{eq:tangent_erase}
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}},
 \end{equation}
-with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCEpp{} (and its CelebA counterpart \AmbGCEp{}) is the direct ambient ablation: same closed-form preprocessing, same iterative loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the manifold projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the spectrally-normalized generalization in §\ref{sec:cov_tangce}.
+with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCEpp{} is the direct ambient ablation (used on both NLP and Vision): same closed-form preprocessing, same iterative loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the manifold projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the spectrally-normalized generalization in §\ref{sec:cov_tangce}.
 
 \subsection{Adaptive per-sample step size: closed-form \texorpdfstring{$\lambda_i$}{lambda}}
 \label{sec:closed_form_lambda}
