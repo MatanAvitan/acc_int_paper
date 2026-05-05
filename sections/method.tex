@@ -1,11 +1,19 @@
-% Method — first full presentation of TanGCE
-\section{Method: \TanGCE{}}
+% Method — first full presentation of the TanGCE family
+\section{Method: \TanGCE{} family}
 \label{sec:method}
 
-\TanGCE{} (\emph{Tangent Gradient-based Concept Erasure}) has two phases. Phase~1 applies two closed-form moment-matching projections that exhaust 1st- and 2nd-moment concept signal. Phase~2 iterates a tangent-constrained step on the residual: each round trains a fresh nonlinear scorer, projects its gradient onto a locally estimated tangent basis, and applies the projection-and-preconditioning update. The scorer used to drive the update is a 2-layer MLP with hidden width $h{=}512$ trained for $800$ steps; this is intentionally distinct from the smaller evaluation probe ($h{=}128$, 200 SGD steps, §\ref{sec:evaluation}) so that erasure quality is judged by an independently trained classifier rather than the one that produced the gradient.
+\TanGCE{} (\emph{Tangent Gradient-based Concept Erasure}) is the manifold-aware iterative erasure step at the core of this paper: at each round it trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, projects the scorer's gradient onto a locally estimated tangent basis of the representation manifold, and applies a $\sigma$-preconditioned trust-region update. The scorer used to drive the update is a 2-layer MLP with hidden width $h{=}512$ trained for $800$ steps; this is intentionally distinct from the smaller evaluation probe ($h{=}128$, 200 SGD steps, §\ref{sec:evaluation}) so that erasure quality is judged by an independently trained classifier rather than the one that produced the gradient.
+
+We present three nested variants, indexed by how much closed-form linear preprocessing precedes the manifold loop:
+\begin{itemize}
+    \item \TanGCE{} --- the manifold-aware iterative loop alone (no closed-form preprocessing). Isolates the contribution of the manifold projection.
+    \item \TanGCEp{} --- LEACE preprocessing followed by \TanGCE{}. Adds rank-1 mean alignment between target classes; isolates the contribution of the rank-2 covariance step.
+    \item \TanGCEpp{} --- LEACE + rank-2 CovMatch K=2 preprocessing followed by \TanGCE{}. The full pipeline; this is the headline empirical configuration on the NLP grid.
+\end{itemize}
+The closed-form preprocessing (§\ref{sec:moment_preproc}) and the iterative manifold loop (§\ref{sec:closed_form_lambda}--§\ref{sec:cov_tangce}) are both described below; the three variants are obtained by composing them as listed.
 
 \begin{algorithm}[t]
-\caption{\TanGCE{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step.}
+\caption{\TanGCEpp{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step. Dropping line 1b yields \TanGCEp{}; dropping Phase 1 entirely yields \TanGCE{}.}
 \label{alg:tangce}
 \begin{algorithmic}[1]
 \REQUIRE Representations $\mathbf{X}$, concept labels $\mathbf{y}$, $\#$rounds $T$, trust region $\varepsilon$, anisotropy $\alpha$, scorer hidden $h$.
@@ -24,6 +32,8 @@
 
 \subsection{Phase~1: closed-form moment preprocessing}
 \label{sec:moment_preproc}
+
+Phase~1 is what turns \TanGCE{} into \TanGCEp{} (LEACE only) or \TanGCEpp{} (LEACE + rank-2 CovMatch). It exhausts 1st- and 2nd-moment concept signal in closed form so that the subsequent manifold-aware loop only has to attack the residual nonlinear pocket.
 
 \paragraph{LEACE (1st moment).}
 Fit a LEACE eraser \citep{belrose-etal-2023-leace} on $(\mathbf{X}_{\text{train}}, \mathbf{y})$ and apply to all splits. LEACE removes the rank-1 cross-covariance $\mathbf{\Sigma}_{xz}$, leaving no \emph{linear} classifier above majority-class accuracy with provably minimum representation damage among affine projections.
@@ -78,7 +88,7 @@ not re-normalized: $\|\mathbf{u}_i^{\mathrm{tan}}\| \le 1$ acts as an overlap we
 \label{eq:tangent_erase}
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \lambda \, (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \, \mathbf{u}_i^{\mathrm{tan}},
 \end{equation}
-with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCE{} is the direct ablation: same loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the $\sigma$-preconditioned generalization in §\ref{sec:cov_tangce}.
+with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCEpp{} (and its CelebA counterpart \AmbGCEp{}) is the direct ambient ablation: same closed-form preprocessing, same iterative loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the manifold projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the $\sigma$-preconditioned generalization in §\ref{sec:cov_tangce}.
 
 \subsection{Adaptive per-sample step size: closed-form \texorpdfstring{$\lambda_i$}{lambda}}
 \label{sec:closed_form_lambda}
@@ -125,4 +135,4 @@ The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after 
 
 \subsection{Iterative loop and relation to baselines}
 
-Each round trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, recomputes per-sample gradients, and applies the update. The fresh-scorer loop follows \citet{elazar-goldberg-2018-adversarial}: success against any single trained classifier is not evidence the concept is gone. \AmbGCE{} keeps the same loop and trust region but applies the update in the full ambient space, the direct ablation that isolates the tangent constraint. The two nonlinear baselines we compare against, IGBP \citep{iskander-etal-2023-shielded} and Obliviator \citep{akbari-etal-2025-obliviator}, share our supervision regime (target labels used during fitting, control concepts never seen by the eraser) and differ only in how the update is constructed: IGBP retracts toward an iteratively-retrained 2-class probe boundary; Obliviator solves an HSIC-penalised RKHS objective via random Fourier feature eigenvalue projection. \TanGCE{} differs from both by constraining each update to a locally estimated tangent space.
+Each round trains a fresh nonlinear scorer on the current $(\mathbf{X}, \mathbf{y})$, recomputes per-sample gradients, and applies the manifold-aware update. The fresh-scorer loop follows \citet{elazar-goldberg-2018-adversarial}: success against any single trained classifier is not evidence the concept is gone. The iterative loop alone is \TanGCE{}; combined with LEACE preprocessing it is \TanGCEp{}; combined with LEACE + rank-2 CovMatch K=2 it is \TanGCEpp{}. \AmbGCEpp{} keeps the same closed-form preprocessing, the same loop and the same trust region, but applies the update in the full ambient space --- the direct ablation that isolates the manifold constraint. The two nonlinear baselines we compare against, IGBP \citep{iskander-etal-2023-shielded} and Obliviator \citep{akbari-etal-2025-obliviator}, share our supervision regime (target labels used during fitting, control concepts never seen by the eraser) and differ only in how the update is constructed: IGBP retracts toward an iteratively-retrained 2-class probe boundary; Obliviator solves an HSIC-penalised RKHS objective via random Fourier feature eigenvalue projection. \TanGCE{} differs from both by constraining each update to a locally estimated tangent space.

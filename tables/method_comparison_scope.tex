@@ -13,8 +13,10 @@ INLP & Linear & Iterative linear baseline \\
 LEACE & Linear & Strong matched linear baseline \\
 IGBP & Nonlinear & Closest prior nonlinear baseline \\
 Obliviator & Nonlinear & \textbf{Current state-of-the-art nonlinear baseline} \citep{akbari-etal-2025-obliviator} \\
-\AmbGCE{} & Nonlinear & Ambient ablation of \TanGCE{} \\
-\TanGCE{} & Nonlinear & Main contribution \\
+\TanGCE{} & Nonlinear & Manifold-aware iterative loop alone (no closed-form preprocessing); ablation isolating the manifold contribution \\
+\TanGCEp{} & Nonlinear & LEACE preprocessing + \TanGCE{}; ablation isolating the rank-2 covariance contribution \\
+\AmbGCEpp{} & Nonlinear & Ambient ablation of \TanGCEpp{} \\
+\TanGCEpp{} & Nonlinear & \textbf{Main contribution: LEACE + rank-2 CovMatch + manifold loop} \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,14 +1,14 @@
 \section{Phase-1 closed-form ablation}
 \label{sec:appendix_phase1_ablation}
 
-Tab.~\ref{tab:leace_vs_tangce_nlp} reports a fresh nonlinear probe ($h{=}128$, 200 SGD steps, patience 3) trained on three representation states per setting: clean, post-LEACE, post-(LEACE\,+\,CovMatch K=2). Sycophancy is fully exhausted by Phase~1 (mean NL $0.563$ indistinguishable from floor $0.560$ and from full \TanGCE{}'s $0.560$). Gender is not: Phase~1 leaves $14.8$pp residual above floor that the iterative Phase~2 closes to $1.0$pp. Safety follows the gender pattern with $11.5 \to 0.2$pp.
+Tab.~\ref{tab:leace_vs_tangce_nlp} reports a fresh nonlinear probe ($h{=}128$, 200 SGD steps, patience 3) trained on three representation states per setting: clean, post-LEACE, post-(LEACE\,+\,CovMatch K=2). Sycophancy is fully exhausted by Phase~1 (mean NL $0.563$ indistinguishable from floor $0.560$ and from \TanGCEpp{}'s $0.560$). Gender is not: Phase~1 leaves $14.8$pp residual above floor that the manifold-aware Phase~2 closes to $1.0$pp. Safety follows the gender pattern with $11.5 \to 0.2$pp.
 
 \input{tables/leace_vs_tangce_nlp}
 
 \section{Per-model bar charts (sycophancy and safety)}
 \label{sec:appendix_per_model_bars}
 
-Sycophancy and safety analogues of the gender per-model bar chart in the main text (Fig.~\ref{fig:per_model_bars_gender}). On sycophancy, both \TanGCE{} and Obliviator are at floor on essentially every model and budget; sycophancy is the easy concept. On safety, \TanGCE{} sits at or below the per-model floor on all 13 settings and all four budgets, while Obliviator overshoots floor by $1$--$3$pp on most settings.
+Sycophancy and safety analogues of the gender per-model bar chart in the main text (Fig.~\ref{fig:per_model_bars_gender}). On sycophancy, both \TanGCEpp{} and Obliviator are at floor on essentially every model and budget; sycophancy is the easy concept. On safety, \TanGCEpp{} sits at or below the per-model floor on all 13 settings and all four budgets, while Obliviator overshoots floor by $1$--$3$pp on most settings.
 
 \begin{figure}[h]
 \centering
@@ -27,18 +27,18 @@ Sycophancy and safety analogues of the gender per-model bar chart in the main te
 \section{NLP full per-setting breakdown}
 \label{sec:appendix_per_panel}
 
-Table~\ref{tab:per_panel_breakdown} reports the per-setting version of the main-text Tab.~\ref{tab:main_results_unified}: for each of the 39 NLP settings and each of the four control-damage budgets, the signed deviation $(S - S_{\text{floor}})$ in pp at the trajectory step closest to floor for all seven methods. Bold marks the row-best per setting per budget block (every method within numeric precision of the row-best is bolded). The trailing rows summarize across settings: per-method mean and \TanGCE{} W/T/L count vs.\ the best other method, with the $0.5$pp tie band ensuring that any setting where the row-best is tied between \TanGCE{} and another method counts as T (not W).
+Table~\ref{tab:per_panel_breakdown} reports the per-setting version of the main-text Tab.~\ref{tab:main_results_unified}, restricted to the 7 method columns shared with the main-text breakdown (the pure \TanGCE{} and \TanGCEp{} ablation rows of the main-text table are not repeated per-setting). For each of the 39 NLP settings and each of the four control-damage budgets, the signed deviation $(S - S_{\text{floor}})$ in pp at the trajectory step closest to floor. Bold marks the row-best per setting per budget block (every method within numeric precision of the row-best is bolded). The trailing rows summarize across settings: per-method mean and \TanGCEpp{} W/T/L count vs.\ the best other method, with the $0.5$pp tie band ensuring that any setting where the row-best is tied between \TanGCEpp{} and another method counts as T (not W).
 
 \input{tables/per_panel_breakdown}
 
 \section{CelebA full per-attribute breakdown}
 \label{sec:appendix_celeba_extended}
 
-Table~\ref{tab:celeba_per_panel_breakdown} reports the per-attribute version of the main-text Tab.~\ref{tab:celeba_unified_summary}: for each of the 40 CelebA-CLIP attributes and each of the two control regimes, the signed deviation $(S - S_{\text{floor}})$ in pp at the trajectory step closest to the per-attribute majority-class floor, subject to mean $\Delta Y \ge -5$pp on the 5 controls. Bold marks the row-best per regime block. The trailing rows summarize across the 40 attributes: per-method mean and \TanGCE{} W/T/L count vs.\ the best other method (0.5pp tie band).
+Table~\ref{tab:celeba_per_panel_breakdown} reports the per-attribute version of the main-text Tab.~\ref{tab:celeba_unified_summary}: for each of the 40 CelebA-CLIP attributes and each of the two control regimes, the signed deviation $(S - S_{\text{floor}})$ in pp at the trajectory step closest to the per-attribute majority-class floor, subject to mean $\Delta Y \ge -5$pp on the 5 controls. Bold marks the row-best per regime block. The trailing rows summarize across the 40 attributes: per-method mean and \TanGCEp{} W/T/L count vs.\ the best other method (0.5pp tie band).
 
 \input{tables/celeba_per_panel_breakdown}
 
-Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \TanGCE{} vs.\ Obliviator as a per-attribute floor-distance win-margin plot, separately for the 5-least- and 5-most-correlated control regimes. Hatched dark-blue bars mark walkover settings where \TanGCE{} has at least one in-budget step but Obliviator has none; these are exactly the entangled-target attributes that Tab.~\ref{tab:celeba_unified_summary} flags as walkovers in the most-correlated regime.
+Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \TanGCEp{} vs.\ Obliviator as a per-attribute floor-distance win-margin plot, separately for the 5-least- and 5-most-correlated control regimes. Hatched dark-blue bars mark walkover settings where \TanGCEp{} has at least one in-budget step but Obliviator has none; these are exactly the entangled-target attributes that Tab.~\ref{tab:celeba_unified_summary} flags as walkovers in the most-correlated regime.
 
 \begin{figure}[h]
 \centering
@@ -52,7 +52,7 @@ Fig.~\ref{fig:per_attr_bars_celeba} reports the same comparison restricted to \T
 \includegraphics[width=\linewidth]{figures/pareto_celeba_sota_most_winmargin_multi_floor.png}
 \subcaption{5 most-correlated controls (high entanglement).}
 \end{minipage}
-\caption{\textbf{CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\TanGCE{}} - S_{\text{floor}}|\bigr)\!\times\!100$ on settings where both methods reach the budget; positive (blue) = \TanGCE{} closer to floor. Hatched dark-blue ($^{\star}$) marks walkover settings where \TanGCE{} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded.}
+\caption{\textbf{CelebA per-attribute floor-distance win-margin.} Solid blue/red = $\bigl(|S^{\text{Obliv}} - S_{\text{floor}}| - |S^{\TanGCEp{}} - S_{\text{floor}}|\bigr)\!\times\!100$ on settings where both methods reach the budget; positive (blue) = \TanGCEp{} closer to floor. Hatched dark-blue ($^{\star}$) marks walkover settings where \TanGCEp{} has at least one in-budget step but Obliviator has none. Tie band $\pm 0.5$pp shaded.}
 \label{fig:per_attr_bars_celeba}
 \end{figure}
 
@@ -139,7 +139,7 @@ Safety & 13 & 33.07 & 33.30 & 1.71 & 57.32 \\
 \end{tabular}
 \end{table}
 
-The mean across the entire grid, $\bar{\lambda} \approx 29.31$, is the value at which \AmbGCE{} appears in Tab.~\ref{tab:main_results_unified}: forcing the unconstrained ambient method to take the same effective step magnitude that the closed-form per-row rule produces under \TanGCE{} isolates the gradient-direction constraint (tangent-projected vs.\ ambient) as the only remaining axis of variation between the two methods.
+The mean across the entire grid, $\bar{\lambda} \approx 29.31$, is the value at which \AmbGCEpp{} appears in Tab.~\ref{tab:main_results_unified}: forcing the unconstrained ambient method to take the same effective step magnitude that the closed-form per-row rule produces under \TanGCEpp{} isolates the gradient-direction constraint (tangent-projected vs.\ ambient) as the only remaining axis of variation between the two methods.
 
 \section{Anisotropy regimes for the local-$\sigma$ spectrum}
 \label{sec:appendix_alpha_regimes}
