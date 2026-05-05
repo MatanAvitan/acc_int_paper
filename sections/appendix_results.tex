@@ -121,6 +121,11 @@ The target attribute itself is excluded from the candidate pool (i.e., $\ell \ne
 \paragraph{Concrete examples.}
 For \emph{Male}, the 5 most-correlated attributes are \emph{Wearing\_Lipstick} ($|r| \approx 0.78$), \emph{No\_Beard}, \emph{Heavy\_Makeup}, \emph{Attractive}, and \emph{5\_o\_Clock\_Shadow}; the 5 least-correlated are \emph{Narrow\_Eyes}, \emph{Blurry}, \emph{Straight\_Hair}, \emph{Receding\_Hairline}, and \emph{Pale\_Skin} (all $|r| < 0.05$). Erasing \emph{Male} while preserving the most-correlated controls is genuinely hard because the controls are partial proxies for the target; erasing while preserving the least-correlated controls tests whether the intervention is geographically narrow but not whether it disentangles correlated information. We therefore report both regimes side by side: each one isolates a different failure mode.
 
+\paragraph{Full per-target listing.} Tabs.~\ref{tab:celeba_controls_least}--\ref{tab:celeba_controls_most} list the two control sets for every one of the 40 target attributes, each with its absolute Pearson $|r|$ on the train split. They are reproduced from \texttt{outputs/celeba\_correlated\_controls.json}, the precomputed file consumed by every CelebA run in this paper.
+
+\input{tables/celeba_least_corr_controls}
+\input{tables/celeba_most_corr_controls}
+
 \paragraph{Why two regimes per concept.}
 Reporting only one control set hides whichever regime the method happens to be weak in. A method that destroys the entire representation will pass the least-correlated test (controls are essentially independent of the edit anyway) and fail the most-correlated test catastrophically; conversely, a method that performs no erasure will pass both. The difference between the two regimes per method is therefore informative even when both individual numbers look acceptable. Section~\ref{sec:celeba} reads the difference as a measure of how much an erasure method confuses ``avoid this concept'' with ``avoid everything correlated with it''.
 

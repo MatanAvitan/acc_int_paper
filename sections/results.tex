@@ -13,7 +13,7 @@ Tab.~\ref{tab:main_results_unified} reports the headline number for each method 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.62\linewidth]{figures/aggregated_nlp_results.png}
+\includegraphics[width=0.45\linewidth]{figures/aggregated_nlp_results.png}
 \caption{\textbf{Aggregated NLP leakage vs.\ control-damage budget.} Mean $|S - S_{\text{floor}}|$ in pp across the 39 NLP settings (13 model families $\times$ 3 concepts at 50\%-depth) for each method, plotted against the four control-damage budgets $\Delta Y \in \{1, 3, 5, 10\}$pp. The black ``X'' at $x=0$ is the shared starting point: mean nonlinear-probe leakage on the raw, un-erased representations ($\sim$24pp); every line begins from this anchor. Lower is better; the $y$-axis floor is the per-setting majority-class chance. The \TanGCE{} family (\TanGCEpp{}, \TanGCEp{}, \TanGCE{}) traces the lowest envelope at every budget --- \TanGCEpp{} below $1$pp from $\le 3$pp onward --- while baselines (Obliviator, LEACE\,+\,CovMatch, IGBP, AmbGCE, INLP, LEACE) plateau at $4$--$18$pp regardless of how much utility one is willing to sacrifice. The visual gap between the \TanGCE{} curves and the rest reproduces the column-best ranking in Tab.~\ref{tab:main_results_unified}.}
 \label{fig:aggregated_nlp_results}
 \end{figure}
