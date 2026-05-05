@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex neurips_2026"] 1777989257.9179 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777989262.92355 0
+["bibtex neurips_2026"] 1777989693.5989 "neurips_2026.aux" "neurips_2026.bbl" "neurips_2026" 1777989698.36671 0
   "./references.bib" 1777986363.37779 11360 2e65dac7a1f288780fae293a508c554d ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "neurips_2026.aux" 1777989262.71596 29068 4e957c3f6f203ff4317f317bae20f9f2 "pdflatex"
+  "neurips_2026.aux" 1777989698.159 29310 6e67772da93864f9890aaa72b5e886a4 "pdflatex"
   (generated)
   "neurips_2026.bbl"
   "neurips_2026.blg"
   (rewritten before read)
-["pdflatex"] 1777989257.95764 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777989262.9239 0
+["pdflatex"] 1777989693.63392 "neurips_2026.tex" "neurips_2026.pdf" "neurips_2026" 1777989698.36787 0
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm" 1136768653 4712 9ef4d7d106579d4b136e1529e1a4533c ""
@@ -253,9 +253,9 @@
   "figures/per_model_bars_gender.png" 1777897662.67504 181101 c0802a4d6d301992aa7be056b8663164 ""
   "figures/per_model_bars_safety.png" 1777897662.67904 194074 4dd32146c6329929ffb066a957dd7b2e ""
   "figures/per_model_bars_sycophancy.png" 1777897662.68204 191822 345ec3e1ace23bee47597fe3a3a19f1a ""
-  "neurips_2026.aux" 1777989262.71596 29068 4e957c3f6f203ff4317f317bae20f9f2 "pdflatex"
-  "neurips_2026.bbl" 1777989257.94492 10937 e0736ae5ab9014023103c3bc2bec3493 "bibtex neurips_2026"
-  "neurips_2026.out" 1777989262.71996 6596 153ff04f309e14789ec9dbbcbf632626 "pdflatex"
+  "neurips_2026.aux" 1777989698.159 29310 6e67772da93864f9890aaa72b5e886a4 "pdflatex"
+  "neurips_2026.bbl" 1777989693.62396 10937 e0736ae5ab9014023103c3bc2bec3493 "bibtex neurips_2026"
+  "neurips_2026.out" 1777989698.163 6596 153ff04f309e14789ec9dbbcbf632626 "pdflatex"
   "neurips_2026.sty" 1773773760 13462 818d80447f57703e59b8270885421e82 ""
   "neurips_2026.tex" 1777988629.20108 5768 b47ef78f4e1c258da72adbe7169cf97d ""
   "sections/abstract.tex" 1777988876.68938 2556 eeee0e6d07b6ce9a49f309f607a2f006 ""
@@ -269,11 +269,11 @@
   "sections/method.tex" 1777989207.62945 14138 941a0f6aa4e79c1b540f8e49238f2181 ""
   "sections/notation.tex" 1777988629.20708 9221 ba4a7bfc0ca799cbb5b90cb5e8832035 ""
   "sections/related_work.tex" 1777986366.32182 2522 dfd9c37119e9531883bd84a97a9c80f6 ""
-  "sections/results.tex" 1777986343.2356 8356 06f67636e70134ab30f31a8e81ea42dd ""
+  "sections/results.tex" 1777989680.08583 8376 edcff9fccf9ff7b9178017005b2accf4 ""
   "tables/celeba_per_panel_breakdown.tex" 1777913482.02572 8970 6b0403d4ac2b59b173834ffdc2c0f773 ""
-  "tables/celeba_unified_summary.tex" 1777913479.69369 2716 6719d27afb61be23f58f8c6cfc4df661 ""
+  "tables/celeba_unified_summary.tex" 1777989648.53154 2763 fb1971d53203c77834be6dc5b7435a21 ""
   "tables/leace_vs_tangce_nlp.tex" 1777885336.60519 4978 0b3e9b8d4881a7e8a4168ac5023adb4e ""
-  "tables/main_results_unified.tex" 1777913472.15562 2481 95d2d3fb8a9f262dc75c141d8c9beac1 ""
+  "tables/main_results_unified.tex" 1777989633.12839 2483 8c7b6cac0701188605379eb485239f17 ""
   "tables/per_panel_breakdown.tex" 1777913480.6067 12317 60f74bdf0ca9888720546de3643cdd98 ""
   (generated)
   "neurips_2026.aux"
