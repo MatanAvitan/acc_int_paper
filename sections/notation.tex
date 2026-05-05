@@ -202,8 +202,65 @@ $\begin{aligned}
 \label{fig:tangce-intuition}
 \end{figure*}
 
-Let $\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ be the hidden state at layer $\ell$ of a language model over vocabulary $\Sigma$. For each sample $i$ we have a representation $\mathbf{x}_i = \mathrm{enc}_\ell(s_i) \in \mathbb{R}^d$, a binary concept label $y_i \in \{0,1\}$, and an optional control label $z_i$. The dataset is $\mathcal{D} = \{(\mathbf{x}_i, y_i, z_i)\}_{i=1}^N$ with class subsets $\mathcal{D}_c = \{i : y_i = c\}$. A concept scorer $f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a 2-layer MLP with input gradient $\nabla f_\theta(\mathbf{x}_i)$.
+Let $p_{\mathrm{nat}}$ be a distribution over natural inputs $s \in \Sigma^*$, and let
+$\mathrm{enc}_\ell : \Sigma^* \to \mathbb{R}^d$ be the layer-$\ell$ encoder of a language model.
+For a random natural input $S \sim p_{\mathrm{nat}}$, define the layer-$\ell$ representation random vector
+\begin{equation}
+    \mathbf{X}_\ell = \mathrm{enc}_\ell(S) \in \mathbb{R}^d .
+\end{equation}
+Let $p_\ell$ denote the distribution of $\mathbf{X}_\ell$ over representation space. We define the
+\emph{natural representation support} as
+\begin{equation}
+\label{eq:natural_rep_support}
+    \mathcal{S}_\ell
+    =
+    \mathrm{supp}(p_\ell)
+    =
+    \bigcap_{\substack{
+    A \subseteq \mathbb{R}^d,\ A \text{ closed} \\
+    \Pr(\mathbf{X}_\ell \in A)=1
+    }} A .
+\end{equation}
+Informally, $\mathcal{S}_\ell$ is the region of representation space occupied by hidden states
+produced by natural inputs.
 
-\paragraph{Local manifold hypothesis.} We adopt the modeling assumption that the representations $\{\mathbf{x}_i\}$ lie near a locally low-dimensional support $\mathcal{M} \subset \mathbb{R}^d$. Its operational consequence is that we can approximate the neighborhood of any $\mathbf{x} \in \mathcal{M}$ by its tangent space $T_{\mathbf{x}}\mathcal{M}$ \citep{tu-2011-manifolds} and apply linear-algebraic operations (SVD, projection, anisotropic scaling) inside it. The tangent space is not observed directly; we estimate it from nearby representations by local SVD on the secant matrix (§\ref{sec:method}). For an ambient vector $\mathbf{g} \in \mathbb{R}^d$, the decomposition $\mathbf{g} = \mathbf{g}^{\top} + \mathbf{g}^{\perp}$ with $\mathbf{g}^{\top} \in T_{\mathbf{x}}\mathcal{M}$ separates the part of $\mathbf{g}$ supported by the local sample structure from the part orthogonal to it. \TanGCE{} acts on the tangent component only; \AmbGCE{} retains both. Formal coordinate-chart definitions and the differential $d(\varphi^{-1})_0$ identification with $T_{\mathbf{x}}\mathcal{M}$ are deferred to App.~\ref{sec:appendix_geometry}.
+For each observed sample $i$, we have a representation
+$\mathbf{x}_i = \mathrm{enc}_\ell(s_i) \in \mathbb{R}^d$, a binary concept label
+$y_i \in \{0,1\}$, and an optional control label $z_i$. The dataset is
+$\mathcal{D} = \{(\mathbf{x}_i, y_i, z_i)\}_{i=1}^N$, with class subsets
+$\mathcal{D}_c = \{i : y_i = c\}$. A concept scorer
+$f_\theta : \mathbb{R}^d \to \mathbb{R}$ is a 2-layer MLP with input gradient
+$\nabla f_\theta(\mathbf{x}_i)$.
 
-\paragraph{Recoverability.} Concept removal is judged only after training a \emph{fresh} probe on the edited representations \citep{elazar-goldberg-2018-adversarial}: erasure succeeds if a newly trained nonlinear classifier fails to recover the concept from $\tilde{\mathbf{x}}$, not merely if the old scorer is fooled.
+\paragraph{Local manifold hypothesis.}
+Although $\mathbf{X}_\ell$ takes values in the ambient space $\mathbb{R}^d$, we do not expect
+$p_\ell$ to occupy this space uniformly. We assume that, around observed natural representations,
+the support $\mathcal{S}_\ell$ is locally well approximated by a low-dimensional manifold-like
+structure $\mathcal{M}_\ell \subset \mathbb{R}^d$. The operational consequence is that the
+neighborhood of a point $\mathbf{x} \in \mathcal{S}_\ell$ can be approximated by a tangent space
+$T_{\mathbf{x}}\mathcal{M}_\ell$ \citep{tu-2011-manifolds}, allowing us to apply local linear
+operations such as SVD, projection, and anisotropic scaling.
+
+The tangent space is not observed directly. We estimate it from nearby representations by local SVD
+on nearest-neighbor secants (§\ref{sec:method}). For an ambient vector
+$\mathbf{g} \in \mathbb{R}^d$, the tangent decomposition
+\begin{equation}
+    \mathbf{g}
+    =
+    \mathbf{g}^{\top}
+    +
+    \mathbf{g}^{\perp},
+    \qquad
+    \mathbf{g}^{\top} \in T_{\mathbf{x}}\mathcal{M}_\ell,
+    \qquad
+    \mathbf{g}^{\perp} \perp T_{\mathbf{x}}\mathcal{M}_\ell,
+\end{equation}
+separates the component supported by the local representation geometry from the component
+orthogonal to it. \TanGCE{} acts on the tangent component only; \AmbGCE{} retains both. Formal
+coordinate-chart definitions and the differential $d(\varphi^{-1})_0$ identification with
+$T_{\mathbf{x}}\mathcal{M}_\ell$ are deferred to App.~\ref{sec:appendix_geometry}.
+
+\paragraph{Recoverability.}
+Concept removal is judged only after training a \emph{fresh} probe on the edited representations
+\citep{elazar-goldberg-2018-adversarial}: erasure succeeds if a newly trained nonlinear classifier
+fails to recover the concept from $\tilde{\mathbf{x}}$, not merely if the old scorer is fooled.
