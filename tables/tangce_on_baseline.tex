@@ -5,21 +5,21 @@
 % spent its budget overshooting and is excluded from "alone reach".
 \begin{table}[t]
 \centering
-\caption{\textbf{TanGCE complements every Phase-1 baseline.} Mean $|S{-}S_{\text{floor}}|$ in pp at the trajectory step closest to chance, with $\Delta Y$ measured against the original clean reps (same budget convention as Tab.~\ref{tab:main_results_unified}). For each baseline B, the ``alone'' column reports B's endpoint leakage on settings where B kept $Y$ within the budget; the ``+TanGCE'' column reports the best post-TanGCE step on the same settings. Reach $\!=\!$ (settings in budget)$/$(settings with data). \TanGCE{}-only and \TanGCEpp{} are reference rows for context (TanGCE on clean reps; full SOTA pipeline). $^\dagger${}\textbf{Obliviator surgicality warning:} Obliviator overshoots the $\Delta Y$ budget on \emph{every} sycophancy and gender setting ($26/26$); the only settings on which it lands in budget are the $13$ safety settings, where the safety task accuracy floor happens to coincide with Obliviator's encoder-collapse Y. The $0.0$pp leakage on those $13$ settings reflects this collapse, not a genuine surgical erasure --- it is an artefact of Obliviator destroying control accuracy until $Y$ matches the panel's $Y_{\text{floor}}$.}
+\caption{\textbf{TanGCE complements every Phase-1 baseline.} Mean $|S{-}S_{\text{floor}}|$ in pp at the trajectory step closest to chance, with $\Delta Y$ measured against the original clean reps (same budget convention as Tab.~\ref{tab:main_results_unified}). For each baseline B, the ``alone'' column reports B's endpoint leakage on settings where B kept $Y$ within the budget; the ``Improvement'' column is the mean reduction in leakage after stacking TanGCE on B's reps (positive $=$ TanGCE moved closer to chance), evaluated on the same settings. For the reference rows (\TanGCE{} on raw reps and \TanGCEpp{}, the SOTA pipeline) there is no Phase-1-alone baseline; the Improvement slot italicises the absolute post-TanGCE leakage instead. Reach $\!=\!$ (settings in budget)$/$(settings with data). \TanGCE{}-only and \TanGCEpp{} are reference rows for context (TanGCE on clean reps; full SOTA pipeline). $^\dagger${}\textbf{Obliviator surgicality warning:} Obliviator overshoots the $\Delta Y$ budget on \emph{every} sycophancy and gender setting ($26/26$); the only settings on which it lands in budget are the $13$ safety settings, where the safety task accuracy floor happens to coincide with Obliviator's encoder-collapse Y. The $0.0$pp leakage on those $13$ settings reflects this collapse, not a genuine surgical erasure --- it is an artefact of Obliviator destroying control accuracy until $Y$ matches the panel's $Y_{\text{floor}}$.}
 \label{tab:tangce_on_baseline}
 \footnotesize
 \setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{l|cc|cc|cc|cc}
 \toprule
  & \multicolumn{2}{c|}{$\Delta Y \le 1$pp} & \multicolumn{2}{c|}{$\Delta Y \le 3$pp} & \multicolumn{2}{c|}{$\Delta Y \le 5$pp} & \multicolumn{2}{c}{$\Delta Y \le 10$pp} \\
-Method & alone & +T & alone & +T & alone & +T & alone & +T \\
+Method & alone & Improvement & alone & Improvement & alone & Improvement & alone & Improvement \\
 \midrule
-\TanGCE{} (no Phase 1) & -- & $\mathbf{9.2}$~(37/39) & -- & $\mathbf{8.4}$~(39/39) & -- & $\mathbf{7.7}$~(39/39) & -- & $\mathbf{6.8}$~(39/39) \\
-LEACE $\to$ \TanGCEp{} & $20.4$~(33/34) & $\mathbf{2.5}$~(33/34) & $20.2$~(34/34) & $\mathbf{0.8}$~(34/34) & $20.2$~(34/34) & $\mathbf{0.7}$~(34/34) & $20.2$~(34/34) & $\mathbf{0.7}$~(34/34) \\
-INLP $\to$ TanGCE & $15.2$~(36/39) & $\mathbf{2.6}$~(38/39) & $16.1$~(38/39) & $\mathbf{2.1}$~(39/39) & $16.0$~(39/39) & $\mathbf{1.9}$~(39/39) & $16.0$~(39/39) & $\mathbf{1.8}$~(39/39) \\
-IGBP $\to$ TanGCE & $11.2$~(38/39) & $\mathbf{1.9}$~(37/39) & $11.2$~(39/39) & $\mathbf{1.5}$~(39/39) & $11.2$~(39/39) & $\mathbf{1.1}$~(39/39) & $11.2$~(39/39) & $\mathbf{0.9}$~(39/39) \\
-Obliviator $\to$ TanGCE & $0.0^{\dagger}$~(13/39) & $\mathbf{0.0}^{\dagger}$~(13/39) & $0.0^{\dagger}$~(13/39) & $\mathbf{0.0}^{\dagger}$~(13/39) & $0.0^{\dagger}$~(13/39) & $\mathbf{0.0}^{\dagger}$~(13/39) & $0.0^{\dagger}$~(19/39) & $\mathbf{0.0}^{\dagger}$~(19/39) \\
-\TanGCEpp{} (= SOTA reference) & -- & $\mathbf{2.9}$~(33/39) & -- & $\mathbf{1.2}$~(38/39) & -- & $\mathbf{0.7}$~(39/39) & -- & $\mathbf{0.4}$~(39/39) \\
+\TanGCE{} (no Phase 1) & -- & $\mathit{9.2}$~(37/39) & -- & $\mathit{8.4}$~(39/39) & -- & $\mathit{7.7}$~(39/39) & -- & $\mathit{6.8}$~(39/39) \\
+LEACE $\to$ \TanGCEp{} & $20.4$~(33/34) & $\mathbf{+17.9}$ & $20.2$~(34/34) & $\mathbf{+19.4}$ & $20.2$~(34/34) & $\mathbf{+19.5}$ & $20.2$~(34/34) & $\mathbf{+19.5}$ \\
+INLP $\to$ TanGCE & $15.2$~(36/39) & $\mathbf{+12.9}$ & $16.1$~(38/39) & $\mathbf{+14.1}$ & $16.0$~(39/39) & $\mathbf{+14.1}$ & $16.0$~(39/39) & $\mathbf{+14.2}$ \\
+IGBP $\to$ TanGCE & $11.3$~(37/39) & $\mathbf{+9.4}$ & $11.2$~(39/39) & $\mathbf{+9.7}$ & $11.2$~(39/39) & $\mathbf{+10.1}$ & $11.2$~(39/39) & $\mathbf{+10.3}$ \\
+Obliviator $\to$ TanGCE & $0.0^{\dagger}$~(13/39) & $\mathbf{+0.0}^{\dagger}$ & $0.0^{\dagger}$~(13/39) & $\mathbf{+0.0}^{\dagger}$ & $0.0^{\dagger}$~(13/39) & $\mathbf{+0.0}^{\dagger}$ & $0.0^{\dagger}$~(18/39) & $\mathbf{+0.0}^{\dagger}$ \\
+\TanGCEpp{} & -- & $\mathit{2.9}$~(33/39) & -- & $\mathit{1.2}$~(38/39) & -- & $\mathit{0.7}$~(39/39) & -- & $\mathit{0.4}$~(39/39) \\
 \bottomrule
 \end{tabular}
 \end{table}
