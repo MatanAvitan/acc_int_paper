@@ -1,0 +1,16 @@
+% Manifold Representation Hypothesis
+\section{The Manifold Representation Hypothesis}
+\label{sec:mrh}
+
+Concept erasure should remove a target attribute from a representation \emph{without} damaging the unrelated structure that downstream computation relies on. While neural representations live in $\mathbb{R}^d$, learned representations produced by trained models do not fill this space uniformly. Instead, they concentrate near a much smaller region that we treat as a low-dimensional \emph{manifold} embedded in the ambient space. This observation changes the geometry of erasure: an arbitrary direction in $\mathbb{R}^d$ may be a valid ambient vector, but it need not be tangent to the manifold of natural representations. Moving in such a direction pushes the representation \emph{off the manifold}, into a region the encoder does not normally produce, where downstream computations behave unpredictably and unrelated information is distorted.
+
+This is the central reason an off-manifold step damages \emph{unknown} control concepts: most of what the representation encodes is unlabeled, but every encoded concept --- labeled and unlabeled alike --- is read out by downstream layers from the same manifold. Pushing off the manifold corrupts that shared substrate; staying on it bounds the damage by construction.
+
+\paragraph{The hypothesis.}
+We call this the \emph{Manifold Representation Hypothesis} (MRH): the natural representations of a trained model concentrate on a low-dimensional manifold $\mathcal{M} \subset \mathbb{R}^d$, and an erasure step that moves each representation \emph{along} $\mathcal{M}$ is structurally \emph{surgical} --- it edits exactly the degrees of freedom the model itself uses to encode information, while leaving the orthogonal ambient directions, which carry no learned signal, untouched. A step with off-manifold components, by contrast, damages the unlabeled control concepts that ride along the same manifold.
+
+\paragraph{Linear vs.\ nonlinear erasure under MRH.}
+Linear erasure has a closed-form, low-rank solution that is applied uniformly to every representation: the operator targets a small number of global moments (a mean direction, a covariance asymmetry) and cannot adapt per sample. Nonlinear erasure has no analogous closed form. Without one, we must estimate per-sample directions of concept presence (typically as the gradient of a learned scorer) and apply them iteratively. The estimate has no built-in constraint to remain on the manifold, so a per-sample step that locally reduces concept signal can also push the representation off-manifold.
+
+\paragraph{A testable prediction.}
+MRH makes a directly testable prediction: if the on-manifold constraint is what makes erasure surgical, then bolting it on top of \emph{any} other erasure pipeline should reduce residual concept leakage without further damaging the controls. We confirm exactly this in §\ref{sec:tangce_on_baseline}, where stacking \TanGCE{} on top of five prior erasers (LEACE, LEACE\,+\,CovMatch, INLP, IGBP, Obliviator) lowers nonlinear-probe leakage on every panel while preserving control accuracy.
