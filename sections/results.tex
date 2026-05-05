@@ -44,7 +44,7 @@ The gain is largest on gender (Fig.~\ref{fig:per_model_bars_gender}), where the 
 \subsection{Cross-modal generalization: CelebA dual control regimes}
 \label{sec:celeba}
 
-\paragraph{Setup.} We extract pooled CLIP ViT-B/32 image embeddings (768-dim) from each CelebA face image, using the official train/val/test splits, and apply the same fixed-$\varepsilon=0.1$ method used for the NLP settings. CelebA provides 40 binary facial attributes; for each attribute as the erasure target, we form two control sets from the remaining 39 attributes: (i) the \textbf{5 least-correlated} attributes by absolute Pearson $r$ on the train split (low-entanglement regime, the standard surgicality choice in prior work) and (ii) the \textbf{5 most-correlated} attributes by absolute Pearson $r$ (high-entanglement regime, the surgicality stress test). Concretely, erasing \emph{Male} under the most-correlated regime requires preserving \emph{Wearing\_Lipstick}, \emph{Heavy\_Makeup}, \emph{No\_Beard}, \emph{Attractive}, \emph{5\_o\_Clock\_Shadow} ($|r| > 0.4$ with Male on the train split). This yields 80 settings (40 attributes $\times$ 2 regimes). The control-task accuracy reported in $\Delta Y$ is averaged across the 5 controls of the active regime; App.~\ref{sec:appendix_celeba_controls} lists every attribute's two control sets.
+\paragraph{Setup.} CelebA evaluation uses the same fixed-$\varepsilon=0.1$ recipe as the NLP grid; the dual control-set construction (5 least- vs.\ 5 most-correlated attributes per target) and the $\Delta Y$ control-damage budget protocol are detailed in §\ref{sec:hp_selection}, with the per-target control listings in App.~Tabs.~\ref{tab:celeba_controls_least}--\ref{tab:celeba_controls_most}.
 
 \begin{figure}[t]
 \centering
