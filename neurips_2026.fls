@@ -548,6 +548,8 @@ INPUT ./tables/celeba_most_corr_controls.tex
 INPUT ./tables/celeba_most_corr_controls.tex
 INPUT ./tables/celeba_most_corr_controls.tex
 INPUT tables/celeba_most_corr_controls.tex
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
+INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
@@ -556,8 +558,6 @@ INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
-INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmbi8t.tfm
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmbi8t.vf
 INPUT /home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmbi8r.tfm
