@@ -7,7 +7,7 @@
 % ambient iterative loop, per scripts/run_ambgce_vanilla_celeba.py:5,98-108).
 \begin{table}[t]
 \centering
-\caption{\textbf{CelebA cross-modal results (CLIP ViT-B/32, 40 binary attributes).} \emph{Leakage (pp)}: signed $S - S_{\text{floor}}$ at the trajectory step closest to the per-attribute majority-class chance; $0$ = at chance, lower in absolute value = stronger erasure. \emph{@chance}: settings driven to chance ($|S{-}S_{\text{floor}}| \le 0.5$pp) over settings the method reached the budget on. Each method is run on 40 attributes under each control regime (5 least- vs.\ 5 most-correlated controls per target). The CelebA pipeline uses the same \TanGCEpp{} recipe as the NLP headline: LEACE preprocessing $+$ rank-2 CovMatch $K{=}2$ $+$ manifold loop. Best per column in \textbf{bold}. `--' = no in-budget step at that budget for that method.}
+\caption{\textbf{CelebA cross-modal results (CLIP ViT-B/32, 40 binary attributes).} \emph{Leakage (pp)}: signed $S - S_{\text{floor}}$ at the trajectory step closest to the per-attribute majority-class chance; $0$ = at chance, lower in absolute value = stronger erasure. \emph{@chance}: settings driven to chance ($|S{-}S_{\text{floor}}| \le 0.5$pp) over settings the method reached the budget on. Each method is run on 40 attributes under each control regime (5 least- vs.\ 5 most-correlated controls per target). The CelebA pipeline uses the same \TanGCEpp{} recipe as the NLP headline: LEACE preprocessing $+$ rank-2 CovMatch $+$ manifold loop. Best per column in \textbf{bold}. `--' = no in-budget step at that budget for that method.}
 \label{tab:celeba_unified_summary}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -19,7 +19,7 @@ Method & Leakage & @chance$\uparrow$ & Leakage & @chance & Leakage & @chance & L
 \multicolumn{9}{l}{\textit{5 least-correlated controls (40 attributes).}} \\
 \midrule
 LEACE & $+6.6$ & $15/39$ & $+6.4$ & $16/40$ & $+6.4$ & $16/40$ & $+6.4$ & $16/40$ \\
-LEACE$+$CovMatch $K{=}2$ & $+5.4$ & $21/37$ & $+5.1$ & $22/40$ & $+5.1$ & $22/40$ & $+5.1$ & $22/40$ \\
+LEACE$+$CovMatch & $+5.4$ & $21/37$ & $+5.1$ & $22/40$ & $+5.1$ & $22/40$ & $+5.1$ & $22/40$ \\
 INLP & $+5.5$ & $26/40$ & $+5.5$ & $26/40$ & $+5.5$ & $26/40$ & $+5.5$ & $26/40$ \\
 IGBP & $+5.8$ & $10/36$ & $+5.3$ & $13/40$ & $+5.3$ & $13/40$ & $+5.3$ & $13/40$ \\
 Obliviator & $\mathbf{+0.0}$ & $15/15$ & $\mathbf{+0.0}$ & $29/29$ & $-0.4$ & $37/39$ & $-0.4$ & $38/40$ \\
@@ -29,7 +29,7 @@ Obliviator & $\mathbf{+0.0}$ & $15/15$ & $\mathbf{+0.0}$ & $29/29$ & $-0.4$ & $3
 \multicolumn{9}{l}{\textit{5 most-correlated controls (40 attributes).}} \\
 \midrule
 LEACE & $+3.9$ & $11/20$ & $+6.2$ & $16/37$ & $+6.4$ & $16/40$ & $+6.4$ & $16/40$ \\
-LEACE$+$CovMatch $K{=}2$ & $+0.5$ & $9/12$ & $+4.0$ & $21/34$ & $+4.7$ & $22/39$ & $+5.1$ & $22/40$ \\
+LEACE$+$CovMatch & $+0.5$ & $9/12$ & $+4.0$ & $21/34$ & $+4.7$ & $22/39$ & $+5.1$ & $22/40$ \\
 INLP & $+5.8$ & $26/40$ & $+5.6$ & $26/40$ & $+5.5$ & $26/40$ & $+5.5$ & $26/40$ \\
 IGBP & $+7.0$ & $13/40$ & $+5.6$ & $13/40$ & $+5.3$ & $13/40$ & $+5.3$ & $13/40$ \\
 Obliviator & $\mathbf{+0.0}$ & $2/2$ & $\mathbf{+0.0}$ & $15/15$ & $\mathbf{+0.0}$ & $30/30$ & $\mathbf{+0.0}$ & $34/34$ \\

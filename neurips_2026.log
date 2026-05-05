@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  6 MAY 2026 01:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.23)  6 MAY 2026 01:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -782,7 +782,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 {/home/nlp/matan_avitan/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]) (./sections/related_work.tex [2]) (./sections/notation.tex [3]) (./sections/mrh.tex) (./sections/method.tex [4]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 17.
  [5] [6] [7]) (./sections/evaluation.tex) (./sections/experiments.tex [8]) (./sections/results.tex (./tables/main_results_unified.tex)
-<figures/aggregated_nlp_results.png, id=367, 461.62462pt x 280.76895pt>
+<figures/aggregated_nlp_results.png, id=368, 461.62462pt x 280.76895pt>
 File: figures/aggregated_nlp_results.png Graphic file (type png)
 <use figures/aggregated_nlp_results.png>
 Package pdftex.def Info: figures/aggregated_nlp_results.png  used on input line 16.
@@ -793,7 +793,7 @@ Overfull \hbox (106.21393pt too wide) in paragraph at lines 12--25
  []
 
 )
-<figures/per_model_bars_gender_slim.png, id=384, 455.301pt x 266.49562pt>
+<figures/per_model_bars_gender_slim.png, id=387, 455.301pt x 266.49562pt>
 File: figures/per_model_bars_gender_slim.png Graphic file (type png)
 <use figures/per_model_bars_gender_slim.png>
 Package pdftex.def Info: figures/per_model_bars_gender_slim.png  used on input line 37.
@@ -801,7 +801,10 @@ Package pdftex.def Info: figures/per_model_bars_gender_slim.png  used on input l
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [10] (./tables/celeba_unified_summary.tex) [11 <./figures/aggregated_nlp_results.png>]
+ [10] (./tables/celeba_unified_summary.tex)
+Underfull \vbox (badness 5008) has occurred while \output is active []
+
+ [11 <./figures/aggregated_nlp_results.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [12]) (./sections/discussion.tex [13 <./figures/per_model_bars_gender_slim.png>]) (./sections/limitations.tex) (./sections/conclusion.tex [14]) (./neurips_2026.bbl [15]
@@ -815,12 +818,12 @@ Underfull \hbox (badness 4531) in paragraph at lines 121--126
  []
 
 [16]) (./sections/appendix_results.tex (./tables/leace_vs_tangce_nlp.tex
-Overfull \hbox (22.83063pt too wide) in paragraph at lines 6--69
+Overfull \hbox (4.50676pt too wide) in paragraph at lines 6--69
  [][] 
  []
 
 )
-<figures/per_model_bars_gender.png, id=498, 455.301pt x 664.70332pt>
+<figures/per_model_bars_gender.png, id=505, 455.301pt x 664.70332pt>
 File: figures/per_model_bars_gender.png Graphic file (type png)
 <use figures/per_model_bars_gender.png>
 Package pdftex.def Info: figures/per_model_bars_gender.png  used on input line 15.
@@ -829,7 +832,7 @@ Package pdftex.def Info: figures/per_model_bars_gender.png  used on input line 1
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figures/per_model_bars_sycophancy.png, id=501, 455.301pt x 664.70332pt>
+<figures/per_model_bars_sycophancy.png, id=508, 455.301pt x 664.70332pt>
 File: figures/per_model_bars_sycophancy.png Graphic file (type png)
 <use figures/per_model_bars_sycophancy.png>
 Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input line 22.
@@ -837,7 +840,7 @@ Package pdftex.def Info: figures/per_model_bars_sycophancy.png  used on input li
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figures/per_model_bars_safety.png, id=504, 455.301pt x 664.70332pt>
+<figures/per_model_bars_safety.png, id=511, 455.301pt x 664.70332pt>
 File: figures/per_model_bars_safety.png Graphic file (type png)
 <use figures/per_model_bars_safety.png>
 Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 29.
@@ -845,58 +848,58 @@ Package pdftex.def Info: figures/per_model_bars_safety.png  used on input line 2
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(./tables/per_panel_breakdown.tex) (./tables/celeba_per_panel_breakdown.tex)
-<figures/per_attr_bars_celeba_least.png, id=515, 997.326pt x 669.40088pt>
+(./tables/per_panel_breakdown.tex)
+<figures/per_attr_bars_celeba_least.png, id=520, 997.326pt x 669.40088pt>
 File: figures/per_attr_bars_celeba_least.png Graphic file (type png)
 <use figures/per_attr_bars_celeba_least.png>
-Package pdftex.def Info: figures/per_attr_bars_celeba_least.png  used on input line 52.
+Package pdftex.def Info: figures/per_attr_bars_celeba_least.png  used on input line 48.
 (pdftex.def)             Requested size: 397.48499pt x 266.78525pt.
-<figures/per_attr_bars_celeba_most.png, id=516, 997.326pt x 669.40088pt>
+<figures/per_attr_bars_celeba_most.png, id=521, 997.326pt x 669.40088pt>
 File: figures/per_attr_bars_celeba_most.png Graphic file (type png)
 <use figures/per_attr_bars_celeba_most.png>
-Package pdftex.def Info: figures/per_attr_bars_celeba_most.png  used on input line 55.
+Package pdftex.def Info: figures/per_attr_bars_celeba_most.png  used on input line 51.
 (pdftex.def)             Requested size: 397.48499pt x 266.78525pt.
 
 
-LaTeX Warning: Float too large for page by 19.64043pt on input line 59.
+LaTeX Warning: Float too large for page by 19.64043pt on input line 55.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[17] [18]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 110.
+(./tables/celeba_per_panel_breakdown_dy1.tex) (./tables/celeba_per_panel_breakdown_dy3.tex) (./tables/celeba_per_panel_breakdown_dy5.tex) [17] [18]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 112.
  (/home/nlp/matan_avitan/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 121.
+(hyperref)                removing `math shift' on input line 123.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\lambda' on input line 121.
+(hyperref)                removing `\lambda' on input line 123.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 121.
+(hyperref)                removing `subscript' on input line 123.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 121.
+(hyperref)                removing `math shift' on input line 123.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 146.
+(hyperref)                removing `math shift' on input line 148.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\sigma' on input line 146.
+(hyperref)                removing `\sigma' on input line 148.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 146.
+(hyperref)                removing `math shift' on input line 148.
 
-[19]) [20] (./checklist.tex) [21] [22 <./figures/per_model_bars_gender.png>] [23 <./figures/per_model_bars_sycophancy.png>] [24 <./figures/per_model_bars_safety.png>] [25] [26] [27 <./figures/per_attr_bars_celeba_least.png> <./figures/per_attr_bars_celeba_most.png>] (./neurips_2026.aux)
+[19]) [20] (./checklist.tex) [21] [22 <./figures/per_model_bars_gender.png>] [23 <./figures/per_model_bars_sycophancy.png>] [24 <./figures/per_model_bars_safety.png>] [25] [26 <./figures/per_attr_bars_celeba_least.png> <./figures/per_attr_bars_celeba_most.png>] [27] [28] [29] (./neurips_2026.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-29>
@@ -905,18 +908,18 @@ Package rerunfilecheck Info: File `neurips_2026.out' has not changed.
 (rerunfilecheck)             Checksum: 040F602621301CDF53CB6E134ABDF901;7284.
  ) 
 Here is how much of TeX's memory you used:
- 27898 strings out of 469476
- 521071 string characters out of 5467624
- 1094305 words of memory out of 5000000
- 55438 multiletter control sequences out of 15000+600000
- 710193 words of font info for 380 fonts, out of 8000000 for 9000
+ 27925 strings out of 469476
+ 521989 string characters out of 5467624
+ 1176225 words of memory out of 5000000
+ 55450 multiletter control sequences out of 15000+600000
+ 710384 words of font info for 383 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  84i,18n,94p,2577b,980s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></home/nlp/matan_avitan/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2026.pdf (27 pages, 3771684 bytes).
+Output written on neurips_2026.pdf (29 pages, 3778911 bytes).
 PDF statistics:
- 782 PDF objects out of 1000 (max. 8388607)
- 655 compressed objects within 7 object streams
- 160 named destinations out of 1000 (max. 500000)
+ 800 PDF objects out of 1000 (max. 8388607)
+ 671 compressed objects within 7 object streams
+ 164 named destinations out of 1000 (max. 500000)
  83240 words of extra memory for PDF output out of 89155 (max. 10000000)
 

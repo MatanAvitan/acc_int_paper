@@ -7,7 +7,7 @@
 % TanGCE++ = LEACE + CovMatch K=2 + manifold (the headline pipeline).
 \begin{table}[t]
 \centering
-\caption{\textbf{Main result.} \emph{Leakage (pp)}: signed $S - S_{\text{floor}}$ at the trajectory step closest to majority-class chance, in pp; $0$ = at chance, lower in absolute value = stronger erasure. \emph{@chance}: settings driven to chance ($|S{-}S_{\text{floor}}| \le 0.5$pp) over settings the method reached the budget on. All 39 NLP panels (13 model families $\times$ 3 concepts) at 50\%-depth, fresh nonlinear probe ($h{=}128$, 200 SGD, patience 3); LEACE-only and LEACE$+$CovMatch $K{=}2$ are one-shot closed-form. \TanGCEpp{} is the proposed pipeline at fixed $\varepsilon{=}0.1$, $h{=}512$; \TanGCE{} drops both preprocessing stages and \TanGCEp{} drops only CovMatch. Bold = column-best; multiple methods within 0.05pp of the best are all bolded. Per-panel detail across all 39 panels is in App.~Tab.~\ref{tab:per_panel_breakdown}.}
+\caption{\textbf{Main result.} \emph{Leakage (pp)}: signed $S - S_{\text{floor}}$ at the trajectory step closest to majority-class chance, in pp; $0$ = at chance, lower in absolute value = stronger erasure. \emph{@chance}: settings driven to chance ($|S{-}S_{\text{floor}}| \le 0.5$pp) over settings the method reached the budget on. All 39 NLP panels (13 model families $\times$ 3 concepts) at 50\%-depth, fresh nonlinear probe ($h{=}128$, 200 SGD, patience 3); LEACE-only and LEACE$+$CovMatch (rank-2 covariance-asymmetry projection) are one-shot closed-form. \TanGCEpp{} is the proposed pipeline at fixed $\varepsilon{=}0.1$, $h{=}512$; \TanGCE{} drops both preprocessing stages and \TanGCEp{} drops only CovMatch. Bold = column-best; multiple methods within 0.05pp of the best are all bolded. Per-panel detail across all 39 panels is in App.~Tab.~\ref{tab:per_panel_breakdown}.}
 \label{tab:main_results_unified}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -17,7 +17,7 @@
 Method & Leakage & @chance$\uparrow$ & Leakage & @chance & Leakage & @chance & Leakage & @chance \\
 \midrule
 LEACE & $+18.3$ & $5/38$ & $+18.6$ & $5/39$ & $+18.6$ & $5/39$ & $+18.6$ & $5/39$ \\
-LEACE$+$CovMatch $K{=}2$ & $+9.6$ & $12/30$ & $+8.9$ & $16/38$ & $+8.9$ & $16/38$ & $+8.9$ & $16/39$ \\
+LEACE$+$CovMatch & $+9.6$ & $12/30$ & $+8.9$ & $16/38$ & $+8.9$ & $16/38$ & $+8.9$ & $16/39$ \\
 INLP & $+14.1$ & $7/38$ & $+13.8$ & $7/39$ & $+13.7$ & $8/39$ & $+13.6$ & $8/39$ \\
 IGBP & $+9.5$ & $4/37$ & $+9.4$ & $4/38$ & $+9.4$ & $4/38$ & $+9.4$ & $4/38$ \\
 Obliviator & $+4.3$ & $13/39$ & $+4.0$ & $13/39$ & $+4.0$ & $13/39$ & $+2.7$ & $17/39$ \\
