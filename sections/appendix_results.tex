@@ -41,6 +41,10 @@ Table~\ref{tab:per_panel_breakdown} reports the per-setting version of the main-
 \section{CelebA full per-attribute breakdown}
 \label{sec:appendix_celeba_extended}
 
+Tab.~\ref{tab:celeba_unified_summary} is the full per-method $\times$ per-budget summary across both control regimes, of which the main-text Fig.~\ref{fig:celeba_least_summary} is the least-correlated $\Delta Y \in \{1, 3\}$pp slice. Cells: signed mean $(S - S_{\text{floor}})$ in pp at the trajectory step closest to chance; in-budget reach (denominator) and at-chance count (numerator) over the same.
+
+\input{tables/celeba_unified_summary}
+
 Fig.~\ref{fig:per_attr_bars_celeba} reports the per-attribute nonlinear-probe accuracy $S$ for each of the 40 CelebA attributes at all four control-damage budgets, in the same bar-chart style as the NLP per-model figures (Fig.~\ref{fig:per_model_bars_gender}, App.~Fig.~\ref{fig:per_model_bars_gender_full}--\ref{fig:per_model_bars_safety_app}): three bars per attribute (Clean / \TanGCEpp{} / Obliviator) and a horizontal tick at the per-attribute majority-class floor. Hatched bars annotated ``N/A'' indicate that the method had no in-budget step at the shown $\Delta Y$ budget; we substitute its clean (un-erased) $S$ so the visual height communicates ``failed to land'' rather than a real measurement. A clear win for \TanGCEpp{} reads as a low solid blue bar paired with a high (often hatched-N/A) orange Obliviator bar --- common at $\Delta Y \le 1$pp in the most-correlated regime, where Obliviator overshoots the budget on $39$ of $40$ entangled targets while \TanGCEpp{} lands at floor on $15$.
 
 \begin{figure}[h]
