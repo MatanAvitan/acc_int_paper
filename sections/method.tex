@@ -14,7 +14,7 @@ A first-order tangent estimate is only accurate within a small neighborhood. Thi
 Consistent with MRH (§\ref{sec:mrh}), the manifold step composes with \emph{any} prior erasure technique: in §\ref{sec:tangce_on_baseline} we show that running \TanGCE{} on top of LEACE, LEACE\,+\,CovMatch, INLP, IGBP, or Obliviator further reduces nonlinear-probe leakage on every panel while preserving control accuracy. The gain is not specific to any one preprocessor, but to the fact that all of them leave behind the same locally curved residue that the manifold-constrained step removes.
 
 \begin{algorithm}[t]
-\caption{\TanGCEpp{} at a glance. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step. Dropping line 1b yields \TanGCEp{}; dropping Phase 1 entirely yields \TanGCE{}.}
+\caption{\TanGCEpp{}. Phase~1: LEACE + rank-2 covariance-asymmetry projection. Phase~2: iterative tangent-constrained step. Dropping line 1b yields \TanGCEp{}; dropping Phase 1 entirely yields \TanGCE{}.}
 \label{alg:tangce}
 \begin{algorithmic}[1]
 \REQUIRE Representations $\mathbf{X}$, concept labels $\mathbf{y}$, $\#$rounds $T$, trust region $\varepsilon$, anisotropy $\alpha$, scorer hidden $h$.
@@ -91,48 +91,53 @@ not re-normalized: $\|\mathbf{u}_i^{\mathrm{tan}}\| \le 1$ acts as an overlap we
 \end{equation}
 with $\lambda$ a step-size scalar (replaced below by a closed-form per-sample $\lambda_i$). \AmbGCEpp{} is the direct ambient ablation (used on both NLP and Vision): same closed-form preprocessing, same iterative loop, same scorer, same $\lambda$, but applies the update in the full ambient space without the manifold projection. We retain Eq.~\ref{eq:tangent_erase} as the conceptual entry point and as the $\alpha = 0$ ablation; the canonical \TanGCE{} update is the spectrally-normalized generalization in §\ref{sec:cov_tangce}.
 
-\subsection{Adaptive per-sample step size: closed-form \texorpdfstring{$\lambda_i$}{lambda}}
+\subsection{Anisotropic trust-region step in tangent SVD coordinates}
 \label{sec:closed_form_lambda}
+\label{sec:cov_tangce}
 
-A single global $\lambda$ over-edits some samples while under-editing others. We replace it with a per-sample step size that respects a \emph{local trust region}: no sample moves more than a fraction $\varepsilon$ of a per-sample local scale $s_i$,
+\paragraph{The simple update rule.}
+The skeleton of every iteration is the tangent-projected gradient step of Eq.~\ref{eq:tangent_erase}: subtract $\lambda \cdot (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \mathbf{u}_i^{\mathrm{tan}}$ from $\mathbf{x}_i$, where $\mathbf{u}_i^{\mathrm{tan}}$ is the tangent-projected unit gradient and $\lambda$ is a step size. The remaining design questions are (i) how large $\lambda$ should be per sample and (ii) along which tangent axes the step should put its mass. We never literally take a $\lambda{=}1$ step in practice; we treat it only as the bookkeeping reference at which the displacement vector is unscaled.
+
+\paragraph{Local trust region as a constraint optimisation.}
+A uniform global $\lambda$ over-edits some samples while under-editing others. We instead solve, per sample, the one-dimensional constrained problem
 \begin{equation}
 \label{eq:trust_region}
-\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i.
+\lambda_i \;=\; \arg\max_{\lambda \le \lambda_{\max}} \, \lambda
+\quad \text{subject to} \quad
+\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i,
 \end{equation}
-Substituting Eq.~\ref{eq:tangent_erase} and letting $\mathbf{v}_i = (\mathbf{x}_i^\top \mathbf{u}_i^{\mathrm{tan}}) \mathbf{u}_i^{\mathrm{tan}}$ be the per-sample displacement at $\lambda{=}1$, the largest admissible step is
+i.e.\ the largest $\lambda$ for which the displacement stays within a fraction $\varepsilon$ of a per-sample local scale $s_i$ (the precise definition of $s_i$ comes below). Letting $\mathbf{v}_i$ be the unscaled tangent-step direction (the displacement vector that Eq.~\ref{eq:tangent_erase} would produce at the bookkeeping reference $\lambda{=}1$), the constraint $\|\lambda \, \mathbf{v}_i\|_2 \le \varepsilon \, s_i$ has the closed-form maximiser
 \begin{equation}
 \label{eq:lambda_closed_form}
 \boxed{\;\;\lambda_i = \min\!\left( \lambda_{\max}, \; \frac{\varepsilon \cdot s_i}{\|\mathbf{v}_i\|} \right)\;\;}
 \end{equation}
-with $\lambda_{\max}=64$ a safety cap when $\|\mathbf{v}_i\| \to 0$. We use $\varepsilon = 0.1$ across every setting.
+with $\lambda_{\max}=64$ a safety cap that bites only when $\|\mathbf{v}_i\| \to 0$. We use $\varepsilon = 0.1$ across every setting; $\lambda_i$ then takes whatever (typically large) value the constraint admits, sample by sample.
 
-\paragraph{Anisotropy-aware local scale via spectral normalization.}
-The local manifold is an ellipsoid: along high-$\sigma$ singular directions, neighbors extend much further than along thin tail directions. A direction-agnostic Euclidean radius therefore over-allocates budget along thin axes and under-allocates along thick ones. Working in the tangent SVD coordinates $\{\mathbf{v}_i^{(k)}\}_{k=1}^{r}$ already produced by the secant decomposition (Eq.~\ref{eq:secant_svd}) makes the natural correction explicit: divide each tangent coordinate by its own singular value $\sigma_{i,k}$. This is spectral normalization in the spirit of Mahalanobis covariance whitening, but expressed through singular values rather than a covariance square root --- the natural choice once the tangent step is already written in SVD coordinates, since the local secant covariance is $\mathbf{C}_i = \tfrac{1}{k}\mathbf{V}_i \mathrm{diag}(\sigma_{i,k}^2)\mathbf{V}_i^\top$ and so $\mathbf{C}_i^{-1/2}$ acts diagonally as $\sigma_{i,k}^{-1}$ in this basis. We therefore use the spectrally-normalized neighborhood radius
+\paragraph{Tangent axes have different ``lengths''.}
+The local linear approximation produced by the secant SVD (Eq.~\ref{eq:secant_svd}) decomposes the tangent space into right singular vectors $\{\mathbf{v}_i^{(k)}\}$ and singular values $\{\sigma_{i,k}\}$. The singular values are the per-axis ``lengths'' --- how far neighbors of $\mathbf{x}_i$ extend along each tangent direction. We will call the directions with large $\sigma_{i,k}$ the \emph{long axes} of the neighborhood (high-$\sigma$ for short) and the directions with small $\sigma_{i,k}$ the \emph{thin axes} (low-$\sigma$). A direction-agnostic Euclidean radius treats every axis identically: it over-allocates step budget along thin axes (where the linear approximation is fragile and a small step in coordinate space already escapes the manifold) and under-allocates along long axes (where neighbors give the linear approximation generous support).
+
+\paragraph{Per-axis budget via spectral normalisation.}
+Respecting the per-axis lengths means measuring step magnitude in $\sigma$-normalised coordinates: divide each tangent coordinate of the move by the local singular value of its axis. This is Mahalanobis whitening expressed through the SVD --- the local secant covariance is $\mathbf{C}_i = \tfrac{1}{k}\mathbf{V}_i \mathrm{diag}(\sigma_{i,k}^2)\mathbf{V}_i^\top$ and so $\mathbf{C}_i^{-1/2}$ acts diagonally as $\sigma_{i,k}^{-1}$ in the SVD basis, recovering the per-axis division for free. Concretely, we use the spectrally-normalised neighborhood radius
 \begin{equation}
 \label{eq:s_spectral}
 s_i = R_i^{\mathrm{spec}} \cdot s_i^{\mathrm{maha}}, \qquad
 R_i^{\mathrm{spec}} = \mathrm{median}_{j \in \mathcal{N}_k(i)} \, \|\mathbf{B}_i^\top (\mathbf{x}_j - \mathbf{x}_i) / \boldsymbol\sigma_i \|_2,
 \end{equation}
-with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$, $\boldsymbol{a}_i = (a_{i,1}, \ldots, a_{i,r})$ the tangent coordinates of the displacement (defined in Eq.~\ref{eq:tangent_erase_sigma}), and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol{a}_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise). $\varepsilon$ is then a fraction of the local spectrally-normalized neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
+with $\boldsymbol\sigma_i = (\sigma_{i,1}, \ldots, \sigma_{i,r})$ and $s_i^{\mathrm{maha}} = 1 / \|\boldsymbol{a}_i / (\boldsymbol\sigma_i + \delta)\|_2$ (component-wise), where $\boldsymbol{a}_i$ are the tangent coordinates of the displacement defined just below. $\varepsilon$ is then a fraction of the local spectrally-normalised neighborhood; setting $s_i = r_i$ (mean $k$-NN distance) recovers the Euclidean radial scale and is reported in App.\ as an ablation.
 
-\subsection{Anisotropic update via local spectral normalization}
-\label{sec:cov_tangce}
-
-The closed-form $\lambda_i$ controls the magnitude of each step, but the direction of Eq.~\ref{eq:tangent_erase} is still isotropic in the tangent basis. The local SVD already exposes anisotropy: the singular values $\sigma_{i,k}$ can vary substantially across tangent axes. An isotropic tangent step can therefore over-edit thin directions where the local linear approximation is fragile, while under-using directions along which the neighborhood actually extends.
-
-We replace Eq.~\ref{eq:tangent_erase} with a spectrally-normalized tangent step that rescales each tangent coordinate by the local singular value $\sigma_{i,k}$ produced by the secant SVD,
+The spectrally-normalised step itself replaces Eq.~\ref{eq:tangent_erase} with
 \begin{equation}
 \label{eq:tangent_erase_sigma}
 \boxed{\;\;
 \tilde{\mathbf{x}}_i \;=\; \mathbf{x}_i \;-\; \lambda_i \sum_{k=1}^{r} \sigma_{i,k}^{\alpha} \, a_{i,k} \, \mathbf{v}_i^{(k)}
 \;\;}
 \end{equation}
-where $a_{i,k} = \langle \mathbf{v}_i, \mathbf{v}_i^{(k)} \rangle$ are the coordinates of the unpreconditioned tangent displacement $\mathbf{v}_i$ in the local SVD basis $\{\mathbf{v}_i^{(k)}\}_{k=1}^{r}$. We use $\alpha = 1$ in the main experiments. Each tangent coefficient is then scaled by the local extent of the neighborhood along that axis: high-$\sigma$ directions receive larger updates, while thin directions are suppressed.
+where $a_{i,k} = \langle \mathbf{v}_i, \mathbf{v}_i^{(k)} \rangle$ are the SVD-basis coordinates of the unscaled tangent displacement and $\alpha = 1$ in the main experiments. Each tangent coefficient is now scaled by the local extent of the neighborhood along that axis: long-axis (high-$\sigma$) directions receive larger updates because the linear approximation is reliable there, and thin-axis (low-$\sigma$) directions are suppressed because moving along them most easily leaves the manifold.
 
 \paragraph{Relation to local covariance and Mahalanobis scaling.}
-The update can also be viewed as applying a positive spectral power of the local secant covariance. The empirical covariance of the centered secants has eigenvectors $\mathbf{v}_i^{(k)}$ and eigenvalues proportional to $\sigma_{i,k}^2$, so scaling each tangent coordinate by $\sigma_{i,k}$ corresponds, up to a global constant, to applying the positive square root of this local covariance ($\mathbf{C}_i^{1/2}$). This is the opposite of whitening: Mahalanobis normalization downweights high-variance directions through an inverse covariance power, whereas we use a positive power to move preferentially along directions that are well supported by nearby representations. App.~\ref{sec:appendix_alpha_regimes} details the full $\sigma_{i,k}^{\alpha}$ family with $\alpha \in \{0, 1, 2\}$, corresponding respectively to the isotropic ablation, our default, and the natural-gradient / full-Mahalanobis trust-region optimum.
+The update can also be viewed as applying a positive spectral power of the local secant covariance. The empirical covariance of the centered secants has eigenvectors $\mathbf{v}_i^{(k)}$ and eigenvalues proportional to $\sigma_{i,k}^2$, so scaling each tangent coordinate by $\sigma_{i,k}$ corresponds, up to a global constant, to applying the positive square root of this local covariance ($\mathbf{C}_i^{1/2}$). This is the opposite of whitening: Mahalanobis normalisation downweights high-variance directions through an inverse covariance power, whereas we use a positive power to move preferentially along directions that are well supported by nearby representations. App.~\ref{sec:appendix_alpha_regimes} details the full $\sigma_{i,k}^{\alpha}$ family with $\alpha \in \{0, 1, 2\}$, corresponding respectively to the isotropic ablation, our default, and the natural-gradient / full-Mahalanobis trust-region optimum.
 
-The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after spectral normalization (replacing $\|\mathbf{v}_i\|$ by the norm of the spectrally-normalized displacement in the denominator), so the actual ambient move still respects $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i$. Anisotropy reshapes the \emph{direction} of the step, not its budget.
+The trust-region magnitude in Eq.~\ref{eq:lambda_closed_form} is enforced after spectral normalisation (replacing $\|\mathbf{v}_i\|$ by the norm of the spectrally-normalised displacement in the denominator), so the actual ambient move still respects $\| \tilde{\mathbf{x}}_i - \mathbf{x}_i \|_2 \le \varepsilon \cdot s_i$. Anisotropy reshapes the \emph{direction} of the step, not its budget.
 
 \subsection{Iterative loop and relation to baselines}
 
